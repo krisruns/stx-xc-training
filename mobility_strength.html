@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STX XC Strength & Mobility Reference</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            padding: 10px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c5530, #4a7c59);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .back-link {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 15px;
+            transition: background 0.3s ease;
+        }
+        
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .routine-section {
+            margin-bottom: 40px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .routine-header {
+            background: #f1f3f4;
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .routine-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2c5530;
+            margin-bottom: 8px;
+        }
+        
+        .routine-description {
+            font-size: 1rem;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .routine-content {
+            padding: 25px;
+        }
+        
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .exercise-item {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #4a7c59;
+        }
+        
+        .exercise-name {
+            font-weight: 600;
+            color: #2c5530;
+            margin-bottom: 5px;
+        }
+        
+        .exercise-details {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .mobility-a { border-left-color: #4a7c59; }
+        .mobility-b { border-left-color: #6c757d; }
+        .strength-a { border-left-color: #dc3545; }
+        .strength-b { border-left-color: #fd7e14; }
+        .post-race { border-left-color: #6f42c1; }
+        
+        .routine-notes {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        
+        .notes-title {
+            font-weight: 600;
+            color: #856404;
+            margin-bottom: 8px;
+        }
+        
+        .notes-content {
+            font-size: 0.9rem;
+            color: #856404;
+        }
+        
+        .quick-reference {
+            background: #e8f5e8;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .quick-reference h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c5530;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .reference-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .reference-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .reference-label {
+            font-weight: 700;
+            color: #2c5530;
+            margin-bottom: 5px;
+        }
+        
+        .reference-time {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+            
+            .header {
+                padding: 20px 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.6rem;
+            }
+            
+            .content {
+                padding: 20px 15px;
+            }
+            
+            .exercise-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .reference-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.4rem;
+            }
+            
+            .routine-title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="index.html" class="back-link">← Back to Training Hub</a>
+            <h1>💪 STRENGTH & MOBILITY REFERENCE</h1>
+            <p>Complete guide to post-workout routines and recovery protocols</p>
+        </div>
+        
+        <div class="content">
+            
+            <!-- Quick Reference -->
+            <div class="quick-reference">
+                <h3>Daily Routine Schedule</h3>
+                <div class="reference-grid">
+                    <div class="reference-item">
+                        <div class="reference-label">MOBILITY A</div>
+                        <div class="reference-time">Monday • Wednesday • Friday</div>
+                    </div>
+                    <div class="reference-item">
+                        <div class="reference-label">MOBILITY B</div>
+                        <div class="reference-time">Tuesday • Thursday • Saturday</div>
+                    </div>
+                    <div class="reference-item">
+                        <div class="reference-label">STRENGTH A</div>
+                        <div class="reference-time">With Mobility A (when listed)</div>
+                    </div>
+                    <div class="reference-item">
+                        <div class="reference-label">STRENGTH B</div>
+                        <div class="reference-time">With Mobility B (when listed)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- MOBILITY A -->
+            <div class="routine-section">
+                <div class="routine-header">
+                    <div class="routine-title">MOBILITY A</div>
+                    <div class="routine-description">10-15 minutes • Focus on hip flexors, glutes, and spine mobility</div>
+                </div>
+                <div class="routine-content">
+                    <div class="exercise-grid">
+                        <div class="exercise-item mobility-a">
+                            <div class="exercise-name">Side Plank</div>
+                            <div class="exercise-details">x 2 sets (each side)</div>
+                        </div>
+                        <div class="exercise-item mobility-a">
+                            <div class="exercise-name">Leg Raises</div>
+                            <div class="exercise-details">x 3 sets</div>
+                        </div>
+                        <div class="exercise-item mobility-a">
+                            <div class="exercise-name">Clams</div>
+                            <div class="exercise-details">x 3 sets (each side)</div>
+                        </div>
+                        <div class="exercise-item mobility-a">
+                            <div class="exercise-name">Lunge Matrix</div>
+                            <div class="exercise-details">Multi-directional lunges</div>
+                        </div>
+                        <div class="exercise-item mobility-a">
+                            <div class="exercise-name">90/90 Trunk Rotate</div>
+                            <div class="exercise-details">Seated trunk rotation</div>
+                        </div>
+                        <div class="exercise-item mobility-a">
+                            <div class="exercise-name">Scorpions</div>
+                            <div class="exercise-details">Dynamic spine rotation</div>
+                        </div>
+                        <div class="exercise-item mobility-a">
+                            <div class="exercise-name">Prisoner Flex</div>
+                            <div class="exercise-details">Hands behind head flex</div>
+                        </div>
+                        <div class="exercise-item mobility-a">
+                            <div class="exercise-name">Kneeling Lats</div>
+                            <div class="exercise-details">Single/Left/Right variations</div>
+                        </div>
+                        <div class="exercise-item mobility-a">
+                            <div class="exercise-name">Front/Supine</div>
+                            <div class="exercise-details">Hip flexor stretches</div>
+                        </div>
+                        <div class="exercise-item mobility-a">
+                            <div class="exercise-name">Cat Cow</div>
+                            <div class="exercise-details">Spinal flexion/extension</div>
+                        </div>
+                        <div class="exercise-item mobility-a">
+                            <div class="exercise-name">Donkey Kick</div>
+                            <div class="exercise-details">Glute activation</div>
+                        </div>
+                        <div class="exercise-item mobility-a">
+                            <div class="exercise-name">Donkey Whip</div>
+                            <div class="exercise-details">Hip stability</div>
+                        </div>
+                        <div class="exercise-item mobility-a">
+                            <div class="exercise-name">Fire Hydrant</div>
+                            <div class="exercise-details">Hip abduction</div>
+                        </div>
+                    </div>
+                    <div class="routine-notes">
+                        <div class="notes-title">💡 Mobility A Focus:</div>
+                        <div class="notes-content">Emphasizes hip flexor stretching, glute activation, and thoracic spine mobility. Perfect for post-run recovery on easier training days.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- MOBILITY B -->
+            <div class="routine-section">
+                <div class="routine-header">
+                    <div class="routine-title">MOBILITY B</div>
+                    <div class="routine-description">10-15 minutes • Dynamic movements and leg swings</div>
+                </div>
+                <div class="routine-content">
+                    <div class="exercise-grid">
+                        <div class="exercise-item mobility-b">
+                            <div class="exercise-name">Hip Circles</div>
+                            <div class="exercise-details">x 2 sets (each direction)</div>
+                        </div>
+                        <div class="exercise-item mobility-b">
+                            <div class="exercise-name">Thoracic Rotations</div>
+                            <div class="exercise-details">Upper spine mobility</div>
+                        </div>
+                        <div class="exercise-item mobility-b">
+                            <div class="exercise-name">Good Mornings</div>
+                            <div class="exercise-details">Hip hinge pattern</div>
+                        </div>
+                        <div class="exercise-item mobility-b">
+                            <div class="exercise-name">Leg Swings</div>
+                            <div class="exercise-details">Forward/back, side to side</div>
+                        </div>
+                    </div>
+                    <div class="routine-notes">
+                        <div class="notes-title">💡 Mobility B Focus:</div>
+                        <div class="notes-content">More dynamic movements to complement harder training days. Emphasizes hip mobility and movement preparation.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- STRENGTH A -->
+            <div class="routine-section">
+                <div class="routine-header">
+                    <div class="routine-title">STRENGTH A</div>
+                    <div class="routine-description">10-12 minutes • Core stability and functional strength</div>
+                </div>
+                <div class="routine-content">
+                    <div class="exercise-grid">
+                        <div class="exercise-item strength-a">
+                            <div class="exercise-name">Pushups Cued</div>
+                            <div class="exercise-details">Focus on form and control</div>
+                        </div>
+                        <div class="exercise-item strength-a">
+                            <div class="exercise-name">Resisted Planks</div>
+                            <div class="exercise-details">Core stability with resistance</div>
+                        </div>
+                        <div class="exercise-item strength-a">
+                            <div class="exercise-name">V Sit Flutter Kick</div>
+                            <div class="exercise-details">Lower abdominal strength</div>
+                        </div>
+                        <div class="exercise-item strength-a">
+                            <div class="exercise-name">Hip Bridge Progression</div>
+                            <div class="exercise-details">Glute strength variations</div>
+                        </div>
+                        <div class="exercise-item strength-a">
+                            <div class="exercise-name">Lateral Crawl</div>
+                            <div class="exercise-details">Full body stability</div>
+                        </div>
+                        <div class="exercise-item strength-a">
+                            <div class="exercise-name">Bird Dogs</div>
+                            <div class="exercise-details">Core and hip stability</div>
+                        </div>
+                        <div class="exercise-item strength-a">
+                            <div class="exercise-name">V Sit Bicycle</div>
+                            <div class="exercise-details">Rotational core strength</div>
+                        </div>
+                    </div>
+                    <div class="routine-notes">
+                        <div class="notes-title">💡 Strength A Focus:</div>
+                        <div class="notes-content">Foundational strength movements emphasizing core stability, glute activation, and functional movement patterns.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- STRENGTH B -->
+            <div class="routine-section">
+                <div class="routine-header">
+                    <div class="routine-title">STRENGTH B</div>
+                    <div class="routine-description">10-12 minutes • Advanced strength and partner exercises</div>
+                </div>
+                <div class="routine-content">
+                    <div class="exercise-grid">
+                        <div class="exercise-item strength-b">
+                            <div class="exercise-name">Pushups Cued</div>
+                            <div class="exercise-details">Focus on form and control</div>
+                        </div>
+                        <div class="exercise-item strength-b">
+                            <div class="exercise-name">Ankle Dorsiflex/Extension</div>
+                            <div class="exercise-details">Ankle mobility and strength</div>
+                        </div>
+                        <div class="exercise-item strength-b">
+                            <div class="exercise-name">Pushups Resisted</div>
+                            <div class="exercise-details">Partner or band resistance</div>
+                        </div>
+                        <div class="exercise-item strength-b">
+                            <div class="exercise-name">Partner Throws</div>
+                            <div class="exercise-details">Medicine ball or partner work</div>
+                        </div>
+                        <div class="exercise-item strength-b">
+                            <div class="exercise-name">Partner Clams</div>
+                            <div class="exercise-details">Resisted hip abduction</div>
+                        </div>
+                        <div class="exercise-item strength-b">
+                            <div class="exercise-name">V Sit Scissors</div>
+                            <div class="exercise-details">Hip flexor strength</div>
+                        </div>
+                        <div class="exercise-item strength-b">
+                            <div class="exercise-name">Pushups Elevated</div>
+                            <div class="exercise-details">Feet elevated variation</div>
+                        </div>
+                        <div class="exercise-item strength-b">
+                            <div class="exercise-name">V Sit Flutter</div>
+                            <div class="exercise-details">Core endurance</div>
+                        </div>
+                        <div class="exercise-item strength-b">
+                            <div class="exercise-name">Prone W's</div>
+                            <div class="exercise-details">Posterior chain activation</div>
+                        </div>
+                        <div class="exercise-item strength-b">
+                            <div class="exercise-name">Pushup/Side Plank</div>
+                            <div class="exercise-details">Combination movement</div>
+                        </div>
+                        <div class="exercise-item strength-b">
+                            <div class="exercise-name">Ankles Lateral</div>
+                            <div class="exercise-details">Lateral ankle stability</div>
+                        </div>
+                    </div>
+                    <div class="routine-notes">
+                        <div class="notes-title">💡 Strength B Focus:</div>
+                        <div class="notes-content">More advanced movements including partner exercises, elevated positions, and combination movements for increased challenge.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- POST RACE -->
+            <div class="routine-section">
+                <div class="routine-header">
+                    <div class="routine-title">POST RACE RECOVERY</div>
+                    <div class="routine-description">15-20 minutes • Competition recovery and restoration</div>
+                </div>
+                <div class="routine-content">
+                    <div class="exercise-grid">
+                        <div class="exercise-item post-race">
+                            <div class="exercise-name">Lying Knee Hug</div>
+                            <div class="exercise-details">Hip flexor release</div>
+                        </div>
+                        <div class="exercise-item post-race">
+                            <div class="exercise-name">Lying Cross Body</div>
+                            <div class="exercise-details">IT band and hip stretch</div>
+                        </div>
+                        <div class="exercise-item post-race">
+                            <div class="exercise-name">Lying Glute Pull</div>
+                            <div class="exercise-details">Glute and piriformis stretch</div>
+                        </div>
+                        <div class="exercise-item post-race">
+                            <div class="exercise-name">Knee Hug Hammies</div>
+                            <div class="exercise-details">Hamstring flexibility</div>
+                        </div>
+                        <div class="exercise-item post-race">
+                            <div class="exercise-name">Kneeling Hamstring</div>
+                            <div class="exercise-details">Active hamstring stretch</div>
+                        </div>
+                        <div class="exercise-item post-race">
+                            <div class="exercise-name">Kneeling Hip Flex</div>
+                            <div class="exercise-details">Hip flexor lengthening</div>
+                        </div>
+                        <div class="exercise-item post-race">
+                            <div class="exercise-name">Kneeling Quad</div>
+                            <div class="exercise-details">Quadriceps stretch</div>
+                        </div>
+                        <div class="exercise-item post-race">
+                            <div class="exercise-name">Kneeling Prisoner</div>
+                            <div class="exercise-details">Thoracic extension</div>
+                        </div>
+                        <div class="exercise-item post-race">
+                            <div class="exercise-name">Prone Cobra</div>
+                            <div class="exercise-details">Spinal extension</div>
+                        </div>
+                        <div class="exercise-item post-race">
+                            <div class="exercise-name">Wider Cobra</div>
+                            <div class="exercise-details">Enhanced spinal mobility</div>
+                        </div>
+                    </div>
+                    <div class="routine-notes">
+                        <div class="notes-title">💡 Post Race Focus:</div>
+                        <div class="notes-content">Extended recovery routine for competition days. Emphasizes full body restoration, focusing on areas that tighten during racing.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GENERAL GUIDELINES -->
+            <div class="routine-section">
+                <div class="routine-header">
+                    <div class="routine-title">GENERAL GUIDELINES</div>
+                    <div class="routine-description">Important notes for all routines</div>
+                </div>
+                <div class="routine-content">
+                    <div class="routine-notes">
+                        <div class="notes-title">⏰ Timing:</div>
+                        <div class="notes-content">Complete immediately after running while muscles are warm. Never skip on hard training days.</div>
+                    </div>
+                    <div class="routine-notes">
+                        <div class="notes-title">🎯 Quality over Quantity:</div>
+                        <div class="notes-content">Focus on proper form and controlled movements. Better to do fewer reps correctly than many poorly.</div>
+                    </div>
+                    <div class="routine-notes">
+                        <div class="notes-title">🤝 Partner Work:</div>
+                        <div class="notes-content">Some Strength B exercises require a partner. Pair up with teammates and alternate.</div>
+                    </div>
+                    <div class="routine-notes">
+                        <div class="notes-title">📈 Progression:</div>
+                        <div class="notes-content">Gradually increase hold times and repetitions as you get stronger throughout the season.</div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>
