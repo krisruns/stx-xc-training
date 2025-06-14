@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STX Cross Country Training Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c5530, #4a7c59);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+        
+        .season-info {
+            font-size: 1rem;
+            opacity: 0.8;
+            font-style: italic;
+        }
+        
+        .content {
+            padding: 40px 30px;
+        }
+        
+        .phase-section {
+            margin-bottom: 40px;
+        }
+        
+        .phase-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2c5530;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #4a7c59;
+        }
+        
+        .phase-description {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .weeks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .week-card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .week-card:hover {
+            border-color: #4a7c59;
+            box-shadow: 0 4px 15px rgba(74, 124, 89, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .week-number {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #2c5530;
+            margin-bottom: 8px;
+        }
+        
+        .week-dates {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 12px;
+        }
+        
+        .week-highlights {
+            font-size: 0.9rem;
+            color: #495057;
+        }
+        
+        .week-highlights li {
+            margin-bottom: 4px;
+        }
+        
+        .current-week {
+            border-color: #ffc107;
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+        }
+        
+        .current-week .week-number {
+            color: #856404;
+        }
+        
+        .current-badge {
+            display: inline-block;
+            background: #ffc107;
+            color: #856404;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .stats-section {
+            background: #e8f5e8;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 40px 0;
+        }
+        
+        .stats-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #2c5530;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .stat-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4a7c59;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 30px 15px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+            
+            .weeks-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏃‍♂️ ST. XAVIER CROSS COUNTRY</h1>
+            <p>2025 Training Hub</p>
+            <div class="season-info">Summer Conditioning → Cross Country Season → Post-Season</div>
+        </div>
+        
+        <div class="content">
+            
+            <!-- SUMMER CONDITIONING -->
+            <div class="phase-section">
+                <h2 class="phase-title">Summer Conditioning</h2>
+                <p class="phase-description">
+                    Base building phase focusing on aerobic development, stride progression, and building training consistency. 
+                    All groups follow progressive mileage increases with emphasis on running by feel and proper recovery.
+                </p>
+                <div class="weeks-grid">
+                    <a href="week01.html" class="week-card">
+                        <div class="week-number">Week 1</div>
+                        <div class="week-dates">May 26 - June 1</div>
+                        <ul class="week-highlights">
+                            <li>JV/Soph begin training</li>
+                            <li>4x20s strides @ 5k effort</li>
+                            <li>18-28 mile range</li>
+                        </ul>
+                    </a>
+                    
+                    <a href="week02.html" class="week-card">
+                        <div class="week-number">Week 2</div>
+                        <div class="week-dates">June 2 - June 8</div>
+                        <ul class="week-highlights">
+                            <li>First fartlek workouts</li>
+                            <li>1min on/4min steady</li>
+                            <li>20-32 mile range</li>
+                        </ul>
+                    </a>
+                    
+                    <a href="week03.html" class="week-card current-week">
+                        <div class="week-number">Week 3 <span class="current-badge">CURRENT</span></div>
+                        <div class="week-dates">June 9 - June 15</div>
+                        <ul class="week-highlights">
+                            <li>First progression runs</li>
+                            <li>5x20s strides @ 5k effort</li>
+                            <li>22-36 mile range</li>
+                        </ul>
+                    </a>
+                    
+                    <a href="week04.html" class="week-card">
+                        <div class="week-number">Week 4</div>
+                        <div class="week-dates">June 16 - June 22</div>
+                        <ul class="week-highlights">
+                            <li>Freshman training begins</li>
+                            <li>2min on/3min steady fartleks</li>
+                            <li>24-40 mile range</li>
+                        </ul>
+                    </a>
+                    
+                    <a href="week05.html" class="week-card">
+                        <div class="week-number">Week 5</div>
+                        <div class="week-dates">June 23 - June 29</div>
+                        <ul class="week-highlights">
+                            <li>Dead Period begins June 25</li>
+                            <li>Strides: 5k→3200m effort</li>
+                            <li>26-43 mile range</li>
+                        </ul>
+                    </a>
+                    
+                    <a href="week06.html" class="week-card">
+                        <div class="week-number">Week 6</div>
+                        <div class="week-dates">June 30 - July 6</div>
+                        <ul class="week-highlights">
+                            <li>3min on/2min steady fartleks</li>
+                            <li>Strides: 5k→1600m effort</li>
+                            <li>28-46 mile range</li>
+                        </ul>
+                    </a>
+                    
+                    <a href="week07.html" class="week-card">
+                        <div class="week-number">Week 7</div>
+                        <div class="week-dates">July 7 - July 13</div>
+                        <ul class="week-highlights">
+                            <li>Dead Period ends July 9</li>
+                            <li>6x20s strides: 3200m→1600m</li>
+                            <li>30-48 mile range</li>
+                        </ul>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- SUMMER PEAK -->
+            <div class="phase-section">
+                <h2 class="phase-title">Summer Peak Phase</h2>
+                <p class="phase-description">
+                    Peak summer mileage with introduction of hill work and aerobic repeats. 
+                    Focus shifts to higher intensity aerobic development while maintaining base.
+                </p>
+                <div class="weeks-grid">
+                    <a href="week08.html" class="week-card">
+                        <div class="week-number">Week 8</div>
+                        <div class="week-dates">July 14 - July 20</div>
+                        <ul class="week-highlights">
+                            <li>Mandatory practice begins</li>
+                            <li>1 Mile Time Trial</li>
+                            <li>32-51 mile range</li>
+                        </ul>
+                    </a>
+                    
+                    <a href="week09.html" class="week-card">
+                        <div class="week-number">Week 9</div>
+                        <div class="week-dates">July 21 - July 27</div>
+                        <ul class="week-highlights">
+                            <li>Team Camp Day</li>
+                            <li>Peak mileage week</li>
+                            <li>33-55 mile range</li>
+                        </ul>
+                    </a>
+                    
+                    <a href="week10.html" class="week-card">
+                        <div class="week-number">Week 10</div>
+                        <div class="week-dates">July 28 - August 3</div>
+                        <ul class="week-highlights">
+                            <li>Hill workout introduction</li>
+                            <li>Summer peak week</li>
+                            <li>35-55 mile range</li>
+                        </ul>
+                    </a>
+                    
+                    <a href="week11.html" class="week-card">
+                        <div class="week-number">Week 11</div>
+                        <div class="week-dates">August 4 - August 10</div>
+                        <ul class="week-highlights">
+                            <li>2 Mile Time Trial</li>
+                            <li>School orientation</li>
+                            <li>30-51 mile range</li>
+                        </ul>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- CROSS COUNTRY SEASON -->
+            <div class="phase-section">
+                <h2 class="phase-title">Cross Country Season</h2>
+                <p class="phase-description">
+                    Competition phase with race-specific workouts, tapering strategy, and peak performance focus. 
+                    Mileage maintained with increased intensity and race simulation.
+                </p>
+                <div class="weeks-grid">
+                    <a href="week12.html" class="week-card">
+                        <div class="week-number">Week 12</div>
+                        <div class="week-dates">August 11 - August 17</div>
+                        <ul class="week-highlights">
+                            <li>Pre-season adjustment</li>
+                            <li>School schedule adaptation</li>
+                            <li>Fleet Feet Relays</li>
+                        </ul>
+                    </a>
+                    
+                    <a href="week13.html" class="week-card">
+                        <div class="week-number">Week 13</div>
+                        <div class="week-dates">August 18 - August 24</div>
+                        <ul class="week-highlights">
+                            <li>XC season begins</li>
+                            <li>First official competition</li>
+                            <li>Build phase</li>
+                        </ul>
+                    </a>
+                    
+                    <a href="week14.html" class="week-card">
+                        <div class="week-number">Week 14</div>
+                        <div class="week-dates">August 25 - August 31</div>
+                        <ul class="week-highlights">
+                            <li>Tiger Run</li>
+                            <li>Building intensity</li>
+                            <li>Race preparation</li>
+                        </ul>
+                    </a>
+                    
+                    <!-- Additional weeks will be added as the season progresses -->
+                    <div style="grid-column: 1/-1; text-align: center; padding: 20px; color: #666; font-style: italic;">
+                        Additional weeks will be added as the season progresses...
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TRAINING STATS -->
+            <div class="stats-section">
+                <h3 class="stats-title">2025 Season Overview</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">30+</div>
+                        <div class="stat-label">Training Weeks</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">Training Groups</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">55</div>
+                        <div class="stat-label">Peak Weekly Miles</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Race Opportunities</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>St. Xavier Cross Country Training Hub • Updated Weekly • Coach Access</p>
+            <p>Questions? Contact coaching staff through TeamApp</p>
+        </div>
+    </div>
+</body>
+</html>
