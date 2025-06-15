@@ -21,7 +21,7 @@
         }
         
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             background: white;
             border-radius: 12px;
@@ -80,7 +80,7 @@
         
         .weeks-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
         }
         
@@ -142,6 +142,24 @@
             margin-left: 10px;
         }
         
+        .dead-period {
+            border-color: #dc3545;
+            background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+        }
+        
+        .dead-period .week-number {
+            color: #721c24;
+        }
+        
+        .race-week {
+            border-color: #17a2b8;
+            background: linear-gradient(135deg, #d1ecf1, #bee5eb);
+        }
+        
+        .race-week .week-number {
+            color: #0c5460;
+        }
+        
         .stats-section {
             background: #e8f5e8;
             padding: 30px;
@@ -185,6 +203,51 @@
             letter-spacing: 0.5px;
         }
         
+        .meet-schedule {
+            background: #f1f3f4;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        
+        .meet-schedule h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c5530;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .meet-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .meet-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #4a7c59;
+        }
+        
+        .meet-date {
+            font-weight: 700;
+            color: #2c5530;
+            margin-bottom: 5px;
+        }
+        
+        .meet-name {
+            font-size: 0.95rem;
+            color: #495057;
+            margin-bottom: 3px;
+        }
+        
+        .meet-location {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
         .footer {
             background: #f8f9fa;
             padding: 20px;
@@ -217,6 +280,10 @@
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+            
+            .meet-list {
+                grid-template-columns: 1fr;
+            }
         }
         
         @media (max-width: 480px) {
@@ -235,26 +302,26 @@
         <div class="header">
             <h1>🏃‍♂️ ST. XAVIER CROSS COUNTRY</h1>
             <p>2025 Training Hub</p>
-            <div class="season-info">Summer Conditioning → Cross Country Season → Post-Season</div>
+            <div class="season-info">May 26 - December 6, 2025 • Four Training Groups • Peak Excellence</div>
         </div>
         
         <div class="content">
             
-            <!-- SUMMER CONDITIONING -->
+            <!-- SUMMER BASE BUILDING -->
             <div class="phase-section">
-                <h2 class="phase-title">Summer Conditioning</h2>
+                <h2 class="phase-title">Summer Base Building</h2>
                 <p class="phase-description">
-                    Base building phase focusing on aerobic development, stride progression, and building training consistency. 
-                    All groups follow progressive mileage increases with emphasis on running by feel and proper recovery.
+                    Foundation phase focusing on aerobic base development, stride progression, and movement consistency. 
+                    JV/Sophomore groups begin May 26, Freshmen and Varsity begin June 16. Emphasis on "running by feel" and proper recovery protocols.
                 </p>
                 <div class="weeks-grid">
                     <a href="week01.html" class="week-card">
                         <div class="week-number">Week 1</div>
                         <div class="week-dates">May 26 - June 1</div>
                         <ul class="week-highlights">
-                            <li>JV/Soph begin training</li>
+                            <li>JV/Soph recovery complete, training begins</li>
                             <li>4x20s strides @ 5k effort</li>
-                            <li>18-28 mile range</li>
+                            <li>White: 18 miles, Green: 22 miles</li>
                         </ul>
                     </a>
                     
@@ -262,9 +329,9 @@
                         <div class="week-number">Week 2</div>
                         <div class="week-dates">June 2 - June 8</div>
                         <ul class="week-highlights">
-                            <li>First fartlek workouts</li>
-                            <li>1min on/4min steady</li>
-                            <li>20-32 mile range</li>
+                            <li>Varsity recovery week 1</li>
+                            <li>First fartlek: 1min on/4min steady</li>
+                            <li>White: 20 miles, Green: 25 miles</li>
                         </ul>
                     </a>
                     
@@ -272,9 +339,9 @@
                         <div class="week-number">Week 3 <span class="current-badge">CURRENT</span></div>
                         <div class="week-dates">June 9 - June 15</div>
                         <ul class="week-highlights">
-                            <li>First progression runs</li>
-                            <li>5x20s strides @ 5k effort</li>
-                            <li>22-36 mile range</li>
+                            <li>Varsity recovery week 2</li>
+                            <li>First progression runs introduced</li>
+                            <li>White: 22 miles, Green: 28 miles</li>
                         </ul>
                     </a>
                     
@@ -282,29 +349,29 @@
                         <div class="week-number">Week 4</div>
                         <div class="week-dates">June 16 - June 22</div>
                         <ul class="week-highlights">
-                            <li>Freshman training begins</li>
-                            <li>2min on/3min steady fartleks</li>
-                            <li>24-40 mile range</li>
+                            <li>Freshmen & Varsity training begins</li>
+                            <li>Summer Training Kickoff meeting</li>
+                            <li>All groups: 12-40 mile range</li>
                         </ul>
                     </a>
                     
-                    <a href="week05.html" class="week-card">
+                    <a href="week05.html" class="week-card dead-period">
                         <div class="week-number">Week 5</div>
                         <div class="week-dates">June 23 - June 29</div>
                         <ul class="week-highlights">
-                            <li>Dead Period begins June 25</li>
-                            <li>Strides: 5k→3200m effort</li>
-                            <li>26-43 mile range</li>
+                            <li>KHSAA Dead Period begins June 25</li>
+                            <li>Independent training schedules</li>
+                            <li>Strides progress: 5k→3200m effort</li>
                         </ul>
                     </a>
                     
-                    <a href="week06.html" class="week-card">
+                    <a href="week06.html" class="week-card dead-period">
                         <div class="week-number">Week 6</div>
                         <div class="week-dates">June 30 - July 6</div>
                         <ul class="week-highlights">
+                            <li>Dead Period continues</li>
                             <li>3min on/2min steady fartleks</li>
                             <li>Strides: 5k→1600m effort</li>
-                            <li>28-46 mile range</li>
                         </ul>
                     </a>
                     
@@ -313,8 +380,8 @@
                         <div class="week-dates">July 7 - July 13</div>
                         <ul class="week-highlights">
                             <li>Dead Period ends July 9</li>
-                            <li>6x20s strides: 3200m→1600m</li>
-                            <li>30-48 mile range</li>
+                            <li>Team reconvenes July 10</li>
+                            <li>6x20s strides: 3200m→1600m effort</li>
                         </ul>
                     </a>
                 </div>
@@ -324,17 +391,17 @@
             <div class="phase-section">
                 <h2 class="phase-title">Summer Peak Phase</h2>
                 <p class="phase-description">
-                    Peak summer mileage with introduction of hill work and aerobic repeats. 
-                    Focus shifts to higher intensity aerobic development while maintaining base.
+                    Peak summer volume with hill work introduction and aerobic repeats. Mandatory practice begins July 14. 
+                    Focus on maximal aerobic development while preparing for race-specific training.
                 </p>
                 <div class="weeks-grid">
                     <a href="week08.html" class="week-card">
                         <div class="week-number">Week 8</div>
                         <div class="week-dates">July 14 - July 20</div>
                         <ul class="week-highlights">
-                            <li>Mandatory practice begins</li>
-                            <li>1 Mile Time Trial</li>
-                            <li>32-51 mile range</li>
+                            <li>Mandatory practice begins July 14</li>
+                            <li>Summer conditioning continues</li>
+                            <li>Volume increasing: 19-43 miles</li>
                         </ul>
                     </a>
                     
@@ -342,9 +409,9 @@
                         <div class="week-number">Week 9</div>
                         <div class="week-dates">July 21 - July 27</div>
                         <ul class="week-highlights">
-                            <li>Team Camp Day</li>
-                            <li>Peak mileage week</li>
-                            <li>33-55 mile range</li>
+                            <li>Two Mile Time Trial July 26</li>
+                            <li>Peak building: 20-46 miles</li>
+                            <li>Summer conditioning peak</li>
                         </ul>
                     </a>
                     
@@ -352,9 +419,9 @@
                         <div class="week-number">Week 10</div>
                         <div class="week-dates">July 28 - August 3</div>
                         <ul class="week-highlights">
-                            <li>Hill workout introduction</li>
-                            <li>Summer peak week</li>
-                            <li>35-55 mile range</li>
+                            <li>Hill Workout Introduction July 31</li>
+                            <li>Summer peak: 21-48 miles</li>
+                            <li>Introduce hill work</li>
                         </ul>
                     </a>
                     
@@ -362,9 +429,9 @@
                         <div class="week-number">Week 11</div>
                         <div class="week-dates">August 4 - August 10</div>
                         <ul class="week-highlights">
-                            <li>2 Mile Time Trial</li>
-                            <li>School orientation</li>
-                            <li>30-51 mile range</li>
+                            <li>Orientation August 6-7</li>
+                            <li>Practice meet vs Manual August 9</li>
+                            <li>Alumni Run & Team Picnic August 9</li>
                         </ul>
                     </a>
                 </div>
@@ -374,53 +441,265 @@
             <div class="phase-section">
                 <h2 class="phase-title">Cross Country Season</h2>
                 <p class="phase-description">
-                    Competition phase with race-specific workouts, tapering strategy, and peak performance focus. 
-                    Mileage maintained with increased intensity and race simulation.
+                    Competition phase with race-specific workouts and strategic tapering. School begins August 8. 
+                    Peak performance focus with 12+ competitive opportunities culminating in State Championships.
                 </p>
                 <div class="weeks-grid">
                     <a href="week12.html" class="week-card">
                         <div class="week-number">Week 12</div>
                         <div class="week-dates">August 11 - August 17</div>
                         <ul class="week-highlights">
+                            <li>First Day of School August 8</li>
                             <li>Pre-season adjustment</li>
                             <li>School schedule adaptation</li>
-                            <li>Fleet Feet Relays</li>
                         </ul>
                     </a>
                     
-                    <a href="week13.html" class="week-card">
+                    <a href="week13.html" class="week-card race-week">
                         <div class="week-number">Week 13</div>
                         <div class="week-dates">August 18 - August 24</div>
                         <ul class="week-highlights">
-                            <li>XC season begins</li>
-                            <li>First official competition</li>
-                            <li>Build phase</li>
+                            <li>XC Season officially begins</li>
+                            <li>Build phase intensity</li>
+                            <li>All groups reaching peak miles</li>
                         </ul>
                     </a>
                     
-                    <a href="week14.html" class="week-card">
+                    <a href="week14.html" class="week-card race-week">
                         <div class="week-number">Week 14</div>
                         <div class="week-dates">August 25 - August 31</div>
                         <ul class="week-highlights">
-                            <li>Tiger Run</li>
-                            <li>Building intensity</li>
-                            <li>Race preparation</li>
+                            <li>Tiger Run August 30</li>
+                            <li>First major competition</li>
+                            <li>Race intensity building</li>
                         </ul>
                     </a>
                     
-                    <!-- Additional weeks will be added as the season progresses -->
-                    <div style="grid-column: 1/-1; text-align: center; padding: 20px; color: #666; font-style: italic;">
-                        Additional weeks will be added as the season progresses...
+                    <a href="week15.html" class="week-card race-week">
+                        <div class="week-number">Week 15</div>
+                        <div class="week-dates">September 1 - September 7</div>
+                        <ul class="week-highlights">
+                            <li>Labor Day (No School) September 1</li>
+                            <li>Season intensity building</li>
+                            <li>Freshman building toward peak</li>
+                        </ul>
+                    </a>
+                    
+                    <a href="week16.html" class="week-card race-week">
+                        <div class="week-number">Week 16</div>
+                        <div class="week-dates">September 8 - September 14</div>
+                        <ul class="week-highlights">
+                            <li>Champions Series #1 September 10</li>
+                            <li>Southern Showcase September 13</li>
+                            <li>Freshman & White reach peak miles</li>
+                        </ul>
+                    </a>
+                    
+                    <a href="week17.html" class="week-card race-week">
+                        <div class="week-number">Week 17</div>
+                        <div class="week-dates">September 15 - September 21</div>
+                        <ul class="week-highlights">
+                            <li>Trinity Valkyrie Invitational Sept 20</li>
+                            <li>Student X Day September 19</li>
+                            <li>Green & Gold at peak miles</li>
+                        </ul>
+                    </a>
+                    
+                    <a href="week18.html" class="week-card">
+                        <div class="week-number">Week 18</div>
+                        <div class="week-dates">September 22 - September 28</div>
+                        <ul class="week-highlights">
+                            <li>Champions Series #2 September 24</li>
+                            <li>Palentine Invitational September 27</li>
+                            <li>Early taper begins for Gold</li>
+                        </ul>
+                    </a>
+                    
+                    <a href="week19.html" class="week-card race-week">
+                        <div class="week-number">Week 19</div>
+                        <div class="week-dates">September 29 - October 5</div>
+                        <ul class="week-highlights">
+                            <li>JV Dual vs Trinity September 30</li>
+                            <li>Louisville XC Classic October 4</li>
+                            <li>All tracks beginning taper</li>
+                        </ul>
+                    </a>
+                    
+                    <a href="week20.html" class="week-card">
+                        <div class="week-number">Week 20</div>
+                        <div class="week-dates">October 6 - October 12</div>
+                        <ul class="week-highlights">
+                            <li>PSAT/Senior Holiday October 9</li>
+                            <li>Fall Break October 10-14</li>
+                            <li>Haunted Woods Classic October 11</li>
+                        </ul>
+                    </a>
+                    
+                    <a href="week21.html" class="week-card">
+                        <div class="week-number">Week 21</div>
+                        <div class="week-dates">October 13 - October 19</div>
+                        <ul class="week-highlights">
+                            <li>Meet of Champions October 19</li>
+                            <li>Pre-championship preparation</li>
+                            <li>Sharp volume reduction</li>
+                        </ul>
+                    </a>
+                    
+                    <a href="week22.html" class="week-card race-week">
+                        <div class="week-number">Week 22</div>
+                        <div class="week-dates">October 20 - October 26</div>
+                        <ul class="week-highlights">
+                            <li>Student X Day October 24</li>
+                            <li>AAA Region 3 Championships Oct 25</li>
+                            <li>Pre-State Week preparation</li>
+                        </ul>
+                    </a>
+                    
+                    <a href="week23.html" class="week-card race-week">
+                        <div class="week-number">Week 23</div>
+                        <div class="week-dates">October 27 - November 2</div>
+                        <ul class="week-highlights">
+                            <li>AAA State Championships Nov 1</li>
+                            <li>First peak - State Meet</li>
+                            <li>All levels compete</li>
+                        </ul>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- POST-SEASON -->
+            <div class="phase-section">
+                <h2 class="phase-title">Post-Season Opportunities</h2>
+                <p class="phase-description">
+                    Optional national-level competition path for qualifying athletes. 
+                    Recovery phase for non-continuing athletes transitioning to winter base building.
+                </p>
+                <div class="weeks-grid">
+                    <a href="week24.html" class="week-card">
+                        <div class="week-number">Week 24</div>
+                        <div class="week-dates">November 3 - November 9</div>
+                        <ul class="week-highlights">
+                            <li>National Path Selection November 4</li>
+                            <li>Recovery OR NXR rebuild</li>
+                            <li>Optional for qualifying athletes</li>
+                        </ul>
+                    </a>
+                    
+                    <a href="week25.html" class="week-card">
+                        <div class="week-number">Week 25</div>
+                        <div class="week-dates">November 10 - November 16</div>
+                        <ul class="week-highlights">
+                            <li>No School November 10</li>
+                            <li>Final NXR Workout November 15</li>
+                            <li>NXR preparation OR winter base</li>
+                        </ul>
+                    </a>
+                    
+                    <a href="week26.html" class="week-card race-week">
+                        <div class="week-number">Week 26</div>
+                        <div class="week-dates">November 17 - November 23</div>
+                        <ul class="week-highlights">
+                            <li>Nike Cross Regionals November 22</li>
+                            <li>Second peak OR winter building</li>
+                            <li>National-level competition</li>
+                        </ul>
+                    </a>
+                    
+                    <a href="week27.html" class="week-card">
+                        <div class="week-number">Week 27</div>
+                        <div class="week-dates">November 24 - November 30</div>
+                        <ul class="week-highlights">
+                            <li>Thanksgiving Break November 26-28</li>
+                            <li>NXN build OR winter base</li>
+                            <li>Family time and recovery</li>
+                        </ul>
+                    </a>
+                    
+                    <a href="week28.html" class="week-card race-week">
+                        <div class="week-number">Week 28</div>
+                        <div class="week-dates">December 1 - December 7</div>
+                        <ul class="week-highlights">
+                            <li>Feast Day December 3</li>
+                            <li>Nike Cross Nationals December 6</li>
+                            <li>Season culmination OR winter base</li>
+                        </ul>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- KEY MEET SCHEDULE -->
+            <div class="meet-schedule">
+                <h3>🏁 Key 2025 Meet Schedule</h3>
+                <div class="meet-list">
+                    <div class="meet-item">
+                        <div class="meet-date">July 26</div>
+                        <div class="meet-name">Two Mile Time Trial</div>
+                        <div class="meet-location">Seneca Park</div>
+                    </div>
+                    <div class="meet-item">
+                        <div class="meet-date">August 9</div>
+                        <div class="meet-name">Practice Meet vs Manual</div>
+                        <div class="meet-location">Seneca Park</div>
+                    </div>
+                    <div class="meet-item">
+                        <div class="meet-date">August 30</div>
+                        <div class="meet-name">Tiger Run</div>
+                        <div class="meet-location">Champions Park</div>
+                    </div>
+                    <div class="meet-item">
+                        <div class="meet-date">September 10</div>
+                        <div class="meet-name">Champions Series #1</div>
+                        <div class="meet-location">Champions Park</div>
+                    </div>
+                    <div class="meet-item">
+                        <div class="meet-date">September 13</div>
+                        <div class="meet-name">Southern Showcase</div>
+                        <div class="meet-location">Huntsville, AL</div>
+                    </div>
+                    <div class="meet-item">
+                        <div class="meet-date">September 20</div>
+                        <div class="meet-name">Trinity Invitational</div>
+                        <div class="meet-location">E.P. Tom Sawyer</div>
+                    </div>
+                    <div class="meet-item">
+                        <div class="meet-date">September 27</div>
+                        <div class="meet-name">Palentine Invitational</div>
+                        <div class="meet-location">Chicago, IL</div>
+                    </div>
+                    <div class="meet-item">
+                        <div class="meet-date">October 4</div>
+                        <div class="meet-name">Louisville XC Classic</div>
+                        <div class="meet-location">E.P. Tom Sawyer</div>
+                    </div>
+                    <div class="meet-item">
+                        <div class="meet-date">October 11</div>
+                        <div class="meet-name">Haunted Woods Classic</div>
+                        <div class="meet-location">Buckner, KY</div>
+                    </div>
+                    <div class="meet-item">
+                        <div class="meet-date">October 19</div>
+                        <div class="meet-name">Meet of Champions</div>
+                        <div class="meet-location">Kentucky Horse Park</div>
+                    </div>
+                    <div class="meet-item">
+                        <div class="meet-date">October 25</div>
+                        <div class="meet-name">AAA Region 3 Championship</div>
+                        <div class="meet-location">Seneca Park</div>
+                    </div>
+                    <div class="meet-item">
+                        <div class="meet-date">November 1</div>
+                        <div class="meet-name">AAA State Championship</div>
+                        <div class="meet-location">Kentucky Horse Park</div>
                     </div>
                 </div>
             </div>
             
             <!-- TRAINING STATS -->
             <div class="stats-section">
-                <h3 class="stats-title">2025 Season Overview</h3>
+                <h3 class="stats-title">2025 Season by the Numbers</h3>
                 <div class="stats-grid">
                     <div class="stat-item">
-                        <div class="stat-number">30+</div>
+                        <div class="stat-number">28</div>
                         <div class="stat-label">Training Weeks</div>
                     </div>
                     <div class="stat-item">
@@ -435,13 +714,21 @@
                         <div class="stat-number">15+</div>
                         <div class="stat-label">Race Opportunities</div>
                     </div>
+                    <div class="stat-item">
+                        <div class="stat-number">15</div>
+                        <div class="stat-label">Dead Period Days</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">National Opportunities</div>
+                    </div>
                 </div>
             </div>
         </div>
         
         <div class="footer">
             <p>St. Xavier Cross Country Training Hub • Updated Weekly • Coach Access</p>
-            <p>Questions? Contact coaching staff through TeamApp</p>
+            <p>Questions? Contact coaching staff through TeamApp • KHSAA Dead Period: June 25 - July 9</p>
         </div>
     </div>
 </body>
