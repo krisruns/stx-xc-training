@@ -71,6 +71,7 @@
             border: 1px solid #e0e0e0;
             border-radius: 8px;
             overflow: hidden;
+            scroll-margin-top: 20px;
         }
         
         .routine-header {
@@ -185,6 +186,16 @@
             color: #666;
         }
         
+        /* Highlight effect for linked sections */
+        .routine-section:target {
+            box-shadow: 0 0 0 3px #ffc107;
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .routine-section:target .routine-header {
+            background: #fff3cd;
+        }
+        
         @media (max-width: 768px) {
             body {
                 padding: 5px;
@@ -233,7 +244,7 @@
         <div class="content">
             
             <!-- MOBILITY A -->
-            <div class="routine-section">
+            <div class="routine-section" id="mobility-a">
                 <div class="routine-header">
                     <div class="routine-title">MOBILITY A</div>
                     <div class="routine-description">10-15 minutes • Focus on hip flexors, glutes, and spine mobility</div>
@@ -301,7 +312,7 @@
             </div>
             
             <!-- MOBILITY B -->
-            <div class="routine-section">
+            <div class="routine-section" id="mobility-b">
                 <div class="routine-header">
                     <div class="routine-title">MOBILITY B</div>
                     <div class="routine-description">10-15 minutes • Dynamic movements and leg swings</div>
@@ -333,7 +344,7 @@
             </div>
             
             <!-- STRENGTH A -->
-            <div class="routine-section">
+            <div class="routine-section" id="strength-a">
                 <div class="routine-header">
                     <div class="routine-title">STRENGTH A</div>
                     <div class="routine-description">10-12 minutes • Core stability and functional strength</div>
@@ -377,7 +388,7 @@
             </div>
             
             <!-- STRENGTH B -->
-            <div class="routine-section">
+            <div class="routine-section" id="strength-b">
                 <div class="routine-header">
                     <div class="routine-title">STRENGTH B</div>
                     <div class="routine-description">10-12 minutes • Advanced strength and partner exercises</div>
@@ -437,7 +448,7 @@
             </div>
             
             <!-- POST RACE -->
-            <div class="routine-section">
+            <div class="routine-section" id="post-race">
                 <div class="routine-header">
                     <div class="routine-title">POST RACE RECOVERY</div>
                     <div class="routine-description">15-20 minutes • Competition recovery and restoration</div>
@@ -493,7 +504,7 @@
             </div>
             
             <!-- GENERAL GUIDELINES -->
-            <div class="routine-section">
+            <div class="routine-section" id="guidelines">
                 <div class="routine-header">
                     <div class="routine-title">GENERAL GUIDELINES</div>
                     <div class="routine-description">Important notes for all routines</div>
