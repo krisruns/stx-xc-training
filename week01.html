@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STX XC Week 1 Training - May 26-June 1, 2025</title>
+    <title>STX XC Week 1 Training - May 26 - June 1, 2025</title>
     <style>
         * {
             margin: 0;
@@ -43,6 +43,16 @@
         .header p {
             font-size: 1.1rem;
             opacity: 0.9;
+        }
+        
+        .week-highlight {
+            background: #e8f5e8;
+            color: #2c5530;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
         }
         
         .content {
@@ -124,17 +134,42 @@
             font-style: italic;
         }
         
-        .captain-assignments {
-            background: #f1f3f4;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 6px;
+        /* Special styling for mobility/strength links */
+        .post-workout-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
         
-        .captain-title {
+        .mobility-link, .strength-link {
+            padding: 4px 12px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-size: 0.85rem;
             font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .mobility-link {
+            background: #e8f5e8;
             color: #2c5530;
-            margin: 0;
+            border: 1px solid #4a7c59;
+        }
+        
+        .mobility-link:hover {
+            background: #4a7c59;
+            color: white;
+        }
+        
+        .strength-link {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #dc3545;
+        }
+        
+        .strength-link:hover {
+            background: #dc3545;
+            color: white;
         }
         
         .totals-section {
@@ -231,6 +266,10 @@
             .totals-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .post-workout-links {
+                justify-content: center;
+            }
         }
         
         @media (max-width: 480px) {
@@ -255,6 +294,10 @@
             <p>Week 1: May 26 - June 1, 2025</p>
         </div>
         
+        <div class="week-highlight">
+            🚀 SUMMER TRAINING BEGINS! JV/Sophomore groups start their base building phase.
+        </div>
+        
         <div class="content">
             
             <!-- MONDAY -->
@@ -263,14 +306,9 @@
                     <div class="day-title">MONDAY, MAY 26</div>
                 </div>
                 
-                <!-- Captain Assignments -->
-                <div class="captain-assignments">
-                    <div class="captain-title">📋 Captain Assignments:</div>
-                </div>
-                
                 <div class="groups-container">
                     <div class="group">
-                        <div class="group-name">Gold</div>
+                        <div class="group-name">White</div>
                         <div class="workout-section">
                             <div class="workout-label">PRE:</div>
                             <div class="workout-content">
@@ -280,7 +318,7 @@
                         <div class="workout-section">
                             <div class="workout-label">RUN:</div>
                             <div class="workout-content">
-                                <div class="workout-main">5 miles easy</div>
+                                <div class="workout-main">3 miles easy</div>
                                 <div class="workout-details">(with 4 surges x 20 seconds @ 5k effort in last 15min)</div>
                             </div>
                         </div>
@@ -288,7 +326,12 @@
                             <div class="workout-label">POST:</div>
                             <div class="workout-content">
                                 <div class="workout-main">2-4 strides @ 5k</div>
-                                <div class="workout-details">Mobility A</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-a" class="mobility-link">Mobility A</a>
+                                        <a href="mobility-strength.html#strength-a" class="strength-link">Strength A</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -312,13 +355,18 @@
                             <div class="workout-label">POST:</div>
                             <div class="workout-content">
                                 <div class="workout-main">2-4 strides @ 5k</div>
-                                <div class="workout-details">Mobility A</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-a" class="mobility-link">Mobility A</a>
+                                        <a href="mobility-strength.html#strength-a" class="strength-link">Strength A</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     
                     <div class="group">
-                        <div class="group-name">White</div>
+                        <div class="group-name">Gold</div>
                         <div class="workout-section">
                             <div class="workout-label">PRE:</div>
                             <div class="workout-content">
@@ -328,7 +376,7 @@
                         <div class="workout-section">
                             <div class="workout-label">RUN:</div>
                             <div class="workout-content">
-                                <div class="workout-main">3 miles easy</div>
+                                <div class="workout-main">5 miles easy</div>
                                 <div class="workout-details">(with 4 surges x 20 seconds @ 5k effort in last 15min)</div>
                             </div>
                         </div>
@@ -336,7 +384,12 @@
                             <div class="workout-label">POST:</div>
                             <div class="workout-content">
                                 <div class="workout-main">2-4 strides @ 5k</div>
-                                <div class="workout-details">Mobility A</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-a" class="mobility-link">Mobility A</a>
+                                        <a href="mobility-strength.html#strength-a" class="strength-link">Strength A</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -344,22 +397,10 @@
                     <div class="group">
                         <div class="group-name">Freshman</div>
                         <div class="workout-section">
-                            <div class="workout-label">PRE:</div>
-                            <div class="workout-content">
-                                <div class="workout-main">—</div>
-                            </div>
-                        </div>
-                        <div class="workout-section">
                             <div class="workout-label">RUN:</div>
                             <div class="workout-content">
-                                <div class="workout-main">OFF</div>
-                                <div class="workout-details">Training begins Week 4</div>
-                            </div>
-                        </div>
-                        <div class="workout-section">
-                            <div class="workout-label">POST:</div>
-                            <div class="workout-content">
-                                <div class="workout-main">—</div>
+                                <div class="workout-main">Training begins Week 4 (June 16)</div>
+                                <div class="workout-details">Focus on spring sport recovery</div>
                             </div>
                         </div>
                     </div>
@@ -372,14 +413,9 @@
                     <div class="day-title">TUESDAY, MAY 27</div>
                 </div>
                 
-                <!-- Captain Assignments -->
-                <div class="captain-assignments">
-                    <div class="captain-title">📋 Captain Assignments:</div>
-                </div>
-                
                 <div class="groups-container">
                     <div class="group">
-                        <div class="group-name">Gold</div>
+                        <div class="group-name">White</div>
                         <div class="workout-section">
                             <div class="workout-label">PRE:</div>
                             <div class="workout-content">
@@ -389,13 +425,18 @@
                         <div class="workout-section">
                             <div class="workout-label">RUN:</div>
                             <div class="workout-content">
-                                <div class="workout-main">4 miles easy</div>
+                                <div class="workout-main">3 miles easy</div>
                             </div>
                         </div>
                         <div class="workout-section">
                             <div class="workout-label">POST:</div>
                             <div class="workout-content">
-                                <div class="workout-main">Mobility B</div>
+                                <div class="workout-main">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-b" class="mobility-link">Mobility B</a>
+                                        <a href="mobility-strength.html#strength-b" class="strength-link">Strength B</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -417,13 +458,18 @@
                         <div class="workout-section">
                             <div class="workout-label">POST:</div>
                             <div class="workout-content">
-                                <div class="workout-main">Mobility B</div>
+                                <div class="workout-main">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-b" class="mobility-link">Mobility B</a>
+                                        <a href="mobility-strength.html#strength-b" class="strength-link">Strength B</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     
                     <div class="group">
-                        <div class="group-name">White</div>
+                        <div class="group-name">Gold</div>
                         <div class="workout-section">
                             <div class="workout-label">PRE:</div>
                             <div class="workout-content">
@@ -433,13 +479,18 @@
                         <div class="workout-section">
                             <div class="workout-label">RUN:</div>
                             <div class="workout-content">
-                                <div class="workout-main">3 miles easy</div>
+                                <div class="workout-main">4 miles easy</div>
                             </div>
                         </div>
                         <div class="workout-section">
                             <div class="workout-label">POST:</div>
                             <div class="workout-content">
-                                <div class="workout-main">Mobility B</div>
+                                <div class="workout-main">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-b" class="mobility-link">Mobility B</a>
+                                        <a href="mobility-strength.html#strength-b" class="strength-link">Strength B</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -447,22 +498,10 @@
                     <div class="group">
                         <div class="group-name">Freshman</div>
                         <div class="workout-section">
-                            <div class="workout-label">PRE:</div>
-                            <div class="workout-content">
-                                <div class="workout-main">—</div>
-                            </div>
-                        </div>
-                        <div class="workout-section">
                             <div class="workout-label">RUN:</div>
                             <div class="workout-content">
-                                <div class="workout-main">OFF</div>
-                                <div class="workout-details">Training begins Week 4</div>
-                            </div>
-                        </div>
-                        <div class="workout-section">
-                            <div class="workout-label">POST:</div>
-                            <div class="workout-content">
-                                <div class="workout-main">—</div>
+                                <div class="workout-main">Training begins Week 4 (June 16)</div>
+                                <div class="workout-details">Focus on spring sport recovery</div>
                             </div>
                         </div>
                     </div>
@@ -475,60 +514,7 @@
                     <div class="day-title">WEDNESDAY, MAY 28</div>
                 </div>
                 
-                <!-- Captain Assignments -->
-                <div class="captain-assignments">
-                    <div class="captain-title">📋 Captain Assignments:</div>
-                </div>
-                
                 <div class="groups-container">
-                    <div class="group">
-                        <div class="group-name">Gold</div>
-                        <div class="workout-section">
-                            <div class="workout-label">PRE:</div>
-                            <div class="workout-content">
-                                <div class="workout-main">Foot Drills</div>
-                            </div>
-                        </div>
-                        <div class="workout-section">
-                            <div class="workout-label">RUN:</div>
-                            <div class="workout-content">
-                                <div class="workout-main">4 miles easy</div>
-                                <div class="workout-details">(with 4 surges x 20 seconds @ 5k effort in last 15min)</div>
-                            </div>
-                        </div>
-                        <div class="workout-section">
-                            <div class="workout-label">POST:</div>
-                            <div class="workout-content">
-                                <div class="workout-main">Fast Finish</div>
-                                <div class="workout-details">Mobility A</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="group">
-                        <div class="group-name">Green</div>
-                        <div class="workout-section">
-                            <div class="workout-label">PRE:</div>
-                            <div class="workout-content">
-                                <div class="workout-main">Foot Drills</div>
-                            </div>
-                        </div>
-                        <div class="workout-section">
-                            <div class="workout-label">RUN:</div>
-                            <div class="workout-content">
-                                <div class="workout-main">3 miles easy</div>
-                                <div class="workout-details">(with 4 surges x 20 seconds @ 5k effort in last 15min)</div>
-                            </div>
-                        </div>
-                        <div class="workout-section">
-                            <div class="workout-label">POST:</div>
-                            <div class="workout-content">
-                                <div class="workout-main">Fast Finish</div>
-                                <div class="workout-details">Mobility A</div>
-                            </div>
-                        </div>
-                    </div>
-                    
                     <div class="group">
                         <div class="group-name">White</div>
                         <div class="workout-section">
@@ -548,7 +534,70 @@
                             <div class="workout-label">POST:</div>
                             <div class="workout-content">
                                 <div class="workout-main">Fast Finish</div>
-                                <div class="workout-details">Mobility A</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-a" class="mobility-link">Mobility A</a>
+                                        <a href="mobility-strength.html#strength-a" class="strength-link">Strength A</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="group">
+                        <div class="group-name">Green</div>
+                        <div class="workout-section">
+                            <div class="workout-label">PRE:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Foot Drills</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">3 miles easy</div>
+                                <div class="workout-details">(with 4 surges x 20 seconds @ 5k effort in last 15min)</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">POST:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Fast Finish</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-a" class="mobility-link">Mobility A</a>
+                                        <a href="mobility-strength.html#strength-a" class="strength-link">Strength A</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="group">
+                        <div class="group-name">Gold</div>
+                        <div class="workout-section">
+                            <div class="workout-label">PRE:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Foot Drills</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">4 miles easy</div>
+                                <div class="workout-details">(with 4 surges x 20 seconds @ 5k effort in last 15min)</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">POST:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Fast Finish</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-a" class="mobility-link">Mobility A</a>
+                                        <a href="mobility-strength.html#strength-a" class="strength-link">Strength A</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -556,22 +605,10 @@
                     <div class="group">
                         <div class="group-name">Freshman</div>
                         <div class="workout-section">
-                            <div class="workout-label">PRE:</div>
-                            <div class="workout-content">
-                                <div class="workout-main">—</div>
-                            </div>
-                        </div>
-                        <div class="workout-section">
                             <div class="workout-label">RUN:</div>
                             <div class="workout-content">
-                                <div class="workout-main">OFF</div>
-                                <div class="workout-details">Training begins Week 4</div>
-                            </div>
-                        </div>
-                        <div class="workout-section">
-                            <div class="workout-label">POST:</div>
-                            <div class="workout-content">
-                                <div class="workout-main">—</div>
+                                <div class="workout-main">Training begins Week 4 (June 16)</div>
+                                <div class="workout-details">Focus on spring sport recovery</div>
                             </div>
                         </div>
                     </div>
@@ -584,14 +621,9 @@
                     <div class="day-title">THURSDAY, MAY 29</div>
                 </div>
                 
-                <!-- Captain Assignments -->
-                <div class="captain-assignments">
-                    <div class="captain-title">📋 Captain Assignments:</div>
-                </div>
-                
                 <div class="groups-container">
                     <div class="group">
-                        <div class="group-name">Gold</div>
+                        <div class="group-name">White</div>
                         <div class="workout-section">
                             <div class="workout-label">PRE:</div>
                             <div class="workout-content">
@@ -601,13 +633,18 @@
                         <div class="workout-section">
                             <div class="workout-label">RUN:</div>
                             <div class="workout-content">
-                                <div class="workout-main">5 miles easy</div>
+                                <div class="workout-main">3 miles easy</div>
                             </div>
                         </div>
                         <div class="workout-section">
                             <div class="workout-label">POST:</div>
                             <div class="workout-content">
-                                <div class="workout-main">Mobility B</div>
+                                <div class="workout-main">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-b" class="mobility-link">Mobility B</a>
+                                        <a href="mobility-strength.html#strength-b" class="strength-link">Strength B</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -629,13 +666,18 @@
                         <div class="workout-section">
                             <div class="workout-label">POST:</div>
                             <div class="workout-content">
-                                <div class="workout-main">Mobility B</div>
+                                <div class="workout-main">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-b" class="mobility-link">Mobility B</a>
+                                        <a href="mobility-strength.html#strength-b" class="strength-link">Strength B</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     
                     <div class="group">
-                        <div class="group-name">White</div>
+                        <div class="group-name">Gold</div>
                         <div class="workout-section">
                             <div class="workout-label">PRE:</div>
                             <div class="workout-content">
@@ -645,13 +687,18 @@
                         <div class="workout-section">
                             <div class="workout-label">RUN:</div>
                             <div class="workout-content">
-                                <div class="workout-main">3 miles easy</div>
+                                <div class="workout-main">5 miles easy</div>
                             </div>
                         </div>
                         <div class="workout-section">
                             <div class="workout-label">POST:</div>
                             <div class="workout-content">
-                                <div class="workout-main">Mobility B</div>
+                                <div class="workout-main">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-b" class="mobility-link">Mobility B</a>
+                                        <a href="mobility-strength.html#strength-b" class="strength-link">Strength B</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -659,22 +706,10 @@
                     <div class="group">
                         <div class="group-name">Freshman</div>
                         <div class="workout-section">
-                            <div class="workout-label">PRE:</div>
-                            <div class="workout-content">
-                                <div class="workout-main">—</div>
-                            </div>
-                        </div>
-                        <div class="workout-section">
                             <div class="workout-label">RUN:</div>
                             <div class="workout-content">
-                                <div class="workout-main">OFF</div>
-                                <div class="workout-details">Training begins Week 4</div>
-                            </div>
-                        </div>
-                        <div class="workout-section">
-                            <div class="workout-label">POST:</div>
-                            <div class="workout-content">
-                                <div class="workout-main">—</div>
+                                <div class="workout-main">Training begins Week 4 (June 16)</div>
+                                <div class="workout-details">Focus on spring sport recovery</div>
                             </div>
                         </div>
                     </div>
@@ -687,14 +722,9 @@
                     <div class="day-title">FRIDAY, MAY 30</div>
                 </div>
                 
-                <!-- Captain Assignments -->
-                <div class="captain-assignments">
-                    <div class="captain-title">📋 Captain Assignments:</div>
-                </div>
-                
                 <div class="groups-container">
                     <div class="group">
-                        <div class="group-name">Gold</div>
+                        <div class="group-name">White</div>
                         <div class="workout-section">
                             <div class="workout-label">PRE:</div>
                             <div class="workout-content">
@@ -704,14 +734,19 @@
                         <div class="workout-section">
                             <div class="workout-label">RUN:</div>
                             <div class="workout-content">
-                                <div class="workout-main">3.5 miles easy</div>
+                                <div class="workout-main">3 miles easy</div>
                             </div>
                         </div>
                         <div class="workout-section">
                             <div class="workout-label">POST:</div>
                             <div class="workout-content">
                                 <div class="workout-main">Fast Finish</div>
-                                <div class="workout-details">Mobility A</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-a" class="mobility-link">Mobility A</a>
+                                        <a href="mobility-strength.html#strength-a" class="strength-link">Strength A</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -734,13 +769,18 @@
                             <div class="workout-label">POST:</div>
                             <div class="workout-content">
                                 <div class="workout-main">Fast Finish</div>
-                                <div class="workout-details">Mobility A</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-a" class="mobility-link">Mobility A</a>
+                                        <a href="mobility-strength.html#strength-a" class="strength-link">Strength A</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     
                     <div class="group">
-                        <div class="group-name">White</div>
+                        <div class="group-name">Gold</div>
                         <div class="workout-section">
                             <div class="workout-label">PRE:</div>
                             <div class="workout-content">
@@ -750,14 +790,19 @@
                         <div class="workout-section">
                             <div class="workout-label">RUN:</div>
                             <div class="workout-content">
-                                <div class="workout-main">3 miles easy</div>
+                                <div class="workout-main">3.5 miles easy</div>
                             </div>
                         </div>
                         <div class="workout-section">
                             <div class="workout-label">POST:</div>
                             <div class="workout-content">
                                 <div class="workout-main">Fast Finish</div>
-                                <div class="workout-details">Mobility A</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-a" class="mobility-link">Mobility A</a>
+                                        <a href="mobility-strength.html#strength-a" class="strength-link">Strength A</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -765,22 +810,10 @@
                     <div class="group">
                         <div class="group-name">Freshman</div>
                         <div class="workout-section">
-                            <div class="workout-label">PRE:</div>
-                            <div class="workout-content">
-                                <div class="workout-main">—</div>
-                            </div>
-                        </div>
-                        <div class="workout-section">
                             <div class="workout-label">RUN:</div>
                             <div class="workout-content">
-                                <div class="workout-main">OFF</div>
-                                <div class="workout-details">Training begins Week 4</div>
-                            </div>
-                        </div>
-                        <div class="workout-section">
-                            <div class="workout-label">POST:</div>
-                            <div class="workout-content">
-                                <div class="workout-main">—</div>
+                                <div class="workout-main">Training begins Week 4 (June 16)</div>
+                                <div class="workout-details">Focus on spring sport recovery</div>
                             </div>
                         </div>
                     </div>
@@ -793,14 +826,9 @@
                     <div class="day-title">SATURDAY, MAY 31</div>
                 </div>
                 
-                <!-- Captain Assignments -->
-                <div class="captain-assignments">
-                    <div class="captain-title">📋 Captain Assignments:</div>
-                </div>
-                
                 <div class="groups-container">
                     <div class="group">
-                        <div class="group-name">Gold</div>
+                        <div class="group-name">White</div>
                         <div class="workout-section">
                             <div class="workout-label">PRE:</div>
                             <div class="workout-content">
@@ -810,14 +838,19 @@
                         <div class="workout-section">
                             <div class="workout-label">RUN:</div>
                             <div class="workout-content">
-                                <div class="workout-main">LONG RUN: 6.5 miles easy</div>
+                                <div class="workout-main">LONG RUN: 4 miles easy</div>
                                 <div class="workout-details">(with 4 surges x 20 seconds @ 5k effort in last 20min)</div>
                             </div>
                         </div>
                         <div class="workout-section">
                             <div class="workout-label">POST:</div>
                             <div class="workout-content">
-                                <div class="workout-main">Mobility B</div>
+                                <div class="workout-main">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-b" class="mobility-link">Mobility B</a>
+                                        <a href="mobility-strength.html#strength-b" class="strength-link">Strength B</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -840,13 +873,18 @@
                         <div class="workout-section">
                             <div class="workout-label">POST:</div>
                             <div class="workout-content">
-                                <div class="workout-main">Mobility B</div>
+                                <div class="workout-main">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-b" class="mobility-link">Mobility B</a>
+                                        <a href="mobility-strength.html#strength-b" class="strength-link">Strength B</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     
                     <div class="group">
-                        <div class="group-name">White</div>
+                        <div class="group-name">Gold</div>
                         <div class="workout-section">
                             <div class="workout-label">PRE:</div>
                             <div class="workout-content">
@@ -856,14 +894,19 @@
                         <div class="workout-section">
                             <div class="workout-label">RUN:</div>
                             <div class="workout-content">
-                                <div class="workout-main">LONG RUN: 4 miles easy</div>
+                                <div class="workout-main">LONG RUN: 6.5 miles easy</div>
                                 <div class="workout-details">(with 4 surges x 20 seconds @ 5k effort in last 20min)</div>
                             </div>
                         </div>
                         <div class="workout-section">
                             <div class="workout-label">POST:</div>
                             <div class="workout-content">
-                                <div class="workout-main">Mobility B</div>
+                                <div class="workout-main">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-b" class="mobility-link">Mobility B</a>
+                                        <a href="mobility-strength.html#strength-b" class="strength-link">Strength B</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -871,22 +914,10 @@
                     <div class="group">
                         <div class="group-name">Freshman</div>
                         <div class="workout-section">
-                            <div class="workout-label">PRE:</div>
-                            <div class="workout-content">
-                                <div class="workout-main">—</div>
-                            </div>
-                        </div>
-                        <div class="workout-section">
                             <div class="workout-label">RUN:</div>
                             <div class="workout-content">
-                                <div class="workout-main">OFF</div>
-                                <div class="workout-details">Training begins Week 4</div>
-                            </div>
-                        </div>
-                        <div class="workout-section">
-                            <div class="workout-label">POST:</div>
-                            <div class="workout-content">
-                                <div class="workout-main">—</div>
+                                <div class="workout-main">Training begins Week 4 (June 16)</div>
+                                <div class="workout-details">Focus on spring sport recovery</div>
                             </div>
                         </div>
                     </div>
@@ -916,37 +947,36 @@
                 <div class="totals-title">WEEKLY MILEAGE TOTALS</div>
                 <div class="totals-grid">
                     <div class="total-item">
-                        <div class="total-group">GOLD</div>
-                        <div class="total-miles">28 miles</div>
+                        <div class="total-group">WHITE</div>
+                        <div class="total-miles">18 miles</div>
                     </div>
                     <div class="total-item">
                         <div class="total-group">GREEN</div>
                         <div class="total-miles">22 miles</div>
                     </div>
                     <div class="total-item">
-                        <div class="total-group">WHITE</div>
-                        <div class="total-miles">18 miles</div>
+                        <div class="total-group">GOLD</div>
+                        <div class="total-miles">28 miles</div>
                     </div>
                     <div class="total-item">
                         <div class="total-group">FRESHMAN</div>
-                        <div class="total-miles">Off Week</div>
+                        <div class="total-miles">Off Season</div>
                     </div>
                 </div>
             </div>
             
             <!-- TRAINING NOTES -->
             <div class="notes-section">
-                <div class="notes-title">TRAINING NOTES</div>
+                <div class="notes-title">WEEK 1 TRAINING NOTES</div>
                 <div class="notes-content">
                     <ul>
-                        <li><strong>Summer Base Building Begins:</strong> JV and Sophomore athletes start training</li>
-                        <li><strong>Surge Progression:</strong> Week 1 - 4 surges x 20 seconds @ 5k effort</li>
-                        <li><strong>Surge Location:</strong> Perform surges DURING the run (not after). Easy runs = last 15 minutes; Long runs = last 20 minutes</li>
-                        <li><strong>Recovery:</strong> Maintain normal running pace between surges (do not slow to jog)</li>
-                        <li><strong>Easy Run Guidelines:</strong> Conversational pace throughout, should be able to speak in full sentences</li>
-                        <li><strong>Post-Workout:</strong> Complete mobility work immediately after run while muscles are warm</li>
-                        <li><strong>Freshman Start:</strong> Freshman training begins Week 4 (June 16)</li>
-                        <li><strong>Varsity Athletes:</strong> Still completing track season - will join Week 4</li>
+                        <li><strong>Summer Launch:</strong> First week of summer training for JV/Sophomore groups. Freshmen and Varsity begin Week 4.</li>
+                        <li><strong>Base Building:</strong> Focus on consistent easy running with 4x20s strides @ 5k effort for neuromuscular development.</li>
+                        <li><strong>Surge Timing:</strong> Perform surges DURING the run in the last 15-20 minutes, not after completion.</li>
+                        <li><strong>Recovery Focus:</strong> Maintain normal running pace between surges - do not slow to a jog.</li>
+                        <li><strong>Mobility & Strength:</strong> Click the colored links to jump directly to specific post-workout routines.</li>
+                        <li><strong>Easy Pace:</strong> Should be conversational throughout - able to speak in full sentences.</li>
+                        <li><strong>Consistency Over Speed:</strong> Building the habit of daily training and proper recovery protocols.</li>
                     </ul>
                 </div>
             </div>
