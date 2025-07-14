@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STX XC Week 8 Training - July 14-20, 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            padding: 10px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .back-link {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 15px;
+            transition: background 0.3s ease;
+        }
+        
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .week-highlight {
+            background: #dc3545;
+            color: white;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .mandatory-practice-note {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
+            border: 2px solid #28a745;
+        }
+        
+        .content {
+            padding: 20px;
+        }
+        
+        .day-section {
+            margin-bottom: 30px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .mandatory-practice .day-section {
+            border-color: #dc3545;
+            background: linear-gradient(135deg, #fff5f5, #fefefe);
+        }
+        
+        .day-header {
+            background: #f1f3f4;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .mandatory-practice .day-header {
+            background: #f8d7da;
+        }
+        
+        .day-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c5530;
+        }
+        
+        .mandatory-practice .day-title {
+            color: #721c24;
+        }
+        
+        .groups-container {
+            padding: 15px;
+        }
+        
+        .group {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-left: 4px solid #4a7c59;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+        
+        .group:last-child {
+            margin-bottom: 0;
+        }
+        
+        .group-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #2c5530;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .workout-section {
+            display: grid;
+            grid-template-columns: 60px 1fr;
+            gap: 15px;
+            align-items: start;
+            margin-bottom: 8px;
+        }
+        
+        .workout-label {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .workout-content {
+            font-size: 1rem;
+        }
+        
+        .workout-main {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .workout-details {
+            font-size: 0.9rem;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .post-workout-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .mobility-link, .strength-link {
+            padding: 4px 12px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .mobility-link {
+            background: #e8f5e8;
+            color: #2c5530;
+            border: 1px solid #4a7c59;
+        }
+        
+        .mobility-link:hover {
+            background: #4a7c59;
+            color: white;
+        }
+        
+        .strength-link {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #dc3545;
+        }
+        
+        .strength-link:hover {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .totals-section {
+            background: #f8d7da;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 8px;
+            border: 1px solid #dc3545;
+        }
+        
+        .totals-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #721c24;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .totals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .total-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .total-group {
+            font-weight: 700;
+            color: #721c24;
+            margin-bottom: 5px;
+        }
+        
+        .total-miles {
+            font-size: 1.2rem;
+            color: #dc3545;
+            font-weight: 600;
+        }
+        
+        .notes-section {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        
+        .notes-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #856404;
+            margin-bottom: 15px;
+        }
+        
+        .notes-content {
+            font-size: 0.95rem;
+            color: #856404;
+        }
+        
+        .notes-content ul {
+            margin-left: 20px;
+        }
+        
+        .notes-content li {
+            margin-bottom: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+            
+            .header {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .content {
+                padding: 15px;
+            }
+            
+            .workout-section {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+            
+            .totals-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .post-workout-links {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="index.html" class="back-link">← Back to Training Hub</a>
+            <h1>ST. XAVIER XC SUMMER TRAINING</h1>
+            <p>Week 8: July 14-20, 2025</p>
+        </div>
+        
+        <div class="week-highlight">
+            🚀 MANDATORY PRACTICE BEGINS! Summer Peak Phase starts with hill workouts and structured training.
+        </div>
+        
+        <div class="content">
+            
+            <!-- MONDAY - MANDATORY PRACTICE BEGINS -->
+            <div class="day-section mandatory-practice">
+                <div class="day-header">
+                    <div class="day-title">MONDAY, JULY 14 🚀</div>
+                </div>
+                
+                <div class="mandatory-practice-note">
+                    🏆 <strong>MANDATORY PRACTICE BEGINS TODAY!</strong> Welcome to the Summer Peak phase. Time to get serious!
+                </div>
+                
+                <div class="groups-container">
+                    <div class="group">
+                        <div class="group-name">Freshman</div>
+                        <div class="workout-section">
+                            <div class="workout-label">PRE:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Foot Drills + Awesomizer</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">3 miles easy</div>
+                                <div class="workout-details">(with 6 strides (F): 2@3200m, 2@1600m, 2@800m in last 15min)</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">POST:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Strides + Fast Finish</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-a" class="mobility-link">Mobility A</a>
+                                        <a href="mobility-strength.html#strength-a" class="strength-link">Strength A</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="group">
+                        <div class="group-name">White</div>
+                        <div class="workout-section">
+                            <div class="workout-label">PRE:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Foot Drills + Awesomizer</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">5 miles easy</div>
+                                <div class="workout-details">(with 6 strides (F): 2@3200m, 2@1600m, 2@800m in last 15min)</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">POST:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Strides + Fast Finish</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-a" class="mobility-link">Mobility A</a>
+                                        <a href="mobility-strength.html#strength-a" class="strength-link">Strength A</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="group">
+                        <div class="group-name">Green</div>
+                        <div class="workout-section">
+                            <div class="workout-label">PRE:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Foot Drills + Awesomizer</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">7 miles easy</div>
+                                <div class="workout-details">(with 6 strides (F): 2@3200m, 2@1600m, 2@800m in last 15min)</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">POST:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Strides + Fast Finish</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-a" class="mobility-link">Mobility A</a>
+                                        <a href="mobility-strength.html#strength-a" class="strength-link">Strength A</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="group">
+                        <div class="group-name">Gold</div>
+                        <div class="workout-section">
+                            <div class="workout-label">PRE:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Foot Drills + Awesomizer</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">9 miles easy</div>
+                                <div class="workout-details">(with 6 strides (F): 2@3200m, 2@1600m, 2@800m in last 15min)</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">POST:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Strides + Fast Finish</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-a" class="mobility-link">Mobility A</a>
+                                        <a href="mobility-strength.html#strength-a" class="strength-link">Strength A</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TUESDAY -->
+            <div class="day-section mandatory-practice">
+                <div class="day-header">
+                    <div class="day-title">TUESDAY, JULY 15</div>
+                </div>
+                
+                <div class="groups-container">
+                    <div class="group">
+                        <div class="group-name">Freshman</div>
+                        <div class="workout-section">
+                            <div class="workout-label">PRE:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Foot Drills</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">1 mile easy</div>
+                                <div class="workout-details">(with 6 strides (F): 2@3200m, 2@1600m, 2@800m in last 15min)</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">POST:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Strides + Fast Finish</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-a" class="mobility-link">Mobility A</a>
+                                        <a href="mobility-strength.html#strength-a" class="strength-link">Strength A</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="group">
+                        <div class="group-name">White</div>
+                        <div class="workout-section">
+                            <div class="workout-label">PRE:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Foot Drills</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">4 miles easy</div>
+                                <div class="workout-details">(with 6 strides (F): 2@3200m, 2@1600m, 2@800m in last 15min)</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">POST:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Strides + Fast Finish</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-a" class="mobility-link">Mobility A</a>
+                                        <a href="mobility-strength.html#strength-a" class="strength-link">Strength A</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="group">
+                        <div class="group-name">Green</div>
+                        <div class="workout-section">
+                            <div class="workout-label">PRE:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Foot Drills</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">5.5 miles easy</div>
+                                <div class="workout-details">(with 6 strides (F): 2@3200m, 2@1600m, 2@800m in last 15min)</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">POST:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Strides + Fast Finish</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-a" class="mobility-link">Mobility A</a>
+                                        <a href="mobility-strength.html#strength-a" class="strength-link">Strength A</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="group">
+                        <div class="group-name">Gold</div>
+                        <div class="workout-section">
+                            <div class="workout-label">PRE:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Foot Drills</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">9 miles easy</div>
+                                <div class="workout-details">(with 6 strides (F): 2@3200m, 2@1600m, 2@800m in last 15min)</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">POST:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Strides + Fast Finish</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-a" class="mobility-link">Mobility A</a>
+                                        <a href="mobility-strength.html#strength-a" class="strength-link">Strength A</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- WEDNESDAY - FARTLEK -->
+            <div class="day-section mandatory-practice">
+                <div class="day-header">
+                    <div class="day-title">WEDNESDAY, JULY 16</div>
+                </div>
+                
+                <div class="groups-container">
+                    <div class="group">
+                        <div class="group-name">Freshman</div>
+                        <div class="workout-section">
+                            <div class="workout-label">PRE:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Dynamic Warmup + 3 buildups</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">FARTLEK #4</div>
+                                <div class="workout-details">1mi warmup → 4 x [1min on/4min steady] → 1mi cooldown<br><strong>Total: ~4.5 miles</strong></div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">POST:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">4-6 strides @ 5k</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-b" class="mobility-link">Mobility B</a>
+                                        <a href="mobility-strength.html#strength-b" class="strength-link">Strength B</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="group">
+                        <div class="group-name">White</div>
+                        <div class="workout-section">
+                            <div class="workout-label">PRE:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Dynamic Warmup + 3 buildups</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">FARTLEK #4</div>
+                                <div class="workout-details">2mi warmup → 5 x [1min on/4min steady] → 1mi cooldown<br><strong>Total: ~5.5 miles</strong></div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">POST:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">4-6 strides @ 5k</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-b" class="mobility-link">Mobility B</a>
+                                        <a href="mobility-strength.html#strength-b" class="strength-link">Strength B</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="group">
+                        <div class="group-name">Green</div>
+                        <div class="workout-section">
+                            <div class="workout-label">PRE:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Dynamic Warmup + 3 buildups</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">FARTLEK #4</div>
+                                <div class="workout-details">2mi warmup → 6 x [1min on/4min steady] → 1mi cooldown<br><strong>Total: ~6.5 miles</strong></div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">POST:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">4-6 strides @ 5k</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-b" class="mobility-link">Mobility B</a>
+                                        <a href="mobility-strength.html#strength-b" class="strength-link">Strength B</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="group">
+                        <div class="group-name">Gold</div>
+                        <div class="workout-section">
+                            <div class="workout-label">PRE:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">2mi warmup + 3 buildups</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">FARTLEK</div>
+                                <div class="workout-details">7 x [1min on/4min steady]<br><strong>Total with W/C: ~8 miles</strong></div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">POST:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">1mi cooldown + 4-6 strides @ 5k</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-b" class="mobility-link">Mobility B</a>
+                                        <a href="mobility-strength.html#strength-b" class="strength-link">Strength B</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- THURSDAY - HILL CIRCUITS -->
+            <div class="day-section mandatory-practice">
+                <div class="day-header">
+                    <div class="day-title">THURSDAY, JULY 17</div>
+                </div>
+                
+                <div class="groups-container">
+                    <div class="group">
+                        <div class="group-name">Freshman</div>
+                        <div class="workout-section">
+                            <div class="workout-label">PRE:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Dynamic Warmup + 3 buildups</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">1200M HILL CIRCUIT</div>
+                                <div class="workout-details">1mi warmup → 4 x 1200m hill circuit → 1mi cooldown<br><strong>Total: ~5 miles</strong></div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">POST:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">4-6 strides @ 5k</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-b" class="mobility-link">Mobility B</a>
+                                        <a href="mobility-strength.html#strength-b" class="strength-link">Strength B</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="group">
+                        <div class="group-name">White</div>
+                        <div class="workout-section">
+                            <div class="workout-label">PRE:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Dynamic Warmup + 3 buildups</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">1200M HILL CIRCUIT</div>
+                                <div class="workout-details">2mi warmup → 5 x 1200m hill circuit → 1mi cooldown<br><strong>Total: ~5.5 miles</strong></div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">POST:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">4-6 strides @ 5k</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-b" class="mobility-link">Mobility B</a>
+                                        <a href="mobility-strength.html#strength-b" class="strength-link">Strength B</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="group">
+                        <div class="group-name">Green</div>
+                        <div class="workout-section">
+                            <div class="workout-label">PRE:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Dynamic Warmup + 3 buildups</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">1200M HILL CIRCUIT</div>
+                                <div class="workout-details">2mi warmup → 5 x 1200m hill circuit → 1mi cooldown<br><strong>Total: ~6.5 miles</strong></div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">POST:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">4-6 strides @ 5k</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-b" class="mobility-link">Mobility B</a>
+                                        <a href="mobility-strength.html#strength-b" class="strength-link">Strength B</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="group">
+                        <div class="group-name">Gold</div>
+                        <div class="workout-section">
+                            <div class="workout-label">PRE:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">2mi warmup + 3 buildups</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">1200M HILL CIRCUIT</div>
+                                <div class="workout-details">6 x 1200m hill circuit<br><strong>Total with W/C: ~8 miles</strong></div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">POST:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">1mi cooldown + 4-6 strides @ 5k</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-b" class="mobility-link">Mobility B</a>
+                                        <a href="mobility-strength.html#strength-b" class="strength-link">Strength B</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- FRIDAY -->
+            <div class="day-section mandatory-practice">
+                <div class="day-header">
+                    <div class="day-title">FRIDAY, JULY 18</div>
+                </div>
+                
+                <div class="groups-container">
+                    <div class="group">
+                        <div class="group-name">Freshman</div>
+                        <div class="workout-section">
+                            <div class="workout-label">PRE:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Awesomizer</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">2 miles easy</div>
+                                <div class="workout-details">(with 6 strides (F): 2@3200m, 2@1600m, 2@800m in last 15min)</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">POST:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Strides + Fast Finish</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-a" class="mobility-link">Mobility A</a>
+                                        <a href="mobility-strength.html#strength-a" class="strength-link">Strength A</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="group">
+                        <div class="group-name">White</div>
+                        <div class="workout-section">
+                            <div class="workout-label">PRE:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Awesomizer</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">4 miles easy</div>
+                                <div class="workout-details">(with 6 strides (F): 2@3200m, 2@1600m, 2@800m in last 15min)</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">POST:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Strides + Fast Finish</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-a" class="mobility-link">Mobility A</a>
+                                        <a href="mobility-strength.html#strength-a" class="strength-link">Strength A</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="group">
+                        <div class="group-name">Green</div>
+                        <div class="workout-section">
+                            <div class="workout-label">PRE:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Awesomizer</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">5 miles easy</div>
+                                <div class="workout-details">(with 6 strides (F): 2@3200m, 2@1600m, 2@800m in last 15min)</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">POST:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Strides + Fast Finish</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-a" class="mobility-link">Mobility A</a>
+                                        <a href="mobility-strength.html#strength-a" class="strength-link">Strength A</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="group">
+                        <div class="group-name">Gold</div>
+                        <div class="workout-section">
+                            <div class="workout-label">PRE:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Awesomizer</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">6 miles easy</div>
+                                <div class="workout-details">(with 6 strides (F): 2@3200m, 2@1600m, 2@800m in last 15min)</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">POST:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Strides + Fast Finish</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-a" class="mobility-link">Mobility A</a>
+                                        <a href="mobility-strength.html#strength-a" class="strength-link">Strength A</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SATURDAY - LONG RUNS -->
+            <div class="day-section mandatory-practice">
+                <div class="day-header">
+                    <div class="day-title">SATURDAY, JULY 19</div>
+                </div>
+                
+                <div class="groups-container">
+                    <div class="group">
+                        <div class="group-name">Freshman</div>
+                        <div class="workout-section">
+                            <div class="workout-label">PRE:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Warmup B + Race Day Dynamic</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">LONG RUN: 4.5 miles easy</div>
+                                <div class="workout-details">(with 6 strides (F): 2@3200m, 2@1600m, 2@800m in last 20min)</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">POST:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Strides + Fartlek Cooldown</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-b" class="mobility-link">Mobility B</a>
+                                        <a href="mobility-strength.html#strength-b" class="strength-link">Strength B</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="group">
+                        <div class="group-name">White</div>
+                        <div class="workout-section">
+                            <div class="workout-label">PRE:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Warmup B + Race Day Dynamic</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">LONG RUN: 8 miles easy</div>
+                                <div class="workout-details">(with 6 strides (F): 2@3200m, 2@1600m, 2@800m in last 20min)</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">POST:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Strides + Fartlek Cooldown</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-b" class="mobility-link">Mobility B</a>
+                                        <a href="mobility-strength.html#strength-b" class="strength-link">Strength B</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="group">
+                        <div class="group-name">Green</div>
+                        <div class="workout-section">
+                            <div class="workout-label">PRE:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Warmup B + Race Day Dynamic</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">LONG RUN: 9.5 miles easy</div>
+                                <div class="workout-details">(with 6 strides (F): 2@3200m, 2@1600m, 2@800m in last 20min)</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">POST:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Strides + Fartlek Cooldown</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-b" class="mobility-link">Mobility B</a>
+                                        <a href="mobility-strength.html#strength-b" class="strength-link">Strength B</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="group">
+                        <div class="group-name">Gold</div>
+                        <div class="workout-section">
+                            <div class="workout-label">PRE:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Warmup B + Race Day Dynamic</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">LONG RUN: 11 miles easy</div>
+                                <div class="workout-details">(with 6 strides (F): 2@3200m, 2@1600m, 2@800m in last 20min)</div>
+                            </div>
+                        </div>
+                        <div class="workout-section">
+                            <div class="workout-label">POST:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">Strides + Fartlek Cooldown</div>
+                                <div class="workout-details">
+                                    <div class="post-workout-links">
+                                        <a href="mobility-strength.html#mobility-b" class="mobility-link">Mobility B</a>
+                                        <a href="mobility-strength.html#strength-b" class="strength-link">Strength B</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SUNDAY -->
+            <div class="day-section mandatory-practice">
+                <div class="day-header">
+                    <div class="day-title">SUNDAY, JULY 20</div>
+                </div>
+                <div class="groups-container">
+                    <div class="group">
+                        <div class="group-name">All Groups</div>
+                        <div class="workout-section">
+                            <div class="workout-label">RUN:</div>
+                            <div class="workout-content">
+                                <div class="workout-main">REST DAY</div>
+                                <div class="workout-details">Mobility for Recovery + Therapy Bundles (as assigned)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- WEEKLY TOTALS -->
+            <div class="totals-section">
+                <div class="totals-title">WEEK 8 MILEAGE TOTALS - SUMMER PEAK BEGINS</div>
+                <div class="totals-grid">
+                    <div class="total-item">
+                        <div class="total-group">FRESHMAN</div>
+                        <div class="total-miles">20 miles</div>
+                    </div>
+                    <div class="total-item">
+                        <div class="total-group">WHITE</div>
+                        <div class="total-miles">32 miles</div>
+                    </div>
+                    <div class="total-item">
+                        <div class="total-group">GREEN</div>
+                        <div class="total-miles">40 miles</div>
+                    </div>
+                    <div class="total-item">
+                        <div class="total-group">GOLD</div>
+                        <div class="total-miles">51 miles</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TRAINING NOTES -->
+            <div class="notes-section">
+                <div class="notes-title">WEEK 8 TRAINING NOTES - SUMMER PEAK PHASE</div>
+                <div class="notes-content">
+                    <ul>
+                        <li><strong>Mandatory Practice Begins:</strong> July 14 marks the transition from voluntary to required daily practice. Coaching supervision resumes.</li>
+                        <li><strong>Summer Peak Phase:</strong> Volume increases significantly across all groups as we build toward peak summer fitness before racing begins.</li>
+                        <li><strong>Hill Circuit Introduction:</strong> Thursday introduces 1200m hill circuits to build strength and power. Freshman: 4 circuits, White/Green: 5, Gold: 6.</li>
+                        <li><strong>Stride Progression (F):</strong> 6 x 20s @ 2@3200m, 2@1600m, 2@slower 800m effort. Option to transition into spikes for faster strides.</li>
+                        <li><strong>Fartlek Structure:</strong> Wednesday fartlek - Freshman: 4 reps, White: 5, Green: 6, Gold: 7 x [1min on/4min steady].</li>
+                        <li><strong>Volume Increases:</strong> Freshman: 20mi (+2), White: 32mi (+2), Green: 40mi (+2), Gold: 51mi (+3 from Week 7).</li>
+                        <li><strong>Freshman Adjustments:</strong> Reduced warmup/cooldown for structured workouts (1mi each) to manage total volume appropriately.</li>
+                        <li><strong>Recovery Emphasis:</strong> Friday remains the shortest day. Sunday introduces therapy bundles for targeted recovery work.</li>
+                        <li><strong>Workout Structure:</strong> Tuesday easy runs, Wednesday fartlek, Thursday hills, Saturday long runs with race-day dynamics.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
