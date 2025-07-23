@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STX XC Movement & Warmup Reference</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            padding: 10px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c5530, #4a7c59);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .back-link {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 15px;
+            transition: background 0.3s ease;
+        }
+        
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .nav-section {
+            background: #f1f3f4;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .nav-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2c5530;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .nav-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            text-decoration: none;
+            color: #2c5530;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .nav-item:hover {
+            background: #2c5530;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .routine-section {
+            margin-bottom: 40px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .routine-header {
+            background: #f1f3f4;
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .routine-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2c5530;
+            margin-bottom: 8px;
+        }
+        
+        .routine-description {
+            font-size: 1rem;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .routine-content {
+            padding: 25px;
+        }
+        
+        .movement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .movement-item {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #4a7c59;
+        }
+        
+        .movement-name {
+            font-weight: 700;
+            color: #2c5530;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .movement-steps {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .movement-purpose {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-style: italic;
+            font-size: 0.9rem;
+            color: #495057;
+        }
+        
+        .barefoot-notice {
+            background: #d4edda;
+            border: 2px solid #28a745;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .barefoot-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #155724;
+            margin-bottom: 10px;
+        }
+        
+        .barefoot-text {
+            color: #155724;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        .sequence-info {
+            background: #e8f5e8;
+            border: 1px solid #28a745;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        
+        .sequence-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #155724;
+            margin-bottom: 15px;
+        }
+        
+        .sequence-content {
+            color: #155724;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .foot-drills { border-left-color: #ffc107; }
+        .foot-drills .routine-header { background: #fff3cd; }
+        .foot-drills .routine-title { color: #856404; }
+        
+        .awesomizer { border-left-color: #17a2b8; }
+        .awesomizer .routine-header { background: #d1ecf1; }
+        .awesomizer .routine-title { color: #0c5460; }
+        
+        .race-day { border-left-color: #dc3545; }
+        .race-day .routine-header { background: #f8d7da; }
+        .race-day .routine-title { color: #721c24; }
+        
+        .dynamics { border-left-color: #6f42c1; }
+        .dynamics .routine-header { background: #e2d9f3; }
+        .dynamics .routine-title { color: #493267; }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+            
+            .header {
+                padding: 20px 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.6rem;
+            }
+            
+            .content {
+                padding: 20px 15px;
+            }
+            
+            .movement-grid, .nav-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="javascript:history.back()" class="back-link">← Back to Training</a>
+            <h1>🏃‍♂️ MOVEMENT & WARMUP REFERENCE</h1>
+            <p>Complete guide to foot drills, dynamics, and race day preparation</p>
+        </div>
+        
+        <div class="content">
+            
+            <!-- NAVIGATION -->
+            <div class="nav-section">
+                <div class="nav-title">Quick Navigation</div>
+                <div class="nav-grid">
+                    <a href="#foot-drills" class="nav-item">🦶 Foot Drills</a>
+                    <a href="#awesomizer" class="nav-item">⚡ Awesomizer</a>
+                    <a href="#race-day-warmup" class="nav-item">🏁 Race Day Warmup</a>
+                    <a href="#dynamics" class="nav-item">🔥 Dynamic Movements</a>
+                </div>
+            </div>
+            
+            <!-- FOOT DRILLS -->
+            <div id="foot-drills" class="routine-section foot-drills">
+                <div class="routine-header">
+                    <div class="routine-title">Barefoot Foot Drills</div>
+                    <div class="routine-description">4-6 minutes • Proprioception and foot strength development</div>
+                </div>
+                <div class="routine-content">
+                    <div class="barefoot-notice">
+                        <div class="barefoot-title">🌱 BAREFOOT ON GRASS/TURF ONLY</div>
+                        <div class="barefoot-text">
+                            <strong>Important:</strong> These drills must be performed barefoot on grass or artificial turf. 
+                            Remove shoes and socks to maximize sensory feedback and strengthen intrinsic foot muscles.
+                        </div>
+                    </div>
+                    
+                    <div class="movement-grid">
+                        <div class="movement-item">
+                            <div class="movement-name">1. Forward Walk</div>
+                            <div class="movement-steps">
+                                • Normal walking gait pattern<br>
+                                • Focus on heel-to-toe contact<br>
+                                • Feel each part of foot touching ground<br>
+                                • Maintain natural stride length
+                            </div>
+                            <div class="movement-purpose">
+                                <strong>Purpose:</strong> Baseline proprioception and natural gait awareness
+                            </div>
+                        </div>
+                        
+                        <div class="movement-item">
+                            <div class="movement-name">2. Backwards Walk</div>
+                            <div class="movement-steps">
+                                • Walk in reverse direction<br>
+                                • Lead with toes/forefoot contact<br>
+                                • Maintain balance and control<br>
+                                • Keep steps small and deliberate
+                            </div>
+                            <div class="movement-purpose">
+                                <strong>Purpose:</strong> Calf and achilles activation, balance challenge
+                            </div>
+                        </div>
+                        
+                        <div class="movement-item">
+                            <div class="movement-name">3. Toes In Walk</div>
+                            <div class="movement-steps">
+                                • Turn toes inward (pigeon-toed)<br>
+                                • Walk with internal foot rotation<br>
+                                • Focus on outer edge foot contact<br>
+                                • Maintain upright posture
+                            </div>
+                            <div class="movement-purpose">
+                                <strong>Purpose:</strong> Lateral foot muscle activation, arch strengthening
+                            </div>
+                        </div>
+                        
+                        <div class="movement-item">
+                            <div class="movement-name">4. Toes Out Walk</div>
+                            <div class="movement-steps">
+                                • Turn toes outward (duck-footed)<br>
+                                • Walk with external foot rotation<br>
+                                • Emphasize inner edge contact<br>
+                                • Slightly wider stance
+                            </div>
+                            <div class="movement-purpose">
+                                <strong>Purpose:</strong> Medial foot muscle activation, hip mobility
+                            </div>
+                        </div>
+                        
+                        <div class="movement-item">
+                            <div class="movement-name">5. Outside of Foot Walk</div>
+                            <div class="movement-steps">
+                                • Walk on lateral edge of feet<br>
+                                • Keep toes lifted off ground<br>
+                                • Roll along outside border<br>
+                                • Maintain balance without wobbling
+                            </div>
+                            <div class="movement-purpose">
+                                <strong>Purpose:</strong> Lateral stability, peroneals strengthening
+                            </div>
+                        </div>
+                        
+                        <div class="movement-item">
+                            <div class="movement-name">6. Inside of Foot Walk</div>
+                            <div class="movement-steps">
+                                • Walk on medial edge of feet<br>
+                                • Keep outside of foot lifted<br>
+                                • Roll along inner border<br>
+                                • Engage arch muscles actively
+                            </div>
+                            <div class="movement-purpose">
+                                <strong>Purpose:</strong> Medial stability, arch strengthening
+                            </div>
+                        </div>
+                        
+                        <div class="movement-item">
+                            <div class="movement-name">7. Heel Walk</div>
+                            <div class="movement-steps">
+                                • Walk only on heels<br>
+                                • Keep toes lifted off ground<br>
+                                • Maintain upright posture<br>
+                                • Take shorter, controlled steps
+                            </div>
+                            <div class="movement-purpose">
+                                <strong>Purpose:</strong> Dorsiflexor strengthening, shin muscle activation
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="sequence-info">
+                        <div class="sequence-title">📋 Execution Guidelines</div>
+                        <div class="sequence-content">
+                            <strong>Duration:</strong> 4-6 minutes total<br>
+                            <strong>Distance:</strong> 15-20 meters per drill<br>
+                            <strong>Order:</strong> Perform all 7 drills in sequence<br>
+                            <strong>Pace:</strong> Slow and controlled - focus on quality<br>
+                            <strong>Frequency:</strong> Before easy runs and most workouts
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- AWESOMIZER -->
+            <div id="awesomizer" class="routine-section awesomizer">
+                <div class="routine-header">
+                    <div class="routine-title">The Awesomizer</div>
+                    <div class="routine-description">4-step movement sequence • Running form improvement and screening tool</div>
+                </div>
+                <div class="routine-content">
+                    <div class="sequence-info">
+                        <div class="sequence-title">🎯 Core Principle</div>
+                        <div class="sequence-content">
+                            <strong>Always "turn first, then step"</strong> - Face the direction of the leg you're stepping up with to maintain proper alignment and prevent hip drops.<br><br>
+                            <strong>Equipment Needed:</strong> A surface at knee-to-hand height (doesn't need to be exact)
+                        </div>
+                    </div>
+                    
+                    <div class="movement-grid">
+                        <div class="movement-item">
+                            <div class="movement-name">Step 1: Hip Flexor Stretch & Hamstring Release</div>
+                            <div class="movement-steps">
+                                • Step up onto surface after turning toward stepping leg<br>
+                                • Alternate between hip flexor stretch and hamstring release positions<br>
+                                • Keep upper body rotated relative to lower body<br>
+                                • Focus on "bones not muscle" - heel down, relaxed standing leg<br>
+                                • Maintain upright posture, avoid leaning forward<br>
+                                • <strong>Reps:</strong> 8-10 each side
+                            </div>
+                            <div class="movement-purpose">
+                                <strong>Purpose:</strong> Address hip flexibility and alignment
+                            </div>
+                        </div>
+                        
+                        <div class="movement-item">
+                            <div class="movement-name">Step 2: Deep Hip Rotator Stretch</div>
+                            <div class="movement-steps">
+                                • One hand on knee to maintain alignment, other hand on hip<br>
+                                • Open and rotate the hip while keeping knee stable and pointing outward<br>
+                                • Turn as much as possible from the pelvis while upper body stays fixed<br>
+                                • Creates big hip opening and stretches peroneal muscles<br>
+                                • Excellent for glute max activation and small internal hip muscles<br>
+                                • <strong>Reps:</strong> 6-8 each side
+                            </div>
+                            <div class="movement-purpose">
+                                <strong>Purpose:</strong> Target deep hip muscles, piriformis syndrome, and nerve entrapments
+                            </div>
+                        </div>
+                        
+                        <div class="movement-item">
+                            <div class="movement-name">Step 3: Forefoot Activation</div>
+                            <div class="movement-steps">
+                                • Travel forward on the standing leg until heel naturally lifts<br>
+                                • Allow heel to "pull" you onto forefoot passively - don't actively calf raise<br>
+                                • Keep toes soft and relaxed throughout the movement<br>
+                                • Movement should be totally passive, focusing on forward travel<br>
+                                • <strong>Reps:</strong> About 8 each side
+                            </div>
+                            <div class="movement-purpose">
+                                <strong>Purpose:</strong> Mimic proper foot mechanics in running
+                            </div>
+                        </div>
+                        
+                        <div class="movement-item">
+                            <div class="movement-name">Step 4: Upper Body Integration</div>
+                            <div class="movement-steps">
+                                • Link fingers and hold arms at 45° angle<br>
+                                • Practice head over foot positioning by letting head drop toward ground<br>
+                                • Focus on ear toward ground, not neck shifting across<br>
+                                • Creates connection between shoulder blade and opposite glute<br>
+                                • Provides big fascial stretch and balance challenge<br>
+                                • <strong>Hold and breathe</strong> in each position
+                            </div>
+                            <div class="movement-purpose">
+                                <strong>Purpose:</strong> Develop "head over foot" positioning and fascial connection
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="sequence-info">
+                        <div class="sequence-title">💪 Benefits</div>
+                        <div class="sequence-content">
+                            • Improves hip height and prevents hip drops<br>
+                            • Enhances balance and proprioception<br>
+                            • Releases tight fascia throughout the body<br>
+                            • Activates deep stabilizing muscles<br>
+                            • Integrates upper and lower body movement patterns<br>
+                            • Addresses common issues from sitting and cycling
+                        </div>
+                    </div>
+                    
+                    <div class="sequence-info">
+                        <div class="sequence-title">📋 Recommended Practice</div>
+                        <div class="sequence-content">
+                            • Perform daily, ideally in the morning<br>
+                            • Great screening tool for identifying running form issues<br>
+                            • Helps translate better movement patterns into actual running<br>
+                            • Can be used both as warmup and movement assessment
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- RACE DAY WARMUP -->
+            <div id="race-day-warmup" class="routine-section race-day">
+                <div class="routine-header">
+                    <div class="routine-title">Race Day Warmup</div>
+                    <div class="routine-description">15-20 minutes • Complete pre-competition preparation</div>
+                </div>
+                <div class="routine-content">
+                    <div class="sequence-info">
+                        <div class="sequence-title">📋 Race Day Structure</div>
+                        <div class="sequence-content">
+                            <strong>Phase 1:</strong> 1 mile (10 minutes) easy warmup<br>
+                            <strong>Phase 2:</strong> Dynamic movements (5-8 minutes)<br>
+                            <strong>Phase 3:</strong> 4-6 strides @ 5k and faster<br>
+                            <strong>Phase 4:</strong> 3 x 50m buildups to 75%+<br>
+                            <strong>Total Time:</strong> 15-20 minutes before race start
+                        </div>
+                    </div>
+                    
+                    <div class="movement-grid">
+                        <div class="movement-item">
+                            <div class="movement-name">Phase 1: Easy Warmup</div>
+                            <div class="movement-steps">
+                                • 1 mile (10 minutes) easy jogging<br>
+                                • Gradual pace increase<br>
+                                • Focus on relaxation<br>
+                                • Begin mental preparation
+                            </div>
+                            <div class="movement-purpose">
+                                <strong>Purpose:</strong> Increase core temperature and prepare systems
+                            </div>
+                        </div>
+                        
+                        <div class="movement-item">
+                            <div class="movement-name">Phase 2: Dynamic Movements (In Order)</div>
+                            <div class="movement-steps">
+                                1. Step-Pull-Lean/Superquad/Quick Out<br>
+                                2. High Kick / Scoops / Quick Out<br>
+                                3. A Skip to Forefoot / Quick Out<br>
+                                4. B Skip to Claw Step / Quick Out<br>
+                                5. High Knees to Fast Feet / Quick Out<br>
+                                6. Butt Kick to Fast Feet / Quick Out<br>
+                                7. Carioca / Turn Half Way<br>
+                                8. Back Pedal<br>
+                                • 15-20 meters each exercise<br>
+                                • Walk back recovery between exercises<br>
+                                • Progressive intensity throughout sequence
+                            </div>
+                            <div class="movement-purpose">
+                                <strong>Purpose:</strong> Activate movement patterns and range of motion for racing
+                            </div>
+                        </div>
+                        
+                        <div class="movement-item">
+                            <div class="movement-name">Phase 3: Strides</div>
+                            <div class="movement-steps">
+                                • 4-6 x 80-100m strides<br>
+                                • @ 5k effort and faster<br>
+                                • Full recovery between<br>
+                                • Focus on smooth acceleration
+                            </div>
+                            <div class="movement-purpose">
+                                <strong>Purpose:</strong> Prime neuromuscular system for race pace
+                            </div>
+                        </div>
+                        
+                        <div class="movement-item">
+                            <div class="movement-name">Phase 4: Buildups</div>
+                            <div class="movement-steps">
+                                • 3 x 50m buildups<br>
+                                • Build to 75%+ effort<br>
+                                • 2-3 minutes before race<br>
+                                • Final race preparation
+                            </div>
+                            <div class="movement-purpose">
+                                <strong>Purpose:</strong> Final system activation and confidence
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- DYNAMIC MOVEMENTS -->
+            <div id="dynamics" class="routine-section dynamics">
+                <div class="routine-header">
+                    <div class="routine-title">Dynamic Movement Sequence</div>
+                    <div class="routine-description">5-8 minutes • Movement preparation for regular training days</div>
+                </div>
+                <div class="routine-content">
+                    <div class="sequence-info">
+                        <div class="sequence-title">📋 Training Day Dynamics (In Order)</div>
+                        <div class="sequence-content">
+                            <strong>Usage:</strong> Regular training days (Monday, Wednesday, Thursday)<br>
+                            <strong>Distance:</strong> 15-20 meters each exercise<br>
+                            <strong>Recovery:</strong> Walk back between exercises<br>
+                            <strong>Note:</strong> Different sequence from Race Day Warmup
+                        </div>
+                    </div>
+                    
+                    <div class="movement-grid">
+                        <div class="movement-item">
+                            <div class="movement-name">1. Backwards Bergers / Duck Walk</div>
+                            <div class="movement-steps">
+                                • Deep squat position<br>
+                                • Walk backwards in squat<br>
+                                • Keep chest up<br>
+                                • Maintain squat depth throughout<br>
+                                • 15-20 meters
+                            </div>
+                            <div class="movement-purpose">
+                                <strong>Purpose:</strong> Glute activation and hip mobility
+                            </div>
+                        </div>
+                        
+                        <div class="movement-item">
+                            <div class="movement-name">2. Lunge w/ Twist / Reverse Lunge</div>
+                            <div class="movement-steps">
+                                • Forward lunge with torso rotation<br>
+                                • Step back to reverse lunge<br>
+                                • Alternate sides<br>
+                                • Deep range of motion<br>
+                                • 15-20 meters
+                            </div>
+                            <div class="movement-purpose">
+                                <strong>Purpose:</strong> Multi-planar hip mobility and core activation
+                            </div>
+                        </div>
+                        
+                        <div class="movement-item">
+                            <div class="movement-name">3. Lateral Lunge / Willies</div>
+                            <div class="movement-steps">
+                                • Step wide to side lunge<br>
+                                • Shift weight side to side<br>
+                                • "Willie" bounce in position<br>
+                                • Return to center<br>
+                                • 15-20 meters
+                            </div>
+                            <div class="movement-purpose">
+                                <strong>Purpose:</strong> Lateral hip mobility and adductor flexibility
+                            </div>
+                        </div>
+                        
+                        <div class="movement-item">
+                            <div class="movement-name">4. Step-Pull-Lean/Superquad/Quick Out</div>
+                            <div class="movement-steps">
+                                • Step forward, pull heel to glute<br>
+                                • Lean forward, quick step out<br>
+                                • 15-20 meters<br>
+                                • Focus on hip flexor stretch
+                            </div>
+                            <div class="movement-purpose">
+                                <strong>Purpose:</strong> Hip flexor mobility and quad activation
+                            </div>
+                        </div>
+                        
+                        <div class="movement-item">
+                            <div class="movement-name">5. High Kick / Scoops / Quick Out</div>
+                            <div class="movement-steps">
+                                • Straight leg kicks to chest level<br>
+                                • "Scoop" motion with leg<br>
+                                • Quick step out after each kick<br>
+                                • Alternate legs<br>
+                                • 15-20 meters
+                            </div>
+                            <div class="movement-purpose">
+                                <strong>Purpose:</strong> Hamstring flexibility and hip mobility
+                            </div>
+                        </div>
+                        
+                        <div class="movement-item">
+                            <div class="movement-name">6. A Skip to Forefoot / Quick Out</div>
+                            <div class="movement-steps">
+                                • High knee marching motion<br>
+                                • Land on forefoot<br>
+                                • Quick step out after landing<br>
+                                • Focus on posture<br>
+                                • 15-20 meters
+                            </div>
+                            <div class="movement-purpose">
+                                <strong>Purpose:</strong> Running mechanics and forefoot striking
+                            </div>
+                        </div>
+                        
+                        <div class="movement-item">
+                            <div class="movement-name">7. B Skip to Claw Step / Quick Out</div>
+                            <div class="movement-steps">
+                                • A Skip + forward leg extension<br>
+                                • "Claw" foot back down<br>
+                                • Quick step out<br>
+                                • Simulate running motion<br>
+                                • 15-20 meters
+                            </div>
+                            <div class="movement-purpose">
+                                <strong>Purpose:</strong> Running mechanics and hamstring activation
+                            </div>
+                        </div>
+                        
+                        <div class="movement-item">
+                            <div class="movement-name">8. High Knees to Fast Feet / Quick Out</div>
+                            <div class="movement-steps">
+                                • High knee marching<br>
+                                • Transition to fast feet<br>
+                                • Quick step out<br>
+                                • Maintain forward lean<br>
+                                • 15-20 meters
+                            </div>
+                            <div class="movement-purpose">
+                                <strong>Purpose:</strong> Cadence and leg turnover preparation
+                            </div>
+                        </div>
+                        
+                        <div class="movement-item">
+                            <div class="movement-name">9. Butt Kick to Fast Feet / Quick Out</div>
+                            <div class="movement-steps">
+                                • Heels to glutes<br>
+                                • Transition to fast feet<br>
+                                • Quick step out<br>
+                                • Focus on recovery mechanics<br>
+                                • 15-20 meters
+                            </div>
+                            <div class="movement-purpose">
+                                <strong>Purpose:</strong> Recovery phase mechanics and turnover
+                            </div>
+                        </div>
+                        
+                        <div class="movement-item">
+                            <div class="movement-name">10. Carioca / Turn Half Way</div>
+                            <div class="movement-steps">
+                                • Side-stepping crossover pattern<br>
+                                • Turn around at halfway point<br>
+                                • Face both directions<br>
+                                • Maintain rhythm<br>
+                                • 15-20 meters
+                            </div>
+                            <div class="movement-purpose">
+                                <strong>Purpose:</strong> Hip mobility and lateral movement patterns
+                            </div>
+                        </div>
+                        
+                        <div class="movement-item">
+                            <div class="movement-name">11. Back Pedal</div>
+                            <div class="movement-steps">
+                                • Run backwards<br>
+                                • Stay on balls of feet<br>
+                                • Maintain posture<br>
+                                • Control the movement<br>
+                                • 15-20 meters
+                            </div>
+                            <div class="movement-purpose">
+                                <strong>Purpose:</strong> Posterior chain activation and balance
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
