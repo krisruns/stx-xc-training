@@ -352,8 +352,8 @@
                         </ul>
                     </a>
                     
-                    <a href="week34.html" class="week-card current-week">
-                        <div class="week-number">Week 34 <span class="current-badge">CURRENT</span></div>
+                    <a href="week34.html" class="week-card">
+                        <div class="week-number">Week 34</div>
                         <div class="week-dates">January 12 - January 18</div>
                         <ul class="week-highlights">
                             <li>Indoor competition prep</li>
@@ -811,6 +811,59 @@
                 }, 400);
             }
         }
+        
+        // Automatically highlight current week based on date
+        function setCurrentWeek() {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            // Get all week cards
+            const weekCards = document.querySelectorAll('.week-card');
+            
+            weekCards.forEach(card => {
+                const dateText = card.querySelector('.week-dates');
+                if (!dateText) return;
+                
+                // Parse date range (e.g., "January 5 - January 11")
+                const dateRange = dateText.textContent.trim();
+                const parts = dateRange.split(' - ');
+                
+                if (parts.length === 2) {
+                    // Helper function to assign correct year based on month
+                    function assignYear(dateStr) {
+                        const tempDate = new Date(dateStr + ', 2025');
+                        const month = tempDate.getMonth(); // 0-11
+                        
+                        // May (4) through December (11) = 2025
+                        // January (0) through April (3) = 2026
+                        if (month >= 4) {
+                            return new Date(dateStr + ', 2025');
+                        } else {
+                            return new Date(dateStr + ', 2026');
+                        }
+                    }
+                    
+                    // Parse start and end dates with correct years
+                    const startDate = assignYear(parts[0].trim());
+                    const endDate = assignYear(parts[1].trim());
+                    
+                    // Check if today falls within this week
+                    if (today >= startDate && today <= endDate) {
+                        // Add current week styling
+                        card.classList.add('current-week');
+                        
+                        // Add CURRENT badge to week number
+                        const weekNumber = card.querySelector('.week-number');
+                        if (weekNumber && !weekNumber.querySelector('.current-badge')) {
+                            weekNumber.innerHTML += ' <span class="current-badge">CURRENT</span>';
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Run on page load
+        document.addEventListener('DOMContentLoaded', setCurrentWeek);
     </script>
 </body>
 </html>
