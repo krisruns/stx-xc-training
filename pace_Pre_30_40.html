@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STX XC - Pre 30/40 Pace Chart</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            padding: 10px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.8em;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .search-container {
+            padding: 15px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ced4da;
+            border-radius: 8px;
+            transition: border-color 0.3s;
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: #2a5298;
+        }
+
+        .instructions {
+            padding: 15px;
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            margin: 15px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            padding: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        thead {
+            background: #2a5298;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        th {
+            padding: 12px 8px;
+            text-align: center;
+            font-weight: 600;
+            border-right: 1px solid rgba(255,255,255,0.2);
+        }
+
+        th:last-child {
+            border-right: none;
+        }
+
+        .section-header {
+            background: #1e3c72;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #dee2e6;
+            transition: background-color 0.2s;
+        }
+
+        tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        tbody tr:nth-child(even):hover {
+            background-color: #e9ecef;
+        }
+
+        td {
+            padding: 10px 8px;
+            text-align: center;
+            border-right: 1px solid #dee2e6;
+        }
+
+        td:last-child {
+            border-right: none;
+        }
+
+        .race-time {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .pace-data {
+            color: #dc3545;
+            font-weight: 700;
+            font-size: 1.05em;
+        }
+
+        .no-results {
+            padding: 40px;
+            text-align: center;
+            color: #6c757d;
+            font-size: 1.1em;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+
+            h1 {
+                font-size: 1.4em;
+            }
+
+            .subtitle {
+                font-size: 0.85em;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 8px 4px;
+            }
+
+            .instructions {
+                font-size: 0.85em;
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            table {
+                font-size: 11px;
+            }
+
+            th, td {
+                padding: 6px 3px;
+            }
+
+            h1 {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏃 Pre 30/40 Pace Chart</h1>
+            <div class="subtitle">St. Xavier Track & Cross Country</div>
+        </header>
+
+        <div class="instructions">
+            <strong>📱 How to use:</strong> Enter a race time (e.g., "10:30" or "5:15") to find the closest match. The table will show your pace plus 2 rows above and below for context. Clear the search to see all paces.
+        </div>
+
+        <div class="search-container">
+            <input 
+                type="text" 
+                id="searchInput" 
+                placeholder="🔍 Search by 2-Mile, Mile, or 800m time..."
+                autocomplete="off"
+            >
+        </div>
+
+        <div class="table-container">
+            <table id="paceTable">
+                <thead>
+                    <tr class="section-header">
+                        <th colspan="3">Race Times</th>
+                        <th colspan="2">Pre 30/40 Paces</th>
+                    </tr>
+                    <tr>
+                        <th>2-Mile</th>
+                        <th>Mile</th>
+                        <th>800m</th>
+                        <th>200m<br>(Rep 1)</th>
+                        <th>200m<br>(Rep 2)</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Data will be inserted here by JavaScript -->
+                </tbody>
+            </table>
+            <div id="noResults" class="no-results" style="display: none;">
+                No matching times found. Try a different search term.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Pace data extracted from Training Paces chart
+        const paceData = [
+            {twomile: "8:31", mile: "3:58", eight: "1:46", pre1: "0:31", pre2: "0:41"},
+            {twomile: "8:37", mile: "4:02", eight: "1:48", pre1: "0:32", pre2: "0:42"},
+            {twomile: "8:43", mile: "4:04", eight: "1:49", pre1: "0:32", pre2: "0:42"},
+            {twomile: "8:49", mile: "4:07", eight: "1:50", pre1: "0:32", pre2: "0:42"},
+            {twomile: "8:55", mile: "4:10", eight: "1:52", pre1: "0:33", pre2: "0:43"},
+            {twomile: "9:02", mile: "4:13", eight: "1:53", pre1: "0:33", pre2: "0:43"},
+            {twomile: "9:09", mile: "4:16", eight: "1:54", pre1: "0:33", pre2: "0:43"},
+            {twomile: "9:16", mile: "4:19", eight: "1:56", pre1: "0:34", pre2: "0:44"},
+            {twomile: "9:23", mile: "4:23", eight: "1:57", pre1: "0:34", pre2: "0:44"},
+            {twomile: "9:30", mile: "4:26", eight: "1:59", pre1: "0:35", pre2: "0:45"},
+            {twomile: "9:37", mile: "4:30", eight: "2:00", pre1: "0:35", pre2: "0:45"},
+            {twomile: "9:45", mile: "4:33", eight: "2:01", pre1: "0:36", pre2: "0:46"},
+            {twomile: "9:53", mile: "4:37", eight: "2:03", pre1: "0:36", pre2: "0:46"},
+            {twomile: "10:01", mile: "4:41", eight: "2:05", pre1: "0:37", pre2: "0:47"},
+            {twomile: "10:10", mile: "4:45", eight: "2:07", pre1: "0:37", pre2: "0:47"},
+            {twomile: "10:18", mile: "4:49", eight: "2:09", pre1: "0:38", pre2: "0:48"},
+            {twomile: "10:27", mile: "4:53", eight: "2:10", pre1: "0:38", pre2: "0:48"},
+            {twomile: "10:37", mile: "4:57", eight: "2:12", pre1: "0:39", pre2: "0:49"},
+            {twomile: "10:46", mile: "5:02", eight: "2:14", pre1: "0:40", pre2: "0:50"},
+            {twomile: "10:56", mile: "5:06", eight: "2:16", pre1: "0:40", pre2: "0:50"},
+            {twomile: "11:06", mile: "5:11", eight: "2:18", pre1: "0:41", pre2: "0:51"},
+            {twomile: "11:17", mile: "5:16", eight: "2:20", pre1: "0:42", pre2: "0:52"},
+            {twomile: "11:28", mile: "5:21", eight: "2:23", pre1: "0:42", pre2: "0:52"},
+            {twomile: "11:39", mile: "5:27", eight: "2:25", pre1: "0:43", pre2: "0:53"},
+            {twomile: "11:50", mile: "5:32", eight: "2:28", pre1: "0:44", pre2: "0:54"},
+            {twomile: "12:02", mile: "5:38", eight: "2:31", pre1: "0:44", pre2: "0:54"},
+            {twomile: "12:15", mile: "5:44", eight: "2:33", pre1: "0:45", pre2: "0:55"},
+            {twomile: "12:28", mile: "5:50", eight: "2:36", pre1: "0:46", pre2: "0:56"},
+            {twomile: "12:41", mile: "5:56", eight: "2:38", pre1: "0:46", pre2: "0:56"},
+            {twomile: "12:55", mile: "6:03", eight: "2:41", pre1: "0:47", pre2: "0:57"},
+            {twomile: "13:10", mile: "6:10", eight: "2:44", pre1: "0:48", pre2: "0:58"},
+            {twomile: "13:25", mile: "6:17", eight: "2:48", pre1: "0:49", pre2: "0:59"},
+            {twomile: "13:40", mile: "6:25", eight: "2:51", pre1: "0:50", pre2: "1:00"},
+            {twomile: "13:56", mile: "6:32", eight: "2:54", pre1: "0:51", pre2: "1:01"},
+            {twomile: "14:13", mile: "6:41", eight: "2:58", pre1: "0:52", pre2: "1:02"},
+            {twomile: "14:31", mile: "6:49", eight: "3:02", pre1: "0:53", pre2: "1:03"},
+            {twomile: "14:49", mile: "6:58", eight: "3:06", pre1: "0:54", pre2: "1:04"},
+            {twomile: "15:08", mile: "7:07", eight: "3:10", pre1: "0:56", pre2: "1:06"},
+            {twomile: "15:29", mile: "7:17", eight: "3:15", pre1: "0:57", pre2: "1:07"},
+            {twomile: "15:49", mile: "7:27", eight: "3:19", pre1: "0:58", pre2: "1:08"},
+            {twomile: "16:11", mile: "7:38", eight: "3:24", pre1: "1:00", pre2: "1:10"},
+            {twomile: "16:34", mile: "7:49", eight: "3:29", pre1: "1:01", pre2: "1:11"},
+            {twomile: "16:58", mile: "8:01", eight: "3:34", pre1: "1:03", pre2: "1:13"},
+            {twomile: "17:24", mile: "8:14", eight: "3:39", pre1: "1:04", pre2: "1:14"},
+            {twomile: "17:50", mile: "8:27", eight: "3:44", pre1: "1:06", pre2: "1:16"},
+            {twomile: "18:18", mile: "8:41", eight: "3:50", pre1: "1:08", pre2: "1:18"},
+            {twomile: "18:48", mile: "8:55", eight: "3:55", pre1: "1:09", pre2: "1:19"},
+            {twomile: "19:19", mile: "9:11", eight: "4:00", pre1: "1:11", pre2: "1:21"}
+        ];
+
+        const tableBody = document.getElementById('tableBody');
+        const searchInput = document.getElementById('searchInput');
+        const noResults = document.getElementById('noResults');
+
+        // Function to render table rows
+        function renderTable(data) {
+            tableBody.innerHTML = '';
+            
+            if (data.length === 0) {
+                tableBody.style.display = 'none';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            tableBody.style.display = '';
+            noResults.style.display = 'none';
+
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="race-time">${row.twomile}</td>
+                    <td class="race-time">${row.mile}</td>
+                    <td class="race-time">${row.eight}</td>
+                    <td class="pace-data">${row.pre1}</td>
+                    <td class="pace-data">${row.pre2}</td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        // Convert time string (M:SS or MM:SS) to total seconds
+        function timeToSeconds(timeStr) {
+            const parts = timeStr.split(':');
+            if (parts.length === 2) {
+                return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+            }
+            return 0;
+        }
+
+        // Function to filter table
+        function filterTable() {
+            const searchTerm = searchInput.value.trim();
+            
+            if (searchTerm === '') {
+                renderTable(paceData);
+                return;
+            }
+
+            // Check if search term looks like a time (contains colon)
+            if (searchTerm.includes(':')) {
+                const searchSeconds = timeToSeconds(searchTerm);
+                
+                if (searchSeconds === 0) {
+                    renderTable([]);
+                    return;
+                }
+
+                // Find closest match by calculating difference for each column
+                let closestRow = null;
+                let smallestDiff = Infinity;
+
+                paceData.forEach(row => {
+                    const twoMileDiff = Math.abs(timeToSeconds(row.twomile) - searchSeconds);
+                    const mileDiff = Math.abs(timeToSeconds(row.mile) - searchSeconds);
+                    const eightDiff = Math.abs(timeToSeconds(row.eight) - searchSeconds);
+                    
+                    const minDiff = Math.min(twoMileDiff, mileDiff, eightDiff);
+                    
+                    if (minDiff < smallestDiff) {
+                        smallestDiff = minDiff;
+                        closestRow = row;
+                    }
+                });
+
+                // Show the closest match plus 2 rows above and below for context
+                if (closestRow) {
+                    const closestIndex = paceData.indexOf(closestRow);
+                    const startIndex = Math.max(0, closestIndex - 2);
+                    const endIndex = Math.min(paceData.length, closestIndex + 3);
+                    const contextRows = paceData.slice(startIndex, endIndex);
+                    renderTable(contextRows);
+                }
+            } else {
+                // Regular text search (partial match)
+                const searchLower = searchTerm.toLowerCase();
+                const filtered = paceData.filter(row => {
+                    return row.twomile.includes(searchLower) || 
+                           row.mile.includes(searchLower) || 
+                           row.eight.includes(searchLower);
+                });
+                renderTable(filtered);
+            }
+        }
+
+        // Event listeners
+        searchInput.addEventListener('input', filterTable);
+
+        // Initial render
+        renderTable(paceData);
+    </script>
+</body>
+</html>
