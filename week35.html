@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STX Training Week 35</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; max-width: 1000px; margin: 20px auto; padding: 0 20px; background: #fafafa; }
+        h1 { color: #2c5530; border-bottom: 3px solid #4a7c59; padding-bottom: 10px; }
+        .subtitle { color: #666; margin-bottom: 20px; }
+        .totals { display: flex; gap: 10px; margin: 20px 0; flex-wrap: wrap; }
+        .total { padding: 15px 20px; background: white; border-radius: 6px; flex: 1; min-width: 140px; text-align: center; cursor: pointer; transition: all 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .total:hover { transform: translateY(-2px); box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+        .total.gold { border-left: 4px solid #DAA520; }
+        .total.gold.active { background: #DAA520; color: white; }
+        .total.green { border-left: 4px solid #4a7c59; }
+        .total.green.active { background: #4a7c59; color: white; }
+        .total.white { border-left: 4px solid #888; }
+        .total.white.active { background: #888; color: white; }
+        .total.freshman { border-left: 4px solid #4169E1; }
+        .total.freshman.active { background: #4169E1; color: white; }
+        .total-label { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+        .total-miles { font-size: 1.8rem; font-weight: 700; }
+        .filters { margin: 20px 0; text-align: center; }
+        .filter-btn { padding: 8px 16px; margin: 0 5px 5px 0; border: 2px solid #4a7c59; background: white; color: #4a7c59; border-radius: 4px; cursor: pointer; font-size: 0.9rem; transition: all 0.2s; }
+        .filter-btn:hover, .filter-btn.active { background: #4a7c59; color: white; }
+        .day { margin: 25px 0; border-radius: 8px; overflow: hidden; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .day-header { background: linear-gradient(135deg, #2c5530 0%, #4a7c59 100%); padding: 15px 20px; color: white; font-size: 1.2rem; font-weight: 700; letter-spacing: 0.5px; }
+        .day-content { padding: 20px; }
+        .status-section { margin-bottom: 25px; }
+        .status-section:last-child { margin-bottom: 0; }
+        .status-title { font-size: 1.1rem; font-weight: 700; color: #2c5530; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #e0e0e0; }
+        .section { margin-bottom: 20px; }
+        .section:last-child { margin-bottom: 0; }
+        .section-label { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: #666; margin-bottom: 10px; letter-spacing: 0.5px; }
+        .workout-item { padding: 10px 15px; margin-bottom: 8px; border-radius: 4px; display: flex; align-items: center; gap: 12px; transition: all 0.2s; }
+        .workout-item:last-child { margin-bottom: 0; }
+        .workout-item.hidden { display: none; }
+        .workout-item.gold { background: #FFF9E6; border-left: 4px solid #DAA520; }
+        .workout-item.green { background: #F0F9F0; border-left: 4px solid #4a7c59; }
+        .workout-item.white { background: #F5F5F5; border-left: 4px solid #888; }
+        .workout-item.freshman { background: #E6F0FF; border-left: 4px solid #4169E1; }
+        .workout-item:hover { transform: translateX(5px); }
+        .group-badge { font-weight: 700; min-width: 80px; font-size: 0.9rem; text-transform: uppercase; }
+        .group-badge.gold { color: #B8860B; }
+        .group-badge.green { color: #2c5530; }
+        .group-badge.white { color: #555; }
+        .group-badge.freshman { color: #1E3A8A; }
+        .workout-desc { flex: 1; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
+        .workout-miles { font-weight: 700; font-size: 1rem; white-space: nowrap; }
+        .info-icon { 
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4a7c59;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .info-icon:hover {
+            background: #2c5530;
+            transform: scale(1.1);
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            overflow-y: auto;
+        }
+        .modal.active { display: flex; align-items: center; justify-content: center; }
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            margin: 20px;
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .modal-close:hover { color: #333; }
+        .modal-content h2 {
+            color: #2c5530;
+            margin: 0 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #4a7c59;
+        }
+        .modal-section {
+            margin-bottom: 20px;
+        }
+        .modal-section h3 {
+            color: #4a7c59;
+            font-size: 1.1rem;
+            margin: 0 0 10px 0;
+        }
+        .modal-section p {
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+        }
+        .key-points {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .key-points li {
+            padding: 8px 0 8px 25px;
+            position: relative;
+            color: #333;
+            line-height: 1.5;
+        }
+        .key-points li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #4a7c59;
+            font-weight: 700;
+        }
+        .pace-chart-link {
+            background: #e8f5e8;
+            border: 2px solid #4a7c59;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .pace-chart-link a {
+            color: #2c5530;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+        .pace-chart-link a:hover {
+            color: #4a7c59;
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .totals { flex-direction: column; }
+            .workout-item { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .workout-miles { align-self: flex-end; }
+            .modal-content { padding: 20px; margin: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <h1>🏃 STX Training - Week 35</h1>
+    <div class="subtitle"><strong>Training Week</strong></div>
+    
+    <div class="totals">
+        <div class="total gold" onclick="filterGroup('Gold')" id="total-Gold">
+            <div class="total-label">Gold</div>
+            <div class="total-miles">49-46</div>
+        </div>
+        <div class="total green" onclick="filterGroup('Green')" id="total-Green">
+            <div class="total-label">Green</div>
+            <div class="total-miles">41-40</div>
+        </div>
+        <div class="total white" onclick="filterGroup('White')" id="total-White">
+            <div class="total-label">White</div>
+            <div class="total-miles">34-32</div>
+        </div>
+        <div class="total freshman" onclick="filterGroup('Freshman')" id="total-Freshman">
+            <div class="total-label">Freshman</div>
+            <div class="total-miles">27.5-27</div>
+        </div>
+    </div>
+    
+    <div class="filters">
+        <button class="filter-btn active" onclick="showAll()">Show All</button>
+        <button class="filter-btn" onclick="filterGroup('Gold')">Gold</button>
+        <button class="filter-btn" onclick="filterGroup('Green')">Green</button>
+        <button class="filter-btn" onclick="filterGroup('White')">White</button>
+        <button class="filter-btn" onclick="filterGroup('Freshman')">Freshman</button>
+    </div>
+    
+    <div class="day">
+        <div class="day-header">MONDAY</div>
+        <div class="day-content">
+                <div class="section">
+                    <div class="section-label">WORKOUT</div>
+                    <div class="workout-item gold" data-group="Gold">
+                        <div class="group-badge gold">Gold</div>
+                        <div class="workout-desc">
+                            <span>8mi easy</span>
+                            <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">8 mi</div>
+                    </div>
+                    <div class="workout-item green" data-group="Green">
+                        <div class="group-badge green">Green</div>
+                        <div class="workout-desc">
+                            <span>7mi easy</span>
+                            <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">7 mi</div>
+                    </div>
+                    <div class="workout-item white" data-group="White">
+                        <div class="group-badge white">White</div>
+                        <div class="workout-desc">
+                            <span>5mi easy</span>
+                            <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">5 mi</div>
+                    </div>
+                    <div class="workout-item freshman" data-group="Freshman">
+                        <div class="group-badge freshman">Freshman</div>
+                        <div class="workout-desc">
+                            <span>4mi easy</span>
+                            <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">4 mi</div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="day">
+        <div class="day-header">TUESDAY</div>
+        <div class="day-content">
+                <div class="section">
+                    <div class="section-label">WORKOUT</div>
+                    <div class="workout-item gold" data-group="Gold">
+                        <div class="group-badge gold">Gold</div>
+                        <div class="workout-desc">
+                            <span>10min WU; Fartlek: 5-4-3-2-1 w/ half recovery; 10min CD + 6x200 CD</span>
+                            <span class="info-icon" onclick="openModal('fartlek-5-4-3-2-1')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">7 mi</div>
+                    </div>
+                    <div class="workout-item green" data-group="Green">
+                        <div class="group-badge green">Green</div>
+                        <div class="workout-desc">
+                            <span>10min WU; Fartlek: 5-4-3-2-1 w/ half recovery; 10min CD + 6x200 CD</span>
+                            <span class="info-icon" onclick="openModal('fartlek-5-4-3-2-1')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">7 mi</div>
+                    </div>
+                    <div class="workout-item white" data-group="White">
+                        <div class="group-badge white">White</div>
+                        <div class="workout-desc">
+                            <span>10min WU; Fartlek: 5-4-3-2-1 w/ half recovery; 10min CD + 4x200 CD</span>
+                            <span class="info-icon" onclick="openModal('fartlek-5-4-3-2-1')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">6 mi</div>
+                    </div>
+                    <div class="workout-item freshman" data-group="Freshman">
+                        <div class="group-badge freshman">Freshman</div>
+                        <div class="workout-desc">
+                            <span>10min WU; Fartlek: 5-4-3-2-1 w/ half recovery; 10min CD + 2x200 CD</span>
+                            <span class="info-icon" onclick="openModal('fartlek-5-4-3-2-1')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">5 mi</div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="day">
+        <div class="day-header">WEDNESDAY</div>
+        <div class="day-content">
+                <div class="section">
+                    <div class="section-label">WORKOUT</div>
+                    <div class="workout-item gold" data-group="Gold">
+                        <div class="group-badge gold">Gold</div>
+                        <div class="workout-desc">
+                            <span>7mi easy</span>
+                            <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">7 mi</div>
+                    </div>
+                    <div class="workout-item green" data-group="Green">
+                        <div class="group-badge green">Green</div>
+                        <div class="workout-desc">
+                            <span>6mi easy</span>
+                            <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">6 mi</div>
+                    </div>
+                    <div class="workout-item white" data-group="White">
+                        <div class="group-badge white">White</div>
+                        <div class="workout-desc">
+                            <span>5mi easy</span>
+                            <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">5 mi</div>
+                    </div>
+                    <div class="workout-item freshman" data-group="Freshman">
+                        <div class="group-badge freshman">Freshman</div>
+                        <div class="workout-desc">
+                            <span>4mi easy</span>
+                            <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">4 mi</div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="day">
+        <div class="day-header">THURSDAY</div>
+        <div class="day-content">
+                <div class="section">
+                    <div class="section-label">WORKOUT</div>
+                    <div class="workout-item gold" data-group="Gold">
+                        <div class="group-badge gold">Gold</div>
+                        <div class="workout-desc">
+                            <span>10min WU; Hills - 35min; 10min CD</span>
+                            <span class="info-icon" onclick="openModal('hills-35')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">7 mi</div>
+                    </div>
+                    <div class="workout-item green" data-group="Green">
+                        <div class="group-badge green">Green</div>
+                        <div class="workout-desc">
+                            <span>10min WU; Hills - 30min; 10min CD</span>
+                            <span class="info-icon" onclick="openModal('hills-30')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">6 mi</div>
+                    </div>
+                    <div class="workout-item white" data-group="White">
+                        <div class="group-badge white">White</div>
+                        <div class="workout-desc">
+                            <span>10min WU; Hills - 25min; 10min CD</span>
+                            <span class="info-icon" onclick="openModal('hills-25')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">5 mi</div>
+                    </div>
+                    <div class="workout-item freshman" data-group="Freshman">
+                        <div class="group-badge freshman">Freshman</div>
+                        <div class="workout-desc">
+                            <span>10min WU; Hills - 20min; 10min CD</span>
+                            <span class="info-icon" onclick="openModal('hills-20')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">4 mi</div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="day">
+        <div class="day-header">FRIDAY</div>
+        <div class="day-content">
+                <div class="section">
+                    <div class="section-label">WORKOUT</div>
+                    <div class="workout-item gold" data-group="Gold">
+                        <div class="group-badge gold">Gold</div>
+                        <div class="workout-desc">
+                            <span>8mi easy</span>
+                            <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">8 mi</div>
+                    </div>
+                    <div class="workout-item green" data-group="Green">
+                        <div class="group-badge green">Green</div>
+                        <div class="workout-desc">
+                            <span>6mi easy</span>
+                            <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">6 mi</div>
+                    </div>
+                    <div class="workout-item white" data-group="White">
+                        <div class="group-badge white">White</div>
+                        <div class="workout-desc">
+                            <span>5mi easy</span>
+                            <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">5 mi</div>
+                    </div>
+                    <div class="workout-item freshman" data-group="Freshman">
+                        <div class="group-badge freshman">Freshman</div>
+                        <div class="workout-desc">
+                            <span>4mi easy</span>
+                            <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">4 mi</div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="day">
+        <div class="day-header">SATURDAY</div>
+        <div class="day-content">
+            <div class="status-section">
+                <div class="status-title">Racers</div>
+                <div class="section">
+                    <div class="section-label">WORKOUT</div>
+                    <div class="workout-item gold" data-group="Gold">
+                        <div class="group-badge gold">Gold</div>
+                        <div class="workout-desc">
+                            <span>5mi easy</span>
+                            <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">5 mi</div>
+                    </div>
+                    <div class="workout-item green" data-group="Green">
+                        <div class="group-badge green">Green</div>
+                        <div class="workout-desc">
+                            <span>4mi easy</span>
+                            <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">4 mi</div>
+                    </div>
+                    <div class="workout-item white" data-group="White">
+                        <div class="group-badge white">White</div>
+                        <div class="workout-desc">
+                            <span>3mi easy</span>
+                            <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">3 mi</div>
+                    </div>
+                    <div class="workout-item freshman" data-group="Freshman">
+                        <div class="group-badge freshman">Freshman</div>
+                        <div class="workout-desc">
+                            <span>3mi easy</span>
+                            <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">3 mi</div>
+                    </div>
+                </div>
+            </div>
+            <div class="status-section">
+                <div class="status-title">Non-Racers</div>
+                <div class="section">
+                    <div class="section-label">WORKOUT</div>
+                    <div class="workout-item gold" data-group="Gold">
+                        <div class="group-badge gold">Gold</div>
+                        <div class="workout-desc">
+                            <span>Long Run 12mi/90min - Progression</span>
+                            <span class="info-icon" onclick="openModal('long-run-progression')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">12 mi</div>
+                    </div>
+                    <div class="workout-item green" data-group="Green">
+                        <div class="group-badge green">Green</div>
+                        <div class="workout-desc">
+                            <span>Long Run 9mi/75min - Progression</span>
+                            <span class="info-icon" onclick="openModal('long-run-progression')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">9 mi</div>
+                    </div>
+                    <div class="workout-item white" data-group="White">
+                        <div class="group-badge white">White</div>
+                        <div class="workout-desc">
+                            <span>Long Run 8mi/65min - Progression</span>
+                            <span class="info-icon" onclick="openModal('long-run-progression')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">8 mi</div>
+                    </div>
+                    <div class="workout-item freshman" data-group="Freshman">
+                        <div class="group-badge freshman">Freshman</div>
+                        <div class="workout-desc">
+                            <span>Long Run 6.5mi/50min - Progression</span>
+                            <span class="info-icon" onclick="openModal('long-run-progression')" title="Click for workout details">i</span>
+                        </div>
+                        <div class="workout-miles">6.5 mi</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="day">
+        <div class="day-header">SUNDAY</div>
+        <div class="day-content">
+            <div class="status-section">
+                <div class="status-title">Racers</div>
+                <div class="section">
+                    <div class="section-label">WORKOUT</div>
+                    <div class="workout-item gold" data-group="Gold">
+                        <div class="group-badge gold">Gold</div>
+                        <div class="workout-desc">
+                            <span>Race</span>
+                            
+                        </div>
+                        <div class="workout-miles">4 mi</div>
+                    </div>
+                    <div class="workout-item green" data-group="Green">
+                        <div class="group-badge green">Green</div>
+                        <div class="workout-desc">
+                            <span>Race</span>
+                            
+                        </div>
+                        <div class="workout-miles">4 mi</div>
+                    </div>
+                    <div class="workout-item white" data-group="White">
+                        <div class="group-badge white">White</div>
+                        <div class="workout-desc">
+                            <span>Race</span>
+                            
+                        </div>
+                        <div class="workout-miles">3 mi</div>
+                    </div>
+                    <div class="workout-item freshman" data-group="Freshman">
+                        <div class="group-badge freshman">Freshman</div>
+                        <div class="workout-desc">
+                            <span>Race</span>
+                            
+                        </div>
+                        <div class="workout-miles">3 mi</div>
+                    </div>
+                </div>
+            </div>
+            <div class="status-section">
+                <div class="status-title">Non-Racers</div>
+                <div class="section">
+                    <div class="section-label">WORKOUT</div>
+                    <div class="workout-item gold" data-group="Gold">
+                        <div class="group-badge gold">Gold</div>
+                        <div class="workout-desc">
+                            <span>REST</span>
+                            
+                        </div>
+                        <div class="workout-miles">REST</div>
+                    </div>
+                    <div class="workout-item green" data-group="Green">
+                        <div class="group-badge green">Green</div>
+                        <div class="workout-desc">
+                            <span>REST</span>
+                            
+                        </div>
+                        <div class="workout-miles">REST</div>
+                    </div>
+                    <div class="workout-item white" data-group="White">
+                        <div class="group-badge white">White</div>
+                        <div class="workout-desc">
+                            <span>REST</span>
+                            
+                        </div>
+                        <div class="workout-miles">REST</div>
+                    </div>
+                    <div class="workout-item freshman" data-group="Freshman">
+                        <div class="group-badge freshman">Freshman</div>
+                        <div class="workout-desc">
+                            <span>REST</span>
+                            
+                        </div>
+                        <div class="workout-miles">REST</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-long-run-progression" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('long-run-progression')">&times;</span>
+            <h2>Long Run - Progression</h2>
+            
+            <div class="modal-section">
+                <h3>Overview</h3>
+                <p>Long run starting easy and progressing to moderate/tempo effort in final portion. Build gradually throughout.</p>
+            </div>
+            <div class="modal-section">
+                <h3>Key Points</h3>
+                <ul class="key-points">
+                    <li>• First 60-70% at easy/conversational pace</li>
+<li>• Middle 20-25% at steady/moderate pace</li>
+<li>• Final 10-15% at tempo effort</li>
+<li>• No specific splits - run by feel</li>
+<li>• Focus on relaxed form throughout</li>
+                </ul>
+            </div>
+            <div class="modal-section"><h3>Pace</h3><p>Start: Easy pace, Finish: M-T pace</p></div>
+            <div class="modal-section"><h3>Duration</h3><p>varies</p></div>
+        </div>
+    </div>
+    <div id="modal-hills-35" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('hills-35')">&times;</span>
+            <h2>Hills - 35min</h2>
+            
+            <div class="modal-section">
+                <h3>Overview</h3>
+                <p>Continuous hill running for 35min. Hard effort up the hill, recovery pace down the hill</p>
+            </div>
+            <div class="modal-section">
+                <h3>Key Points</h3>
+                <ul class="key-points">
+                    
+                </ul>
+            </div>
+            <div class="modal-section"><h3>Pace</h3><p>Effort</p></div>
+            <div class="modal-section"><h3>Duration</h3><p>35min</p></div>
+        </div>
+    </div>
+    <div id="modal-hills-30" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('hills-30')">&times;</span>
+            <h2>Hills - 30min</h2>
+            
+            <div class="modal-section">
+                <h3>Overview</h3>
+                <p>Continuous hill running for 30min. Hard effort up the hill, recovery pace down the hill</p>
+            </div>
+            <div class="modal-section">
+                <h3>Key Points</h3>
+                <ul class="key-points">
+                    
+                </ul>
+            </div>
+            <div class="modal-section"><h3>Pace</h3><p>Effort</p></div>
+            <div class="modal-section"><h3>Duration</h3><p>30min</p></div>
+        </div>
+    </div>
+    <div id="modal-easy-run" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('easy-run')">&times;</span>
+            <h2>Easy Run</h2>
+            
+            <div class="modal-section">
+                <h3>Overview</h3>
+                <p>Conversational pace run for aerobic base building. Should be able to speak in complete sentences.</p>
+            </div>
+            <div class="modal-section">
+                <h3>Key Points</h3>
+                <ul class="key-points">
+                    <li>• True easy effort - don't push the pace</li>
+<li>• This builds your aerobic engine</li>
+                </ul>
+            </div>
+            <div class="modal-section"><h3>Pace</h3><p>E pace from chart, conversational</p></div>
+            <div class="modal-section"><h3>Duration</h3><p>varies</p></div>
+        </div>
+    </div>
+    <div id="modal-hills-20" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('hills-20')">&times;</span>
+            <h2>Hills - 20min</h2>
+            
+            <div class="modal-section">
+                <h3>Overview</h3>
+                <p>Continuous hill running for 20min. Hard effort up the hill, recovery pace down the hill</p>
+            </div>
+            <div class="modal-section">
+                <h3>Key Points</h3>
+                <ul class="key-points">
+                    
+                </ul>
+            </div>
+            <div class="modal-section"><h3>Pace</h3><p>Effort</p></div>
+            <div class="modal-section"><h3>Duration</h3><p>20min</p></div>
+        </div>
+    </div>
+    <div id="modal-hills-25" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('hills-25')">&times;</span>
+            <h2>Hills - 25min</h2>
+            
+            <div class="modal-section">
+                <h3>Overview</h3>
+                <p>Continuous hill running for 25min. Hard effort up the hill, recovery pace down the hill</p>
+            </div>
+            <div class="modal-section">
+                <h3>Key Points</h3>
+                <ul class="key-points">
+                    
+                </ul>
+            </div>
+            <div class="modal-section"><h3>Pace</h3><p>Effort</p></div>
+            <div class="modal-section"><h3>Duration</h3><p>25min</p></div>
+        </div>
+    </div>
+    <div id="modal-fartlek-5-4-3-2-1" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('fartlek-5-4-3-2-1')">&times;</span>
+            <h2>5-4-3-2-1 Fartlek</h2>
+            
+            <div class="modal-section">
+                <h3>Overview</h3>
+                <p>Progressive fartlek workout with descending intervals: 5min, 4min, 3min, 2min, 1min hard efforts with half-time recovery jogs between each interval.</p>
+            </div>
+            <div class="modal-section">
+                <h3>Key Points</h3>
+                <ul class="key-points">
+                    <li>• Start at tempo effort (5min) and progress to 800m pace (1min)</li>
+<li>• Recovery jogs are HALF the time of the hard effort</li>
+<li>• Example: 5min hard, 2:30 jog, 4min hard, 2min jog, etc.</li>
+<li>• Total hard time: 15 minutes</li>
+<li>• Focus on negative splitting each interval</li>
+                </ul>
+            </div>
+            <div class="modal-section"><h3>Pace</h3><p>5min: M/T pace, 4min: 5k pace, 3min: 3k pace, 2min: Mile pace, 1min: 800m pace</p></div>
+            <div class="modal-section"><h3>Duration</h3><p>~30min</p></div>
+        </div>
+    </div>
+
+    <script>
+        let currentFilter = null;
+        
+        function filterGroup(group) {
+            currentFilter = group;
+            document.querySelectorAll('.workout-item').forEach(item => {
+                item.classList.toggle('hidden', item.dataset.group !== group);
+            });
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            document.querySelectorAll('.total').forEach(t => t.classList.remove('active'));
+            document.getElementById('total-' + group).classList.add('active');
+        }
+        
+        function showAll() {
+            currentFilter = null;
+            document.querySelectorAll('.workout-item').forEach(item => item.classList.remove('hidden'));
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('.filter-btn').classList.add('active');
+            document.querySelectorAll('.total').forEach(t => t.classList.remove('active'));
+        }
+        
+        function openModal(workoutId) {
+            const modal = document.getElementById('modal-' + workoutId);
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        function closeModal(workoutId) {
+            const modal = document.getElementById('modal-' + workoutId);
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                document.querySelectorAll('.modal.active').forEach(modal => {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
