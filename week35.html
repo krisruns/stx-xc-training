@@ -159,6 +159,24 @@
             color: #4a7c59;
             text-decoration: underline;
         }
+        .workout-day-info {
+            background: #fff4e6;
+            border: 2px solid #DAA520;
+            border-radius: 6px;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        .workout-day-info a {
+            color: #B8860B;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .workout-day-info a:hover {
+            color: #DAA520;
+            text-decoration: underline;
+        }
         
         @media (max-width: 768px) {
             .totals { flex-direction: column; }
@@ -171,6 +189,10 @@
 <body>
     <h1>🏃 STX Training - Week 35</h1>
     <div class="subtitle"><strong>Training Week</strong></div>
+    
+    <!-- <div class="pace-chart-link">
+        <a href="athlete_groups.html">📋 View Current Training Groups</a>
+    </div> -->
     
     <div class="totals">
         <div class="total gold" onclick="filterGroup('Gold')" id="total-Gold">
@@ -242,6 +264,9 @@
     <div class="day">
         <div class="day-header">TUESDAY</div>
         <div class="day-content">
+                <div class="workout-day-info">
+                    <a href="athlete_groups.html">View Training Groups</a>
+                </div>
                 <div class="section">
                     <div class="section-label">WORKOUT</div>
                     <div class="workout-item gold" data-group="Gold">
@@ -322,6 +347,9 @@
     <div class="day">
         <div class="day-header">THURSDAY</div>
         <div class="day-content">
+                <div class="workout-day-info">
+                    <a href="athlete_groups.html">View Training Groups</a>
+                </div>
                 <div class="section">
                     <div class="section-label">WORKOUT</div>
                     <div class="workout-item gold" data-group="Gold">
