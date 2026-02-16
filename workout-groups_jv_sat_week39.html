@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Workout Paces - STX Training</title>
+<title>JV - Week 39 - Saturday - STX Training</title>
 <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -23,18 +22,14 @@
             border-bottom: 3px solid #003366;
         }
         
-        .vdot-toggle-container {
+        .action-buttons {
             text-align: center;
-            margin: 20px 0 30px 0;
-            padding: 15px;
-            background: #fff3cd;
-            border: 2px solid #ffc107;
-            border-radius: 8px;
+            margin: 20px 0;
         }
         
-        .vdot-toggle-btn {
-            padding: 10px 20px;
-            background: #003366;
+        .print-btn {
+            padding: 12px 30px;
+            background: #28a745;
             color: white;
             border: none;
             border-radius: 5px;
@@ -42,17 +37,13 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
+            margin: 0 10px;
         }
         
-        .vdot-toggle-btn:hover {
-            background: #004488;
+        .print-btn:hover {
+            background: #218838;
             transform: translateY(-2px);
-        }
-        
-        .vdot-info {
-            margin-top: 10px;
-            font-size: 0.9rem;
-            color: #666;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         
         .groups-container {
@@ -112,7 +103,6 @@
         }
         
         .vdot-value {
-            display: none;
             margin-left: 8px;
             padding: 2px 8px;
             background: #e3f2fd;
@@ -120,10 +110,6 @@
             border-radius: 12px;
             font-size: 0.85em;
             font-weight: 600;
-        }
-        
-        .vdot-value.show {
-            display: inline-block;
         }
         
         .manual-entry {
@@ -204,257 +190,519 @@
             font-weight: bold;
             color: #1976d2;
         }
+
+        .no-print {
+            display: block;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                max-width: 100%;
+            }
+            
+            .no-print {
+                display: none !important;
+            }
+            
+            .print-page {
+                page-break-after: always;
+                padding: 20px;
+            }
+            
+            .print-page:last-child {
+                page-break-after: auto;
+            }
+            
+            .print-group-header {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            
+            .print-group-title {
+                font-size: 24pt;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+            
+            .print-workout-desc {
+                font-size: 14pt;
+                margin-bottom: 15px;
+                color: #333;
+            }
+            
+            .print-paces {
+                margin-bottom: 20px;
+                padding: 10px;
+                border: 2px solid #003366;
+            }
+            
+            .print-pace-item {
+                display: inline-block;
+                margin-right: 20px;
+                font-size: 12pt;
+            }
+            
+            .print-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+            
+            .print-table th,
+            .print-table td {
+                border: 1px solid #333;
+                padding: 8px;
+                text-align: left;
+            }
+            
+            .print-table th {
+                background-color: #f0f0f0;
+                font-weight: bold;
+            }
+            
+            .print-table .rep-col {
+                width: 60px;
+                text-align: center;
+            }
+            
+            .print-table .name-col {
+                width: 150px;
+            }
+        }
 </style>
 </head>
 <body>
-<h1>Workout Paces</h1><div class="workout-description">12x200@mile (200j)+4x200@800 (45s)</div>
-<!-- <div class="vdot-toggle-container">
-        <button class="vdot-toggle-btn" onclick="toggleVDOT()">Show VDOT Values</button>
-        <div class="vdot-info">
-            Click to show/hide VDOT calculations for verification
-        </div>
-    </div> -->
-<div class="groups-container">
-<div class="group-card">
-<div class="group-header">Group 1</div>
-<div class="pace-section"><h3>Target Paces</h3><div class="pace-grid"><div class="pace-item"><div class="pace-label">200m @ MILE</div><div class="pace-value">31s-35s</div></div><div class="pace-item"><div class="pace-label">200m @ 800</div><div class="pace-value">28s-31s</div></div></div></div><ul class="athlete-list">
-<li>
-<span class="athlete-name">Marshall Wilson</span>
-<span class="vdot-value">VDOT: 65</span>
-</li>
-<li>
-<span class="athlete-name">Matthew Frick</span>
-<span class="vdot-value">VDOT: 66</span>
-</li>
-<li>
-<span class="athlete-name">Nick Sanders</span>
-<span class="vdot-value">VDOT: 72</span>
-</li>
-<li>
-<span class="athlete-name">Sam Schweickhardt</span>
-<span class="vdot-value">VDOT: 66</span>
-</li>
-<li>
-<span class="athlete-name">Tony Parilli</span>
-<span class="vdot-value">VDOT: 65</span>
-</li>
-<li>
-<span class="athlete-name">Nolan Crider</span>
-<span class="vdot-value">VDOT: 64</span>
-</li>
-<li class="manual-entry">
-<span class="athlete-name">Anthony Passafiume</span>
-</li>
-</ul>
+<h1 class="no-print">Workout Paces - JV - Week 39 - Saturday</h1>
+
+<div class="workout-description no-print" id="workoutDesc">12x200@mile (200j)+4x200@800 (45s)</div>
+
+<div class="action-buttons no-print">
+    <button class="print-btn" onclick="printGroupSheets()">🖨️ Print Group Record Sheets</button>
 </div>
-<div class="group-card">
-<div class="group-header">Group 2</div>
-<div class="pace-section"><h3>Target Paces</h3><div class="pace-grid"><div class="pace-item"><div class="pace-label">200m @ MILE</div><div class="pace-value">35s</div></div><div class="pace-item"><div class="pace-label">200m @ 800</div><div class="pace-value">31s</div></div></div></div><ul class="athlete-list">
-<li>
-<span class="athlete-name">James George</span>
-<span class="vdot-value">VDOT: 64</span>
-</li>
-<li>
-<span class="athlete-name">Ian O'Bryan</span>
-<span class="vdot-value">VDOT: 64</span>
-</li>
-<li>
-<span class="athlete-name">James Bush</span>
-<span class="vdot-value">VDOT: 64</span>
-</li>
-<li>
-<span class="athlete-name">Levi Roach</span>
-<span class="vdot-value">VDOT: 63</span>
-</li>
-<!-- <li>
-                    <span class="athlete-name">Nolan Crider</span>
-                    <span class="vdot-value">VDOT: 64</span>
-                </li> -->
-<li>
-<span class="athlete-name">Parker Lesshafft</span>
-<span class="vdot-value">VDOT: 63</span>
-</li>
-<li>
-<span class="athlete-name">Tyler Hogan</span>
-<span class="vdot-value">VDOT: 63</span>
-</li>
-</ul>
+
+<!-- Screen View Groups -->
+<div class="groups-container no-print" id="groupsContainer">
 </div>
-<div class="group-card">
-<div class="group-header">Group 3</div>
-<div class="pace-section"><h3>Target Paces</h3><div class="pace-grid"><div class="pace-item"><div class="pace-label">200m @ MILE</div><div class="pace-value">36s</div></div><div class="pace-item"><div class="pace-label">200m @ 800</div><div class="pace-value">32s</div></div></div></div><ul class="athlete-list">
-<li>
-<span class="athlete-name">Colin Bozich</span>
-<span class="vdot-value">VDOT: 62</span>
-</li>
-<li>
-<span class="athlete-name">Cooper Hogan</span>
-<span class="vdot-value">VDOT: 62</span>
-</li>
-<li>
-<span class="athlete-name">Everett Derrick</span>
-<span class="vdot-value">VDOT: 62</span>
-</li>
-<li>
-<span class="athlete-name">Owen Mayes</span>
-<span class="vdot-value">VDOT: 62</span>
-</li>
-<li>
-<span class="athlete-name">Ray Laracy</span>
-<span class="vdot-value">VDOT: 61</span>
-</li>
-<li>
-<span class="athlete-name">Thomas Norton</span>
-<span class="vdot-value">VDOT: 61</span>
-</li>
-<li class="manual-entry">
-<span class="athlete-name">Henry Pudlo</span>
-</li>
-</ul>
+
+<!-- Print View (hidden on screen) -->
+<div id="printContainer" style="display: none;">
 </div>
-<div class="group-card">
-<div class="group-header">Group 4</div>
-<div class="pace-section"><h3>Target Paces</h3><div class="pace-grid"><div class="pace-item"><div class="pace-label">200m @ MILE</div><div class="pace-value">37s-39s</div></div><div class="pace-item"><div class="pace-label">200m @ 800</div><div class="pace-value">33s-34s</div></div></div></div><ul class="athlete-list">
-<li>
-<span class="athlete-name">Baron Staab</span>
-<span class="vdot-value">VDOT: 58</span>
-</li>
-<li>
-<span class="athlete-name">Jack Clifford</span>
-<span class="vdot-value">VDOT: 60</span>
-</li>
-<li>
-<span class="athlete-name">Jimmy Greer</span>
-<span class="vdot-value">VDOT: 59</span>
-</li>
-<li>
-<span class="athlete-name">Matthew Meirose</span>
-<span class="vdot-value">VDOT: 57</span>
-</li>
-<li>
-<span class="athlete-name">Vincent Yochum</span>
-<span class="vdot-value">VDOT: 60</span>
-</li>
-<li>
-<span class="athlete-name">Xavier Mudd</span>
-<span class="vdot-value">VDOT: 60</span>
-</li>
-</ul>
+
+<div class="footer no-print">
+    St. Xavier High School Cross Country &amp; Track
 </div>
-<div class="group-card">
-<div class="group-header">Group 5</div>
-<div class="pace-section"><h3>Target Paces</h3><div class="pace-grid"><div class="pace-item"><div class="pace-label">200m @ MILE</div><div class="pace-value">39s-42s</div></div><div class="pace-item"><div class="pace-label">200m @ 800</div><div class="pace-value">35s-37s</div></div></div></div><ul class="athlete-list">
-<li>
-<span class="athlete-name">Leo Falk</span>
-<span class="vdot-value">VDOT: 54</span>
-</li>
-<li>
-<span class="athlete-name">Levi Thornton</span>
-<span class="vdot-value">VDOT: 55</span>
-</li>
-<li>
-<span class="athlete-name">Quenton Horton</span>
-<span class="vdot-value">VDOT: 56</span>
-</li>
-<li>
-<span class="athlete-name">Ryder Garcia</span>
-<span class="vdot-value">VDOT: 56</span>
-</li>
-<li>
-<span class="athlete-name">Sam Church</span>
-<span class="vdot-value">VDOT: 53</span>
-</li>
-<li>
-<span class="athlete-name">Rajii Walsh</span>
-<span class="vdot-value">VDOT: 52</span>
-</li>
-</ul>
-</div>
-<div class="group-card">
-<div class="group-header">Group 6</div>
-<div class="pace-section"><h3>Target Paces</h3><div class="pace-grid"><div class="pace-item"><div class="pace-label">200m @ MILE</div><div class="pace-value">39s-45s</div></div><div class="pace-item"><div class="pace-label">200m @ 800</div><div class="pace-value">34s-41s</div></div></div></div><ul class="athlete-list">
-<li class="manual-entry">
-<span class="athlete-name">Nathan Worley</span>
-</li>
-<li>
-<span class="athlete-name">Ben Lewis</span>
-<span class="vdot-value">VDOT: 52</span>
-</li>
-<li>
-<span class="athlete-name">Evan Pfeffer</span>
-<span class="vdot-value">VDOT: 53</span>
-</li>
-<li>
-<span class="athlete-name">Henry Metzger</span>
-<span class="vdot-value">VDOT: 51</span>
-</li>
-<li>
-<span class="athlete-name">Jonah Roach</span>
-<span class="vdot-value">VDOT: 50</span>
-</li>
-<li>
-<span class="athlete-name">Nick Wolff</span>
-<span class="vdot-value">VDOT: 51</span>
-</li>
-<li>
-<span class="athlete-name">Owen Mattingly</span>
-<span class="vdot-value">VDOT: 47</span>
-</li>
-<li>
-<span class="athlete-name">Owen Derrick</span>
-<span class="vdot-value">VDOT: 57</span>
-</li>
-</ul>
-</div>
-<div class="group-card">
-<div class="group-header">Group 7 - Unassigned</div>
-<ul class="athlete-list">
-<li>
-<span class="athlete-name">Trevor O'Nan</span>
-<span class="vdot-value">VDOT: 46</span>
-</li>
-<li class="manual-entry">
-<span class="athlete-name">Alexander Jemley</span>
-</li>
-<li class="manual-entry">
-<span class="athlete-name">Andrew Reed</span>
-</li>
-<li class="manual-entry">
-<span class="athlete-name">Garrett Pate</span>
-</li>
-<li class="manual-entry">
-<span class="athlete-name">Ian Vickerstaff</span>
-</li>
-<li class="manual-entry">
-<span class="athlete-name">John Hagedorn</span>
-</li>
-<li class="manual-entry">
-<span class="athlete-name">Sawyer Gates</span>
-</li>
-<li class="manual-entry">
-<span class="athlete-name">Thomas Dusza</span>
-</li>
-<li class="manual-entry">
-<span class="athlete-name">Zach Reed</span>
-</li>
-</ul>
-</div>
-</div>
-<div class="footer">
-        St. Xavier High School Cross Country &amp; Track
-    </div>
+
 <script>
-        function toggleVDOT() {
-            const vdotElements = document.querySelectorAll('.vdot-value');
-            const btn = document.querySelector('.vdot-toggle-btn');
-            const isShowing = vdotElements[0].classList.contains('show');
+// Group data structure
+const groupsData = [
+    {
+        "name": "Group 1",
+        "athletes": [
+            {
+                "name": "Marshall Wilson",
+                "vdot": 65
+            },
+            {
+                "name": "Matthew Frick",
+                "vdot": 66
+            },
+            {
+                "name": "Nick Sanders",
+                "vdot": 72
+            },
+            {
+                "name": "Sam Schweickhardt",
+                "vdot": 66
+            },
+            {
+                "name": "Tony Parilli",
+                "vdot": 65
+            },
+            {
+                "name": "Nolan Crider",
+                "vdot": 64
+            },
+            {
+                "name": "Anthony Passafiume",
+                "vdot": null
+            }
+        ],
+        "paces": {
+            "200m @ MILE": "31s-35s",
+            "200m @ 800": "28s-31s"
+        }
+    },
+    {
+        "name": "Group 2",
+        "athletes": [
+            {
+                "name": "James George",
+                "vdot": 64
+            },
+            {
+                "name": "Ian O'Bryan",
+                "vdot": 64
+            },
+            {
+                "name": "James Bush",
+                "vdot": 64
+            },
+            {
+                "name": "Levi Roach",
+                "vdot": 63
+            },
+            {
+                "name": "Parker Lesshafft",
+                "vdot": 63
+            },
+            {
+                "name": "Tyler Hogan",
+                "vdot": 63
+            }
+        ],
+        "paces": {
+            "200m @ MILE": "35s",
+            "200m @ 800": "31s"
+        }
+    },
+    {
+        "name": "Group 3",
+        "athletes": [
+            {
+                "name": "Colin Bozich",
+                "vdot": 62
+            },
+            {
+                "name": "Cooper Hogan",
+                "vdot": 62
+            },
+            {
+                "name": "Everett Derrick",
+                "vdot": 62
+            },
+            {
+                "name": "Owen Mayes",
+                "vdot": 62
+            },
+            {
+                "name": "Ray Laracy",
+                "vdot": 61
+            },
+            {
+                "name": "Thomas Norton",
+                "vdot": 61
+            },
+            {
+                "name": "Henry Pudlo",
+                "vdot": null
+            }
+        ],
+        "paces": {
+            "200m @ MILE": "36s",
+            "200m @ 800": "32s"
+        }
+    },
+    {
+        "name": "Group 4",
+        "athletes": [
+            {
+                "name": "Baron Staab",
+                "vdot": 58
+            },
+            {
+                "name": "Jack Clifford",
+                "vdot": 60
+            },
+            {
+                "name": "Jimmy Greer",
+                "vdot": 59
+            },
+            {
+                "name": "Matthew Meirose",
+                "vdot": 57
+            },
+            {
+                "name": "Vincent Yochum",
+                "vdot": 60
+            },
+            {
+                "name": "Xavier Mudd",
+                "vdot": 60
+            }
+        ],
+        "paces": {
+            "200m @ MILE": "37s-39s",
+            "200m @ 800": "33s-34s"
+        }
+    },
+    {
+        "name": "Group 5",
+        "athletes": [
+            {
+                "name": "Leo Falk",
+                "vdot": 54
+            },
+            {
+                "name": "Levi Thornton",
+                "vdot": 55
+            },
+            {
+                "name": "Quenton Horton",
+                "vdot": 56
+            },
+            {
+                "name": "Ryder Garcia",
+                "vdot": 56
+            },
+            {
+                "name": "Sam Church",
+                "vdot": 53
+            },
+            {
+                "name": "Rajii Walsh",
+                "vdot": 52
+            }
+        ],
+        "paces": {
+            "200m @ MILE": "39s-42s",
+            "200m @ 800": "35s-37s"
+        }
+    },
+    {
+        "name": "Group 6",
+        "athletes": [
+            {
+                "name": "Nathan Worley",
+                "vdot": null
+            },
+            {
+                "name": "Ben Lewis",
+                "vdot": 52
+            },
+            {
+                "name": "Evan Pfeffer",
+                "vdot": 53
+            },
+            {
+                "name": "Henry Metzger",
+                "vdot": 51
+            },
+            {
+                "name": "Jonah Roach",
+                "vdot": 50
+            },
+            {
+                "name": "Nick Wolff",
+                "vdot": 51
+            },
+            {
+                "name": "Owen Mattingly",
+                "vdot": 47
+            },
+            {
+                "name": "Owen Derrick",
+                "vdot": 57
+            }
+        ],
+        "paces": {
+            "200m @ MILE": "39s-45s",
+            "200m @ 800": "34s-41s"
+        }
+    },
+    {
+        "name": "Group 7 - Unassigned",
+        "athletes": [
+            {
+                "name": "Trevor O'Nan",
+                "vdot": 46
+            },
+            {
+                "name": "Alexander Jemley",
+                "vdot": null
+            },
+            {
+                "name": "Andrew Reed",
+                "vdot": null
+            },
+            {
+                "name": "Garrett Pate",
+                "vdot": null
+            },
+            {
+                "name": "Ian Vickerstaff",
+                "vdot": null
+            },
+            {
+                "name": "John Hagedorn",
+                "vdot": null
+            },
+            {
+                "name": "Sawyer Gates",
+                "vdot": null
+            },
+            {
+                "name": "Thomas Dusza",
+                "vdot": null
+            },
+            {
+                "name": "Zach Reed",
+                "vdot": null
+            }
+        ],
+        "paces": {
+            "200m @ MILE": "46s",
+            "200m @ 800": "42s"
+        }
+    }
+];
+
+
+// Parse workout description to get rep structure
+function parseWorkout(workoutDesc) {
+    const reps = [];
+    
+    // Pattern: number x distance @ pace
+    const pattern = /(\d+)x(\d+)@(\w+)/g;
+    let match;
+    
+    while ((match = pattern.exec(workoutDesc)) !== null) {
+        reps.push({
+            count: parseInt(match[1]),
+            distance: match[2],
+            pace: match[3].toUpperCase()
+        });
+    }
+    
+    return reps;
+}
+
+// Generate print view for all groups
+function printGroupSheets() {
+    const workoutDesc = document.getElementById('workoutDesc').textContent;
+    const reps = parseWorkout(workoutDesc);
+    const printContainer = document.getElementById('printContainer');
+    
+    // Clear previous content
+    printContainer.innerHTML = '';
+    
+    // Generate a page for each group
+    groupsData.forEach((group, index) => {
+        if (group.name.includes('Unassigned')) return; // Skip unassigned
+        
+        const page = document.createElement('div');
+        page.className = 'print-page';
+        
+        // Header
+        const header = document.createElement('div');
+        header.className = 'print-group-header';
+        header.innerHTML = `
+            <div class="print-group-title">${group.name}</div>
+            <div class="print-workout-desc">${workoutDesc}</div>
+            <div class="print-paces">
+                ${Object.entries(group.paces).map(([label, pace]) => 
+                    `<span class="print-pace-item"><strong>${label}:</strong> ${pace}</span>`
+                ).join(' | ')}
+            </div>
+        `;
+        page.appendChild(header);
+        
+        // Table
+        const table = document.createElement('table');
+        table.className = 'print-table';
+        
+        // Table header
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+        headerRow.innerHTML = '<th class="name-col">Athlete</th>';
+        
+        reps.forEach((rep, repIndex) => {
+            for (let i = 1; i <= rep.count; i++) {
+                headerRow.innerHTML += `<th class="rep-col">${rep.distance}m<br/>#${i}</th>`;
+            }
+        });
+        
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+        
+        // Table body
+        const tbody = document.createElement('tbody');
+        group.athletes.forEach(athlete => {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td class="name-col">${athlete.name}</td>`;
             
-            vdotElements.forEach(el => {
-                el.classList.toggle('show');
+            // Add empty cells for each rep
+            reps.forEach(rep => {
+                for (let i = 0; i < rep.count; i++) {
+                    row.innerHTML += '<td class="rep-col"></td>';
+                }
             });
             
-            btn.textContent = isShowing ? 'Show VDOT Values' : 'Hide VDOT Values';
-        }
-    </script>
+            tbody.appendChild(row);
+        });
+        table.appendChild(tbody);
+        
+        page.appendChild(table);
+        printContainer.appendChild(page);
+    });
+    
+    // Show print container and trigger print
+    printContainer.style.display = 'block';
+    window.print();
+    printContainer.style.display = 'none';
+}
+
+// Load groups on page load (for screen view)
+window.addEventListener('DOMContentLoaded', function() {
+    const container = document.getElementById('groupsContainer');
+    
+    groupsData.forEach(group => {
+        const card = document.createElement('div');
+        card.className = 'group-card';
+        
+        const header = document.createElement('div');
+        header.className = 'group-header';
+        header.textContent = group.name;
+        card.appendChild(header);
+        
+        // Pace section
+        const paceSection = document.createElement('div');
+        paceSection.className = 'pace-section';
+        paceSection.innerHTML = '<h3>Target Paces</h3><div class="pace-grid">';
+        
+        Object.entries(group.paces).forEach(([label, pace]) => {
+            paceSection.innerHTML += `
+                <div class="pace-item">
+                    <div class="pace-label">${label}</div>
+                    <div class="pace-value">${pace}</div>
+                </div>
+            `;
+        });
+        
+        paceSection.innerHTML += '</div>';
+        card.appendChild(paceSection);
+        
+        // Athletes list
+        const ul = document.createElement('ul');
+        ul.className = 'athlete-list';
+        
+        group.athletes.forEach(athlete => {
+            const li = document.createElement('li');
+            if (!athlete.vdot) li.className = 'manual-entry';
+            li.innerHTML = `
+                <span class="athlete-name">${athlete.name}</span>
+                ${athlete.vdot ? `<span class="vdot-value">VDOT: ${athlete.vdot}</span>` : ''}
+            `;
+            ul.appendChild(li);
+        });
+        
+        card.appendChild(ul);
+        container.appendChild(card);
+    });
+});
+
+</script>
 </body>
 </html>
