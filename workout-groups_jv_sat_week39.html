@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Workout Paces - STX Training</title>
+<style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #003366;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #003366;
+        }
+        
+        .vdot-toggle-container {
+            text-align: center;
+            margin: 20px 0 30px 0;
+            padding: 15px;
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+        }
+        
+        .vdot-toggle-btn {
+            padding: 10px 20px;
+            background: #003366;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .vdot-toggle-btn:hover {
+            background: #004488;
+            transform: translateY(-2px);
+        }
+        
+        .vdot-info {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .groups-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .group-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .group-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .group-header {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #003366;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .athlete-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .athlete-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+            color: #555;
+        }
+        
+        .athlete-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .athlete-list li:hover {
+            color: #003366;
+            background-color: #f8f8f8;
+            padding-left: 5px;
+            transition: all 0.2s;
+        }
+        
+        .athlete-name {
+            font-weight: 500;
+        }
+        
+        .vdot-value {
+            display: none;
+            margin-left: 8px;
+            padding: 2px 8px;
+            background: #e3f2fd;
+            color: #1976d2;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        
+        .vdot-value.show {
+            display: inline-block;
+        }
+        
+        .manual-entry {
+            font-style: italic;
+            color: #888;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .groups-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.5em;
+            }
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #777;
+            font-size: 0.9em;
+        }
+    
+        .workout-description {
+            text-align: center;
+            background: #e3f2fd;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 500;
+            color: #1976d2;
+        }
+        
+        .pace-section {
+            background: #f0f7ff;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #1976d2;
+        }
+        
+        .pace-section h3 {
+            margin: 0 0 10px 0;
+            color: #1976d2;
+            font-size: 1em;
+            font-weight: 600;
+        }
+        
+        .pace-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+        
+        .pace-item {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #bbdefb;
+        }
+        
+        .pace-label {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 3px;
+        }
+        
+        .pace-value {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #1976d2;
+        }
+</style>
+</head>
+<body>
+<h1>Workout Paces</h1><div class="workout-description">12x200@mile (200j)+4x200@800 (45s)</div>
+<!-- <div class="vdot-toggle-container">
+        <button class="vdot-toggle-btn" onclick="toggleVDOT()">Show VDOT Values</button>
+        <div class="vdot-info">
+            Click to show/hide VDOT calculations for verification
+        </div>
+    </div> -->
+<div class="groups-container">
+<div class="group-card">
+<div class="group-header">Group 1</div>
+<div class="pace-section"><h3>Target Paces</h3><div class="pace-grid"><div class="pace-item"><div class="pace-label">200m @ MILE</div><div class="pace-value">31s-35s</div></div><div class="pace-item"><div class="pace-label">200m @ 800</div><div class="pace-value">28s-31s</div></div></div></div><ul class="athlete-list">
+<li>
+<span class="athlete-name">Marshall Wilson</span>
+<span class="vdot-value">VDOT: 65</span>
+</li>
+<li>
+<span class="athlete-name">Matthew Frick</span>
+<span class="vdot-value">VDOT: 66</span>
+</li>
+<li>
+<span class="athlete-name">Nick Sanders</span>
+<span class="vdot-value">VDOT: 72</span>
+</li>
+<li>
+<span class="athlete-name">Sam Schweickhardt</span>
+<span class="vdot-value">VDOT: 66</span>
+</li>
+<li>
+<span class="athlete-name">Tony Parilli</span>
+<span class="vdot-value">VDOT: 65</span>
+</li>
+<li>
+<span class="athlete-name">Nolan Crider</span>
+<span class="vdot-value">VDOT: 64</span>
+</li>
+<li class="manual-entry">
+<span class="athlete-name">Anthony Passafiume</span>
+</li>
+</ul>
+</div>
+<div class="group-card">
+<div class="group-header">Group 2</div>
+<div class="pace-section"><h3>Target Paces</h3><div class="pace-grid"><div class="pace-item"><div class="pace-label">200m @ MILE</div><div class="pace-value">35s</div></div><div class="pace-item"><div class="pace-label">200m @ 800</div><div class="pace-value">31s</div></div></div></div><ul class="athlete-list">
+<li>
+<span class="athlete-name">James George</span>
+<span class="vdot-value">VDOT: 64</span>
+</li>
+<li>
+<span class="athlete-name">Ian O'Bryan</span>
+<span class="vdot-value">VDOT: 64</span>
+</li>
+<li>
+<span class="athlete-name">James Bush</span>
+<span class="vdot-value">VDOT: 64</span>
+</li>
+<li>
+<span class="athlete-name">Levi Roach</span>
+<span class="vdot-value">VDOT: 63</span>
+</li>
+<!-- <li>
+                    <span class="athlete-name">Nolan Crider</span>
+                    <span class="vdot-value">VDOT: 64</span>
+                </li> -->
+<li>
+<span class="athlete-name">Parker Lesshafft</span>
+<span class="vdot-value">VDOT: 63</span>
+</li>
+<li>
+<span class="athlete-name">Tyler Hogan</span>
+<span class="vdot-value">VDOT: 63</span>
+</li>
+</ul>
+</div>
+<div class="group-card">
+<div class="group-header">Group 3</div>
+<div class="pace-section"><h3>Target Paces</h3><div class="pace-grid"><div class="pace-item"><div class="pace-label">200m @ MILE</div><div class="pace-value">36s</div></div><div class="pace-item"><div class="pace-label">200m @ 800</div><div class="pace-value">32s</div></div></div></div><ul class="athlete-list">
+<li>
+<span class="athlete-name">Colin Bozich</span>
+<span class="vdot-value">VDOT: 62</span>
+</li>
+<li>
+<span class="athlete-name">Cooper Hogan</span>
+<span class="vdot-value">VDOT: 62</span>
+</li>
+<li>
+<span class="athlete-name">Everett Derrick</span>
+<span class="vdot-value">VDOT: 62</span>
+</li>
+<li>
+<span class="athlete-name">Owen Mayes</span>
+<span class="vdot-value">VDOT: 62</span>
+</li>
+<li>
+<span class="athlete-name">Ray Laracy</span>
+<span class="vdot-value">VDOT: 61</span>
+</li>
+<li>
+<span class="athlete-name">Thomas Norton</span>
+<span class="vdot-value">VDOT: 61</span>
+</li>
+<li class="manual-entry">
+<span class="athlete-name">Henry Pudlo</span>
+</li>
+</ul>
+</div>
+<div class="group-card">
+<div class="group-header">Group 4</div>
+<div class="pace-section"><h3>Target Paces</h3><div class="pace-grid"><div class="pace-item"><div class="pace-label">200m @ MILE</div><div class="pace-value">37s-39s</div></div><div class="pace-item"><div class="pace-label">200m @ 800</div><div class="pace-value">33s-34s</div></div></div></div><ul class="athlete-list">
+<li>
+<span class="athlete-name">Baron Staab</span>
+<span class="vdot-value">VDOT: 58</span>
+</li>
+<li>
+<span class="athlete-name">Jack Clifford</span>
+<span class="vdot-value">VDOT: 60</span>
+</li>
+<li>
+<span class="athlete-name">Jimmy Greer</span>
+<span class="vdot-value">VDOT: 59</span>
+</li>
+<li>
+<span class="athlete-name">Matthew Meirose</span>
+<span class="vdot-value">VDOT: 57</span>
+</li>
+<li>
+<span class="athlete-name">Vincent Yochum</span>
+<span class="vdot-value">VDOT: 60</span>
+</li>
+<li>
+<span class="athlete-name">Xavier Mudd</span>
+<span class="vdot-value">VDOT: 60</span>
+</li>
+</ul>
+</div>
+<div class="group-card">
+<div class="group-header">Group 5</div>
+<div class="pace-section"><h3>Target Paces</h3><div class="pace-grid"><div class="pace-item"><div class="pace-label">200m @ MILE</div><div class="pace-value">39s-42s</div></div><div class="pace-item"><div class="pace-label">200m @ 800</div><div class="pace-value">35s-37s</div></div></div></div><ul class="athlete-list">
+<li>
+<span class="athlete-name">Leo Falk</span>
+<span class="vdot-value">VDOT: 54</span>
+</li>
+<li>
+<span class="athlete-name">Levi Thornton</span>
+<span class="vdot-value">VDOT: 55</span>
+</li>
+<li>
+<span class="athlete-name">Quenton Horton</span>
+<span class="vdot-value">VDOT: 56</span>
+</li>
+<li>
+<span class="athlete-name">Ryder Garcia</span>
+<span class="vdot-value">VDOT: 56</span>
+</li>
+<li>
+<span class="athlete-name">Sam Church</span>
+<span class="vdot-value">VDOT: 53</span>
+</li>
+<li>
+<span class="athlete-name">Rajii Walsh</span>
+<span class="vdot-value">VDOT: 52</span>
+</li>
+</ul>
+</div>
+<div class="group-card">
+<div class="group-header">Group 6</div>
+<div class="pace-section"><h3>Target Paces</h3><div class="pace-grid"><div class="pace-item"><div class="pace-label">200m @ MILE</div><div class="pace-value">39s-45s</div></div><div class="pace-item"><div class="pace-label">200m @ 800</div><div class="pace-value">34s-41s</div></div></div></div><ul class="athlete-list">
+<li class="manual-entry">
+<span class="athlete-name">Nathan Worley</span>
+</li>
+<li>
+<span class="athlete-name">Ben Lewis</span>
+<span class="vdot-value">VDOT: 52</span>
+</li>
+<li>
+<span class="athlete-name">Evan Pfeffer</span>
+<span class="vdot-value">VDOT: 53</span>
+</li>
+<li>
+<span class="athlete-name">Henry Metzger</span>
+<span class="vdot-value">VDOT: 51</span>
+</li>
+<li>
+<span class="athlete-name">Jonah Roach</span>
+<span class="vdot-value">VDOT: 50</span>
+</li>
+<li>
+<span class="athlete-name">Nick Wolff</span>
+<span class="vdot-value">VDOT: 51</span>
+</li>
+<li>
+<span class="athlete-name">Owen Mattingly</span>
+<span class="vdot-value">VDOT: 47</span>
+</li>
+<li>
+<span class="athlete-name">Owen Derrick</span>
+<span class="vdot-value">VDOT: 57</span>
+</li>
+</ul>
+</div>
+<div class="group-card">
+<div class="group-header">Group 7 - Unassigned</div>
+<ul class="athlete-list">
+<li>
+<span class="athlete-name">Trevor O'Nan</span>
+<span class="vdot-value">VDOT: 46</span>
+</li>
+<li class="manual-entry">
+<span class="athlete-name">Alexander Jemley</span>
+</li>
+<li class="manual-entry">
+<span class="athlete-name">Andrew Reed</span>
+</li>
+<li class="manual-entry">
+<span class="athlete-name">Garrett Pate</span>
+</li>
+<li class="manual-entry">
+<span class="athlete-name">Ian Vickerstaff</span>
+</li>
+<li class="manual-entry">
+<span class="athlete-name">John Hagedorn</span>
+</li>
+<li class="manual-entry">
+<span class="athlete-name">Sawyer Gates</span>
+</li>
+<li class="manual-entry">
+<span class="athlete-name">Thomas Dusza</span>
+</li>
+<li class="manual-entry">
+<span class="athlete-name">Zach Reed</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="footer">
+        St. Xavier High School Cross Country &amp; Track
+    </div>
+<script>
+        function toggleVDOT() {
+            const vdotElements = document.querySelectorAll('.vdot-value');
+            const btn = document.querySelector('.vdot-toggle-btn');
+            const isShowing = vdotElements[0].classList.contains('show');
+            
+            vdotElements.forEach(el => {
+                el.classList.toggle('show');
+            });
+            
+            btn.textContent = isShowing ? 'Show VDOT Values' : 'Hide VDOT Values';
+        }
+    </script>
+</body>
+</html>
