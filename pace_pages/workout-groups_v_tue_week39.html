@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>V - Week 39 - Tuesday - STX Training</title>
+<style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #003366;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #003366;
+        }
+        
+        .action-buttons {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .print-btn {
+            padding: 12px 30px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin: 0 10px;
+        }
+        
+        .print-btn:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .groups-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .group-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .group-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .group-header {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #003366;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .athlete-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .athlete-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+            color: #555;
+        }
+        
+        .athlete-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .athlete-list li:hover {
+            color: #003366;
+            background-color: #f8f8f8;
+            padding-left: 5px;
+            transition: all 0.2s;
+        }
+        
+        .athlete-name {
+            font-weight: 500;
+        }
+        
+        .vdot-value {
+            margin-left: 8px;
+            padding: 2px 8px;
+            background: #e3f2fd;
+            color: #1976d2;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        
+        .manual-entry {
+            font-style: italic;
+            color: #888;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .groups-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.5em;
+            }
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #777;
+            font-size: 0.9em;
+        }
+    
+        .workout-description {
+            text-align: center;
+            background: #e3f2fd;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 500;
+            color: #1976d2;
+        }
+        
+        .pace-section {
+            background: #f0f7ff;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #1976d2;
+        }
+        
+        .pace-section h3 {
+            margin: 0 0 10px 0;
+            color: #1976d2;
+            font-size: 1em;
+            font-weight: 600;
+        }
+        
+        .pace-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+        
+        .pace-item {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #bbdefb;
+        }
+        
+        .pace-label {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 3px;
+        }
+        
+        .pace-value {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #1976d2;
+        }
+
+        .no-print {
+            display: block;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+                max-width: 100%;
+            }
+            
+            .no-print {
+                display: none !important;
+            }
+            
+            .print-page {
+                page-break-after: always;
+                padding: 20px;
+            }
+            
+            .print-page:last-child {
+                page-break-after: auto;
+            }
+            
+            .print-group-header {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            
+            .print-group-title {
+                font-size: 24pt;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+            
+            .print-workout-desc {
+                font-size: 14pt;
+                margin-bottom: 15px;
+                color: #333;
+            }
+            
+            .print-paces {
+                margin-bottom: 20px;
+                padding: 10px;
+                border: 2px solid #003366;
+            }
+            
+            .print-pace-item {
+                display: inline-block;
+                margin-right: 20px;
+                font-size: 12pt;
+            }
+            
+            .print-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+            
+            .print-table th,
+            .print-table td {
+                border: 1px solid #333;
+                padding: 8px;
+                text-align: left;
+            }
+            
+            .print-table th {
+                background-color: #f0f0f0;
+                font-weight: bold;
+            }
+            
+            .print-table .rep-col {
+                width: 60px;
+                text-align: center;
+            }
+            
+            .print-table .name-col {
+                width: 150px;
+            }
+        }
+</style>
+</head>
+<body>
+<h1 class="no-print">Workout Paces - V - Week 39 - Tuesday</h1>
+
+<div class="workout-description no-print" id="workoutDesc">2x200@mile+12x400@5k (200j) + 2x200@800</div>
+
+<div class="action-buttons no-print">
+    <button class="print-btn" onclick="printGroupSheets()">🖨️ Print Group Record Sheets</button>
+</div>
+
+<!-- Screen View Groups -->
+<div class="groups-container no-print" id="groupsContainer">
+</div>
+
+<!-- Print View (hidden on screen) -->
+<div id="printContainer" style="display: none;">
+</div>
+
+<div class="footer no-print">
+    St. Xavier High School Cross Country &amp; Track
+</div>
+
+<script>
+// Group data structure
+const groupsData = [
+    {
+        "name": "Group 1",
+        "athletes": [
+            {
+                "name": "Marshall Wilson",
+                "vdot": 65
+            },
+            {
+                "name": "Matthew Frick",
+                "vdot": 66
+            },
+            {
+                "name": "Nick Sanders",
+                "vdot": 72
+            },
+            {
+                "name": "Sam Schweickhardt",
+                "vdot": 66
+            },
+            {
+                "name": "Tony Parilli",
+                "vdot": 65
+            },
+            {
+                "name": "Nolan Crider",
+                "vdot": 64
+            },
+            {
+                "name": "Anthony Passafiume",
+                "vdot": null
+            }
+        ],
+        "paces": {
+            "200m @ MILE": "31s-35s",
+            "400m @ 5K": "1:09-1:17",
+            "200m @ 800": "28s-31s"
+        }
+    },
+    {
+        "name": "Group 2",
+        "athletes": [
+            {
+                "name": "James George",
+                "vdot": 64
+            },
+            {
+                "name": "Ian O'Bryan",
+                "vdot": 64
+            },
+            {
+                "name": "James Bush",
+                "vdot": 64
+            },
+            {
+                "name": "Levi Roach",
+                "vdot": 63
+            },
+            {
+                "name": "Parker Lesshafft",
+                "vdot": 63
+            },
+            {
+                "name": "Tyler Hogan",
+                "vdot": 63
+            }
+        ],
+        "paces": {
+            "200m @ MILE": "35s",
+            "400m @ 5K": "1:17-1:18",
+            "200m @ 800": "31s"
+        }
+    },
+    {
+        "name": "Group 3",
+        "athletes": [
+            {
+                "name": "Colin Bozich",
+                "vdot": 62
+            },
+            {
+                "name": "Cooper Hogan",
+                "vdot": 62
+            },
+            {
+                "name": "Everett Derrick",
+                "vdot": 62
+            },
+            {
+                "name": "Owen Mayes",
+                "vdot": 62
+            },
+            {
+                "name": "Ray Laracy",
+                "vdot": 61
+            },
+            {
+                "name": "Thomas Norton",
+                "vdot": 61
+            },
+            {
+                "name": "Henry Pudlo",
+                "vdot": null
+            }
+        ],
+        "paces": {
+            "200m @ MILE": "36s",
+            "400m @ 5K": "1:19-1:20",
+            "200m @ 800": "32s"
+        }
+    },
+    {
+        "name": "Group 4",
+        "athletes": [
+            {
+                "name": "Baron Staab",
+                "vdot": 58
+            },
+            {
+                "name": "Jack Clifford",
+                "vdot": 60
+            },
+            {
+                "name": "Jimmy Greer",
+                "vdot": 59
+            },
+            {
+                "name": "Matthew Meirose",
+                "vdot": 57
+            },
+            {
+                "name": "Vincent Yochum",
+                "vdot": 60
+            },
+            {
+                "name": "Xavier Mudd",
+                "vdot": 60
+            }
+        ],
+        "paces": {
+            "200m @ MILE": "37s-39s",
+            "400m @ 5K": "1:21-1:25",
+            "200m @ 800": "33s-34s"
+        }
+    },
+    {
+        "name": "Group 5",
+        "athletes": [
+            {
+                "name": "Leo Falk",
+                "vdot": 54
+            },
+            {
+                "name": "Levi Thornton",
+                "vdot": 55
+            },
+            {
+                "name": "Quenton Horton",
+                "vdot": 56
+            },
+            {
+                "name": "Ryder Garcia",
+                "vdot": 56
+            },
+            {
+                "name": "Sam Church",
+                "vdot": 53
+            },
+            {
+                "name": "Rajii Walsh",
+                "vdot": 52
+            }
+        ],
+        "paces": {
+            "200m @ MILE": "39s-42s",
+            "400m @ 5K": "1:26-1:31",
+            "200m @ 800": "35s-37s"
+        }
+    },
+    {
+        "name": "Group 6",
+        "athletes": [
+            {
+                "name": "Nathan Worley",
+                "vdot": null
+            },
+            {
+                "name": "Ben Lewis",
+                "vdot": 52
+            },
+            {
+                "name": "Evan Pfeffer",
+                "vdot": 53
+            },
+            {
+                "name": "Henry Metzger",
+                "vdot": 51
+            },
+            {
+                "name": "Jonah Roach",
+                "vdot": 50
+            },
+            {
+                "name": "Nick Wolff",
+                "vdot": 51
+            },
+            {
+                "name": "Owen Mattingly",
+                "vdot": 47
+            },
+            {
+                "name": "Owen Derrick",
+                "vdot": 57
+            }
+        ],
+        "paces": {
+            "200m @ MILE": "39s-45s",
+            "400m @ 5K": "1:25-1:38",
+            "200m @ 800": "34s-41s"
+        }
+    },
+    {
+        "name": "Group 7 - Unassigned",
+        "athletes": [
+            {
+                "name": "Trevor O'Nan",
+                "vdot": 46
+            },
+            {
+                "name": "Alexander Jemley",
+                "vdot": null
+            },
+            {
+                "name": "Andrew Reed",
+                "vdot": null
+            },
+            {
+                "name": "Garrett Pate",
+                "vdot": null
+            },
+            {
+                "name": "Ian Vickerstaff",
+                "vdot": null
+            },
+            {
+                "name": "John Hagedorn",
+                "vdot": null
+            },
+            {
+                "name": "Sawyer Gates",
+                "vdot": null
+            },
+            {
+                "name": "Thomas Dusza",
+                "vdot": null
+            },
+            {
+                "name": "Zach Reed",
+                "vdot": null
+            }
+        ],
+        "paces": {
+            "200m @ MILE": "46s",
+            "400m @ 5K": "1:40",
+            "200m @ 800": "42s"
+        }
+    }
+];
+
+
+// Parse workout description to get rep structure
+function parseWorkout(workoutDesc) {
+    const reps = [];
+    
+    // Pattern: number x distance @ pace
+    const pattern = /(\d+)x(\d+)@(\w+)/g;
+    let match;
+    
+    while ((match = pattern.exec(workoutDesc)) !== null) {
+        reps.push({
+            count: parseInt(match[1]),
+            distance: match[2],
+            pace: match[3].toUpperCase()
+        });
+    }
+    
+    return reps;
+}
+
+// Generate print view for all groups
+function printGroupSheets() {
+    const workoutDesc = document.getElementById('workoutDesc').textContent;
+    const reps = parseWorkout(workoutDesc);
+    const printContainer = document.getElementById('printContainer');
+    
+    // Clear previous content
+    printContainer.innerHTML = '';
+    
+    // Generate a page for each group
+    groupsData.forEach((group, index) => {
+        if (group.name.includes('Unassigned')) return; // Skip unassigned
+        
+        const page = document.createElement('div');
+        page.className = 'print-page';
+        
+        // Header
+        const header = document.createElement('div');
+        header.className = 'print-group-header';
+        header.innerHTML = `
+            <div class="print-group-title">${group.name}</div>
+            <div class="print-workout-desc">${workoutDesc}</div>
+            <div class="print-paces">
+                ${Object.entries(group.paces).map(([label, pace]) => 
+                    `<span class="print-pace-item"><strong>${label}:</strong> ${pace}</span>`
+                ).join(' | ')}
+            </div>
+        `;
+        page.appendChild(header);
+        
+        // Table
+        const table = document.createElement('table');
+        table.className = 'print-table';
+        
+        // Table header
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+        headerRow.innerHTML = '<th class="name-col">Athlete</th>';
+        
+        reps.forEach((rep, repIndex) => {
+            for (let i = 1; i <= rep.count; i++) {
+                headerRow.innerHTML += `<th class="rep-col">${rep.distance}m<br/>#${i}</th>`;
+            }
+        });
+        
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+        
+        // Table body
+        const tbody = document.createElement('tbody');
+        group.athletes.forEach(athlete => {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td class="name-col">${athlete.name}</td>`;
+            
+            // Add empty cells for each rep
+            reps.forEach(rep => {
+                for (let i = 0; i < rep.count; i++) {
+                    row.innerHTML += '<td class="rep-col"></td>';
+                }
+            });
+            
+            tbody.appendChild(row);
+        });
+        table.appendChild(tbody);
+        
+        page.appendChild(table);
+        printContainer.appendChild(page);
+    });
+    
+    // Show print container and trigger print
+    printContainer.style.display = 'block';
+    window.print();
+    printContainer.style.display = 'none';
+}
+
+// Load groups on page load (for screen view)
+window.addEventListener('DOMContentLoaded', function() {
+    const container = document.getElementById('groupsContainer');
+    
+    groupsData.forEach(group => {
+        const card = document.createElement('div');
+        card.className = 'group-card';
+        
+        const header = document.createElement('div');
+        header.className = 'group-header';
+        header.textContent = group.name;
+        card.appendChild(header);
+        
+        // Pace section
+        const paceSection = document.createElement('div');
+        paceSection.className = 'pace-section';
+        paceSection.innerHTML = '<h3>Target Paces</h3><div class="pace-grid">';
+        
+        Object.entries(group.paces).forEach(([label, pace]) => {
+            paceSection.innerHTML += `
+                <div class="pace-item">
+                    <div class="pace-label">${label}</div>
+                    <div class="pace-value">${pace}</div>
+                </div>
+            `;
+        });
+        
+        paceSection.innerHTML += '</div>';
+        card.appendChild(paceSection);
+        
+        // Athletes list
+        const ul = document.createElement('ul');
+        ul.className = 'athlete-list';
+        
+        group.athletes.forEach(athlete => {
+            const li = document.createElement('li');
+            if (!athlete.vdot) li.className = 'manual-entry';
+            li.innerHTML = `
+                <span class="athlete-name">${athlete.name}</span>
+                ${athlete.vdot ? `<span class="vdot-value">VDOT: ${athlete.vdot}</span>` : ''}
+            `;
+            ul.appendChild(li);
+        });
+        
+        card.appendChild(ul);
+        container.appendChild(card);
+    });
+});
+
+</script>
+</body>
+</html>
