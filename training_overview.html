@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STX Tigers · Track 2025-26 Training Overview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green-deep:   #0c1f13;
+      --green-dark:   #122b18;
+      --green-mid:    #1a3d22;
+      --green-accent: #2a6b3a;
+      --gold:         #c8972a;
+      --gold-light:   #e8b84b;
+      --gold-pale:    #f5dfa0;
+      --silver:       #8daa93;
+      --line:         rgba(80,160,100,0.18);
+      --text:         #e4efe6;
+      --text-dim:     #5e8c68;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--green-deep);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(120deg, #09160d 0%, var(--green-dark) 55%, #152e1a 100%);
+      border-bottom: 4px solid var(--gold);
+      padding: 26px 40px 20px;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* decorative diagonal stripe */
+    header::before {
+      content: '';
+      position: absolute;
+      right: -30px; top: -20px;
+      width: 180px; height: 180px;
+      background: rgba(200, 151, 42, 0.07);
+      transform: rotate(30deg);
+      pointer-events: none;
+    }
+
+    .header-badge {
+      background: var(--gold);
+      color: var(--green-deep);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 2px;
+      margin-right: 18px;
+      white-space: nowrap;
+    }
+
+    .header-text h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 1.1;
+    }
+
+    .header-text h1 em {
+      font-style: normal;
+      color: var(--gold-light);
+    }
+
+    .header-text p {
+      font-size: 0.78rem;
+      color: var(--silver);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    /* ── CONTAINER ── */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 28px 24px 60px;
+    }
+
+    /* ── LEGEND ── */
+    .legend {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 18px;
+      align-items: center;
+    }
+
+    .legend-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-dim);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: var(--silver);
+    }
+
+    /* ── TAGS ── */
+    .tag {
+      display: inline-block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      padding: 1px 5px;
+      border-radius: 2px;
+      vertical-align: middle;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .v-tag  { background: var(--gold); color: var(--green-deep); }
+    .jv-tag { background: #1c4a26; color: #82e89a; border: 1px solid #2e7a3a; }
+
+    /* ── TABLE ── */
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 6px;
+      border: 1px solid var(--line);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    thead tr {
+      background: var(--green-mid);
+      border-bottom: 2px solid var(--gold);
+    }
+
+    thead th {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      padding: 11px 14px;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    /* Meet column header gets gold accent */
+    thead th:nth-child(3) {
+      color: var(--gold-pale);
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--line);
+      background: var(--green-dark);
+      transition: background 0.12s;
+    }
+
+    tbody tr:nth-child(even) {
+      background: rgba(9, 20, 11, 0.7);
+    }
+
+    tbody tr:hover {
+      background: rgba(42, 107, 58, 0.18);
+    }
+
+    td {
+      padding: 11px 14px;
+      vertical-align: top;
+      line-height: 1.55;
+    }
+
+    .week-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 0.92rem;
+      color: var(--gold-light);
+      white-space: nowrap;
+      min-width: 52px;
+    }
+
+    .date-cell {
+      color: var(--silver);
+      font-size: 0.80rem;
+      white-space: nowrap;
+      min-width: 50px;
+    }
+
+    .meet-cell {
+      color: var(--gold-pale);
+      font-weight: 500;
+      min-width: 120px;
+      font-size: 0.83rem;
+    }
+
+    .workout-cell {
+      min-width: 175px;
+      max-width: 265px;
+      color: var(--text);
+    }
+
+    /* Stacked V / JV within one cell */
+    .wo-line {
+      display: block;
+      padding-bottom: 6px;
+      margin-bottom: 6px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .wo-line:last-child {
+      padding-bottom: 0;
+      margin-bottom: 0;
+      border-bottom: none;
+    }
+
+    .empty {
+      color: var(--text-dim);
+      font-size: 0.75rem;
+    }
+
+    .generated {
+      text-align: right;
+      margin-top: 16px;
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      letter-spacing: 0.07em;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-badge">Tigers</div>
+  <div class="header-text">
+    <h1>St. Xavier <em>Track 2025–26</em></h1>
+    <p>Training Overview · Indoor &amp; Outdoor Season</p>
+  </div>
+</header>
+
+<div class="container">
+  <div class="legend">
+    <span class="legend-label">Key:</span>
+    <span class="legend-item"><span class="tag v-tag">V</span> Varsity</span>
+    <span class="legend-item"><span class="tag jv-tag">JV</span> JV</span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Week</th>
+          <th>Start</th>
+          <th>Meet</th>
+          <th>Workout 1</th><th>Workout 2</th><th>Workout 3</th><th>Workout 4</th><th>Workout 5</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="week-num">Wk 35</td>
+          <td class="date-cell">1/19</td>
+          <td class="meet-cell">Centre Indoor Games</td>
+          <td class="workout-cell">fartlek: 5-4-3-2-1 <span class='tag v-tag'>V</span></td><td class="workout-cell">hills <span class='tag v-tag'>V</span></td><td class="workout-cell">LR - Progression <span class='tag jv-tag'>JV</span></td><td class="workout-cell">race <span class='tag v-tag'>V</span></td><td class="empty">—</td>
+        </tr>
+        <tr>
+          <td class="week-num">Wk 36</td>
+          <td class="date-cell">1/26</td>
+          <td class="empty">—</td>
+          <td class="workout-cell">hills</td><td class="workout-cell">race</td><td class="workout-cell">Fartlek: 5x5:00@T-2:00@Easy</td><td class="workout-cell">LR - Progression</td><td class="empty">—</td>
+        </tr>
+        <tr>
+          <td class="week-num">Wk 37</td>
+          <td class="date-cell">2/2</td>
+          <td class="meet-cell">Norton (JV), Eastern (V)</td>
+          <td class="workout-cell">hills <span class='tag v-tag'>V</span></td><td class="workout-cell"><span class='wo-line'>fartlek <span class='tag v-tag'>V</span></span><span class='wo-line'>race <span class='tag jv-tag'>JV</span></span></td><td class="workout-cell">race <span class='tag v-tag'>V</span></td><td class="workout-cell"><span class='wo-line'>race <span class='tag v-tag'>V</span></span><span class='wo-line'>LR - Progression <span class='tag jv-tag'>JV</span></span></td><td class="workout-cell">LR <span class='tag v-tag'>V</span></td>
+        </tr>
+        <tr>
+          <td class="week-num">Wk 38</td>
+          <td class="date-cell">2/9</td>
+          <td class="meet-cell">JCPS #2 (JV), President's Day Inv. (V)</td>
+          <td class="workout-cell">hills <span class='tag v-tag'>V</span></td><td class="workout-cell"><span class='wo-line'>Fartlek: 10x1:00@mile - 2:00@easy <span class='tag v-tag'>V</span></span><span class='wo-line'>Fartlek: 5x1:00@mile - 2:00@easy <span class='tag jv-tag'>JV</span></span></td><td class="workout-cell">race <span class='tag jv-tag'>JV</span></td><td class="workout-cell"><span class='wo-line'>race <span class='tag v-tag'>V</span></span><span class='wo-line'>LR - Progression <span class='tag jv-tag'>JV</span></span></td><td class="workout-cell">LR - Progression <span class='tag v-tag'>V</span></td>
+        </tr>
+        <tr>
+          <td class="week-num">Wk 39</td>
+          <td class="date-cell">2/16</td>
+          <td class="meet-cell">Norton HS Games (V)</td>
+          <td class="workout-cell">2x200@mile+12x400@5k (200j) + 2x200@800 <span class='tag v-tag'>V</span></td><td class="workout-cell">Pre Tempo + 6x200 cut down <span class='tag v-tag'>V</span></td><td class="workout-cell">12x200@mile (200j)+4x200@800 (45s) <span class='tag jv-tag'>JV</span></td><td class="workout-cell">race <span class='tag v-tag'>V</span></td><td class="empty">—</td>
+        </tr>
+        <tr>
+          <td class="week-num">Wk 40</td>
+          <td class="date-cell">2/23</td>
+          <td class="empty">—</td>
+          <td class="workout-cell">2x200@mile (200j) +8x600@3k (400j) + 4x200@800 (60s)</td><td class="workout-cell">2x200@800 (60s) +2x300@800 (90s) +1x400@800 (3:00) +2x300@800 (90s) +2x200@800 (60s)</td><td class="workout-cell">LR - Progression</td><td class="empty">—</td><td class="empty">—</td>
+        </tr>
+        <tr>
+          <td class="week-num">Wk 41</td>
+          <td class="date-cell">3/2</td>
+          <td class="meet-cell">Indoor State</td>
+          <td class="workout-cell"><span class='wo-line'>3x[600@3k (2:00) + 400@mile (2:00) + 200@800 (1:00)] <span class='tag v-tag'>V</span></span><span class='wo-line'>2x200@mile (200j) +12x400@5k (200j) + 2x200@800 (60s) <span class='tag jv-tag'>JV</span></span></td><td class="workout-cell"><span class='wo-line'>race <span class='tag v-tag'>V</span></span><span class='wo-line'>2x200@mile (200j) + 10x300@mile (200j) + 4x200@800 (60s) <span class='tag jv-tag'>JV</span></span></td><td class="workout-cell">2x200@mile (200j) + 12x200@800 (60s) <span class='tag v-tag'>V</span></td><td class="empty">—</td><td class="empty">—</td>
+        </tr>
+        <tr>
+          <td class="week-num">Wk 42</td>
+          <td class="date-cell">3/9</td>
+          <td class="empty">—</td>
+          <td class="workout-cell">Time Trial + 400s@3k</td><td class="workout-cell">Split 400s: 300 (1:00) 100 (full recovery) + 200 (1:00) 200 (full recovery) + 300 (1:00) 100</td><td class="workout-cell">LR - Progression</td><td class="empty">—</td><td class="empty">—</td>
+        </tr>
+        <tr>
+          <td class="week-num">Wk 43</td>
+          <td class="date-cell">3/16</td>
+          <td class="meet-cell">Adidas Indoor Nationals</td>
+          <td class="workout-cell">Time Trial <span class='tag v-tag'>V</span></td><td class="workout-cell">10x400@mile + 6x200@800 <span class='tag v-tag'>V</span></td><td class="workout-cell"><span class='wo-line'>race <span class='tag v-tag'>V</span></span><span class='wo-line'>Pre Tempo (30/40) +6x200 <span class='tag jv-tag'>JV</span></span></td><td class="empty">—</td><td class="empty">—</td>
+        </tr>
+        <tr>
+          <td class="week-num">Wk 44</td>
+          <td class="date-cell">3/23</td>
+          <td class="meet-cell">Johnny Conn</td>
+          <td class="workout-cell">2x200@mile (200j) +8x600@3k (400j) + 4x200@800 (60s) <span class='tag v-tag'>V</span></td><td class="workout-cell">12x200@800 (45s) <span class='tag v-tag'>V</span></td><td class="workout-cell"><span class='wo-line'>Race <span class='tag v-tag'>V</span></span><span class='wo-line'>10x300@mile <span class='tag jv-tag'>JV</span></span></td><td class="empty">—</td><td class="empty">—</td>
+        </tr>
+        <tr>
+          <td class="week-num">Wk 45</td>
+          <td class="date-cell">3/30</td>
+          <td class="empty">—</td>
+          <td class="workout-cell">2x200@mile+12x400@3k (200j) + 2x200@800</td><td class="workout-cell">Split 400s: 300 (1:00) 100 (full recovery) + 200 (1:00) 200 (full recovery) + 300 (1:00) 100</td><td class="workout-cell">LR - Progression</td><td class="empty">—</td><td class="empty">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="generated">Generated 2/22/2026</p>
+</div>
+
+</body>
+</html>

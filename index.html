@@ -283,6 +283,50 @@
             font-size: 0.95rem;
         }
         
+        .header-nav {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .header-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(255,255,255,0.15);
+            color: white;
+            text-decoration: none;
+            padding: 10px 22px;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            border: 2px solid rgba(255,255,255,0.4);
+            transition: all 0.25s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .header-btn:hover {
+            background: rgba(255,255,255,0.28);
+            border-color: rgba(255,255,255,0.75);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+        }
+
+        .header-btn.primary {
+            background: #c8972a;
+            border-color: #c8972a;
+            color: #fff;
+        }
+
+        .header-btn.primary:hover {
+            background: #e8b84b;
+            border-color: #e8b84b;
+            color: #1a2e1a;
+        }
+
         @media (max-width: 768px) {
             body {
                 padding: 10px;
@@ -325,6 +369,11 @@
             <h1>🏃‍♂️ ST. XAVIER XC/TRACK & FIELD</h1>
             <p>2025-26 Training Hub</p>
             <div class="season-info">Indoor Track → Outdoor Track → Summer Base Building</div>
+            <nav class="header-nav">
+                <a href="training_overview.html" class="header-btn primary">
+                    &#128203; Weekly Overview
+                </a>
+            </nav>
         </div>
         
         <div class="content">
@@ -374,9 +423,7 @@
                         <div class="week-number">Week 36</div>
                         <div class="week-dates">January 26 - February 1</div>
                         <ul class="week-highlights">
-                            <li>Snow/NTI</li>
-                            <li>Meet: Norton JCPS Meet 2 (JV) - rescheduled to 2/13</li>
-                            <li>Meet: Southern Showcase @ Norton (V)</li>
+                            <li>Meet: Norton JCPS Meet 2 (V)</li>
                         </ul>
                     </a>
 
@@ -393,7 +440,6 @@
                         <div class="week-number">Week 38</div>
                         <div class="week-dates">February 9 - February 15</div>
                         <ul class="week-highlights">
-                            <li>Meet: Norton JCPS Meet 2 (JV)</li>
                             <li>Meet: President's Day @ Norton (V)</li>
                             <li>Winter Break (Friday)</li>
                         </ul>
