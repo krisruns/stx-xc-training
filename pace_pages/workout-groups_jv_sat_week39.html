@@ -561,22 +561,57 @@ const groupsData = [
 
 
 // Parse workout description to get rep structure
+// Handles both simple patterns (12x400@5k) and bracketed patterns (3x[600@3k + 400@mile + 200@800])
 function parseWorkout(workoutDesc) {
-    const reps = [];
+    const allReps = [];
     
-    // Pattern: number x distance @ pace
-    const pattern = /(\d+)x(\d+)@(\w+)/g;
-    let match;
+    // First, check for bracketed repetitions: 3x[600@3k + 400@mile + 200@800]
+    const bracketPattern = /(\d+)x\[(.*?)\]/g;
+    let bracketMatch;
     
-    while ((match = pattern.exec(workoutDesc)) !== null) {
-        reps.push({
-            count: parseInt(match[1]),
-            distance: match[2],
-            pace: match[3].toUpperCase()
+    while ((bracketMatch = bracketPattern.exec(workoutDesc)) !== null) {
+        const outerReps = parseInt(bracketMatch[1]);  // The "3" in "3x[...]"
+        const bracketedContent = bracketMatch[2];      // Everything inside brackets
+        
+        // Find all distance@pace patterns inside the brackets
+        const innerPattern = /(\d+)(?:m)?@(\w+)/g;
+        const innerDistances = [];
+        let innerMatch;
+        
+        while ((innerMatch = innerPattern.exec(bracketedContent)) !== null) {
+            innerDistances.push({
+                distance: innerMatch[1],
+                pace: innerMatch[2].toUpperCase()
+            });
+        }
+        
+        // Expand the bracketed pattern: if it's 3x[600, 400, 200], create 9 columns
+        for (let i = 0; i < outerReps; i++) {
+            for (const item of innerDistances) {
+                allReps.push({
+                    count: 1,  // Each column is a single rep
+                    distance: item.distance,
+                    pace: item.pace
+                });
+            }
+        }
+    }
+    
+    // Then, look for non-bracketed patterns: 12x400@5k
+    // Remove bracketed sections first to avoid double-counting
+    const descWithoutBrackets = workoutDesc.replace(/\d+x\[.*?\]/g, '');
+    const simplePattern = /(\d+)x(\d+)(?:m)?@(\w+)/g;
+    let simpleMatch;
+    
+    while ((simpleMatch = simplePattern.exec(descWithoutBrackets)) !== null) {
+        allReps.push({
+            count: parseInt(simpleMatch[1]),
+            distance: simpleMatch[2],
+            pace: simpleMatch[3].toUpperCase()
         });
     }
     
-    return reps;
+    return allReps;
 }
 
 // Generate print view for all groups
@@ -619,8 +654,14 @@ function printGroupSheets() {
         headerRow.innerHTML = '<th class="name-col">Athlete</th>';
         
         reps.forEach((rep, repIndex) => {
-            for (let i = 1; i <= rep.count; i++) {
-                headerRow.innerHTML += `<th class="rep-col">${rep.distance}m<br/>#${i}</th>`;
+            if (rep.count > 1) {
+                // Multiple reps: number them (e.g., "400m #1", "400m #2")
+                for (let i = 1; i <= rep.count; i++) {
+                    headerRow.innerHTML += `<th class="rep-col">${rep.distance}m<br/>#${i}</th>`;
+                }
+            } else {
+                // Single rep (from bracketed patterns): just show distance
+                headerRow.innerHTML += `<th class="rep-col">${rep.distance}m</th>`;
             }
         });
         
