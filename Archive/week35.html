@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STX Training - Week 35</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        h1 {
+            color: white;
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .subtitle {
+            color: rgba(255,255,255,0.95);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        .totals {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .total {
+            flex: 1;
+            min-width: 120px;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+        .total:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .total.active {
+            border-color: #333;
+            box-shadow: 0 0 0 2px white, 0 0 0 5px #333;
+        }
+        .gold { background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); }
+        .green { background: linear-gradient(135deg, #90EE90 0%, #32CD32 100%); }
+        .white { background: linear-gradient(135deg, #F0F0F0 0%, #D3D3D3 100%); }
+        .freshman { background: linear-gradient(135deg, #87CEEB 0%, #4682B4 100%); }
+        .total-label {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .total-miles {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #2c3e50;
+        }
+        .day {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #4a7c59;
+            transition: all 0.3s ease;
+        }
+        .day:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateX(5px);
+        }
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #dee2e6;
+        }
+        .day-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2c5530;
+        }
+        .day-date {
+            color: #6c757d;
+            font-size: 0.95rem;
+        }
+        .workout-section {
+            margin-bottom: 12px;
+        }
+        .workout-section h3 {
+            color: #4a7c59;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .workout-item {
+            padding: 10px 15px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #e9ecef;
+        }
+        .workout-content {
+            flex: 1;
+        }
+        .workout-description {
+            color: #495057;
+            font-size: 0.95rem;
+        }
+        .workout-miles {
+            font-weight: 700;
+            color: #2c5530;
+            font-size: 1.1rem;
+            white-space: nowrap;
+            margin-left: 15px;
+        }
+        .reference-links {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #e9ecef;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .reference-link {
+            display: inline-block;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #4a7c59 0%, #2c5530 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .reference-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 124, 89, 0.4);
+        }
+        .pace-chart-links {
+            margin-top: 12px;
+            padding: 12px;
+            background: #e8f5e8;
+            border-radius: 8px;
+            border: 2px solid #4a7c59;
+        }
+        .pace-links-label {
+            font-weight: 700;
+            color: #2c5530;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        .pace-chart-btn {
+            display: inline-block;
+            padding: 6px 14px;
+            background: white;
+            color: #2c5530;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: 2px solid #4a7c59;
+            margin-right: 8px;
+            margin-bottom: 6px;
+            transition: all 0.2s ease;
+        }
+        .pace-chart-btn:hover {
+            background: #4a7c59;
+            color: white;
+            transform: translateY(-1px);
+        }
+        @media (max-width: 768px) {
+            .totals { flex-direction: column; }
+            .workout-item { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .workout-miles { align-self: flex-end; }
+        }
+    </style>
+</head>
+<body>
+    <h1>🏃 STX Training - Week 35</h1>
+    <div class="subtitle"><strong>1/19</strong></div>
+    
+    <div class="container">
+        <div class="totals">
+            <div class="total gold" onclick="filterGroup('Gold')" id="total-Gold">
+                <div class="total-label">Gold</div>
+                <div class="total-miles">49</div>
+            </div>
+            <div class="total green" onclick="filterGroup('Green')" id="total-Green">
+                <div class="total-label">Green</div>
+                <div class="total-miles">41</div>
+            </div>
+            <div class="total white" onclick="filterGroup('White')" id="total-White">
+                <div class="total-label">White</div>
+                <div class="total-miles">34</div>
+            </div>
+            <div class="total freshman" onclick="filterGroup('Freshman')" id="total-Freshman">
+                <div class="total-label">Freshman</div>
+                <div class="total-miles">27</div>
+            </div>
+        </div>
+
+        <div class="day">
+            <div class="day-header">
+                <div class="day-name">Monday</div>
+            </div>
+            
+            <div class="workout-section">
+                <h3>PRE</h3>
+                <div class="workout-item">
+                    <div class="workout-content">
+                        <div class="workout-description">Warm-up</div>
+                    </div>
+                    <div class="workout-miles"> mi</div>
+                </div>
+            </div>
+            
+            <div class="workout-section">
+                <h3>RUN</h3>
+                <div class="workout-item">
+                    <div class="workout-content">
+                        <div class="workout-description"></div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="workout-section">
+                <h3>POST</h3>
+                <div class="workout-item">
+                    <div class="workout-content">
+                        <div class="workout-description">Cool-down</div>
+                    </div>
+                    <div class="workout-miles"> mi</div>
+                </div>
+            </div>
+            
+            <div class="reference-links">
+                <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="reference-link">Movement & Warmup</a>
+                <a href="STX_XC_Foot_Drills_Reference.html" target="_blank" class="reference-link">Foot Drills</a>
+                <a href="mobility-strength.html" target="_blank" class="reference-link">Mobility & Strength</a>
+            </div>
+        </div>
+
+        <div class="day">
+            <div class="day-header">
+                <div class="day-name">Tuesday</div>
+            </div>
+            
+            <div class="workout-section">
+                <h3>PRE</h3>
+                <div class="workout-item">
+                    <div class="workout-content">
+                        <div class="workout-description">Warm-up</div>
+                    </div>
+                    <div class="workout-miles"> mi</div>
+                </div>
+            </div>
+            
+            <div class="workout-section">
+                <h3>RUN</h3>
+                <div class="workout-item">
+                    <div class="workout-content">
+                        <div class="workout-description"></div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="workout-section">
+                <h3>POST</h3>
+                <div class="workout-item">
+                    <div class="workout-content">
+                        <div class="workout-description">Cool-down</div>
+                    </div>
+                    <div class="workout-miles"> mi</div>
+                </div>
+            </div>
+            
+            <div class="reference-links">
+                <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="reference-link">Movement & Warmup</a>
+                <a href="STX_XC_Foot_Drills_Reference.html" target="_blank" class="reference-link">Foot Drills</a>
+                <a href="mobility-strength.html" target="_blank" class="reference-link">Mobility & Strength</a>
+            </div>
+        </div>
+
+        <div class="day">
+            <div class="day-header">
+                <div class="day-name">Wednesday</div>
+            </div>
+            
+            <div class="workout-section">
+                <h3>PRE</h3>
+                <div class="workout-item">
+                    <div class="workout-content">
+                        <div class="workout-description">Warm-up</div>
+                    </div>
+                    <div class="workout-miles"> mi</div>
+                </div>
+            </div>
+            
+            <div class="workout-section">
+                <h3>RUN</h3>
+                <div class="workout-item">
+                    <div class="workout-content">
+                        <div class="workout-description"></div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="workout-section">
+                <h3>POST</h3>
+                <div class="workout-item">
+                    <div class="workout-content">
+                        <div class="workout-description">Cool-down</div>
+                    </div>
+                    <div class="workout-miles"> mi</div>
+                </div>
+            </div>
+            
+            <div class="reference-links">
+                <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="reference-link">Movement & Warmup</a>
+                <a href="STX_XC_Foot_Drills_Reference.html" target="_blank" class="reference-link">Foot Drills</a>
+                <a href="mobility-strength.html" target="_blank" class="reference-link">Mobility & Strength</a>
+            </div>
+        </div>
+
+        <div class="day">
+            <div class="day-header">
+                <div class="day-name">Thursday</div>
+            </div>
+            
+            <div class="workout-section">
+                <h3>PRE</h3>
+                <div class="workout-item">
+                    <div class="workout-content">
+                        <div class="workout-description">Warm-up</div>
+                    </div>
+                    <div class="workout-miles"> mi</div>
+                </div>
+            </div>
+            
+            <div class="workout-section">
+                <h3>RUN</h3>
+                <div class="workout-item">
+                    <div class="workout-content">
+                        <div class="workout-description"></div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="workout-section">
+                <h3>POST</h3>
+                <div class="workout-item">
+                    <div class="workout-content">
+                        <div class="workout-description">Cool-down</div>
+                    </div>
+                    <div class="workout-miles"> mi</div>
+                </div>
+            </div>
+            
+            <div class="reference-links">
+                <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="reference-link">Movement & Warmup</a>
+                <a href="STX_XC_Foot_Drills_Reference.html" target="_blank" class="reference-link">Foot Drills</a>
+                <a href="mobility-strength.html" target="_blank" class="reference-link">Mobility & Strength</a>
+            </div>
+        </div>
+
+        <div class="day">
+            <div class="day-header">
+                <div class="day-name">Friday</div>
+            </div>
+            
+            <div class="workout-section">
+                <h3>PRE</h3>
+                <div class="workout-item">
+                    <div class="workout-content">
+                        <div class="workout-description">Warm-up</div>
+                    </div>
+                    <div class="workout-miles"> mi</div>
+                </div>
+            </div>
+            
+            <div class="workout-section">
+                <h3>RUN</h3>
+                <div class="workout-item">
+                    <div class="workout-content">
+                        <div class="workout-description"></div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="workout-section">
+                <h3>POST</h3>
+                <div class="workout-item">
+                    <div class="workout-content">
+                        <div class="workout-description">Cool-down</div>
+                    </div>
+                    <div class="workout-miles"> mi</div>
+                </div>
+            </div>
+            
+            <div class="reference-links">
+                <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="reference-link">Movement & Warmup</a>
+                <a href="STX_XC_Foot_Drills_Reference.html" target="_blank" class="reference-link">Foot Drills</a>
+                <a href="mobility-strength.html" target="_blank" class="reference-link">Mobility & Strength</a>
+            </div>
+        </div>
+
+        <div class="day">
+            <div class="day-header">
+                <div class="day-name">Saturday</div>
+            </div>
+            
+            <div class="workout-section">
+                <h3>PRE</h3>
+                <div class="workout-item">
+                    <div class="workout-content">
+                        <div class="workout-description">Warm-up</div>
+                    </div>
+                    <div class="workout-miles"> mi</div>
+                </div>
+            </div>
+            
+            <div class="workout-section">
+                <h3>RUN</h3>
+                <div class="workout-item">
+                    <div class="workout-content">
+                        <div class="workout-description"></div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="workout-section">
+                <h3>POST</h3>
+                <div class="workout-item">
+                    <div class="workout-content">
+                        <div class="workout-description">Cool-down</div>
+                    </div>
+                    <div class="workout-miles"> mi</div>
+                </div>
+            </div>
+            
+            <div class="reference-links">
+                <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="reference-link">Movement & Warmup</a>
+                <a href="STX_XC_Foot_Drills_Reference.html" target="_blank" class="reference-link">Foot Drills</a>
+                <a href="mobility-strength.html" target="_blank" class="reference-link">Mobility & Strength</a>
+            </div>
+        </div>
+
+        <div class="day">
+            <div class="day-header">
+                <div class="day-name">Sunday</div>
+            </div>
+            
+            <div class="workout-section">
+                <h3>PRE</h3>
+                <div class="workout-item">
+                    <div class="workout-content">
+                        <div class="workout-description">Warm-up</div>
+                    </div>
+                    <div class="workout-miles"> mi</div>
+                </div>
+            </div>
+            
+            <div class="workout-section">
+                <h3>RUN</h3>
+                <div class="workout-item">
+                    <div class="workout-content">
+                        <div class="workout-description"></div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="workout-section">
+                <h3>POST</h3>
+                <div class="workout-item">
+                    <div class="workout-content">
+                        <div class="workout-description">Cool-down</div>
+                    </div>
+                    <div class="workout-miles"> mi</div>
+                </div>
+            </div>
+            
+            <div class="reference-links">
+                <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="reference-link">Movement & Warmup</a>
+                <a href="STX_XC_Foot_Drills_Reference.html" target="_blank" class="reference-link">Foot Drills</a>
+                <a href="mobility-strength.html" target="_blank" class="reference-link">Mobility & Strength</a>
+            </div>
+        </div>
+
+    </div>
+    
+    <script>
+        let activeGroup = null;
+        
+        function filterGroup(group) {
+            // Toggle active state
+            if (activeGroup === group) {
+                activeGroup = null;
+                document.querySelectorAll('.total').forEach(t => t.classList.remove('active'));
+            } else {
+                activeGroup = group;
+                document.querySelectorAll('.total').forEach(t => t.classList.remove('active'));
+                document.getElementById('total-' + group).classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>

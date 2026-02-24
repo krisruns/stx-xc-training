@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>stx_master_schedule.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="st-xavier-xc-complete-training-schedule">ST. XAVIER XC COMPLETE TRAINING SCHEDULE</h1>
+<h2 id="all-groups---weeks-8-23-july-14---november-2-2025">All Groups - Weeks 8-23 (July 14 - November 2, 2025)</h2>
+<h2 id="week-8-july-14-20-2025---summer-peak-phase"><strong>WEEK 8: JULY 14-20, 2025</strong> - Summer Peak Phase</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Day</th>
+<th style="text-align:left">Freshman (19 mi)</th>
+<th style="text-align:left">White (32 mi)</th>
+<th style="text-align:left">Green (40 mi)</th>
+<th style="text-align:left">Gold (51 mi)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Mon</strong></td>
+<td style="text-align:left">Easy <em>2mi</em></td>
+<td style="text-align:left">Easy <em>4.5mi</em></td>
+<td style="text-align:left">Easy <em>5.5mi</em></td>
+<td style="text-align:left">Easy <em>7.5mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Tue</strong></td>
+<td style="text-align:left"><strong>4x(1:00 on/4:00 off)</strong> <em>4mi</em></td>
+<td style="text-align:left"><strong>5x(1:00 on/4:00 off)</strong> <em>5.5mi</em></td>
+<td style="text-align:left"><strong>6x(1:00 on/4:00 off)</strong> <em>6.5mi</em></td>
+<td style="text-align:left"><strong>7x(1:00 on/4:00 off)</strong> <em>8mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Wed</strong></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>5.5mi</em></td>
+<td style="text-align:left">Easy <em>7mi</em></td>
+<td style="text-align:left">Easy <em>9mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Thu</strong></td>
+<td style="text-align:left"><strong>Hill Introduction</strong> <em>4mi</em></td>
+<td style="text-align:left"><strong>Hill Repeats</strong> <em>5.5mi</em></td>
+<td style="text-align:left"><strong>Hill Repeats</strong> <em>6.5mi</em></td>
+<td style="text-align:left"><strong>Hill Repeats</strong> <em>8mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Fri</strong></td>
+<td style="text-align:left">Easy <em>2.5mi</em></td>
+<td style="text-align:left">Easy <em>4.5mi</em></td>
+<td style="text-align:left">Easy <em>6mi</em></td>
+<td style="text-align:left">Easy <em>7.5mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sat</strong></td>
+<td style="text-align:left"><strong>Long Run</strong> <em>3.5mi</em></td>
+<td style="text-align:left"><strong>Long Run</strong> <em>6.5mi</em></td>
+<td style="text-align:left"><strong>Long Run</strong> <em>8.5mi</em></td>
+<td style="text-align:left"><strong>Long Run</strong> <em>11mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sun</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="week-9-july-21-27-2025---summer-peak-phase-time-trial"><strong>WEEK 9: JULY 21-27, 2025</strong> - Summer Peak Phase (Time Trial)</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Day</th>
+<th style="text-align:left">Freshman (20 mi)</th>
+<th style="text-align:left">White (35 mi)</th>
+<th style="text-align:left">Green (43 mi)</th>
+<th style="text-align:left">Gold (51 mi)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Mon</strong></td>
+<td style="text-align:left">Easy <em>2.5mi</em></td>
+<td style="text-align:left">Easy <em>5.5mi</em></td>
+<td style="text-align:left">Easy <em>6.5mi</em></td>
+<td style="text-align:left">Easy <em>8.5mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Tue</strong></td>
+<td style="text-align:left"><strong>5min steady → 5min faster → 5min fastest</strong> <em>4mi</em></td>
+<td style="text-align:left"><strong>6min steady → 6min faster → 6min fastest</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>8min steady → 8min faster → 8min fastest</strong> <em>6.5mi</em></td>
+<td style="text-align:left"><strong>10min steady → 10min faster → 10min fastest</strong> <em>8mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Wed</strong></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>6.5mi</em></td>
+<td style="text-align:left">Easy <em>8mi</em></td>
+<td style="text-align:left">Easy <em>9.5mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Thu</strong></td>
+<td style="text-align:left"><strong>Long Run</strong> <em>4mi</em></td>
+<td style="text-align:left"><strong>Long Run</strong> <em>7mi</em></td>
+<td style="text-align:left"><strong>Long Run</strong> <em>8.5mi</em></td>
+<td style="text-align:left"><strong>Long Run</strong> <em>9mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Fri</strong></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+<td style="text-align:left">Easy <em>4.5mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sat</strong></td>
+<td style="text-align:left"><strong>Time Trial</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>Time Trial</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>Time Trial</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>Time Trial</strong> <em>6mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sun</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><em>2mi</em></td>
+<td style="text-align:left"><em>3.5mi</em></td>
+<td style="text-align:left"><em>5.5mi</em></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="week-10-july-28-august-3-2025---summer-peak-phase"><strong>WEEK 10: JULY 28-AUGUST 3, 2025</strong> - Summer Peak Phase</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Day</th>
+<th style="text-align:left">Freshman (21 mi)</th>
+<th style="text-align:left">White (35 mi)</th>
+<th style="text-align:left">Green (45 mi)</th>
+<th style="text-align:left">Gold (55 mi)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Mon</strong></td>
+<td style="text-align:left">Easy <em>2.5mi</em></td>
+<td style="text-align:left">Easy <em>5mi</em></td>
+<td style="text-align:left">Easy <em>6.5mi</em></td>
+<td style="text-align:left">Easy <em>8mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Tue</strong></td>
+<td style="text-align:left"><strong>1mi@T - 2:00 - 1mi@T + 4x200m@R</strong> <em>4mi</em></td>
+<td style="text-align:left"><strong>1mi@T - 2:00 rest - 1mi@T- 2:00 - 1mi@T + 4-6x200m@R</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>2mi@T - 2:00 - 1mi@T + 4-6x200m@R</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>2mi@T - 2:00 - 1mi@T + 4-6x200m@R</strong> <em>7mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Wed</strong></td>
+<td style="text-align:left">Easy <em>3.5mi</em></td>
+<td style="text-align:left">Easy <em>6.5mi</em></td>
+<td style="text-align:left">Easy <em>8mi</em></td>
+<td style="text-align:left">Easy <em>10mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Thu</strong></td>
+<td style="text-align:left"><strong>Hill Repeats</strong> <em>4mi</em></td>
+<td style="text-align:left"><strong>Hill Repeats</strong> <em>5.5mi</em></td>
+<td style="text-align:left"><strong>Hill Repeats</strong> <em>6.5mi</em></td>
+<td style="text-align:left"><strong>Hill Repeats</strong> <em>8mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Fri</strong></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>5mi</em></td>
+<td style="text-align:left">Easy <em>6.5mi</em></td>
+<td style="text-align:left">Easy <em>8mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sat</strong></td>
+<td style="text-align:left"><strong>Long Run</strong> <em>4mi</em></td>
+<td style="text-align:left"><strong>Long Run</strong> <em>8mi</em></td>
+<td style="text-align:left"><strong>Long Run</strong> <em>10mi</em></td>
+<td style="text-align:left"><strong>Long Run</strong> <em>12mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sun</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="week-11-august-4-10-2025---recovery--race-week"><strong>WEEK 11: AUGUST 4-10, 2025</strong> - (Recovery + Race Week)</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Day</th>
+<th style="text-align:left">Freshman (22 mi)</th>
+<th style="text-align:left">White (30 mi)</th>
+<th style="text-align:left">Green (37 mi)</th>
+<th style="text-align:left">Gold (43 mi)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Mon</strong></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+<td style="text-align:left">Easy <em>5mi</em></td>
+<td style="text-align:left">Easy <em>6mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Tue</strong></td>
+<td style="text-align:left"><strong>4x(2:00 on/3:00 off)</strong> <em>4.5mi</em></td>
+<td style="text-align:left"><strong>5x(2:00 on/3:00 off)</strong> <em>5.5mi</em></td>
+<td style="text-align:left"><strong>6x(2:00 on/3:00 off)</strong> <em>7mi</em></td>
+<td style="text-align:left"><strong>7x(2:00 on/3:00 off)</strong> <em>9mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Wed</strong></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+<td style="text-align:left">Easy <em>5.5mi</em></td>
+<td style="text-align:left">Easy <em>6.5mi</em></td>
+<td style="text-align:left">Easy <em>7.5mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Thu</strong></td>
+<td style="text-align:left"><strong>2mi@T + 4x200m@R</strong> <em>4mi</em></td>
+<td style="text-align:left"><strong>2mi@T - 2:00 - 1mi@T + 4-6x200m@R</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>3mi@T + 4x200m@R</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>3mi@T + 4-6x200m@R</strong> <em>7mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Fri</strong></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sat</strong></td>
+<td style="text-align:left"><strong>2mi Race</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>2mi Race</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>2mi Race</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>2mi Race</strong> <em>6mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sun</strong></td>
+<td style="text-align:left"><em>2.5mi</em></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><em>2.5mi</em></td>
+<td style="text-align:left"><em>3.5mi</em></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="week-12-august-11-17-2025---pre-season-adjustment"><strong>WEEK 12: AUGUST 11-17, 2025</strong> - Pre-Season Adjustment</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Day</th>
+<th style="text-align:left">Freshman (22 mi)</th>
+<th style="text-align:left">White (35 mi)</th>
+<th style="text-align:left">Green (43 mi)</th>
+<th style="text-align:left">Gold (55 mi)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Mon</strong></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>5mi</em></td>
+<td style="text-align:left">Easy <em>6.5mi</em></td>
+<td style="text-align:left">Easy <em>8mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Tue</strong></td>
+<td style="text-align:left"><strong>2mi@T + 4x200m@R</strong> <em>4.5mi</em></td>
+<td style="text-align:left"><strong>3mi@T + 4x200m@R</strong> <em>5.5mi</em></td>
+<td style="text-align:left"><strong>3mi@T - 2min@E - 1mi@T + 4x200m@R</strong> <em>6.5mi</em></td>
+<td style="text-align:left"><strong>3mi@T - 2min@E - 1mi@T + 6x200m@R</strong> <em>8mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Wed</strong></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+<td style="text-align:left">Easy <em>6.5mi</em></td>
+<td style="text-align:left">Easy <em>7.5mi</em></td>
+<td style="text-align:left">Easy <em>10mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Thu</strong></td>
+<td style="text-align:left"><strong>Hill Repeats</strong> <em>4mi</em></td>
+<td style="text-align:left"><strong>Hill Repeats</strong> <em>5.5mi</em></td>
+<td style="text-align:left"><strong>Hill Repeats</strong> <em>6.5mi</em></td>
+<td style="text-align:left"><strong>Hill Repeats</strong> <em>8mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Fri</strong></td>
+<td style="text-align:left">Easy <em>3.5mi</em></td>
+<td style="text-align:left">Easy <em>5mi</em></td>
+<td style="text-align:left">Easy <em>6.5mi</em></td>
+<td style="text-align:left">Easy <em>8mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sat</strong></td>
+<td style="text-align:left"><strong>Long Run</strong> <em>3mi</em></td>
+<td style="text-align:left"><strong>Long Run</strong> <em>7.5mi</em></td>
+<td style="text-align:left"><strong>Long Run</strong> <em>9.5mi</em></td>
+<td style="text-align:left"><strong>Long Run</strong> <em>12mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sun</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="week-13-august-18-24-2025---peak-mileage"><strong>WEEK 13: AUGUST 18-24, 2025</strong> - Peak Mileage</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Day</th>
+<th style="text-align:left">Freshman (23 mi)</th>
+<th style="text-align:left">White (35 mi)</th>
+<th style="text-align:left">Green (45 mi)</th>
+<th style="text-align:left">Gold (55 mi)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Mon</strong></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>5mi</em></td>
+<td style="text-align:left">Easy <em>6.5mi</em></td>
+<td style="text-align:left">Easy <em>8mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Tue</strong></td>
+<td style="text-align:left"><strong>4x(3:00 on/2:00 off)</strong> <em>4.5mi</em></td>
+<td style="text-align:left"><strong>5x(3:00 on/2:00 off)</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>6x(3:00 on/2:00 off)</strong> <em>7.5mi</em></td>
+<td style="text-align:left"><strong>7x(3:00 on/2:00 off)</strong> <em>9mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Wed</strong></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+<td style="text-align:left">Easy <em>6.5mi</em></td>
+<td style="text-align:left">Easy <em>8mi</em></td>
+<td style="text-align:left">Easy <em>10mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Thu</strong></td>
+<td style="text-align:left"><strong>2mi@T + 4x200m@R</strong> <em>4.5mi</em></td>
+<td style="text-align:left"><strong>3mi@T + 4x200m@R</strong> <em>5.5mi</em></td>
+<td style="text-align:left"><strong>2mi@T - (1:00) - 2mi@T + 4x200m@R</strong> <em>6.5mi</em></td>
+<td style="text-align:left"><strong>2mi@T - (1:00) - 2mi@T + 6x200m@R</strong> <em>8mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Fri</strong></td>
+<td style="text-align:left">Easy <em>3.5mi</em></td>
+<td style="text-align:left">Easy <em>5mi</em></td>
+<td style="text-align:left">Easy <em>6.5mi</em></td>
+<td style="text-align:left">Easy <em>8mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sat</strong></td>
+<td style="text-align:left"><strong>Long Run</strong> <em>3.5mi</em></td>
+<td style="text-align:left"><strong>Long Run</strong> <em>7.5mi</em></td>
+<td style="text-align:left"><strong>Long Run</strong> <em>10mi</em></td>
+<td style="text-align:left"><strong>Long Run</strong> <em>12mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sun</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="week-14-august-25-31-2025---peak-mileage-race-week"><strong>WEEK 14: AUGUST 25-31, 2025</strong> - Peak Mileage (Race Week)</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Day</th>
+<th style="text-align:left">Freshman (24 mi)</th>
+<th style="text-align:left">White (35 mi)</th>
+<th style="text-align:left">Green (45 mi)</th>
+<th style="text-align:left">Gold (54 mi)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Mon</strong></td>
+<td style="text-align:left">Easy <em>3.5mi</em></td>
+<td style="text-align:left">Easy <em>5mi</em></td>
+<td style="text-align:left">Easy <em>6.5mi</em></td>
+<td style="text-align:left">Easy <em>8mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Tue</strong></td>
+<td style="text-align:left"><strong>6x300@RP - 200 float</strong> <em>4mi</em></td>
+<td style="text-align:left"><strong>8x300@RP - 200 float</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>10x300@RP - 200 float</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>12x300@RP - 200 float</strong> <em>7mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Wed</strong></td>
+<td style="text-align:left">Easy <em>4.5mi</em></td>
+<td style="text-align:left">Easy <em>6.5mi</em></td>
+<td style="text-align:left">Easy <em>8mi</em></td>
+<td style="text-align:left">Easy <em>9.5mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Thu</strong></td>
+<td style="text-align:left"><strong>2mi@T + 4x200m@R</strong> <em>4mi</em></td>
+<td style="text-align:left"><strong>3mi@T + 4x200m@R</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>4mi@T + 4x200m@R</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>4mi@T + 4-6x200m@R</strong> <em>7mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Fri</strong></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sat</strong></td>
+<td style="text-align:left"><strong>Tiger Run</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>Tiger Run</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>Tiger Run</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>Tiger Run</strong> <em>6mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sun</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><em>4.5mi</em></td>
+<td style="text-align:left"><em>8.5mi</em></td>
+<td style="text-align:left"><em>12.5mi</em></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="week-15-september-1-7-2025---peak-mileage"><strong>WEEK 15: SEPTEMBER 1-7, 2025</strong> - Peak Mileage</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Day</th>
+<th style="text-align:left">Freshman (24 mi)</th>
+<th style="text-align:left">White (35 mi)</th>
+<th style="text-align:left">Green (45 mi)</th>
+<th style="text-align:left">Gold (54 mi)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Mon</strong></td>
+<td style="text-align:left">Easy <em>3.5mi</em></td>
+<td style="text-align:left">Easy <em>5mi</em></td>
+<td style="text-align:left">Easy <em>6.5mi</em></td>
+<td style="text-align:left">Easy <em>8mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Tue</strong></td>
+<td style="text-align:left"><strong>3x800m@RP</strong> <em>4mi</em></td>
+<td style="text-align:left"><strong>4x800m@RP</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>5x800m@RP</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>6x800m@RP</strong> <em>7mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Wed</strong></td>
+<td style="text-align:left">Easy <em>4.5mi</em></td>
+<td style="text-align:left">Easy <em>6.5mi</em></td>
+<td style="text-align:left">Easy <em>8mi</em></td>
+<td style="text-align:left">Easy <em>9.5mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Thu</strong></td>
+<td style="text-align:left"><strong>1mi@T - 3min@E - 1mi@T + 4x200m@R</strong> <em>4.5mi</em></td>
+<td style="text-align:left"><strong>1mi@T - 5min@E - 1mi@T + 4x200m@R</strong> <em>5.5mi</em></td>
+<td style="text-align:left"><strong>1.5mi@T - 5min@E - 1.5mi@T + 4x200m@R</strong> <em>6.5mi</em></td>
+<td style="text-align:left"><strong>2mi@T - 5min@E - 2mi@T + 4-6x200m@R</strong> <em>8mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Fri</strong></td>
+<td style="text-align:left">Easy <em>3.5mi</em></td>
+<td style="text-align:left">Easy <em>5mi</em></td>
+<td style="text-align:left">Easy <em>6.5mi</em></td>
+<td style="text-align:left">Easy <em>8mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sat</strong></td>
+<td style="text-align:left"><strong>Long Run</strong> <em>4mi</em></td>
+<td style="text-align:left"><strong>Long Run</strong> <em>8mi</em></td>
+<td style="text-align:left"><strong>Long Run</strong> <em>10mi</em></td>
+<td style="text-align:left"><strong>Long Run</strong> <em>12mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sun</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="week-16-september-8-14-2025---recovery--race-week"><strong>WEEK 16: SEPTEMBER 8-14, 2025</strong> - (Recovery + Race Week)</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Day</th>
+<th style="text-align:left">Freshman (25 mi)</th>
+<th style="text-align:left">White (35 mi)</th>
+<th style="text-align:left">Green (45 mi)</th>
+<th style="text-align:left">Gold (41 mi)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Mon</strong></td>
+<td style="text-align:left">Easy <em>4.5mi</em></td>
+<td style="text-align:left">Easy <em>5mi</em></td>
+<td style="text-align:left">Easy <em>6.5mi</em></td>
+<td style="text-align:left">Easy <em>6.5mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Tue</strong></td>
+<td style="text-align:left"><strong>8x200m@R</strong> <em>3.5mi</em></td>
+<td style="text-align:left"><strong>10x200m@R</strong> <em>4mi</em></td>
+<td style="text-align:left"><strong>12x200m@R</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>16x200m@R</strong> <em>6mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Wed</strong></td>
+<td style="text-align:left">Easy <em>4.5mi</em></td>
+<td style="text-align:left">Easy <em>6.5mi</em></td>
+<td style="text-align:left">Easy <em>8mi</em></td>
+<td style="text-align:left">Easy <em>7.5mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Thu</strong></td>
+<td style="text-align:left"><strong>2x1mi@T + 4x200m@R</strong> <em>4mi</em></td>
+<td style="text-align:left"><strong>3x1mi@T + 4x200m@R</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>4x1mi@T + 4x200m@R</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>4x1mi@T + 4-6x200m@R</strong> <em>7mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Fri</strong></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+<td style="text-align:left">Easy <em>4.5mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sat</strong></td>
+<td style="text-align:left"><strong>S. Showcase</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>S. Showcase</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>S. Showcase</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>S. Showcase</strong> <em>6mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sun</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><em>5.5mi</em></td>
+<td style="text-align:left"><em>9.5mi</em></td>
+<td style="text-align:left"><strong>REST</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="week-17-september-15-21-2025---race-week"><strong>WEEK 17: SEPTEMBER 15-21, 2025</strong> - (Race Week)</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Day</th>
+<th style="text-align:left">Freshman (25 mi)</th>
+<th style="text-align:left">White (35 mi)</th>
+<th style="text-align:left">Green (45 mi)</th>
+<th style="text-align:left">Gold (54 mi)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Mon</strong></td>
+<td style="text-align:left">Easy <em>3.5mi</em></td>
+<td style="text-align:left">Easy <em>4.5mi</em></td>
+<td style="text-align:left">Easy <em>6.5mi</em></td>
+<td style="text-align:left">Easy <em>8mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Tue</strong></td>
+<td style="text-align:left"><strong>3x1000m@I</strong> <em>4.5mi</em></td>
+<td style="text-align:left"><strong>4x1000m@I</strong> <em>5.5mi</em></td>
+<td style="text-align:left"><strong>5x1000m@I</strong> <em>6.5mi</em></td>
+<td style="text-align:left"><strong>6x1000m@I</strong> <em>8mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Wed</strong></td>
+<td style="text-align:left">Easy <em>4.5mi</em></td>
+<td style="text-align:left">Easy <em>5.5mi</em></td>
+<td style="text-align:left">Easy <em>8mi</em></td>
+<td style="text-align:left">Easy <em>9.5mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Thu</strong></td>
+<td style="text-align:left"><strong>3x1000m@T w/1:00 + 4x200m@R</strong> <em>4.5mi</em></td>
+<td style="text-align:left"><strong>4x1000m@T w/1:00 + 4x200m@R</strong> <em>5.5mi</em></td>
+<td style="text-align:left"><strong>5x1000m@T w/1:00 + 4x200m@R</strong> <em>6.5mi</em></td>
+<td style="text-align:left"><strong>6x1000m@T w/1:00 + 4-6x200m@R</strong> <em>8mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Fri</strong></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sat</strong></td>
+<td style="text-align:left"><strong>Trinity Inv</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>Trinity Inv</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>Trinity Inv</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>Trinity Inv</strong> <em>6mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sun</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><em>4mi</em></td>
+<td style="text-align:left"><em>8mi</em></td>
+<td style="text-align:left"><em>10mi</em></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="week-18-september-22-28-2025---race-week"><strong>WEEK 18: SEPTEMBER 22-28, 2025</strong> - (Race Week)</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Day</th>
+<th style="text-align:left">Freshman (24 mi)</th>
+<th style="text-align:left">White (35 mi)</th>
+<th style="text-align:left">Green (40 mi)</th>
+<th style="text-align:left">Gold (45 mi)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Mon</strong></td>
+<td style="text-align:left">Easy <em>3.5mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+<td style="text-align:left">Easy <em>6mi</em></td>
+<td style="text-align:left">Easy <em>7mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Tue</strong></td>
+<td style="text-align:left"><strong>4x300m@R</strong> <em>3.5mi</em></td>
+<td style="text-align:left"><strong>6x300m@R</strong> <em>4mi</em></td>
+<td style="text-align:left"><strong>8x300m@R</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>10x300m@R</strong> <em>6mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Wed</strong></td>
+<td style="text-align:left">Easy <em>4.5mi</em></td>
+<td style="text-align:left">Easy <em>5mi</em></td>
+<td style="text-align:left">Easy <em>7mi</em></td>
+<td style="text-align:left">Easy <em>8mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Thu</strong></td>
+<td style="text-align:left"><strong>2mi@T + 4x200m@R</strong> <em>4mi</em></td>
+<td style="text-align:left"><strong>2.5mi@T + 4x200m@R</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>3mi@T + 4x200m@R</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>4mi@T + 4-6x200m@R</strong> <em>8mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Fri</strong></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sat</strong></td>
+<td style="text-align:left"><strong>Palatine</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>Palatine</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>Palatine</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>Palatine</strong> <em>6mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sun</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><em>6mi</em></td>
+<td style="text-align:left"><em>5mi</em></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="week-19-september-29-october-5-2025---race-week"><strong>WEEK 19: SEPTEMBER 29-OCTOBER 5, 2025</strong> - (Race Week)</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Day</th>
+<th style="text-align:left">Freshman (23 mi)</th>
+<th style="text-align:left">White (32 mi)</th>
+<th style="text-align:left">Green (40 mi)</th>
+<th style="text-align:left">Gold (50 mi)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Mon</strong></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>4.5mi</em></td>
+<td style="text-align:left">Easy <em>7.5mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Tue</strong></td>
+<td style="text-align:left"><strong>2x1200m@I</strong> <em>4.5mi</em></td>
+<td style="text-align:left"><strong>3x1200m@I</strong> <em>5.5mi</em></td>
+<td style="text-align:left"><strong>4x1200m@I</strong> <em>6.5mi</em></td>
+<td style="text-align:left"><strong>5x1200m@I</strong> <em>8mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Wed</strong></td>
+<td style="text-align:left">Easy <em>3.5mi</em></td>
+<td style="text-align:left">Easy <em>3.5mi</em></td>
+<td style="text-align:left">Easy <em>6mi</em></td>
+<td style="text-align:left">Easy <em>9mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Thu</strong></td>
+<td style="text-align:left"><strong>1mi@T - 3min@E - 1mi@T + 4x200m@R</strong> <em>4.5mi</em></td>
+<td style="text-align:left"><strong>1mi@T - 5min@E - 1mi@T + 4x200m@R</strong> <em>5.5mi</em></td>
+<td style="text-align:left"><strong>1.5mi@T - 5min@E - 1.5mi@T + 4x200m@R</strong> <em>6.5mi</em></td>
+<td style="text-align:left"><strong>2mi@T - 5min@E - 2mi@T + 4-6x200m@R</strong> <em>8mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Fri</strong></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sat</strong></td>
+<td style="text-align:left"><strong>LXC Classic</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>LXC Classic</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>LXC Classic</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>LXC Classic</strong> <em>6mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sun</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><em>3.5mi</em></td>
+<td style="text-align:left"><em>5.5mi</em></td>
+<td style="text-align:left"><em>7.5mi</em></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="week-20-october-6-12-2025---race-week"><strong>WEEK 20: OCTOBER 6-12, 2025</strong> - (Race Week)</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Day</th>
+<th style="text-align:left">Freshman (24 mi)</th>
+<th style="text-align:left">White (28 mi)</th>
+<th style="text-align:left">Green (38 mi)</th>
+<th style="text-align:left">Gold (45 mi)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Mon</strong></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>5mi</em></td>
+<td style="text-align:left">Easy <em>6mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Tue</strong></td>
+<td style="text-align:left"><strong>3x1200m@I</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>4x1200m@I</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>5x1200m@I</strong> <em>7mi</em></td>
+<td style="text-align:left"><strong>5x1200m@I</strong> <em>7mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Wed</strong></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+<td style="text-align:left">Easy <em>6mi</em></td>
+<td style="text-align:left">Easy <em>8mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Thu</strong></td>
+<td style="text-align:left"><strong>8x400m@R</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>10x400m@R</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>12x400m@R</strong> <em>7mi</em></td>
+<td style="text-align:left"><strong>12x400m@R</strong> <em>7mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Fri</strong></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sat</strong></td>
+<td style="text-align:left"><strong>Haunted Woods XC</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>Haunted Woods XC</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>Haunted Woods XC</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>Haunted Woods XC</strong> <em>6mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sun</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><em>3mi</em></td>
+<td style="text-align:left"><em>6mi</em></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="week-21-october-13-19-2025---race-week"><strong>WEEK 21: OCTOBER 13-19, 2025</strong> - (Race Week)</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Day</th>
+<th style="text-align:left">Freshman (21 mi)</th>
+<th style="text-align:left">White (24 mi)</th>
+<th style="text-align:left">Green (32-35 mi)</th>
+<th style="text-align:left">Gold (35-40 mi)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Mon</strong></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+<td style="text-align:left">Easy <em>5mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Tue</strong></td>
+<td style="text-align:left"><strong>2x1600m@I</strong> <em>4mi</em></td>
+<td style="text-align:left"><strong>3x1600m@I</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>4x1600m@I</strong> <em>7mi</em></td>
+<td style="text-align:left"><strong>4x1600m@I</strong> <em>7mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Wed</strong></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+<td style="text-align:left">Easy <em>5mi</em></td>
+<td style="text-align:left">Easy <em>7mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Thu</strong></td>
+<td style="text-align:left"><strong>8x400m@R</strong> <em>4mi</em></td>
+<td style="text-align:left"><strong>10x400m@R</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>12x400m@R</strong> <em>7mi</em></td>
+<td style="text-align:left"><strong>12x400m@R</strong> <em>7mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Fri</strong></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sat</strong></td>
+<td style="text-align:left"><strong>HOKA 2Mil</strong> <em>4mi</em></td>
+<td style="text-align:left"><strong>HOKA 2Mil</strong> <em>4mi</em></td>
+<td style="text-align:left"><strong>HOKA 2Mil</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>HOKA 2Mil</strong> <em>5mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sun</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><em>Rest or 20min</em></td>
+<td style="text-align:left"><em>Rest or 40min</em></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="week-22-october-20-26-2025---xc-pre-state-week-race-week"><strong>WEEK 22: OCTOBER 20-26, 2025</strong> - XC Pre-State Week (Race Week)</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Day</th>
+<th style="text-align:left">Freshman (21-23 mi)</th>
+<th style="text-align:left">White (22-24 mi)</th>
+<th style="text-align:left">Green (30 mi)</th>
+<th style="text-align:left">Gold (33 mi)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Mon</strong></td>
+<td style="text-align:left">Easy <em>2mi</em></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+<td style="text-align:left">Easy <em>5mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Tue</strong></td>
+<td style="text-align:left"><strong>2x2000m@T + 4x200m@R</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>2x2000m@T w/1:00 + 4x200m@R</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>3x2000m@T w/1:00 + 4x200m@R</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>3x2000m@T w/1:00 + 4-6x200m@R</strong> <em>6mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Wed</strong></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>5mi</em></td>
+<td style="text-align:left">Easy <em>6mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Thu</strong></td>
+<td style="text-align:left"><strong>JV Regionals</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>JV Regionals</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>JV Regionals</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>10x300m@R</strong> <em>6mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Fri</strong></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sat</strong></td>
+<td style="text-align:left"><strong>Regionals</strong> <em>3-5mi</em></td>
+<td style="text-align:left"><strong>Regionals</strong> <em>3-5mi</em></td>
+<td style="text-align:left"><strong>Regionals</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>Regionals</strong> <em>6mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sun</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="week-23-october-27-november-2-2025---xc-state-week-race-week"><strong>WEEK 23: OCTOBER 27-NOVEMBER 2, 2025</strong> - XC State Week (Race Week)</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Day</th>
+<th style="text-align:left">Freshman (20-22 mi)</th>
+<th style="text-align:left">White (22-25 mi)</th>
+<th style="text-align:left">Green (28 mi)</th>
+<th style="text-align:left">Gold (30 mi)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Mon</strong></td>
+<td style="text-align:left">Easy <em>2mi</em></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+<td style="text-align:left">Easy <em>5mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Tue</strong></td>
+<td style="text-align:left"><strong>3x1000m@T w/1:00 + 4x200m@R</strong> <em>4.5mi</em></td>
+<td style="text-align:left"><strong>4x1000m@T w/1:00 + 4x200m@R</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>5x1000m@T w/1:00 + 4x200m@R</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>6x1000m@T w/1:00 + 4-6x200m@R</strong> <em>6mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Wed</strong></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+<td style="text-align:left">Easy <em>4mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Thu</strong></td>
+<td style="text-align:left"><strong>10x200m@R</strong> <em>4.5mi</em></td>
+<td style="text-align:left"><strong>12x200m@R</strong> <em>5mi</em></td>
+<td style="text-align:left"><strong>14x200m@R</strong> <em>5.5mi</em></td>
+<td style="text-align:left"><strong>16x200m@R</strong> <em>6mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Fri</strong></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+<td style="text-align:left">Easy <em>3mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sat</strong></td>
+<td style="text-align:left"><strong>STATE</strong> <em>3-5mi</em></td>
+<td style="text-align:left"><strong>STATE</strong> <em>3-5mi</em></td>
+<td style="text-align:left"><strong>STATE</strong> <em>6mi</em></td>
+<td style="text-align:left"><strong>STATE</strong> <em>6mi</em></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Sun</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+<td style="text-align:left"><strong>REST</strong></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="training-phases"><strong>TRAINING PHASES</strong></h2>
+<p><strong>🏃‍♂️ SUMMER PEAK</strong> (Weeks 8-11): Building to peak summer volume<br>
+<strong>📚 PRE-SEASON</strong> (Week 12): School schedule adjustment<br>
+<strong>🔨 XC BUILD</strong> (Weeks 13-14): Building race fitness<br>
+<strong>⛰️ PEAK MILEAGE</strong> (Weeks 15-17): Maximum volume with racing<br>
+<strong>📉 EARLY TAPER</strong> (Weeks 18-19): Initial volume reduction<br>
+<strong>🎯 LATE TAPER</strong> (Weeks 20-21): Significant taper for championships<br>
+<strong>🏆 CHAMPIONSHIPS</strong> (Weeks 22-23): Regional and State meets</p>
+<hr>
+<h2 id="pace-guide-all-groups"><strong>PACE GUIDE (ALL GROUPS)</strong></h2>
+<ul>
+<li><strong>@E:</strong> Easy pace (conversational, 65-75% max HR)</li>
+<li><strong>@T:</strong> Threshold pace (comfortably hard, 15K-HM race effort, 85-90% max HR)</li>
+<li><strong>@I:</strong> Interval pace (VO2 max, 3K-5K race effort, 95-100% max HR)</li>
+<li><strong>@R:</strong> Repetition pace (speed work, mile pace or faster, neuromuscular power)</li>
+<li><strong>@RP:</strong> Race pace (current 5K fitness level)</li>
+</ul>
+
+</body>
+</html>
