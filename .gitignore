@@ -1,0 +1,14 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# VS Code settings
+.vscode/
+
+# Mac clutter
+.DS_Store
+
+# Windows clutter
+Thumbs.db
+desktop.ini
