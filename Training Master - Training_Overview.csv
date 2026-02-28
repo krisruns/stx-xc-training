@@ -11,8 +11,8 @@ V,39,2/16,easy,,2x200@mile+12x400@5k (200j) + 2x200@800,athlete_groups.html,easy
 JV,39,2/16,,,,,,,,,,,12x200@mile (200j)+4x200@800 (45s),athlete_groups.html,rest,,,45,40,35,30
 V,40,2/23,easy,,2x200@mile (200j) +8x600@3k (400j) + 4x200@800 (60s),athlete_groups.html,easy,,2x200@800 (60s) +2x300@800 (90s) +1x400@800 (3:00) +2x300@800 (90s) +2x200@800 (60s),,easy,,LR - Progression,,rest,,,45,40,35,30
 JV,40,2/23,,,,,,,,,,,,,,,,,,,
-V,41,3/2,easy,,3x[600@3k (2:00) + 400@mile (2:00) + 200@800 (1:00)],athlete_groups.html,easy,,race,,easy,,2x200@mile (200j) + 12x200@800 (60s),,rest,,Indoor State,40,35,35,30
-JV,41,3/2,,,2x200@mile (200j) +12x400@5k (200j) + 2x200@800 (60s),athlete_groups.html,,,2x200@mile (200j) + 10x300@mile (200j) + 4x200@800 (60s),,,,,,,,,,,,
+V,41,3/2,3x[600@3k (2:00) + 400@mile (2:00) + 200@800 (1:00)],athlete_groups.html,easy,,race,,easy,,easy,,2x200@mile (200j) + 12x200@800 (60s),,rest,,Indoor State,40,35,35,30
+JV,41,3/2,2x200@mile (200j) +12x400@5k (200j) + 2x200@800 (60s),athlete_groups.html,,,2x200@mile (200j) + 10x300@mile (200j) + 4x200@800 (60s),athlete_groups.html,,,,,,,,,,,,,
 V,42,3/9,easy,,Time Trial + 400s@3k,,easy,,Split 400s: 300 (1:00) 100 (full recovery) + 200 (1:00) 200 (full recovery) + 300 (1:00) 100,,easy,,LR - Progression,,,,,,,,
 JV,42,3/9,,,,,,,,,,,,,,,,,,,
 V,43,3/16,easy,,Time Trial,,easy,,10x400@mile + 6x200@800,,easy,,race,,,,Adidas Indoor Nationals,,,,

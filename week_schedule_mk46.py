@@ -790,11 +790,16 @@ def generate_html(week_num, workouts, totals, library):
 
 
 def main():
+    # if len(sys.argv) < 2:
+    #     print("Usage: python week_schedule_enhanced.py <week_number>")
+    #     print("   or: python week_schedule_enhanced.py <csv_file> [workout_library.csv]")
+    #     sys.exit(1)
     if len(sys.argv) < 2:
-        print("Usage: python week_schedule_enhanced.py <week_number>")
-        print("   or: python week_schedule_enhanced.py <csv_file> [workout_library.csv]")
+        week_num = input("Enter week number: ").strip()
+    if not week_num.isdigit():
+        print("Invalid week number.")
         sys.exit(1)
-    
+    sys.argv.append(week_num)
     # Check if argument is just a week number (e.g., "36")
     if sys.argv[1].isdigit():
         week_num = sys.argv[1]

@@ -489,7 +489,14 @@ def generate_week_schedule(week_data, output_dir='weekly_schedules'):
     group_order = {g: i for i, g in enumerate(groups)}
     status_order = {'': 0, 'JV': 1, 'Varsity': 2}
     
+    # df = pd.DataFrame(rows)
+    # df['_day_ord'] = df['Day'].map(day_order)
     df = pd.DataFrame(rows)
+
+    if df.empty:
+        print(f"  ⚠ Week {week_num} has no workouts - skipping")
+    return None
+
     df['_day_ord'] = df['Day'].map(day_order)
     df['_group_ord'] = df['Group'].map(group_order)
     df['_status_ord'] = df['Status'].map(status_order)

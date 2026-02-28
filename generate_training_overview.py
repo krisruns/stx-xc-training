@@ -14,12 +14,22 @@ Rules:
   has any workouts this week; otherwise no badge needed
 """
 
+# import csv
+# from datetime import datetime
+
+# INPUT_CSV = "/mnt/user-data/uploads/Training_Master_-_Training_Overview.csv"
+# OUTPUT_HTML = "/mnt/user-data/outputs/training_overview.html"
 import csv
 from datetime import datetime
+from pathlib import Path
 
-INPUT_CSV = "/mnt/user-data/uploads/Training_Master_-_Training_Overview.csv"
-OUTPUT_HTML = "/mnt/user-data/outputs/training_overview.html"
-
+# ============================================================================
+# FILE PATHS - relative to wherever this script lives
+# ============================================================================
+SCRIPT_DIR = Path(__file__).parent
+INPUT_CSV = SCRIPT_DIR / "Training Master - Training_Overview.csv"
+OUTPUT_HTML = SCRIPT_DIR / "training_overview.html"
+# ============================================================================
 DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
 def is_workout(val):
