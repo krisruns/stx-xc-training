@@ -22,6 +22,24 @@
             border-bottom: 3px solid #003366;
         }
         
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 12px;
+            padding: 7px 14px;
+            background: white;
+            color: #2c5530;
+            border: 2px solid #4a7c59;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .back-btn:hover {
+            background: #4a7c59;
+            color: white;
+        }
+        
         .action-buttons {
             text-align: center;
             margin: 20px 0;
@@ -275,6 +293,7 @@
 </style>
 </head>
 <body>
+<a class="back-btn no-print" href="week39.html">← Week 39</a>
 <h1 class="no-print">Workout Paces - V - Week 39 - Tuesday</h1>
 
 <div class="workout-description no-print" id="workoutDesc">2x200@mile+12x400@5k (200j) + 2x200@800</div>
@@ -302,20 +321,24 @@ const groupsData = [
         "name": "Group 1",
         "athletes": [
             {
-                "name": "Marshall Wilson",
-                "vdot": 65
+                "name": "Nick Sanders",
+                "vdot": 72
+            },
+            {
+                "name": "Anthony Passafiume",
+                "vdot": 68
             },
             {
                 "name": "Matthew Frick",
                 "vdot": 66
             },
             {
-                "name": "Nick Sanders",
-                "vdot": 72
-            },
-            {
                 "name": "Sam Schweickhardt",
                 "vdot": 66
+            },
+            {
+                "name": "Marshall Wilson",
+                "vdot": 65
             },
             {
                 "name": "Tony Parilli",
@@ -323,17 +346,13 @@ const groupsData = [
             },
             {
                 "name": "Nolan Crider",
-                "vdot": 64
-            },
-            {
-                "name": "Anthony Passafiume",
-                "vdot": null
+                "vdot": 65
             }
         ],
         "paces": {
-            "200m @ MILE": "31s-35s",
-            "400m @ 5K": "1:09-1:17",
-            "200m @ 800": "28s-31s"
+            "200m @ MILE": "31s-34s",
+            "400m @ 5K": "1:09-1:16",
+            "200m @ 800": "28s-30s"
         }
     },
     {
@@ -344,11 +363,11 @@ const groupsData = [
                 "vdot": 64
             },
             {
-                "name": "Ian O'Bryan",
+                "name": "James Bush",
                 "vdot": 64
             },
             {
-                "name": "James Bush",
+                "name": "Ian O'Bryan",
                 "vdot": 64
             },
             {
@@ -356,11 +375,11 @@ const groupsData = [
                 "vdot": 63
             },
             {
-                "name": "Parker Lesshafft",
+                "name": "Tyler Hogan",
                 "vdot": 63
             },
             {
-                "name": "Tyler Hogan",
+                "name": "Parker Lesshafft",
                 "vdot": 63
             }
         ],
@@ -374,7 +393,7 @@ const groupsData = [
         "name": "Group 3",
         "athletes": [
             {
-                "name": "Colin Bozich",
+                "name": "Everett Derrick",
                 "vdot": 62
             },
             {
@@ -382,53 +401,27 @@ const groupsData = [
                 "vdot": 62
             },
             {
-                "name": "Everett Derrick",
-                "vdot": 62
-            },
-            {
                 "name": "Owen Mayes",
                 "vdot": 62
             },
             {
-                "name": "Ray Laracy",
-                "vdot": 61
+                "name": "Colin Bozich",
+                "vdot": 62
             },
             {
                 "name": "Thomas Norton",
                 "vdot": 61
             },
             {
-                "name": "Henry Pudlo",
-                "vdot": null
-            }
-        ],
-        "paces": {
-            "200m @ MILE": "36s",
-            "400m @ 5K": "1:19-1:20",
-            "200m @ 800": "32s"
-        }
-    },
-    {
-        "name": "Group 4",
-        "athletes": [
-            {
-                "name": "Baron Staab",
-                "vdot": 58
-            },
-            {
-                "name": "Jack Clifford",
-                "vdot": 60
-            },
-            {
-                "name": "Jimmy Greer",
-                "vdot": 59
-            },
-            {
-                "name": "Matthew Meirose",
-                "vdot": 57
+                "name": "Ray Laracy",
+                "vdot": 61
             },
             {
                 "name": "Vincent Yochum",
+                "vdot": 60
+            },
+            {
+                "name": "Jack Clifford",
                 "vdot": 60
             },
             {
@@ -437,21 +430,25 @@ const groupsData = [
             }
         ],
         "paces": {
-            "200m @ MILE": "37s-39s",
-            "400m @ 5K": "1:21-1:25",
-            "200m @ 800": "33s-34s"
+            "200m @ MILE": "36s-37s",
+            "400m @ 5K": "1:19-1:21",
+            "200m @ 800": "32s-33s"
         }
     },
     {
-        "name": "Group 5",
+        "name": "Group 4",
         "athletes": [
             {
-                "name": "Leo Falk",
-                "vdot": 54
+                "name": "Jimmy Greer",
+                "vdot": 59
             },
             {
-                "name": "Levi Thornton",
-                "vdot": 55
+                "name": "Baron Staab",
+                "vdot": 58
+            },
+            {
+                "name": "Matthew Meirose",
+                "vdot": 57
             },
             {
                 "name": "Quenton Horton",
@@ -462,75 +459,87 @@ const groupsData = [
                 "vdot": 56
             },
             {
-                "name": "Sam Church",
-                "vdot": 53
+                "name": "Levi Thornton",
+                "vdot": 55
             },
             {
-                "name": "Rajii Walsh",
-                "vdot": 52
-            }
-        ],
-        "paces": {
-            "200m @ MILE": "39s-42s",
-            "400m @ 5K": "1:26-1:31",
-            "200m @ 800": "35s-37s"
-        }
-    },
-    {
-        "name": "Group 6",
-        "athletes": [
+                "name": "Leo Falk",
+                "vdot": 54
+            },
             {
-                "name": "Nathan Worley",
+                "name": "Henry Pudlo",
                 "vdot": null
             },
             {
-                "name": "Ben Lewis",
-                "vdot": 52
+                "name": "Nathan Worley",
+                "vdot": null
+            }
+        ],
+        "paces": {
+            "200m @ MILE": "37s-40s",
+            "400m @ 5K": "1:22-1:28",
+            "200m @ 800": "33s-36s"
+        }
+    },
+    {
+        "name": "Group 5",
+        "athletes": [
+            {
+                "name": "Sam Church",
+                "vdot": 53
             },
             {
                 "name": "Evan Pfeffer",
                 "vdot": 53
             },
             {
+                "name": "Ben Lewis",
+                "vdot": 52
+            },
+            {
+                "name": "Rajii Walsh",
+                "vdot": 52
+            },
+            {
+                "name": "Owen Derrick",
+                "vdot": 52
+            },
+            {
                 "name": "Henry Metzger",
                 "vdot": 51
+            },
+            {
+                "name": "Nick Wolff",
+                "vdot": 51
+            }
+        ],
+        "paces": {
+            "200m @ MILE": "41s-42s",
+            "400m @ 5K": "1:30-1:32",
+            "200m @ 800": "37s-38s"
+        }
+    },
+    {
+        "name": "Group 6",
+        "athletes": [
+            {
+                "name": "Thomas Dusza",
+                "vdot": 50
+            },
+            {
+                "name": "Andrew Reed",
+                "vdot": null
             },
             {
                 "name": "Jonah Roach",
                 "vdot": 50
             },
             {
-                "name": "Nick Wolff",
-                "vdot": 51
-            },
-            {
-                "name": "Owen Mattingly",
-                "vdot": 47
-            },
-            {
-                "name": "Owen Derrick",
-                "vdot": 57
-            }
-        ],
-        "paces": {
-            "200m @ MILE": "39s-45s",
-            "400m @ 5K": "1:25-1:38",
-            "200m @ 800": "34s-41s"
-        }
-    },
-    {
-        "name": "Group 7 - Unassigned",
-        "athletes": [
-            {
-                "name": "Trevor O'Nan",
-                "vdot": 46
-            },
-            {
-                "name": "Alexander Jemley",
+                "name": "Ian Vickerstaff",
                 "vdot": null
             },
             {
-                "name": "Andrew Reed",
+                "name": "Alexander Jemley",
                 "vdot": null
             },
             {
@@ -538,30 +547,22 @@ const groupsData = [
                 "vdot": null
             },
             {
-                "name": "Ian Vickerstaff",
-                "vdot": null
+                "name": "Owen Mattingly",
+                "vdot": 47
             },
             {
                 "name": "John Hagedorn",
-                "vdot": null
+                "vdot": 46
             },
             {
-                "name": "Sawyer Gates",
-                "vdot": null
-            },
-            {
-                "name": "Thomas Dusza",
-                "vdot": null
-            },
-            {
-                "name": "Zach Reed",
-                "vdot": null
+                "name": "Trevor O'Nan",
+                "vdot": 46
             }
         ],
         "paces": {
-            "200m @ MILE": "46s",
-            "400m @ 5K": "1:40",
-            "200m @ 800": "42s"
+            "200m @ MILE": "43s-46s",
+            "400m @ 5K": "1:33-1:40",
+            "200m @ 800": "39s-42s"
         }
     }
 ];

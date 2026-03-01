@@ -1,10 +1,129 @@
-<!DOCTYPE html>
+#!/usr/bin/env python3
+"""
+Workout Pace Page Generator with Printable Group Sheets
+Generates HTML pages showing workout paces for each group with built-in print functionality
+"""
+
+import re
+from typing import List, Dict, Tuple, Optional
+import json
+
+
+class WorkoutPacePageGenerator:
+    """Generate workout pace pages with printable group record sheets"""
+    
+    def __init__(self):
+        self.css_styles = self._get_css_styles()
+        self.js_script = self._get_javascript()
+    
+    def parse_workout_description(self, workout_desc: str) -> List[Dict[str, any]]:
+        """
+        Parse workout description to extract rep structure
+        Examples:
+            "12x200@mile (200j)+4x200@800 (45s)" 
+            "2x200@mile+12x400@5k (200j) + 2x200@800"
+        
+        Returns list of dicts with: count, distance, pace
+        """
+        reps = []
+        # Pattern: number x distance @ pace
+        pattern = r'(\d+)x(\d+)@(\w+)'
+        
+        for match in re.finditer(pattern, workout_desc):
+            reps.append({
+                'count': int(match.group(1)),
+                'distance': match.group(2),
+                'pace': match.group(3).upper()
+            })
+        
+        return reps
+    
+    def generate_page(self, 
+                     workout_description: str,
+                     groups: List[Dict],
+                     squad_type: str = "Varsity",
+                     week_number: Optional[int] = None,
+                     day: Optional[str] = None) -> str:
+        """
+        Generate complete HTML page with workout paces and print functionality
+        
+        Args:
+            workout_description: e.g., "12x200@mile (200j)+4x200@800 (45s)"
+            groups: List of group dictionaries with structure:
+                {
+                    'name': 'Group 1',
+                    'paces': {
+                        '200m @ MILE': '31s-35s',
+                        '200m @ 800': '28s-31s'
+                    },
+                    'athletes': [
+                        {'name': 'Marshall Wilson', 'vdot': 65},
+                        {'name': 'Anthony Passafiume', 'vdot': None}  # manual entry
+                    ]
+                }
+            squad_type: "Varsity" or "JV"
+            week_number: Optional week number for title
+            day: Optional day for title
+        
+        Returns:
+            Complete HTML page as string
+        """
+        
+        # Build title
+        title_parts = []
+        if squad_type:
+            title_parts.append(squad_type)
+        if week_number:
+            title_parts.append(f"Week {week_number}")
+        if day:
+            title_parts.append(day)
+        
+        page_title = " - ".join(title_parts) if title_parts else "Workout Paces"
+        
+        # Generate HTML
+        html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>V - Week 41 - Tuesday - STX Training</title>
-<style>
+<title>{page_title} - STX Training</title>
+{self.css_styles}
+</head>
+<body>
+<h1 class="no-print">Workout Paces{' - ' + page_title if title_parts else ''}</h1>
+
+<div class="workout-description no-print" id="workoutDesc">{workout_description}</div>
+
+<div class="action-buttons no-print">
+    <button class="print-btn" onclick="printGroupSheets()">🖨️ Print Group Record Sheets</button>
+</div>
+
+<!-- Screen View Groups -->
+<div class="groups-container no-print" id="groupsContainer">
+</div>
+
+<!-- Print View (hidden on screen) -->
+<div id="printContainer" style="display: none;">
+</div>
+
+<div class="footer no-print">
+    St. Xavier High School Cross Country &amp; Track
+</div>
+
+<script>
+// Group data structure
+const groupsData = {json.dumps(groups, indent=4)};
+
+{self.js_script}
+</script>
+</body>
+</html>"""
+        
+        return html
+    
+    def _get_css_styles(self) -> str:
+        """Return CSS styles for the page"""
+        return """<style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             max-width: 1200px;
@@ -272,301 +391,11 @@
                 width: 150px;
             }
         }
-</style>
-</head>
-<body>
-<h1 class="no-print">Workout Paces - V - Week 41 - Tuesday</h1>
-
-<div class="workout-description no-print" id="workoutDesc">3x[600@3k (2:00) + 400@mile (2:00) + 200@800 (1:00)]</div>
-
-<div class="action-buttons no-print">
-    <button class="print-btn" onclick="printGroupSheets()">🖨️ Print Group Record Sheets</button>
-</div>
-
-<!-- Screen View Groups -->
-<div class="groups-container no-print" id="groupsContainer">
-</div>
-
-<!-- Print View (hidden on screen) -->
-<div id="printContainer" style="display: none;">
-</div>
-
-<div class="footer no-print">
-    St. Xavier High School Cross Country &amp; Track
-</div>
-
-<script>
-// Group data structure
-const groupsData = [
-    {
-        "name": "Group 1",
-        "athletes": [
-            {
-                "name": "Marshall Wilson",
-                "vdot": 65
-            },
-            {
-                "name": "Matthew Frick",
-                "vdot": 66
-            },
-            {
-                "name": "Nick Sanders",
-                "vdot": 72
-            },
-            {
-                "name": "Sam Schweickhardt",
-                "vdot": 66
-            },
-            {
-                "name": "Tony Parilli",
-                "vdot": 65
-            },
-            {
-                "name": "Nolan Crider",
-                "vdot": 64
-            },
-            {
-                "name": "Anthony Passafiume",
-                "vdot": null
-            }
-        ],
-        "paces": {
-            "600m @ 3K": "1:41-1:52",
-            "400m @ MILE": "1:03-1:11",
-            "200m @ 800": "28s-31s"
-        }
-    },
-    {
-        "name": "Group 2",
-        "athletes": [
-            {
-                "name": "James George",
-                "vdot": 64
-            },
-            {
-                "name": "Ian O'Bryan",
-                "vdot": 64
-            },
-            {
-                "name": "James Bush",
-                "vdot": 64
-            },
-            {
-                "name": "Levi Roach",
-                "vdot": 63
-            },
-            {
-                "name": "Parker Lesshafft",
-                "vdot": 63
-            },
-            {
-                "name": "Tyler Hogan",
-                "vdot": 63
-            }
-        ],
-        "paces": {
-            "600m @ 3K": "1:52-1:53",
-            "400m @ MILE": "1:11-1:12",
-            "200m @ 800": "31s"
-        }
-    },
-    {
-        "name": "Group 3",
-        "athletes": [
-            {
-                "name": "Colin Bozich",
-                "vdot": 62
-            },
-            {
-                "name": "Cooper Hogan",
-                "vdot": 62
-            },
-            {
-                "name": "Everett Derrick",
-                "vdot": 62
-            },
-            {
-                "name": "Owen Mayes",
-                "vdot": 62
-            },
-            {
-                "name": "Ray Laracy",
-                "vdot": 61
-            },
-            {
-                "name": "Thomas Norton",
-                "vdot": 61
-            },
-            {
-                "name": "Henry Pudlo",
-                "vdot": null
-            }
-        ],
-        "paces": {
-            "600m @ 3K": "1:55-1:56",
-            "400m @ MILE": "1:13-1:14",
-            "200m @ 800": "32s"
-        }
-    },
-    {
-        "name": "Group 4",
-        "athletes": [
-            {
-                "name": "Baron Staab",
-                "vdot": 58
-            },
-            {
-                "name": "Jack Clifford",
-                "vdot": 60
-            },
-            {
-                "name": "Jimmy Greer",
-                "vdot": 59
-            },
-            {
-                "name": "Matthew Meirose",
-                "vdot": 57
-            },
-            {
-                "name": "Vincent Yochum",
-                "vdot": 60
-            },
-            {
-                "name": "Xavier Mudd",
-                "vdot": 60
-            }
-        ],
-        "paces": {
-            "600m @ 3K": "1:58-2:04",
-            "400m @ MILE": "1:15-1:19",
-            "200m @ 800": "33s-34s"
-        }
-    },
-    {
-        "name": "Group 5",
-        "athletes": [
-            {
-                "name": "Leo Falk",
-                "vdot": 54
-            },
-            {
-                "name": "Levi Thornton",
-                "vdot": 55
-            },
-            {
-                "name": "Quenton Horton",
-                "vdot": 56
-            },
-            {
-                "name": "Ryder Garcia",
-                "vdot": 56
-            },
-            {
-                "name": "Sam Church",
-                "vdot": 53
-            },
-            {
-                "name": "Rajii Walsh",
-                "vdot": 52
-            }
-        ],
-        "paces": {
-            "600m @ 3K": "2:06-2:14",
-            "400m @ MILE": "1:20-1:25",
-            "200m @ 800": "35s-37s"
-        }
-    },
-    {
-        "name": "Group 6",
-        "athletes": [
-            {
-                "name": "Nathan Worley",
-                "vdot": null
-            },
-            {
-                "name": "Ben Lewis",
-                "vdot": 52
-            },
-            {
-                "name": "Evan Pfeffer",
-                "vdot": 53
-            },
-            {
-                "name": "Henry Metzger",
-                "vdot": 51
-            },
-            {
-                "name": "Jonah Roach",
-                "vdot": 50
-            },
-            {
-                "name": "Nick Wolff",
-                "vdot": 51
-            },
-            {
-                "name": "Owen Mattingly",
-                "vdot": 47
-            },
-            {
-                "name": "Owen Derrick",
-                "vdot": 57
-            }
-        ],
-        "paces": {
-            "600m @ 3K": "2:04-2:27",
-            "400m @ MILE": "1:19-1:30",
-            "200m @ 800": "34s-41s"
-        }
-    },
-    {
-        "name": "Group 7 - Unassigned",
-        "athletes": [
-            {
-                "name": "Trevor O'Nan",
-                "vdot": 46
-            },
-            {
-                "name": "Alexander Jemley",
-                "vdot": null
-            },
-            {
-                "name": "Andrew Reed",
-                "vdot": null
-            },
-            {
-                "name": "Garrett Pate",
-                "vdot": null
-            },
-            {
-                "name": "Ian Vickerstaff",
-                "vdot": null
-            },
-            {
-                "name": "John Hagedorn",
-                "vdot": null
-            },
-            {
-                "name": "Sawyer Gates",
-                "vdot": null
-            },
-            {
-                "name": "Thomas Dusza",
-                "vdot": null
-            },
-            {
-                "name": "Zach Reed",
-                "vdot": null
-            }
-        ],
-        "paces": {
-            "600m @ 3K": "2:30",
-            "400m @ MILE": "1:32",
-            "200m @ 800": "42s"
-        }
-    }
-];
-
-
+</style>"""
+    
+    def _get_javascript(self) -> str:
+        """Return JavaScript for page functionality"""
+        return r"""
 // Parse workout description to get rep structure
 // Handles both simple patterns (12x400@5k) and bracketed patterns (3x[600@3k + 400@mile + 200@800])
 function parseWorkout(workoutDesc) {
@@ -750,7 +579,73 @@ window.addEventListener('DOMContentLoaded', function() {
         container.appendChild(card);
     });
 });
+"""
 
-</script>
-</body>
-</html>
+
+# Example usage function
+def create_example_page():
+    """Example of how to use the generator"""
+    
+    generator = WorkoutPacePageGenerator()
+    
+    # Example workout data
+    workout_description = "2x200@mile+12x400@5k (200j) + 2x200@800"
+    
+    groups = [
+        {
+            "name": "Group 1",
+            "paces": {
+                "200m @ MILE": "31s-35s",
+                "400m @ 5K": "1:09-1:17",
+                "200m @ 800": "28s-31s"
+            },
+            "athletes": [
+                {"name": "Marshall Wilson", "vdot": 65},
+                {"name": "Matthew Frick", "vdot": 66},
+                {"name": "Nick Sanders", "vdot": 72},
+                {"name": "Sam Schweickhardt", "vdot": 66},
+                {"name": "Tony Parilli", "vdot": 65},
+                {"name": "Nolan Crider", "vdot": 64},
+                {"name": "Anthony Passafiume", "vdot": None}
+            ]
+        },
+        {
+            "name": "Group 2",
+            "paces": {
+                "200m @ MILE": "35s",
+                "400m @ 5K": "1:17-1:18",
+                "200m @ 800": "31s"
+            },
+            "athletes": [
+                {"name": "James George", "vdot": 64},
+                {"name": "Ian O'Bryan", "vdot": 64},
+                {"name": "James Bush", "vdot": 64}
+            ]
+        }
+    ]
+    
+    html = generator.generate_page(
+        workout_description=workout_description,
+        groups=groups,
+        squad_type="Varsity",
+        week_number=39,
+        day="Tuesday"
+    )
+    
+    return html
+
+
+if __name__ == "__main__":
+    # Generate example page
+    html = create_example_page()
+    
+    # Save to file
+    with open("example_workout_paces.html", "w") as f:
+        f.write(html)
+    
+    print("Generated example_workout_paces.html")
+    print("\nTo use in your workflow:")
+    print("1. Import the WorkoutPacePageGenerator class")
+    print("2. Create an instance: generator = WorkoutPacePageGenerator()")
+    print("3. Call generator.generate_page() with your workout data")
+    print("4. Save the returned HTML to a file")

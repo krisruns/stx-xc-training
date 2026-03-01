@@ -80,6 +80,14 @@ class WorkoutPacePageGenerator:
         
         page_title = " - ".join(title_parts) if title_parts else "Workout Paces"
         
+        # Build back link — goes to week page if we know the week, else index
+        if week_number:
+            back_href = f"week{week_number:02d}.html"
+            back_label = f"← Week {week_number}"
+        else:
+            back_href = "index.html"
+            back_label = "← Schedule"
+        
         # Generate HTML
         html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -90,6 +98,7 @@ class WorkoutPacePageGenerator:
 {self.css_styles}
 </head>
 <body>
+<a class="back-btn no-print" href="{back_href}">{back_label}</a>
 <h1 class="no-print">Workout Paces{' - ' + page_title if title_parts else ''}</h1>
 
 <div class="workout-description no-print" id="workoutDesc">{workout_description}</div>
@@ -139,6 +148,24 @@ const groupsData = {json.dumps(groups, indent=4)};
             margin-bottom: 20px;
             padding-bottom: 15px;
             border-bottom: 3px solid #003366;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 12px;
+            padding: 7px 14px;
+            background: white;
+            color: #2c5530;
+            border: 2px solid #4a7c59;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .back-btn:hover {
+            background: #4a7c59;
+            color: white;
         }
         
         .action-buttons {
