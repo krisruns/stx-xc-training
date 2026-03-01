@@ -82,7 +82,7 @@ class WorkoutPacePageGenerator:
         
         # Build back link — goes to week page if we know the week, else index
         if week_number:
-            back_href = f"week{week_number:02d}.html"
+            back_href = f"../week{week_number:02d}.html"
             back_label = f"← Week {week_number}"
         else:
             back_href = "index.html"
