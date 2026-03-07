@@ -495,7 +495,7 @@ def generate_week_schedule(week_data, output_dir='weekly_schedules'):
 
     if df.empty:
         print(f"  ⚠ Week {week_num} has no workouts - skipping")
-    return None
+        return None
 
     df['_day_ord'] = df['Day'].map(day_order)
     df['_group_ord'] = df['Group'].map(group_order)
