@@ -4,7 +4,7 @@ Training Overview to Week Schedule CSV Converter
 Generates weekly schedules in the STX training format
 
 Usage:
-    python overview_to_week_schedule.py Training_Master_-_Training_Overview.csv
+    python overview_to_week_schedule.py Training_Master - Training_Overview.csv
 """
 
 import pandas as pd
@@ -12,24 +12,52 @@ import csv
 import sys
 from pathlib import Path
 
-# Standard pre/post workout routines
-STANDARD_WARMUPS = {
-    'easy_day': "Foot Drills, Dynamics",
-    'workout_day': "WU, Dynamics",
-    'easy_recovery': "Foot Drills, Awesomizer",
-    'long_run_day': "Awesomizer, Lunge Matrix",
-    'race_day': "Race Day WU",
-    'rest_day': "Foot Drills, Mobility A/B"
+# Pre/Post schedule CSV path (can be overridden via command-line arg)
+PRE_POST_CSV = 'Training_Master - pre_post.csv'
+
+# Workout type classification keywords
+WORKOUT_TYPES = {
+    'Race':               ['race'],
+    'Rest':               ['rest'],
+    'LongRunProgression': ['progression'],
+    'LongRun':            ['long run', 'lr'],
+    'Workout':            ['hill', 'fartlek', 'pre', 'interval', 'tempo'],
+    'Easy':               ['easy'],
+    'Time Trial':         ['time trial', 'tt'],
+    'Split 400s':         ['split 400s'],
 }
 
-STANDARD_COOLDOWNS = {
-    'easy_day': "Strides; Mobility/Strength A",
-    'workout_day': "Mobility/Strength B",
-    'long_run_day': "Strides; Mobilty A, 18s",
-    'post_race': "Post Race",
-    'rest_day': "Strength",
-    'progression_lr': "Mobility A, 21s"
-}
+
+def load_pre_post_schedule(csv_path=None):
+    """Load pre/post routines from CSV.
+
+    Returns a list of dicts ordered as written in the file so that
+    day-specific rows (e.g. Friday/Easy) are checked before Any/Easy.
+    Expected columns: Day, Workout_Type, Pre, Post
+    """
+    path = Path(csv_path or PRE_POST_CSV)
+    if not path.exists():
+        print(f"⚠ pre_post_schedule.csv not found at {path} – using empty defaults")
+        return []
+
+    rows = []
+    with open(path, newline='', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            rows.append({k.strip(): v.strip() for k, v in row.items()})
+    print(f"✓ Loaded pre/post schedule from {path} ({len(rows)} rules)")
+    return rows
+
+
+# Module-level cache so the CSV is only read once per run
+_PRE_POST_RULES = None
+
+
+def get_pre_post_rules():
+    global _PRE_POST_RULES
+    if _PRE_POST_RULES is None:
+        _PRE_POST_RULES = load_pre_post_schedule()
+    return _PRE_POST_RULES
 
 # Group name mapping
 GROUP_NAMES = {
@@ -183,44 +211,38 @@ def expand_workout_description(desc, group, calculated_miles):
     # Default - use as provided
     return desc_str
 
-def determine_pre_post(workout_desc, day):
-    """Determine appropriate Pre and Post workout routines"""
+def classify_workout(workout_desc):
+    """Classify a workout description into a Workout_Type string."""
     desc_lower = str(workout_desc).lower() if workout_desc else ''
-    
-    # Race day
-    if 'race' in desc_lower:
-        return STANDARD_WARMUPS['race_day'], STANDARD_COOLDOWNS['post_race']
-    
-    # Rest day
-    elif 'rest' in desc_lower:
-        return STANDARD_WARMUPS['rest_day'], STANDARD_COOLDOWNS['rest_day']
-    
-    # Long run or progression
-    elif 'long run' in desc_lower or 'lr' in desc_lower or 'progression' in desc_lower:
-        if 'progression' in desc_lower:
-            return STANDARD_WARMUPS['workout_day'], STANDARD_COOLDOWNS['progression_lr']
-        return STANDARD_WARMUPS['long_run_day'], STANDARD_COOLDOWNS['long_run_day']
-    
-    # Workout days (hills, fartlek, intervals)
-    elif any(x in desc_lower for x in ['hill', 'fartlek', 'pre', 'interval', 'tempo']):
-        return STANDARD_WARMUPS['workout_day'], STANDARD_COOLDOWNS['workout_day']
-    
-    # Day-specific patterns for easy runs
-    # Friday easy runs (pre-race)
-    elif day == 'Friday':
-        return STANDARD_WARMUPS['easy_recovery'], STANDARD_COOLDOWNS['post_race']
-    
-    # Wednesday easy runs (uses Awesomizer warmup)
-    elif day == 'Wednesday':
-        return STANDARD_WARMUPS['long_run_day'], STANDARD_COOLDOWNS['long_run_day']
-    
-    # Monday easy runs (standard)
-    elif day == 'Monday':
-        return STANDARD_WARMUPS['easy_day'], STANDARD_COOLDOWNS['easy_day']
-    
-    # Default easy day
-    else:
-        return STANDARD_WARMUPS['easy_day'], STANDARD_COOLDOWNS['easy_day']
+    for wtype, keywords in WORKOUT_TYPES.items():
+        if any(kw in desc_lower for kw in keywords):
+            return wtype
+    return 'Easy'  # default
+
+
+def determine_pre_post(workout_desc, day):
+    """Determine Pre and Post workout routines by looking up pre_post_schedule.csv.
+
+    Matching priority:
+      1. Day-specific row  (e.g. Day=Friday,  Workout_Type=Easy)
+      2. Any-day row       (e.g. Day=Any,     Workout_Type=Easy)
+      3. Fallback to empty strings if nothing matches
+    """
+    rules = get_pre_post_rules()
+    wtype = classify_workout(workout_desc)
+
+    # 1. Day-specific match
+    for rule in rules:
+        if rule.get('Day', '').lower() == day.lower() and rule.get('Workout_Type') == wtype:
+            return rule.get('Pre', ''), rule.get('Post', '')
+
+    # 2. Any-day match
+    for rule in rules:
+        if rule.get('Day', '').lower() == 'any' and rule.get('Workout_Type') == wtype:
+            return rule.get('Pre', ''), rule.get('Post', '')
+
+    # 3. Fallback
+    return '', ''
 
 def update_descriptions_after_adjustment(df):
     """
