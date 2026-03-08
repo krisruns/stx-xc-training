@@ -13,7 +13,7 @@ import sys
 from pathlib import Path
 
 # Pre/Post schedule CSV path (can be overridden via command-line arg)
-PRE_POST_CSV = 'Training_Master - pre_post.csv'
+PRE_POST_CSV = 'Training_Master_-_pre_post.csv'
 
 # Workout type classification keywords
 WORKOUT_TYPES = {
