@@ -30,22 +30,39 @@ WORKOUT_TYPES = {
 
 def load_pre_post_schedule(csv_path=None):
     """Load pre/post routines from CSV.
-
-    Returns a list of dicts ordered as written in the file so that
-    day-specific rows (e.g. Friday/Easy) are checked before Any/Easy.
+    Searches: (1) current working directory, (2) same folder as this script.
+    Falls back to glob match on *pre_post*.csv if exact name fails.
     Expected columns: Day, Workout_Type, Pre, Post
     """
-    path = Path(csv_path or PRE_POST_CSV)
-    if not path.exists():
-        print(f"⚠ pre_post_schedule.csv not found at {path} – using empty defaults")
+    import glob as _glob
+    filename = csv_path or PRE_POST_CSV
+    script_dir = Path(__file__).resolve().parent
+
+    # Exact name candidates
+    candidates = [
+        Path(filename),
+        script_dir / Path(filename).name,
+    ]
+    found_path = next((p for p in candidates if p.exists()), None)
+
+    # Glob fallback - find any *pre_post*.csv in the same folder as script
+    if found_path is None:
+        matches = list(script_dir.glob('*pre_post*.csv'))
+        if matches:
+            found_path = matches[0]
+            print(f"  (found via glob: {found_path.name})")
+
+    if found_path is None:
+        print(f"ERROR: Could not find pre/post CSV. Searched in: {script_dir}")
+        print(f"  CSV files in that folder: {[p.name for p in script_dir.glob('*.csv')]}")
         return []
 
     rows = []
-    with open(path, newline='', encoding='utf-8') as f:
+    with open(found_path, newline='', encoding='utf-8') as f:
         reader = csv.DictReader(f)
         for row in reader:
             rows.append({k.strip(): v.strip() for k, v in row.items()})
-    print(f"✓ Loaded pre/post schedule from {path} ({len(rows)} rules)")
+    print(f"✓ Loaded {len(rows)} pre/post rules from: {found_path.resolve()}")
     return rows
 
 
@@ -55,7 +72,7 @@ _PRE_POST_RULES = None
 
 def get_pre_post_rules():
     global _PRE_POST_RULES
-    if _PRE_POST_RULES is None:
+    if not _PRE_POST_RULES:
         _PRE_POST_RULES = load_pre_post_schedule()
     return _PRE_POST_RULES
 
