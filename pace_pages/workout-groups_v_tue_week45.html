@@ -296,7 +296,7 @@
 <a class="back-btn no-print" href="../week45.html">← Week 45</a>
 <h1 class="no-print">Workout Paces - V - Week 45 - Tuesday</h1>
 
-<div class="workout-description no-print" id="workoutDesc">2x200@mile+12x400@3k (200j) + 2x200@800</div>
+<div class="workout-description no-print" id="workoutDesc">3x[600@mile (3:00) + 300@800 (3:00)]</div>
 
 <div class="action-buttons no-print">
     <button class="print-btn" onclick="printGroupSheets()">🖨️ Print Group Record Sheets</button>
@@ -322,15 +322,24 @@ const groupsData = [
         "athletes": [
             {
                 "name": "Nick Sanders",
-                "vdot": 72
-            },
+                "vdot": 75
+            }
+        ],
+        "paces": {
+            "600m @ MILE": "1:32",
+            "300m @ 800": "40s"
+        }
+    },
+    {
+        "name": "Group 2",
+        "athletes": [
             {
                 "name": "Anthony Passafiume",
                 "vdot": 68
             },
             {
                 "name": "Matthew Frick",
-                "vdot": 66
+                "vdot": 68
             },
             {
                 "name": "Sam Schweickhardt",
@@ -347,28 +356,35 @@ const groupsData = [
             {
                 "name": "Nolan Crider",
                 "vdot": 65
-            }
-        ],
-        "paces": {
-            "200m @ MILE": "31s-34s",
-            "400m @ 3K": "1:07-1:13",
-            "200m @ 800": "28s-30s"
-        }
-    },
-    {
-        "name": "Group 2",
-        "athletes": [
+            },
+            {
+                "name": "Ian O'Bryan",
+                "vdot": 65
+            },
             {
                 "name": "James George",
                 "vdot": 64
-            },
+            }
+        ],
+        "paces": {
+            "600m @ MILE": "1:40-1:46",
+            "300m @ 800": "44s-46s"
+        }
+    },
+    {
+        "name": "Group 3",
+        "athletes": [
             {
                 "name": "James Bush",
                 "vdot": 64
             },
             {
-                "name": "Ian O'Bryan",
+                "name": "Parker Lesshafft",
                 "vdot": 64
+            },
+            {
+                "name": "Everett Derrick",
+                "vdot": 63
             },
             {
                 "name": "Levi Roach",
@@ -379,25 +395,28 @@ const groupsData = [
                 "vdot": 63
             },
             {
-                "name": "Parker Lesshafft",
-                "vdot": 63
-            }
-        ],
-        "paces": {
-            "200m @ MILE": "35s",
-            "400m @ 3K": "1:14-1:15",
-            "200m @ 800": "31s"
-        }
-    },
-    {
-        "name": "Group 3",
-        "athletes": [
-            {
-                "name": "Everett Derrick",
+                "name": "Jack Clifford",
                 "vdot": 62
             },
             {
                 "name": "Cooper Hogan",
+                "vdot": 62
+            },
+            {
+                "name": "Thomas Norton",
+                "vdot": 62
+            }
+        ],
+        "paces": {
+            "600m @ MILE": "1:46-1:49",
+            "300m @ 800": "46s-48s"
+        }
+    },
+    {
+        "name": "Group 4",
+        "athletes": [
+            {
+                "name": "Baron Staab",
                 "vdot": 62
             },
             {
@@ -409,7 +428,7 @@ const groupsData = [
                 "vdot": 62
             },
             {
-                "name": "Thomas Norton",
+                "name": "Vincent Yochum",
                 "vdot": 61
             },
             {
@@ -417,45 +436,48 @@ const groupsData = [
                 "vdot": 61
             },
             {
-                "name": "Vincent Yochum",
-                "vdot": 60
-            },
-            {
-                "name": "Jack Clifford",
-                "vdot": 60
-            },
-            {
                 "name": "Xavier Mudd",
                 "vdot": 60
-            }
-        ],
-        "paces": {
-            "200m @ MILE": "36s-37s",
-            "400m @ 3K": "1:16-1:19",
-            "200m @ 800": "32s-33s"
-        }
-    },
-    {
-        "name": "Group 4",
-        "athletes": [
+            },
             {
                 "name": "Jimmy Greer",
                 "vdot": 59
             },
             {
-                "name": "Baron Staab",
+                "name": "Quenton Horton",
                 "vdot": 58
             },
+            {
+                "name": "Henry Pudlo",
+                "vdot": null
+            }
+        ],
+        "paces": {
+            "600m @ MILE": "1:49-1:54",
+            "300m @ 800": "48s-51s"
+        }
+    },
+    {
+        "name": "Group 5",
+        "athletes": [
             {
                 "name": "Matthew Meirose",
                 "vdot": 57
             },
             {
-                "name": "Quenton Horton",
+                "name": "Ryder Garcia",
+                "vdot": 57
+            },
+            {
+                "name": "Leo Falk",
+                "vdot": 57
+            },
+            {
+                "name": "Bobby Poston",
                 "vdot": 56
             },
             {
-                "name": "Ryder Garcia",
+                "name": "Nathan Worley",
                 "vdot": 56
             },
             {
@@ -463,41 +485,28 @@ const groupsData = [
                 "vdot": 55
             },
             {
-                "name": "Leo Falk",
-                "vdot": 54
-            },
-            {
-                "name": "Henry Pudlo",
-                "vdot": null
-            },
-            {
-                "name": "Nathan Worley",
-                "vdot": null
-            }
-        ],
-        "paces": {
-            "200m @ MILE": "37s-40s",
-            "400m @ 3K": "1:20-1:26",
-            "200m @ 800": "33s-36s"
-        }
-    },
-    {
-        "name": "Group 5",
-        "athletes": [
-            {
                 "name": "Sam Church",
-                "vdot": 53
+                "vdot": 55
             },
             {
                 "name": "Evan Pfeffer",
                 "vdot": 53
+            }
+        ],
+        "paces": {
+            "600m @ MILE": "1:55-2:03",
+            "300m @ 800": "51s-55s"
+        }
+    },
+    {
+        "name": "Group 6",
+        "athletes": [
+            {
+                "name": "Nick Wolff",
+                "vdot": 53
             },
             {
                 "name": "Ben Lewis",
-                "vdot": 52
-            },
-            {
-                "name": "Rajii Walsh",
                 "vdot": 52
             },
             {
@@ -509,60 +518,46 @@ const groupsData = [
                 "vdot": 51
             },
             {
-                "name": "Nick Wolff",
-                "vdot": 51
-            }
-        ],
-        "paces": {
-            "200m @ MILE": "41s-42s",
-            "400m @ 3K": "1:28-1:31",
-            "200m @ 800": "37s-38s"
-        }
-    },
-    {
-        "name": "Group 6",
-        "athletes": [
-            {
-                "name": "Thomas Dusza",
-                "vdot": 50
-            },
-            {
-                "name": "Andrew Reed",
-                "vdot": null
-            },
-            {
                 "name": "Jonah Roach",
-                "vdot": 50
+                "vdot": 51
             },
             {
                 "name": "Ian Vickerstaff",
-                "vdot": null
+                "vdot": 51
             },
             {
-                "name": "Alexander Jemley",
-                "vdot": null
-            },
-            {
-                "name": "Garrett Pate",
-                "vdot": null
-            },
-            {
-                "name": "Owen Mattingly",
-                "vdot": 47
-            },
-            {
-                "name": "John Hagedorn",
-                "vdot": 46
-            },
-            {
-                "name": "Trevor O'Nan",
-                "vdot": 46
+                "name": "Thomas Dusza",
+                "vdot": 50
             }
         ],
         "paces": {
-            "200m @ MILE": "43s-46s",
-            "400m @ 3K": "1:32-1:40",
-            "200m @ 800": "39s-42s"
+            "600m @ MILE": "2:03-2:10",
+            "300m @ 800": "55s-58s"
+        }
+    },
+    {
+        "name": "Group 7",
+        "athletes": [
+            {
+                "name": "Owen Mattingly",
+                "vdot": 50
+            },
+            {
+                "name": "John Hagedorn",
+                "vdot": 49
+            },
+            {
+                "name": "Trevor O'Nan",
+                "vdot": 49
+            },
+            {
+                "name": "Alex Jemley",
+                "vdot": 45
+            }
+        ],
+        "paces": {
+            "600m @ MILE": "2:10-2:23",
+            "300m @ 800": "58s-1:04"
         }
     }
 ];
