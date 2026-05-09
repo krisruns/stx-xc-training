@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STX XC 2026 — Season Schedule</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── CONFIG NOTE: set CALENDAR_ID and API_KEY in the <script> below ── */
+
+:root {
+  --gold: #B8960C;
+  --gold-light: #FDF3C0;
+  --green: #1A3A2A;
+  --green-mid: #2D5C3F;
+  --green-light: #E6F0EA;
+  --white: #FDFCF8;
+  --gray-100: #F5F3EE;
+  --gray-200: #E8E4D8;
+  --gray-400: #A09880;
+  --gray-600: #6B6354;
+  --gray-900: #1C1A14;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--white);
+  color: var(--gray-900);
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── Header ── */
+header {
+  background: var(--green);
+  border-bottom: 3px solid var(--gold);
+  position: sticky; top: 0; z-index: 100;
+}
+.header-inner {
+  max-width: 920px; margin: 0 auto;
+  padding: 16px 24px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.logo { display: flex; align-items: center; gap: 12px; }
+.logo-mark {
+  width: 40px; height: 40px;
+  background: var(--gold);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px; font-weight: 500;
+  color: var(--green);
+  flex-shrink: 0;
+}
+.logo-text h1 { font-size: 16px; font-weight: 600; color: #fff; letter-spacing: -.2px; }
+.logo-text p  { font-size: 11px; color: rgba(255,255,255,.5); font-family: 'DM Mono', monospace; letter-spacing: .06em; margin-top: 1px; }
+.last-updated { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gold); letter-spacing: .06em; text-align: right; white-space: nowrap; }
+
+/* ── Stats bar ── */
+.stats-bar { background: var(--gray-100); border-bottom: 1px solid var(--gray-200); }
+.stats-bar-inner {
+  max-width: 920px; margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+}
+.stat { flex: 1; text-align: center; padding: 0 8px; border-right: 1px solid var(--gray-200); }
+.stat:last-child { border-right: none; }
+.stat-num { font-size: 21px; font-weight: 600; color: var(--green); font-family: 'DM Mono', monospace; line-height: 1; }
+.stat-label { font-size: 10px; color: var(--gray-400); text-transform: uppercase; letter-spacing: .07em; margin-top: 3px; }
+
+/* ── Filters ── */
+.controls {
+  max-width: 920px; margin: 0 auto;
+  padding: 18px 24px 0;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.controls-label { font-size: 11px; color: var(--gray-400); text-transform: uppercase; letter-spacing: .08em; margin-right: 2px; }
+.filter-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 500;
+  padding: 5px 14px;
+  border-radius: 99px;
+  border: 1px solid var(--gray-200);
+  background: var(--white);
+  color: var(--gray-600);
+  cursor: pointer;
+  transition: all .15s;
+}
+.filter-btn:hover { border-color: var(--gray-400); color: var(--gray-900); }
+.filter-btn.active { background: var(--green); color: #fff; border-color: var(--green); }
+.search-wrap { margin-left: auto; }
+.search-wrap input {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  padding: 5px 12px;
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+  background: var(--white);
+  color: var(--gray-900);
+  width: 180px;
+  outline: none;
+  transition: border-color .15s;
+}
+.search-wrap input:focus { border-color: var(--green-mid); }
+.search-wrap input::placeholder { color: var(--gray-400); }
+
+/* ── Main content ── */
+main { max-width: 920px; margin: 0 auto; padding: 24px 24px 60px; }
+
+/* ── Month sections ── */
+.month-section { margin-bottom: 32px; }
+.month-heading {
+  font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .1em;
+  color: var(--gray-400);
+  padding-bottom: 8px;
+  border-bottom: 1.5px solid var(--gray-200);
+  margin-bottom: 4px;
+}
+
+/* ── Event rows ── */
+.event-row {
+  display: grid;
+  grid-template-columns: 72px 1fr 180px 88px;
+  gap: 0 16px;
+  align-items: center;
+  padding: 11px 12px;
+  border-radius: 8px;
+  transition: background .1s;
+  cursor: default;
+}
+.event-row:hover { background: var(--gray-100); }
+.event-row.dimmed { opacity: .35; }
+
+.event-date { text-align: right; }
+.event-date .weekday { font-size: 10px; color: var(--gray-400); text-transform: uppercase; letter-spacing: .07em; }
+.event-date .date    { font-size: 14px; font-weight: 600; color: var(--gray-900); font-family: 'DM Mono', monospace; }
+
+.event-main {}
+.event-name { font-size: 14px; font-weight: 500; color: var(--gray-900); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.event-desc { font-size: 12px; color: var(--gray-400); margin-top: 1px; }
+
+.badge {
+  display: inline-block;
+  font-size: 10px; font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 99px;
+  letter-spacing: .03em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.badge-race     { background: #D1FAE5; color: #065F46; }  /* Basil/10 */
+.badge-practice { background: #ECFDF5; color: #047857; }  /* Sage/2   */
+.badge-service  { background: #FEF3C7; color: #92400E; }  /* Banana/5 */
+.badge-team     { background: #EFF6FF; color: #1E40AF; }  /* Peacock/7*/
+.badge-post     { background: #F5F3FF; color: #4C1D95; }  /* Grape/3  */
+.badge-default  { background: var(--gray-100); color: var(--gray-600); }
+
+.event-location { font-size: 12px; color: var(--gray-600); line-height: 1.4; }
+.event-time     { font-size: 12px; color: var(--gray-400); font-family: 'DM Mono', monospace; text-align: right; white-space: nowrap; }
+.event-time.all-day { color: var(--gray-400); font-style: italic; font-family: 'DM Sans', sans-serif; }
+
+/* ── States ── */
+.state-box {
+  text-align: center;
+  padding: 60px 24px;
+  color: var(--gray-400);
+}
+.state-box .icon { font-size: 32px; margin-bottom: 12px; }
+.state-box h3 { font-size: 16px; font-weight: 500; color: var(--gray-600); margin-bottom: 6px; }
+.state-box p  { font-size: 13px; max-width: 380px; margin: 0 auto; line-height: 1.6; }
+.state-box code {
+  display: inline-block;
+  background: var(--gray-100);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--gray-900);
+  margin-top: 6px;
+}
+
+/* ── Config banner ── */
+.config-banner {
+  background: #FFF7ED;
+  border: 1px solid #FED7AA;
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  font-size: 13px;
+  color: #7C2D12;
+}
+.config-banner strong { font-weight: 600; }
+.config-banner ol { margin: 10px 0 0 18px; line-height: 2; }
+.config-banner code {
+  background: rgba(0,0,0,.06);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+}
+.config-banner a { color: #9A3412; }
+
+/* ── ACT warning dot ── */
+.act-dot {
+  display: inline-block;
+  width: 7px; height: 7px;
+  background: #EF4444;
+  border-radius: 50%;
+  margin-left: 4px;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+/* ── Footer ── */
+footer {
+  border-top: 1px solid var(--gray-200);
+  padding: 20px 24px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--gray-400);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: .04em;
+}
+
+@media (max-width: 640px) {
+  .event-row { grid-template-columns: 58px 1fr; grid-template-rows: auto auto; }
+  .event-location { grid-column: 2; font-size: 11px; }
+  .event-time { display: none; }
+  .stats-bar-inner { flex-wrap: wrap; }
+  .stat { min-width: 50%; border-right: none; border-bottom: 1px solid var(--gray-200); padding: 6px 0; }
+  .stat:nth-child(3), .stat:nth-child(4) { border-bottom: none; }
+  .last-updated { display: none; }
+  .search-wrap { width: 100%; }
+  .search-wrap input { width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-mark">STX</div>
+      <div class="logo-text">
+        <h1>Cross Country 2026</h1>
+        <p>ST. XAVIER HIGH SCHOOL</p>
+      </div>
+    </div>
+    <div class="last-updated" id="last-updated">Loading…</div>
+  </div>
+</header>
+
+<div class="stats-bar">
+  <div class="stats-bar-inner">
+    <div class="stat"><div class="stat-num" id="stat-total">—</div><div class="stat-label">Total events</div></div>
+    <div class="stat"><div class="stat-num" id="stat-races">—</div><div class="stat-label">Races</div></div>
+    <div class="stat"><div class="stat-num" id="stat-service">—</div><div class="stat-label">Service</div></div>
+    <div class="stat"><div class="stat-num" id="stat-postseason">—</div><div class="stat-label">Post-season</div></div>
+  </div>
+</div>
+
+<div class="controls">
+  <span class="controls-label">Filter</span>
+  <button class="filter-btn active" data-cat="all">All</button>
+  <button class="filter-btn" data-cat="race">Races</button>
+  <button class="filter-btn" data-cat="practice">Practice</button>
+  <button class="filter-btn" data-cat="service">Service</button>
+  <button class="filter-btn" data-cat="team">Team events</button>
+  <button class="filter-btn" data-cat="post">Post-season</button>
+  <div class="search-wrap">
+    <input type="search" id="search" placeholder="Search events…">
+  </div>
+</div>
+
+<main id="main-content">
+  <div class="state-box">
+    <div class="icon">⏳</div>
+    <h3>Loading schedule…</h3>
+    <p>Fetching events from Google Calendar.</p>
+  </div>
+</main>
+
+<footer>STX XC · Updated live from Google Calendar · <span id="footer-year"></span></footer>
+
+<script>
+// ─────────────────────────────────────────────
+//  CONFIGURATION — edit these two values
+// ─────────────────────────────────────────────
+const CALENDAR_ID = 'sp6ujpuiq5hikjaa8qnht061a4@group.calendar.google.com';
+const API_KEY     = 'AIzaSyAN4QFzfhhTb3B2mxh54P65in_AO7WUFMM';
+// ─────────────────────────────────────────────
+
+document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+const MONTHS_LONG  = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const DAYS_SHORT   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+// Google Calendar colorId → category
+const COLOR_MAP = {
+  '10': 'race',      // Basil (dark green)
+  '2':  'practice',  // Sage (medium green)
+  '5':  'service',   // Banana (yellow)
+  '7':  'team',      // Peacock (blue)
+  '3':  'post',      // Grape (purple)
+};
+
+function categorize(ev) {
+  return COLOR_MAP[ev.colorId] || 'team';
+}
+
+function badgeHTML(cat) {
+  const labels = { race: 'Race', practice: 'Practice', service: 'Service', team: 'Team event', post: 'Post-season' };
+  return `<span class="badge badge-${cat}">${labels[cat] || 'Event'}</span>`;
+}
+
+function parseStart(ev) {
+  return ev.start.dateTime ? new Date(ev.start.dateTime) : new Date(ev.start.date + 'T00:00:00');
+}
+
+function formatTime(ev) {
+  if (ev.start.date) return '<span class="all-day">All day</span>';
+  const d = new Date(ev.start.dateTime);
+  let h = d.getHours(), m = d.getMinutes(), ampm = h >= 12 ? 'PM' : 'AM';
+  h = h % 12 || 12;
+  return `${h}${m ? ':' + String(m).padStart(2,'0') : ''}&nbsp;${ampm}`;
+}
+
+function isACT(ev) {
+  return /ACT/i.test(ev.summary + (ev.description || ''));
+}
+
+let allEvents = [];
+let activeFilter = 'all';
+let searchQuery  = '';
+
+function renderEvents() {
+  const filtered = allEvents.filter(ev => {
+    const cat = categorize(ev);
+    const matchCat = activeFilter === 'all' || cat === activeFilter;
+    const matchQ   = !searchQuery || (ev.summary + (ev.location || '') + (ev.description || '')).toLowerCase().includes(searchQuery);
+    return matchCat && matchQ;
+  });
+
+  const byMonth = {};
+  filtered.forEach(ev => {
+    const d = parseStart(ev);
+    const key = `${d.getFullYear()}-${String(d.getMonth()).padStart(2,'0')}`;
+    (byMonth[key] = byMonth[key] || []).push(ev);
+  });
+
+  const main = document.getElementById('main-content');
+
+  if (filtered.length === 0) {
+    main.innerHTML = `<div class="state-box"><div class="icon">🔍</div><h3>No events found</h3><p>Try a different filter or search term.</p></div>`;
+    return;
+  }
+
+  let html = '';
+  for (const key of Object.keys(byMonth).sort()) {
+    const [yr, moIdx] = key.split('-');
+    const label = MONTHS_LONG[+moIdx] + ' ' + yr;
+    html += `<div class="month-section"><div class="month-heading">${label}</div>`;
+    for (const ev of byMonth[key]) {
+      const d   = parseStart(ev);
+      const cat = categorize(ev);
+      const loc = ev.location ? ev.location.split(',').slice(0,2).join(',') : '—';
+      const act = isACT(ev) ? '<span class="act-dot" title="ACT Test Date"></span>' : '';
+      html += `
+        <div class="event-row">
+          <div class="event-date">
+            <div class="weekday">${DAYS_SHORT[d.getDay()]}</div>
+            <div class="date">${MONTHS_SHORT[d.getMonth()]} ${d.getDate()}</div>
+          </div>
+          <div class="event-main">
+            <div class="event-name">${ev.summary}${act}${badgeHTML(cat)}</div>
+            ${ev.description ? `<div class="event-desc">${ev.description.replace(/<[^>]+>/g,'').slice(0,80)}</div>` : ''}
+          </div>
+          <div class="event-location">${loc}</div>
+          <div class="event-time">${formatTime(ev)}</div>
+        </div>`;
+    }
+    html += `</div>`;
+  }
+  main.innerHTML = html;
+}
+
+function updateStats() {
+  const cats = { race: 0, practice: 0, service: 0, post: 0 };
+  allEvents.forEach(ev => {
+    const c = categorize(ev);
+    if (cats[c] !== undefined) cats[c]++;
+  });
+  document.getElementById('stat-total').textContent      = allEvents.length;
+  document.getElementById('stat-races').textContent      = cats.race;
+  document.getElementById('stat-service').textContent    = cats.service;
+  document.getElementById('stat-postseason').textContent = cats.post;
+  document.getElementById('last-updated').textContent   = 'Updated ' + new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+}
+
+async function fetchEvents() {
+  // Show config instructions if placeholders are still set
+  if (CALENDAR_ID.startsWith('YOUR_') || API_KEY.startsWith('YOUR_')) {
+    document.getElementById('main-content').innerHTML = `
+      <div class="config-banner">
+        <strong>Setup required — 2 quick steps to go live:</strong>
+        <ol>
+          <li>
+            <strong>Make your calendar public:</strong> Google Calendar → Settings → your STX XC calendar → "Access permissions" → check "Make available to public"
+          </li>
+          <li>
+            <strong>Get a free API key:</strong> <a href="https://console.cloud.google.com/" target="_blank">console.cloud.google.com</a> → New project → Enable "Google Calendar API" → Credentials → Create API key
+          </li>
+          <li>
+            <strong>Find your Calendar ID:</strong> Calendar settings → "Integrate calendar" → copy the Calendar ID (looks like <code>abc123@group.calendar.google.com</code>)
+          </li>
+          <li>Open this HTML file and replace <code>YOUR_CALENDAR_ID</code> and <code>YOUR_GOOGLE_API_KEY</code> near the top of the &lt;script&gt; block, then push to GitHub.
+          </li>
+        </ol>
+      </div>`;
+    return;
+  }
+
+  const now     = new Date().toISOString();
+  const yearEnd = new Date(new Date().getFullYear(), 11, 31, 23, 59, 59).toISOString();
+  const url     = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(CALENDAR_ID)}/events`
+                + `?key=${API_KEY}&timeMin=${now}&timeMax=${yearEnd}`
+                + `&singleEvents=true&orderBy=startTime&maxResults=250`;
+
+  try {
+    const res  = await fetch(url);
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error?.message || 'API error');
+    allEvents = data.items || [];
+    updateStats();
+    renderEvents();
+  } catch (err) {
+    document.getElementById('main-content').innerHTML = `
+      <div class="state-box">
+        <div class="icon">⚠️</div>
+        <h3>Could not load calendar</h3>
+        <p>${err.message}</p>
+        <p style="margin-top:8px;">Check that your Calendar ID and API key are correct, and that the calendar is set to public.</p>
+      </div>`;
+  }
+}
+
+// Filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.cat;
+    renderEvents();
+  });
+});
+
+// Search
+document.getElementById('search').addEventListener('input', e => {
+  searchQuery = e.target.value.toLowerCase().trim();
+  renderEvents();
+});
+
+fetchEvents();
+</script>
+</body>
+</html>
