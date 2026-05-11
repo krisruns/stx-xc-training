@@ -230,7 +230,8 @@ document.getElementById('footer-year').textContent = new Date().getFullYear();
 
 const MONTHS_LONG  = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 const MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-const DAYS_SHORT   = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const DAYS_SHORT  = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']; // indexed by getDay()
+const DAYS_CAL    = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']; // Mon-first for calendar header
 
 const COLOR_MAP = { '10':'race', '2':'practice', '5':'service', '7':'team', '3':'post' };
 const CAT_LABELS = { race:'Race', practice:'Practice', service:'Service', team:'Team event', post:'Post-season' };
@@ -377,7 +378,7 @@ function renderCalendar() {
   const today       = new Date();
 
   let html = `<div class="cal-grid">
-    <div class="cal-dow-row">${DAYS_SHORT.map(d=>`<div class="cal-dow">${d}</div>`).join('')}</div>
+    <div class="cal-dow-row">${DAYS_CAL.map(d=>`<div class="cal-dow">${d}</div>`).join('')}</div>
     <div class="cal-days-grid">`;
 
   // Prev month padding
