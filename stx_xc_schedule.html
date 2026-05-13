@@ -372,12 +372,29 @@ function renderCalendar() {
 
   // Build day → events map using consistent YYYY-M-D key
   const byDay = {};
-  getFiltered().forEach(ev => {
-    const d   = parseStart(ev);
-    if (d.getFullYear() !== calYear || d.getMonth() !== calMonth) return;
-    const key = d.getDate();
-    (byDay[key]=byDay[key]||[]).push(ev);
-  });
+getFiltered().forEach(ev => {
+  const start = parseStart(ev);
+
+  // For multi-day all-day events, end date is exclusive in Google's API
+  // e.g. June 25–July 9 comes back as end.date = "2026-07-10"
+  let end;
+  if (ev.end.date) {
+    end = new Date(ev.end.date + 'T00:00:00');
+    end.setDate(end.getDate() - 1); // make inclusive
+  } else {
+    end = new Date(ev.end.dateTime);
+  }
+
+  // Walk every day from start to end, add to any that fall in this month
+  const cursor = new Date(start);
+  while (cursor <= end) {
+    if (cursor.getFullYear() === calYear && cursor.getMonth() === calMonth) {
+      const key = cursor.getDate();
+      (byDay[key] = byDay[key] || []).push(ev);
+    }
+    cursor.setDate(cursor.getDate() + 1);
+  }
+});
 
   const firstDow = (new Date(calYear, calMonth, 1).getDay() + 6) % 7;
   const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
