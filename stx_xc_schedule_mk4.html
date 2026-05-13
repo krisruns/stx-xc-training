@@ -238,6 +238,15 @@ const CAT_LABELS = { race:'Race', practice:'Practice', service:'Service', team:'
 
 function categorizeByKeyword(name, desc) {
   const t = (name + ' ' + (desc||'')).toLowerCase();
+
+  // Explicit [Tag] flags take priority
+  if (t.includes('[race]'))     return 'race';
+  if (t.includes('[practice]')) return 'practice';
+  if (t.includes('[service]'))  return 'service';
+  if (t.includes('[post]'))     return 'post';
+  if (t.includes('[team]'))     return 'team';
+
+  // Keyword fallback
   if (/regional|foot locker|nike team|runninglane/.test(t))        return 'post';
   if (/soup kitchen|direct service|indirect service|carnival|picnic|hustle/.test(t)) return 'service';
   if (/practice|workout|pm practice|camp x/.test(t))               return 'practice';
@@ -245,29 +254,12 @@ function categorizeByKeyword(name, desc) {
   return 'team';
 }
 
-// Returns array of ALL matching categories so events can have multiple tags
-function getCategories(ev) {
-  const t = (ev.summary + ' ' + (ev.description||'')).toLowerCase();
-  const cats = [];
-  if (t.includes('[race]'))     cats.push('race');
-  if (t.includes('[practice]')) cats.push('practice');
-  if (t.includes('[service]'))  cats.push('service');
-  if (t.includes('[post]'))     cats.push('post');
-  if (t.includes('[team]'))     cats.push('team');
-  if (cats.length === 0) {
-    if (ev.colorId && COLOR_MAP[ev.colorId]) cats.push(COLOR_MAP[ev.colorId]);
-    else cats.push(categorizeByKeyword(ev.summary, ev.description));
-  }
-  return cats;
+// Use colorId when set by Apps Script, otherwise fall back to keyword matching
+function categorize(ev) {
+  if (ev.colorId && COLOR_MAP[ev.colorId]) return COLOR_MAP[ev.colorId];
+  return categorizeByKeyword(ev.summary, ev.description);
 }
-
-// Primary category for chip color in calendar view
-function categorize(ev) { return getCategories(ev)[0]; }
-
-// Renders one badge per category
-function badgeHTML(cats) {
-  return cats.map(cat => `<span class="badge badge-${cat}">${CAT_LABELS[cat]||'Event'}</span>`).join(' ');
-}
+function badgeHTML(cat)  { return `<span class="badge badge-${cat}">${CAT_LABELS[cat]||'Event'}</span>`; }
 function parseStart(ev)  { return ev.start.dateTime ? new Date(ev.start.dateTime) : new Date(ev.start.date+'T00:00:00'); }
 function isACT(ev)       { return /ACT/i.test(ev.summary+(ev.description||'')); }
 
@@ -310,7 +302,8 @@ function printCurrent() {
 // ── FILTERED EVENTS ────────────────────────────
 function getFiltered() {
   return allEvents.filter(ev => {
-    const ok1 = activeFilter==='all' || getCategories(ev).includes(activeFilter);
+    const cat = categorize(ev);
+    const ok1 = activeFilter==='all' || cat===activeFilter;
     const ok2 = !searchQuery || (ev.summary+(ev.location||'')+(ev.description||'')).toLowerCase().includes(searchQuery);
     return ok1 && ok2;
   });
@@ -335,10 +328,10 @@ function renderList() {
     const [yr,mo] = k.split('-');
     html += `<div class="month-section"><div class="month-heading">${MONTHS_LONG[+mo]} ${yr}</div>`;
     for (const ev of byMonth[k]) {
-      const d    = parseStart(ev);
-      const cats = getCategories(ev);
-      const loc  = ev.location ? ev.location.split(',').slice(0,2).join(',') : '—';
-      const act  = isACT(ev) ? '<span class="act-dot" title="ACT Test Date — plan ahead"></span>' : '';
+      const d   = parseStart(ev);
+      const cat = categorize(ev);
+      const loc = ev.location ? ev.location.split(',').slice(0,2).join(',') : '—';
+      const act = isACT(ev) ? '<span class="act-dot" title="ACT Test Date — plan ahead"></span>' : '';
       const desc = ev.description ? ev.description.replace(/<[^>]+>/g,'').replace(/\[.*?\]/g,'').trim().slice(0,90) : '';
       html += `
         <div class="event-row">
@@ -347,7 +340,7 @@ function renderList() {
             <div class="date">${MONTHS_SHORT[d.getMonth()]} ${d.getDate()}</div>
           </div>
           <div class="event-main">
-            <div class="event-name">${ev.summary}${act}${badgeHTML(cats)}</div>
+            <div class="event-name">${ev.summary}${act}${badgeHTML(cat)}</div>
             ${desc ? `<div class="event-desc">${desc}</div>` : ''}
           </div>
           <div class="event-location">${loc}</div>
