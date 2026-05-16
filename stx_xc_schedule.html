@@ -241,7 +241,7 @@ function categorizeByKeyword(name, desc) {
   if (/regional|foot locker|nike team|runninglane/.test(t))        return 'post';
   if (/soup kitchen|direct service|indirect service|carnival|picnic|hustle/.test(t)) return 'service';
   if (/practice|workout|pm practice|camp x/.test(t))               return 'practice';
-  if (/classic|meet|invitational|showcase|championship|champions series|dual|time trial|meet of champions|tiger run/.test(t)) return 'race';
+  if (/classic|meet|invitational|showcase|championship|champions series|dual|time trial|meet of champions|/.test(t)) return 'race';
   return 'team';
 }
 
