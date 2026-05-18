@@ -158,6 +158,35 @@ footer{border-top:1px solid var(--gray-200);padding:20px 24px;text-align:center;
   .month-section{break-inside:avoid;margin-bottom:18px;}
   .badge{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
 }
+/* EXPORT PANEL */
+.export-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;}
+.export-drawer{position:fixed;bottom:0;left:0;right:0;background:var(--white);border-radius:16px 16px 0 0;z-index:201;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 -4px 24px rgba(0,0,0,.15);}
+.export-header{display:flex;align-items:center;justify-content:space-between;padding:18px 24px 14px;border-bottom:1px solid var(--gray-200);}
+.export-header h2{font-size:16px;font-weight:600;color:var(--gray-900);}
+.export-close{background:none;border:none;font-size:18px;color:var(--gray-400);cursor:pointer;line-height:1;padding:4px;}
+.export-close:hover{color:var(--gray-900);}
+.export-body{padding:20px 24px;overflow-y:auto;flex:1;}
+.export-row{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:20px;}
+.export-field{display:flex;flex-direction:column;gap:4px;}
+.export-field label{font-size:11px;font-weight:500;color:var(--gray-600);text-transform:uppercase;letter-spacing:.06em;}
+.export-field input[type=date]{font-family:'DM Sans',sans-serif;font-size:13px;padding:6px 10px;border:1px solid var(--gray-200);border-radius:8px;background:var(--white);color:var(--gray-900);outline:none;}
+.export-field input[type=date]:focus{border-color:var(--green-mid);}
+.export-check{justify-content:flex-end;padding-bottom:2px;}
+.export-check label{font-size:13px;color:var(--gray-600);text-transform:none;letter-spacing:0;display:flex;align-items:center;gap:6px;cursor:pointer;}
+.export-check code{background:var(--gray-100);padding:1px 5px;border-radius:4px;font-family:'DM Mono',monospace;font-size:11px;}
+.export-preview-btn{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:7px 18px;border-radius:8px;border:none;background:var(--green);color:#fff;cursor:pointer;white-space:nowrap;align-self:flex-end;}
+.export-preview-btn:hover{background:var(--green-mid);}
+.export-preview-label{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.export-preview-label span{font-size:13px;color:var(--gray-600);}
+.export-download-btn{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:7px 18px;border-radius:8px;border:none;background:var(--gold);color:#fff;cursor:pointer;}
+.export-download-btn:hover{opacity:.9;}
+.export-table-wrap{overflow-x:auto;border:1px solid var(--gray-200);border-radius:10px;}
+#export-preview-table{width:100%;border-collapse:collapse;font-size:12px;}
+#export-preview-table th{background:var(--gray-100);padding:8px 12px;text-align:left;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--gray-400);border-bottom:1px solid var(--gray-200);white-space:nowrap;}
+#export-preview-table td{padding:8px 12px;border-bottom:1px solid var(--gray-200);color:var(--gray-900);vertical-align:top;}
+#export-preview-table tr:last-child td{border-bottom:none;}
+#export-preview-table tr:hover td{background:var(--gray-50);}
+.export-empty{text-align:center;padding:32px;color:var(--gray-400);font-size:13px;}
 </style>
 </head>
 <body>
@@ -177,6 +206,7 @@ footer{border-top:1px solid var(--gray-200);padding:20px 24px;text-align:center;
         <button class="view-btn"        id="btn-cal"  onclick="setView('cal')">▦ Calendar</button>
       </div>
       <button class="print-btn" onclick="printCurrent()">⎙ Print / PDF</button>
+      <button class="print-btn" onclick="toggleExport()" id="export-btn">⬇ Export CSV</button>
       <div class="last-updated" id="last-updated"></div>
     </div>
   </div>
@@ -220,6 +250,55 @@ footer{border-top:1px solid var(--gray-200);padding:20px 24px;text-align:center;
 
 <footer>STX XC · Updated live from Google Calendar · <span id="footer-year"></span></footer>
 
+<!-- ══ EXPORT PANEL ══ -->
+<div id="export-panel" style="display:none;">
+  <div class="export-backdrop" onclick="toggleExport()"></div>
+  <div class="export-drawer">
+    <div class="export-header">
+      <h2>Export to Team App CSV</h2>
+      <button class="export-close" onclick="toggleExport()">✕</button>
+    </div>
+    <div class="export-body">
+      <div class="export-row">
+        <div class="export-field">
+          <label>Start date</label>
+          <input type="date" id="exp-start">
+        </div>
+        <div class="export-field">
+          <label>End date</label>
+          <input type="date" id="exp-end">
+        </div>
+        <div class="export-field export-check">
+          <label><input type="checkbox" id="exp-no-tentative" checked> Exclude <code>[Tentative]</code> events</label>
+        </div>
+        <button class="export-preview-btn" onclick="runPreview()">Preview</button>
+      </div>
+
+      <div id="export-preview-wrap" style="display:none;">
+        <div class="export-preview-label">
+          <span id="export-count"></span>
+          <button class="export-download-btn" onclick="downloadCSV()">⬇ Download CSV</button>
+        </div>
+        <div class="export-table-wrap">
+          <table id="export-preview-table">
+            <thead>
+              <tr>
+                <th>Event name</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Time</th>
+                <th>Location</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody id="export-preview-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 // ── CONFIGURATION ──────────────────────────────
 const CALENDAR_ID = 'sp6ujpuiq5hikjaa8qnht061a4@group.calendar.google.com';
@@ -238,36 +317,28 @@ const CAT_LABELS = { race:'Race', practice:'Practice', service:'Service', team:'
 
 function categorizeByKeyword(name, desc) {
   const t = (name + ' ' + (desc||'')).toLowerCase();
+
+  // Explicit [Tag] flags take priority
+  if (t.includes('[race]'))     return 'race';
+  if (t.includes('[practice]')) return 'practice';
+  if (t.includes('[service]'))  return 'service';
+  if (t.includes('[post]'))     return 'post';
+  if (t.includes('[team]'))     return 'team';
+
+  // Keyword fallback
   if (/regional|foot locker|nike team|runninglane/.test(t))        return 'post';
   if (/soup kitchen|direct service|indirect service|carnival|picnic|hustle/.test(t)) return 'service';
   if (/practice|workout|pm practice|camp x/.test(t))               return 'practice';
-  if (/classic|meet|invitational|showcase|championship|champions series|dual|time trial|meet of champions|/.test(t)) return 'race';
+  if (/classic|meet|invitational|showcase|championship|champions series|dual|time trial|meet of champions|tiger run/.test(t)) return 'race';
   return 'team';
 }
 
-// Returns array of ALL matching categories so events can have multiple tags
-function getCategories(ev) {
-  const t = (ev.summary + ' ' + (ev.description||'')).toLowerCase();
-  const cats = [];
-  if (t.includes('[race]'))     cats.push('race');
-  if (t.includes('[practice]')) cats.push('practice');
-  if (t.includes('[service]'))  cats.push('service');
-  if (t.includes('[post]'))     cats.push('post');
-  if (t.includes('[team]'))     cats.push('team');
-  if (cats.length === 0) {
-    if (ev.colorId && COLOR_MAP[ev.colorId]) cats.push(COLOR_MAP[ev.colorId]);
-    else cats.push(categorizeByKeyword(ev.summary, ev.description));
-  }
-  return cats;
+// Use colorId when set by Apps Script, otherwise fall back to keyword matching
+function categorize(ev) {
+  if (ev.colorId && COLOR_MAP[ev.colorId]) return COLOR_MAP[ev.colorId];
+  return categorizeByKeyword(ev.summary, ev.description);
 }
-
-// Primary category for chip color in calendar view
-function categorize(ev) { return getCategories(ev)[0]; }
-
-// Renders one badge per category
-function badgeHTML(cats) {
-  return cats.map(cat => `<span class="badge badge-${cat}">${CAT_LABELS[cat]||'Event'}</span>`).join(' ');
-}
+function badgeHTML(cat)  { return `<span class="badge badge-${cat}">${CAT_LABELS[cat]||'Event'}</span>`; }
 function parseStart(ev)  { return ev.start.dateTime ? new Date(ev.start.dateTime) : new Date(ev.start.date+'T00:00:00'); }
 function isACT(ev)       { return /ACT/i.test(ev.summary+(ev.description||'')); }
 
@@ -280,7 +351,7 @@ function formatTime(ev) {
 }
 
 let allEvents    = [];
-let activeFilter = 'all';
+let activeFilters = new Set(['all']); // Set of active category keys; 'all' means show everything
 let searchQuery  = '';
 let currentView  = 'list';
 let calYear, calMonth;
@@ -310,7 +381,7 @@ function printCurrent() {
 // ── FILTERED EVENTS ────────────────────────────
 function getFiltered() {
   return allEvents.filter(ev => {
-    const ok1 = activeFilter==='all' || getCategories(ev).includes(activeFilter);
+    const ok1 = activeFilters.has('all') || getCategories(ev).some(c => activeFilters.has(c));
     const ok2 = !searchQuery || (ev.summary+(ev.location||'')+(ev.description||'')).toLowerCase().includes(searchQuery);
     return ok1 && ok2;
   });
@@ -335,10 +406,10 @@ function renderList() {
     const [yr,mo] = k.split('-');
     html += `<div class="month-section"><div class="month-heading">${MONTHS_LONG[+mo]} ${yr}</div>`;
     for (const ev of byMonth[k]) {
-      const d    = parseStart(ev);
-      const cats = getCategories(ev);
-      const loc  = ev.location ? ev.location.split(',').slice(0,2).join(',') : '—';
-      const act  = isACT(ev) ? '<span class="act-dot" title="ACT Test Date — plan ahead"></span>' : '';
+      const d   = parseStart(ev);
+      const cat = categorize(ev);
+      const loc = ev.location ? ev.location.split(',').slice(0,2).join(',') : '—';
+      const act = isACT(ev) ? '<span class="act-dot" title="ACT Test Date — plan ahead"></span>' : '';
       const desc = ev.description ? ev.description.replace(/<[^>]+>/g,'').replace(/\[.*?\]/g,'').trim().slice(0,90) : '';
       html += `
         <div class="event-row">
@@ -347,7 +418,7 @@ function renderList() {
             <div class="date">${MONTHS_SHORT[d.getMonth()]} ${d.getDate()}</div>
           </div>
           <div class="event-main">
-            <div class="event-name">${ev.summary}${act}${badgeHTML(cats)}</div>
+            <div class="event-name">${ev.summary}${act}${badgeHTML(cat)}</div>
             ${desc ? `<div class="event-desc">${desc}</div>` : ''}
           </div>
           <div class="event-location">${loc}</div>
@@ -372,29 +443,12 @@ function renderCalendar() {
 
   // Build day → events map using consistent YYYY-M-D key
   const byDay = {};
-getFiltered().forEach(ev => {
-  const start = parseStart(ev);
-
-  // For multi-day all-day events, end date is exclusive in Google's API
-  // e.g. June 25–July 9 comes back as end.date = "2026-07-10"
-  let end;
-  if (ev.end.date) {
-    end = new Date(ev.end.date + 'T00:00:00');
-    end.setDate(end.getDate() - 1); // make inclusive
-  } else {
-    end = new Date(ev.end.dateTime);
-  }
-
-  // Walk every day from start to end, add to any that fall in this month
-  const cursor = new Date(start);
-  while (cursor <= end) {
-    if (cursor.getFullYear() === calYear && cursor.getMonth() === calMonth) {
-      const key = cursor.getDate();
-      (byDay[key] = byDay[key] || []).push(ev);
-    }
-    cursor.setDate(cursor.getDate() + 1);
-  }
-});
+  getFiltered().forEach(ev => {
+    const d   = parseStart(ev);
+    if (d.getFullYear() !== calYear || d.getMonth() !== calMonth) return;
+    const key = d.getDate();
+    (byDay[key]=byDay[key]||[]).push(ev);
+  });
 
   const firstDow = (new Date(calYear, calMonth, 1).getDay() + 6) % 7;
   const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
@@ -489,9 +543,35 @@ async function fetchEvents() {
 // ── WIRE UP CONTROLS ───────────────────────────
 document.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    activeFilter = btn.dataset.cat;
+    const cat = btn.dataset.cat;
+    if (cat === 'all') {
+      // All toggles everything on/off
+      if (activeFilters.has('all')) {
+        // Already all — do nothing (keep all selected so something is always shown)
+      } else {
+        activeFilters = new Set(['all']);
+      }
+    } else {
+      // Toggle this category
+      activeFilters.delete('all');
+      if (activeFilters.has(cat)) {
+        activeFilters.delete(cat);
+        // If nothing left, fall back to All
+        if (activeFilters.size === 0) activeFilters.add('all');
+      } else {
+        activeFilters.add(cat);
+      }
+      // If all individual categories are selected, switch back to All
+      const cats = ['race','practice','service','team','post'];
+      if (cats.every(c => activeFilters.has(c))) activeFilters = new Set(['all']);
+    }
+    // Sync button states
+    document.querySelectorAll('.filter-btn').forEach(b => {
+      const isAll = b.dataset.cat === 'all';
+      b.classList.toggle('active',
+        isAll ? activeFilters.has('all') : activeFilters.has(b.dataset.cat)
+      );
+    });
     renderList();
     if (currentView==='cal') renderCalendar();
   });
@@ -501,6 +581,123 @@ document.getElementById('search').addEventListener('input', e => {
   renderList();
   if (currentView==='cal') renderCalendar();
 });
+
+// ── EXPORT ────────────────────────────────────
+const ACCESS_GROUPS = 'Coaches,Parents,STXXC Athletes';
+
+function toggleExport() {
+  const panel = document.getElementById('export-panel');
+  const open  = panel.style.display === 'none';
+  panel.style.display = open ? 'block' : 'none';
+  if (open) {
+    // Default to today → 30 days out
+    const today = new Date();
+    const later = new Date(); later.setDate(later.getDate() + 30);
+    document.getElementById('exp-start').value = today.toISOString().slice(0,10);
+    document.getElementById('exp-end').value   = later.toISOString().slice(0,10);
+    document.getElementById('export-preview-wrap').style.display = 'none';
+  }
+}
+
+function getExportEvents() {
+  const start       = new Date(document.getElementById('exp-start').value + 'T00:00:00');
+  const end         = new Date(document.getElementById('exp-end').value   + 'T23:59:59');
+  const noTentative = document.getElementById('exp-no-tentative').checked;
+
+  // Start from getFiltered() so active category filters carry into the export
+  return getFiltered().filter(ev => {
+    const evStart = parseStart(ev);
+    const evEnd   = ev.end.dateTime ? new Date(ev.end.dateTime)
+                  : ev.end.date    ? new Date(ev.end.date + 'T00:00:00')
+                  : evStart;
+    if (evStart > end || evEnd < start) return false;
+    if (noTentative && (ev.summary + (ev.description||'')).toLowerCase().includes('[tentative]')) return false;
+    return true;
+  });
+}
+
+function fmtDate(ev, which) {
+  const raw = which === 'start' ? (ev.start.dateTime || ev.start.date)
+                                : (ev.end.dateTime   || ev.end.date);
+  if (!raw) return '';
+  // All-day end dates from Google are exclusive — subtract 1 day
+  if (!ev.end.dateTime && which === 'end') {
+    const d = new Date(raw + 'T00:00:00');
+    d.setDate(d.getDate() - 1);
+    return d.toISOString().slice(0,10);
+  }
+  return raw.slice(0,10);
+}
+
+function fmtTime(dt) {
+  if (!dt) return '';
+  const d = new Date(dt);
+  return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+}
+
+function cleanDesc(ev) {
+  return (ev.description || '').replace(/<[^>]+>/g,'').replace(/\[.*?\]/g,'').trim();
+}
+
+function runPreview() {
+  const events = getExportEvents();
+  const wrap   = document.getElementById('export-preview-wrap');
+  const tbody  = document.getElementById('export-preview-body');
+  const count  = document.getElementById('export-count');
+
+  wrap.style.display = 'block';
+  count.textContent  = `${events.length} event${events.length !== 1 ? 's' : ''} ready to export`;
+
+  if (events.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" class="export-empty">No events in this date range.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = events.map(ev => `
+    <tr>
+      <td><strong>${ev.summary}</strong></td>
+      <td>${fmtDate(ev,'start')}</td>
+      <td>${fmtDate(ev,'end')}</td>
+      <td style="white-space:nowrap">${fmtTime(ev.start.dateTime)}${ev.start.dateTime && ev.end.dateTime ? ' – ' + fmtTime(ev.end.dateTime) : ''}</td>
+      <td>${ev.location || ''}</td>
+      <td style="color:var(--gray-400)">${cleanDesc(ev).slice(0,60)}${cleanDesc(ev).length > 60 ? '…' : ''}</td>
+    </tr>`).join('');
+}
+
+function downloadCSV() {
+  const events  = getExportEvents();
+  const headers = ['event_name','start_date','end_date','start_time','end_time','description','location','access_groups','rsvp','comments','attendance_tracking','duty_roster','ticketing','reference_id'];
+
+  const rows = events.map(ev => [
+    ev.summary,
+    fmtDate(ev, 'start'),
+    fmtDate(ev, 'end'),
+    fmtTime(ev.start.dateTime),
+    fmtTime(ev.end.dateTime),
+    cleanDesc(ev),
+    ev.location || '',
+    ACCESS_GROUPS,
+    'FALSE',
+    'TRUE',
+    'TRUE',
+    'TRUE',
+    'FALSE',
+    ''
+  ]);
+
+  const csv = [headers, ...rows].map(r =>
+    r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')
+  ).join('\r\n');
+
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  const dateStr = new Date().toISOString().slice(0,10);
+  a.href     = url;
+  a.download = `stx_xc_teamapp_${dateStr}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
 
 fetchEvents();
 </script>
