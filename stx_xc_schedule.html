@@ -338,7 +338,24 @@ function categorize(ev) {
   if (ev.colorId && COLOR_MAP[ev.colorId]) return COLOR_MAP[ev.colorId];
   return categorizeByKeyword(ev.summary, ev.description);
 }
-function badgeHTML(cat)  { return `<span class="badge badge-${cat}">${CAT_LABELS[cat]||'Event'}</span>`; }
+
+// Returns ALL matching categories for an event (supports multiple [Tag] flags)
+function getCategories(ev) {
+  const t = (ev.summary + ' ' + (ev.description||'')).toLowerCase();
+  const cats = [];
+  if (t.includes('[race]'))     cats.push('race');
+  if (t.includes('[practice]')) cats.push('practice');
+  if (t.includes('[service]'))  cats.push('service');
+  if (t.includes('[post]'))     cats.push('post');
+  if (t.includes('[team]'))     cats.push('team');
+  if (cats.length === 0) cats.push(categorize(ev));
+  return cats;
+}
+
+// Renders one badge per category
+function badgeHTML(cats) {
+  return cats.map(cat => `<span class="badge badge-${cat}">${CAT_LABELS[cat]||'Event'}</span>`).join(' ');
+}
 function parseStart(ev)  { return ev.start.dateTime ? new Date(ev.start.dateTime) : new Date(ev.start.date+'T00:00:00'); }
 function isACT(ev)       { return /ACT/i.test(ev.summary+(ev.description||'')); }
 
@@ -407,7 +424,7 @@ function renderList() {
     html += `<div class="month-section"><div class="month-heading">${MONTHS_LONG[+mo]} ${yr}</div>`;
     for (const ev of byMonth[k]) {
       const d   = parseStart(ev);
-      const cat = categorize(ev);
+      const cats = getCategories(ev);
       const loc = ev.location ? ev.location.split(',').slice(0,2).join(',') : '—';
       const act = isACT(ev) ? '<span class="act-dot" title="ACT Test Date — plan ahead"></span>' : '';
       const desc = ev.description ? ev.description.replace(/<[^>]+>/g,'').replace(/\[.*?\]/g,'').trim().slice(0,90) : '';
@@ -418,7 +435,7 @@ function renderList() {
             <div class="date">${MONTHS_SHORT[d.getMonth()]} ${d.getDate()}</div>
           </div>
           <div class="event-main">
-            <div class="event-name">${ev.summary}${act}${badgeHTML(cat)}</div>
+            <div class="event-name">${ev.summary}${act}${badgeHTML(cats)}</div>
             ${desc ? `<div class="event-desc">${desc}</div>` : ''}
           </div>
           <div class="event-location">${loc}</div>
