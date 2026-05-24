@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STX XC 2026 — Complete Training Schedule</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080d18;
+    --card: #0e1624;
+    --card2: #131e2e;
+    --border: #1e2d42;
+    --border2: #253548;
+    --text: #c8d8e8;
+    --text-dim: #6b8099;
+    --gold: #f0a500;
+    --gold-dim: #7a5400;
+    --green: #22c55e;
+    --green-dim: #144a29;
+    --white: #e2e8f0;
+    --blue: #60a5fa;
+    --blue-dim: #1e3a5f;
+    --red: #ef4444;
+    --orange: #f97316;
+    --purple: #a78bfa;
+    --teal: #2dd4bf;
+    --phase-early: #4ade80;
+    --phase-base: #22c55e;
+    --phase-peak: #f59e0b;
+    --phase-recov: #60a5fa;
+    --phase-preseason: #a78bfa;
+    --phase-build: #f97316;
+    --phase-intro: #ef4444;
+    --phase-champ: #dc2626;
+    --phase-taper: #8b5cf6;
+    --phase-state: #f0a500;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: linear-gradient(160deg, #0a1220 0%, #0e1d35 50%, #091020 100%);
+    border-bottom: 2px solid var(--gold);
+    padding: 40px 24px 32px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .site-header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(240,165,0,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .header-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(32px, 6vw, 64px);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: #fff;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  .header-title span { color: var(--gold); }
+  .header-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 10px;
+  }
+  .header-stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+  .hstat {
+    text-align: center;
+  }
+  .hstat-val {
+    font-family: 'Oswald', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .hstat-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+
+  /* ── STICKY NAV ── */
+  .sticky-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8, 13, 24, 0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .nav-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .nav-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    min-width: 60px;
+    flex-shrink: 0;
+  }
+  .week-pill {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    transition: all 0.15s;
+  }
+  .week-pill:hover { color: #fff; border-color: var(--gold); background: rgba(240,165,0,0.1); }
+  .week-pill.race { border-color: rgba(239,68,68,0.4); color: #fca5a5; }
+  .week-pill.race:hover { background: rgba(239,68,68,0.15); }
+
+  .group-btn {
+    padding: 4px 14px;
+    border-radius: 20px;
+    border: 1.5px solid;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.15s;
+    background: transparent;
+  }
+  .group-btn.all { border-color: var(--border2); color: var(--text-dim); }
+  .group-btn.all.active, .group-btn.all:hover { border-color: #fff; color: #fff; background: rgba(255,255,255,0.08); }
+  .group-btn.gold { border-color: var(--gold-dim); color: var(--gold); }
+  .group-btn.gold.active, .group-btn.gold:hover { background: rgba(240,165,0,0.15); border-color: var(--gold); }
+  .group-btn.green { border-color: var(--green-dim); color: var(--green); }
+  .group-btn.green.active, .group-btn.green:hover { background: rgba(34,197,94,0.15); border-color: var(--green); }
+  .group-btn.white { border-color: #334155; color: var(--white); }
+  .group-btn.white.active, .group-btn.white:hover { background: rgba(226,232,240,0.12); border-color: var(--white); }
+  .group-btn.blue { border-color: var(--blue-dim); color: var(--blue); }
+  .group-btn.blue.active, .group-btn.blue:hover { background: rgba(96,165,250,0.15); border-color: var(--blue); }
+
+  /* ── MAIN LAYOUT ── */
+  .schedule-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 16px 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── WEEK CARD ── */
+  .week-card {
+    background: var(--card);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    scroll-margin-top: 100px;
+  }
+  .week-card.is-race { border-color: rgba(239,68,68,0.3); }
+  .week-card.is-state { border-color: var(--gold); box-shadow: 0 0 24px rgba(240,165,0,0.12); }
+
+  .week-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 18px;
+    background: var(--card2);
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .week-num {
+    font-family: 'Oswald', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+  }
+  .week-num span {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text-dim);
+    margin-left: 8px;
+  }
+  .week-date {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+  }
+  .phase-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid;
+    margin-left: auto;
+  }
+  .meet-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fca5a5;
+    background: rgba(239,68,68,0.12);
+    border: 1px solid rgba(239,68,68,0.3);
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .meet-badge.state { color: var(--gold); background: rgba(240,165,0,0.12); border-color: rgba(240,165,0,0.4); }
+  .jv-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: #94a3b8;
+    background: rgba(148,163,184,0.08);
+    border: 1px solid rgba(148,163,184,0.2);
+    padding: 3px 8px;
+    border-radius: 20px;
+  }
+
+  /* Phase badge colors */
+  .ph-early { color: var(--phase-early); border-color: rgba(74,222,128,0.3); background: rgba(74,222,128,0.06); }
+  .ph-base { color: var(--phase-base); border-color: rgba(34,197,94,0.3); background: rgba(34,197,94,0.06); }
+  .ph-peak { color: var(--phase-peak); border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.06); }
+  .ph-recov { color: var(--phase-recov); border-color: rgba(96,165,250,0.3); background: rgba(96,165,250,0.06); }
+  .ph-preseason { color: var(--phase-preseason); border-color: rgba(167,139,250,0.3); background: rgba(167,139,250,0.06); }
+  .ph-build { color: var(--phase-build); border-color: rgba(249,115,22,0.3); background: rgba(249,115,22,0.06); }
+  .ph-intro { color: #f87171; border-color: rgba(239,68,68,0.3); background: rgba(239,68,68,0.06); }
+  .ph-champ { color: #fca5a5; border-color: rgba(220,38,38,0.3); background: rgba(220,38,38,0.06); }
+  .ph-taper { color: var(--purple); border-color: rgba(167,139,250,0.3); background: rgba(139,92,246,0.06); }
+  .ph-state { color: var(--gold); border-color: rgba(240,165,0,0.4); background: rgba(240,165,0,0.08); }
+
+  /* ── NOTE BAR ── */
+  .week-note {
+    padding: 8px 18px;
+    font-size: 12px;
+    font-style: italic;
+    color: var(--text-dim);
+    border-bottom: 1px solid var(--border);
+    background: rgba(255,255,255,0.02);
+  }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x: auto; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 520px;
+  }
+  thead tr {
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid var(--border);
+  }
+  th {
+    padding: 8px 10px;
+    text-align: left;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  th.col-day { color: var(--text-dim); width: 52px; }
+  th.col-gold { color: var(--gold); }
+  th.col-green { color: var(--green); }
+  th.col-white { color: var(--white); }
+  th.col-blue { color: var(--blue); }
+  .th-inner { display: flex; flex-direction: column; gap: 1px; }
+  .th-total {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    opacity: 0.7;
+  }
+  tbody tr {
+    border-bottom: 1px solid rgba(30,45,66,0.6);
+    transition: background 0.1s;
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,0.02); }
+  td {
+    padding: 9px 10px;
+    vertical-align: top;
+  }
+  td.col-day {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    white-space: nowrap;
+    width: 52px;
+    padding-top: 11px;
+  }
+
+  /* Cell styling */
+  .cell { display: flex; flex-direction: column; gap: 3px; }
+  .cell-text {
+    font-size: 13px;
+    line-height: 1.35;
+    color: var(--text);
+  }
+  .cell-miles {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--text-dim);
+  }
+  .cell-none { color: #2a3d52; font-size: 12px; font-style: italic; }
+
+  /* Type-based row shading */
+  .cell.is-q .cell-text { color: #fde68a; }
+  .cell.is-q .cell-miles { color: #f59e0b; }
+  .cell.is-r .cell-text { color: #fca5a5; font-weight: 600; }
+  .cell.is-r .cell-miles { color: #ef4444; }
+  .cell.is-l .cell-text { color: #93c5fd; }
+  .cell.is-l .cell-miles { color: var(--blue); }
+  .cell.is-rest .cell-text { color: #2a3d52; font-style: italic; font-size: 12px; }
+  .cell.is-s .cell-text { color: #7dd3fc; font-style: italic; font-size: 12px; }
+
+  /* Subtle row backgrounds for quality/race days */
+  tr.day-q { background: rgba(240,165,0,0.025); }
+  tr.day-r { background: rgba(239,68,68,0.03); }
+  tr.day-l { background: rgba(96,165,250,0.02); }
+  tr.day-rest { }
+
+  /* ── GROUP FILTER HIDING ── */
+  body.show-gold .col-green,
+  body.show-gold .col-white,
+  body.show-gold .col-blue { display: none; }
+  body.show-green .col-gold,
+  body.show-green .col-white,
+  body.show-green .col-blue { display: none; }
+  body.show-white .col-gold,
+  body.show-white .col-green,
+  body.show-white .col-blue { display: none; }
+  body.show-blue .col-gold,
+  body.show-blue .col-green,
+  body.show-blue .col-white { display: none; }
+
+  /* ── SUMMARY TABLE ── */
+  .summary-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 16px 60px;
+  }
+  .section-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #fff;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+  }
+  .summary-grid {
+    display: grid;
+    gap: 3px;
+  }
+  .summary-row {
+    display: grid;
+    grid-template-columns: 60px 70px repeat(4, 1fr);
+    gap: 4px;
+    align-items: center;
+  }
+  .summary-row.header {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 4px;
+  }
+  .sum-week {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-dim);
+  }
+  .sum-dates {
+    font-size: 11px;
+    color: #334155;
+  }
+  .sum-bar-wrap { display: flex; align-items: center; gap: 6px; }
+  .sum-bar-bg {
+    flex: 1;
+    height: 18px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .sum-bar {
+    height: 100%;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    padding-left: 6px;
+    min-width: 20px;
+    transition: width 0.3s;
+  }
+  .sum-bar span {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    color: rgba(0,0,0,0.7);
+    white-space: nowrap;
+  }
+  .sum-bar.bg-gold { background: var(--gold); }
+  .sum-bar.bg-green { background: var(--green); }
+  .sum-bar.bg-white { background: var(--white); }
+  .sum-bar.bg-blue { background: var(--blue); }
+  .sum-bar.bg-none { background: transparent; }
+  .summary-row.is-race .sum-week { color: #fca5a5; }
+
+  /* ── JV TABLE ── */
+  .jv-table { width: 100%; border-collapse: collapse; }
+  .jv-table th {
+    padding: 8px 12px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .jv-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(30,45,66,0.5);
+    font-size: 13px;
+  }
+  .jv-table tr:last-child td { border-bottom: none; }
+
+  /* ── PACE GUIDE ── */
+  .pace-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 0;
+  }
+  .pace-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .pace-tag {
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .pace-desc { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+
+  /* ── CHANGES TABLE ── */
+  .changes-table { width: 100%; border-collapse: collapse; }
+  .changes-table th {
+    padding: 8px 12px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .changes-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(30,45,66,0.5);
+    font-size: 13px;
+    vertical-align: top;
+  }
+  .changes-table tr:last-child td { border-bottom: none; }
+  .change-old { color: #6b8099; text-decoration: line-through; }
+  .change-new { color: #fde68a; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 24px;
+    color: #2a3d52;
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 600px) {
+    .header-stats { gap: 20px; }
+    .hstat-val { font-size: 22px; }
+    th, td { padding: 7px 7px; }
+    .cell-text { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-eyebrow">St. Xavier Cross Country · 2026 Season</div>
+  <h1 class="header-title">XC <span>2026</span> Training Schedule</h1>
+  <div class="header-sub">Weeks 1–23 · May 25 – November 1, 2026 · All Groups</div>
+  <div class="header-stats">
+    <div class="hstat"><div class="hstat-val">23</div><div class="hstat-label">Weeks</div></div>
+    <div class="hstat"><div class="hstat-val">55</div><div class="hstat-label">Gold Peak (mi/wk)</div></div>
+    <div class="hstat"><div class="hstat-val">10</div><div class="hstat-label">Race Events</div></div>
+    <div class="hstat"><div class="hstat-val">4</div><div class="hstat-label">Training Groups</div></div>
+  </div>
+</header>
+
+<nav class="sticky-nav" id="stickyNav">
+  <div class="nav-row">
+    <span class="nav-label">Weeks</span>
+    <div id="weekPills"></div>
+  </div>
+  <div class="nav-row">
+    <span class="nav-label">Filter</span>
+    <button class="group-btn all active" onclick="setFilter('all')">All Groups</button>
+    <button class="group-btn gold" onclick="setFilter('gold')">Gold</button>
+    <button class="group-btn green" onclick="setFilter('green')">Green</button>
+    <button class="group-btn white" onclick="setFilter('white')">White</button>
+    <button class="group-btn blue" onclick="setFilter('blue')">Blue</button>
+  </div>
+</nav>
+
+<main class="schedule-wrap" id="schedule"></main>
+
+<div class="summary-section">
+  <h2 class="section-title">Season Mileage Overview</h2>
+  <div class="summary-grid" id="summaryGrid"></div>
+
+  <h2 class="section-title" style="margin-top:40px">JV Schedule</h2>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden">
+    <table class="jv-table">
+      <thead><tr><th>Week</th><th>Dates</th><th>Meet</th><th>Day</th></tr></thead>
+      <tbody>
+        <tr><td>15</td><td>Aug 31 – Sep 6</td><td>Champions 1</td><td>Wednesday</td></tr>
+        <tr><td>17</td><td>Sep 14–20</td><td>Trinity Invitational</td><td>Saturday</td></tr>
+        <tr><td>18</td><td>Sep 21–27</td><td>Champions 2</td><td>Wednesday</td></tr>
+        <tr><td>19</td><td>Sep 28 – Oct 4</td><td>Trinity Dual Meet</td><td>Tuesday</td></tr>
+        <tr><td>20</td><td>Oct 5–11</td><td>Haunted Woods</td><td>Saturday</td></tr>
+        <tr><td>22</td><td>Oct 19–25</td><td>JV Regional</td><td>Thursday</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="section-title" style="margin-top:40px">Pace Guide</h2>
+  <div class="pace-grid">
+    <div class="pace-card"><div class="pace-tag">@E — Easy</div><div class="pace-desc">Conversational, 65–75% max HR. Default recovery and base-building pace.</div></div>
+    <div class="pace-card"><div class="pace-tag">@T — Threshold</div><div class="pace-desc">Comfortably hard, 15K–HM race effort, 85–90% max HR.</div></div>
+    <div class="pace-card"><div class="pace-tag">@I — Interval</div><div class="pace-desc">VO₂ max effort, 3K–5K race effort, 95–100% max HR.</div></div>
+    <div class="pace-card"><div class="pace-tag">@R — Repetition</div><div class="pace-desc">Speed work, mile pace or faster. Neuromuscular power development.</div></div>
+    <div class="pace-card"><div class="pace-tag">@RP — Race Pace</div><div class="pace-desc">Current 5K fitness level. Race-specific rhythm development.</div></div>
+    <div class="pace-card"><div class="pace-tag">Fartlek / Progression</div><div class="pace-desc">Running by feel. All groups use same time structure; pace self-determined by effort.</div></div>
+  </div>
+
+  <h2 class="section-title" style="margin-top:40px">Key Changes from 2025</h2>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden">
+    <table class="changes-table">
+      <thead><tr><th>Item</th><th>2025</th><th>2026</th></tr></thead>
+      <tbody>
+        <tr><td>Freshman group</td><td class="change-old">Freshman</td><td class="change-new">Blue</td></tr>
+        <tr><td>Weeks 1–7 quality</td><td class="change-old">Various days/types</td><td class="change-new">Tuesday only — alternating Fartlek/Progression</td></tr>
+        <tr><td>Week 8 Fartlek day</td><td class="change-old">Tuesday</td><td class="change-new">Wednesday</td></tr>
+        <tr><td>Tiger Run timing</td><td class="change-old">Week 14</td><td class="change-new">Week 13</td></tr>
+        <tr><td>Alumni Run</td><td class="change-old">—</td><td class="change-new">Week 11 (Saturday)</td></tr>
+        <tr><td>Run for the Gold</td><td class="change-old">—</td><td class="change-new">Week 15 (Saturday)</td></tr>
+        <tr><td>Week 14 Saturday</td><td class="change-old">Tiger Run (race)</td><td class="change-new">Long Run</td></tr>
+        <tr><td>Week 14 Tuesday</td><td class="change-old">Race-pace workout</td><td class="change-new">Varsity Time Trial / Race</td></tr>
+        <tr><td>Week 15 Monday</td><td class="change-old">Easy</td><td class="change-new">REST — all groups</td></tr>
+        <tr><td>Week 16</td><td class="change-old">Race week (S. Showcase)</td><td class="change-new">Long Run week (Showcase moves to W17)</td></tr>
+        <tr><td>Race day mileage</td><td class="change-old">6mi V / 5mi FR</td><td class="change-new">6mi Gold/Green/White · 5mi Blue</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<footer>ST. XAVIER CROSS COUNTRY · 2026 SEASON · ALL GROUPS WEEKS 1–23</footer>
+
+<script>
+// ── DATA HELPERS ──
+const e   = (m)        => ({ type:'E',    miles:m, text:'Easy' });
+const l   = (m)        => ({ type:'L',    miles:m, text:'Long Run' });
+const rest             =  { type:'REST',  miles:0, text:'REST' };
+const s   = (m, t)     => ({ type:'S',    miles:m, text: t || `~${m}mi shakeout` });
+const q   = (text, m)  => ({ type:'Q',    miles:m, text });
+const r   = (text, m)  => ({ type:'R',    miles:m, text });
+
+// ── PHASE CONFIG ──
+const PHASES = {
+  early:     { label:'Early Summer',          cls:'ph-early' },
+  base:      { label:'Summer Base Build',      cls:'ph-base' },
+  peak:      { label:'Summer Peak',            cls:'ph-peak' },
+  recov:     { label:'Recovery + Race',        cls:'ph-recov' },
+  preseason: { label:'Pre-Season',             cls:'ph-preseason' },
+  build:     { label:'Peak Mileage',           cls:'ph-build' },
+  intro:     { label:'Race Introduction',      cls:'ph-intro' },
+  champ:     { label:'Championship Prep',      cls:'ph-champ' },
+  taper:     { label:'Championship Taper',     cls:'ph-taper' },
+  state:     { label:'🏆 STATE',               cls:'ph-state' },
+};
+
+// ── WEEKS DATA ──
+const WEEKS = [
+  {
+    num:1, dateRange:'May 25–31, 2026', phase:'early', meet:null, jv:null,
+    note:'Blue group not yet reporting. All easy running — aerobic re-establishment.',
+    totals:{ blue:null, white:18, green:22, gold:28 },
+    days:[
+      { day:'Mon', blue:null, white:e(2.5),  green:e(3.5),  gold:e(4.5) },
+      { day:'Tue', blue:null, white:e(3),    green:e(4),    gold:e(5)   },
+      { day:'Wed', blue:null, white:e(3),    green:e(3.5),  gold:e(4.5) },
+      { day:'Thu', blue:null, white:e(3),    green:e(3.5),  gold:e(4.5) },
+      { day:'Fri', blue:null, white:e(2.5),  green:e(3),    gold:e(4)   },
+      { day:'Sat', blue:null, white:l(4),    green:l(4.5),  gold:l(5.5) },
+      { day:'Sun', blue:null, white:rest,    green:rest,    gold:rest   },
+    ]
+  },
+  {
+    num:2, dateRange:'June 1–7, 2026', phase:'early', meet:null, jv:null,
+    note:'Blue group not yet reporting. First quality session: Fartlek 1.',
+    totals:{ blue:null, white:20, green:25, gold:32 },
+    days:[
+      { day:'Mon', blue:null, white:e(3),   green:e(4),   gold:e(5)   },
+      { day:'Tue', blue:null,
+        white:q('Fartlek 1 — 4x(1:00 on / 4:00 steady)',4),
+        green:q('Fartlek 1 — 5x(1:00 on / 4:00 steady)',5),
+        gold:q('Fartlek 1 — 6x(1:00 on / 4:00 steady)',6.5) },
+      { day:'Wed', blue:null, white:e(3),   green:e(4),   gold:e(5)   },
+      { day:'Thu', blue:null, white:e(3.5), green:e(4.5), gold:e(5)   },
+      { day:'Fri', blue:null, white:e(2.5), green:e(3),   gold:e(3.5) },
+      { day:'Sat', blue:null, white:l(4),   green:l(4.5), gold:l(7)   },
+      { day:'Sun', blue:null, white:rest,   green:rest,   gold:rest   },
+    ]
+  },
+  {
+    num:3, dateRange:'June 8–14, 2026', phase:'early', meet:null, jv:null,
+    note:'Blue group not yet reporting. Progression 1 introduces controlled tempo building.',
+    totals:{ blue:null, white:22, green:28, gold:36 },
+    days:[
+      { day:'Mon', blue:null, white:e(3),   green:e(4),   gold:e(5)   },
+      { day:'Tue', blue:null,
+        white:q("Progression 1 — 5' easy / 15' steady / 10' faster / 5' easy", 4.5),
+        green:q("Progression 1 — 5' easy / 15' steady / 10' faster / 5' easy", 6),
+        gold:q("Progression 1 — 5' easy / 15' steady / 10' faster / 5' easy",  7.5) },
+      { day:'Wed', blue:null, white:e(3.5), green:e(4),   gold:e(5.5) },
+      { day:'Thu', blue:null, white:e(3.5), green:e(4),   gold:e(5)   },
+      { day:'Fri', blue:null, white:e(2.5), green:e(3),   gold:e(4)   },
+      { day:'Sat', blue:null, white:l(5),   green:l(7),   gold:l(9)   },
+      { day:'Sun', blue:null, white:rest,   green:rest,   gold:rest   },
+    ]
+  },
+  {
+    num:4, dateRange:'June 15–21, 2026', phase:'base', meet:null, jv:null,
+    note:'Blue group begins — easy running only. Fartlek 2 for upper groups.',
+    totals:{ blue:12, white:24, green:31, gold:40 },
+    days:[
+      { day:'Mon', blue:e(2),   white:e(3.5),  green:e(4.5),  gold:e(5.5) },
+      { day:'Tue',
+        blue:e(2.5),
+        white:q('Fartlek 2 — 3x(2:00 on / 3:00 steady)', 4.5),
+        green:q('Fartlek 2 — 4x(2:00 on / 3:00 steady)', 6),
+        gold:q('Fartlek 2 — 5x(2:00 on / 3:00 steady)',  7.5) },
+      { day:'Wed', blue:e(2),   white:e(4),    green:e(5),    gold:e(6.5) },
+      { day:'Thu', blue:e(2.5), white:e(4),    green:e(4.5),  gold:e(6)   },
+      { day:'Fri', blue:e(1),   white:e(3),    green:e(4),    gold:e(4.5) },
+      { day:'Sat', blue:l(2),   white:l(5),    green:l(7),    gold:l(10)  },
+      { day:'Sun', blue:rest,   white:rest,    green:rest,    gold:rest   },
+    ]
+  },
+  {
+    num:5, dateRange:'June 22–28, 2026', phase:'base', meet:null, jv:null,
+    note:'Progression 2 adds a fastest segment — all groups run by feel at appropriate effort.',
+    totals:{ blue:14, white:26, green:34, gold:43 },
+    days:[
+      { day:'Mon', blue:e(2.5), white:e(4),   green:e(5),   gold:e(6)   },
+      { day:'Tue',
+        blue:e(2.5),
+        white:q("Progression 2 — 5' easy / 15' steady / 10' faster / 5' fastest / 5' easy", 4.5),
+        green:q("Progression 2 — 5' easy / 15' steady / 10' faster / 5' fastest / 5' easy", 6.5),
+        gold:q("Progression 2 — 5' easy / 15' steady / 10' faster / 5' fastest / 5' easy",  8)  },
+      { day:'Wed', blue:e(2.5), white:e(4.5), green:e(5.5), gold:e(6.5) },
+      { day:'Thu', blue:e(2.5), white:e(4.5), green:e(5),   gold:e(6.5) },
+      { day:'Fri', blue:e(1.5), white:e(3.5), green:e(4),   gold:e(5)   },
+      { day:'Sat', blue:l(2.5), white:l(5),   green:l(8),   gold:l(11)  },
+      { day:'Sun', blue:rest,   white:rest,   green:rest,   gold:rest   },
+    ]
+  },
+  {
+    num:6, dateRange:'June 29 – July 5, 2026', phase:'base', meet:null, jv:null,
+    note:null,
+    totals:{ blue:16, white:28, green:36, gold:46 },
+    days:[
+      { day:'Mon', blue:e(2.5), white:e(4),   green:e(5),   gold:e(6.5)  },
+      { day:'Tue',
+        blue:e(3),
+        white:q('Fartlek 3 — 4x(3:00 on / 2:00 steady)', 5),
+        green:q('Fartlek 3 — 5x(3:00 on / 2:00 steady)', 7),
+        gold:q('Fartlek 3 — 6x(3:00 on / 2:00 steady)',  8.5) },
+      { day:'Wed', blue:e(2.5), white:e(4.5), green:e(6),   gold:e(7)   },
+      { day:'Thu', blue:e(2.5), white:e(4.5), green:e(5.5), gold:e(6.5) },
+      { day:'Fri', blue:e(1.5), white:e(3.5), green:e(4),   gold:e(6)   },
+      { day:'Sat', blue:l(4),   white:l(6.5), green:l(8.5), gold:l(11.5)},
+      { day:'Sun', blue:rest,   white:rest,   green:rest,   gold:rest   },
+    ]
+  },
+  {
+    num:7, dateRange:'July 6–12, 2026', phase:'base', meet:null, jv:null,
+    note:'Official mandatory practice begins July 14, leading to the first Time Trial.',
+    totals:{ blue:18, white:30, green:38, gold:48 },
+    days:[
+      { day:'Mon', blue:e(3),   white:e(4.5), green:e(5.5),  gold:e(7)    },
+      { day:'Tue',
+        blue:e(3.5),
+        white:q("Progression 3 — 5' easy / 15' steady / 15' faster / 5' fastest / 5' easy", 5.5),
+        green:q("Progression 3 — 5' easy / 15' steady / 15' faster / 5' fastest / 5' easy", 7),
+        gold:q("Progression 3 — 5' easy / 15' steady / 15' faster / 5' fastest / 5' easy",  8.5) },
+      { day:'Wed', blue:e(3),   white:e(5),   green:e(6.5),  gold:e(7.5) },
+      { day:'Thu', blue:e(3.5), white:e(4.5), green:e(5.5),  gold:e(7)   },
+      { day:'Fri', blue:e(2),   white:e(3.5), green:e(4.5),  gold:e(5.5) },
+      { day:'Sat', blue:l(3),   white:l(7),   green:l(9),    gold:l(12.5)},
+      { day:'Sun', blue:rest,   white:rest,   green:rest,    gold:rest   },
+    ]
+  },
+  {
+    num:8, dateRange:'July 13–19, 2026', phase:'peak', meet:null, jv:null,
+    note:'Mandatory practice in effect. Fartlek shifts to Wednesday; Hills added Thursday.',
+    totals:{ blue:20, white:32, green:40, gold:51 },
+    days:[
+      { day:'Mon', blue:e(3),   white:e(4),   green:e(5.5), gold:e(7)   },
+      { day:'Tue', blue:e(3),   white:e(5),   green:e(6),   gold:e(8)   },
+      { day:'Wed',
+        blue:q('Fartlek 1 — 4x(1:00 on / 4:00 steady)',  3.5),
+        white:q('Fartlek 1 — 5x(1:00 on / 4:00 steady)', 5.5),
+        green:q('Fartlek 1 — 6x(1:00 on / 4:00 steady)', 7),
+        gold:q('Fartlek 1 — 7x(1:00 on / 4:00 steady)',  8.5) },
+      { day:'Thu',
+        blue:q('Hill Repeats', 3.5),
+        white:q('Hill Repeats',5),
+        green:q('Hill Repeats',6.5),
+        gold:q('Hill Repeats', 8) },
+      { day:'Fri', blue:e(3),   white:e(4),   green:e(5),   gold:e(6)   },
+      { day:'Sat', blue:l(4),   white:l(8.5), green:l(10),  gold:l(13.5)},
+      { day:'Sun', blue:rest,   white:rest,   green:rest,   gold:rest   },
+    ]
+  },
+  {
+    num:9, dateRange:'July 20–26, 2026', phase:'peak', meet:'2-Mile Time Trial (Tom Sawyer Park)', jv:null,
+    note:"Saturday's 2-mile TT provides the first race test. Focus on pacing and competitive assessment.",
+    totals:{ blue:20, white:34, green:44, gold:53 },
+    days:[
+      { day:'Mon', blue:e(3),   white:e(5),   green:e(6),   gold:e(8)   },
+      { day:'Tue', blue:e(3),   white:e(5),   green:e(6.5), gold:e(8)   },
+      { day:'Wed', blue:e(3),   white:e(5),   green:e(6.5), gold:e(8)   },
+      { day:'Thu', blue:l(4),   white:l(6.5), green:l(8),   gold:l(9)   },
+      { day:'Fri', blue:e(2.5), white:e(3.5), green:e(4.5), gold:e(4.5) },
+      { day:'Sat',
+        blue:r('2-Mile Time Trial', 4.5),
+        white:r('2-Mile Time Trial',6),
+        green:r('2-Mile Time Trial',6),
+        gold:r('2-Mile Time Trial', 6) },
+      { day:'Sun', blue:rest, white:e(3), green:e(6.5), gold:e(9.5) },
+    ]
+  },
+  {
+    num:10, dateRange:'July 27 – Aug 2, 2026', phase:'peak', meet:null, jv:null,
+    note:'Peak summer volume. Double quality week: tempo Tuesday, hills Thursday.',
+    totals:{ blue:21, white:35, green:45, gold:55 },
+    days:[
+      { day:'Mon', blue:e(3),   white:e(5),   green:e(6),   gold:e(8)   },
+      { day:'Tue',
+        blue:e(3.5),
+        white:q('1mi@T — (2:00) — 1mi@T + 4x200m@R', 5.5),
+        green:q('2mi@T — (2:00) — 1mi@T + 4–6x200m@R', 7),
+        gold:q('2mi@T — (2:00) — 1mi@T + 4–6x200m@R',  9) },
+      { day:'Wed', blue:e(3),   white:e(5),   green:e(6.5), gold:e(8)   },
+      { day:'Thu',
+        blue:q('Hill Repeats', 3.5),
+        white:q('Hill Repeats',5.5),
+        green:q('Hill Repeats',6.5),
+        gold:q('Hill Repeats', 8) },
+      { day:'Fri', blue:e(3),   white:e(5),   green:e(6),   gold:e(8)   },
+      { day:'Sat', blue:l(5),   white:l(9),   green:l(13),  gold:l(14)  },
+      { day:'Sun', blue:rest,   white:rest,   green:rest,   gold:rest   },
+    ]
+  },
+  {
+    num:11, dateRange:'Aug 3–9, 2026', phase:'recov', meet:'Alumni Run', jv:null,
+    note:'Purposeful mileage reduction after Week 10 peak. Alumni Run Saturday. Sunday: easy recovery.',
+    totals:{ blue:22, white:30, green:37, gold:43 },
+    days:[
+      { day:'Mon', blue:e(3),   white:e(4),   green:e(5),   gold:e(6.5) },
+      { day:'Tue',
+        blue:q('4x(2:00 on / 3:00 off)', 3.5),
+        white:q('5x(2:00 on / 3:00 off)', 4.5),
+        green:q('6x(2:00 on / 3:00 off)', 6),
+        gold:q('7x(2:00 on / 3:00 off)',  7) },
+      { day:'Wed', blue:e(3),   white:e(4),   green:e(5.5), gold:e(6)   },
+      { day:'Thu',
+        blue:e(3.5),
+        white:q('2mi@T + 4x200m@R', 4.5),
+        green:q('2.5mi@T + 6x200m@R',5.5),
+        gold:q('3mi@T + 6x200m@R',   7)  },
+      { day:'Fri', blue:e(2.5), white:e(3),   green:e(4),   gold:e(4.5) },
+      { day:'Sat',
+        blue:r('Alumni Run', 5),
+        white:r('Alumni Run',6),
+        green:r('Alumni Run',6),
+        gold:r('Alumni Run', 6) },
+      { day:'Sun', blue:e(1.5), white:e(4),   green:e(5),   gold:e(6)   },
+    ]
+  },
+  {
+    num:12, dateRange:'Aug 10–16, 2026', phase:'preseason', meet:null, jv:null,
+    note:'School begins. Mileage restored to peak. Sunday: easy recovery.',
+    totals:{ blue:24, white:34, green:43, gold:55 },
+    days:[
+      { day:'Mon', blue:e(3.5), white:e(4.5), green:e(5.5), gold:e(7.5) },
+      { day:'Tue',
+        blue:e(3.5),
+        white:q('2mi@T — 2min@E — 1mi@T + 4x200m@R', 5.5),
+        green:q('3mi@T — 2min@E — 1mi@T + 4x200m@R', 7),
+        gold:q('3mi@T — 2min@E — 1mi@T + 6x200m@R',  9) },
+      { day:'Wed', blue:e(3.5), white:e(4.5), green:e(6),   gold:e(7.5) },
+      { day:'Thu',
+        blue:q('Hill Repeats', 4),
+        white:q('Hill Repeats',5),
+        green:q('Hill Repeats',6.5),
+        gold:q('Hill Repeats', 8) },
+      { day:'Fri', blue:e(3.5), white:e(4.5), green:e(5.5), gold:e(7)   },
+      { day:'Sat', blue:l(5),   white:l(8.5), green:l(11),  gold:l(13)  },
+      { day:'Sun', blue:e(1),   white:e(1.5), green:e(1.5), gold:e(3)   },
+    ]
+  },
+  {
+    num:13, dateRange:'Aug 17–23, 2026', phase:'build', meet:'Tiger Run', jv:null,
+    note:'Peak mileage + Tiger Run Saturday. Gold/Green/White: easy Friday pre-race. Blue: Long Run Friday.',
+    totals:{ blue:25, white:34, green:45, gold:55 },
+    days:[
+      { day:'Mon', blue:e(3.5), white:e(4.5), green:e(6),   gold:e(8)   },
+      { day:'Tue', blue:e(3.5), white:e(5),   green:e(6.5), gold:e(8.5) },
+      { day:'Wed',
+        blue:q('4x(3:00 on / 2:00 off)', 4),
+        white:q('5x(3:00 on / 2:00 off)', 5.5),
+        green:q('6x(3:00 on / 2:00 off)', 7),
+        gold:q('7x(3:00 on / 2:00 off)',  8) },
+      { day:'Thu',
+        blue:e(3.5),
+        white:q('1.5mi@T — (1:00) — 1.5mi@T + 4x200m@R', 5),
+        green:q('2mi@T — (1:00) — 2mi@T + 4x200m@R',    7),
+        gold:q('2mi@T — (1:00) — 2mi@T + 6x200m@R',     8) },
+      { day:'Fri',
+        blue:l(6),
+        white:e(3.5),
+        green:e(4.5),
+        gold:e(4.5) },
+      { day:'Sat',
+        blue:e(2),
+        white:r('Tiger Run',6),
+        green:r('Tiger Run',6),
+        gold:r('Tiger Run', 6) },
+      { day:'Sun', blue:e(2.5), white:e(4.5), green:e(8),   gold:e(12)  },
+    ]
+  },
+  {
+    num:14, dateRange:'Aug 24–30, 2026', phase:'intro', meet:null, jv:null,
+    note:'Tuesday: Varsity time trial / race event. No race Saturday — Long Run for all groups.',
+    totals:{ blue:24, white:31, green:37, gold:42 },
+    days:[
+      { day:'Mon', blue:e(3),   white:e(3.5), green:e(4.5), gold:e(5)   },
+      { day:'Tue',
+        blue:e(3),
+        white:r('Varsity Time Trial',5),
+        green:r('Varsity Time Trial',6),
+        gold:r('Varsity Time Trial', 6) },
+      { day:'Wed', blue:e(3.5), white:e(4),   green:e(5.5), gold:e(6.5) },
+      { day:'Thu',
+        blue:q('2x1mi@T w/1:00 + 4x200m@R',  4),
+        white:q('3x1mi@T w/1:00 + 4x200m@R', 5),
+        green:q('4x1mi@T w/1:00 + 4x200m@R', 6),
+        gold:q('4x1mi@T w/1:00 + 4–6x200m@R',7) },
+      { day:'Fri', blue:e(3),   white:e(3.5), green:e(5),   gold:e(5.5) },
+      { day:'Sat', blue:l(7.5), white:l(10),  green:l(10),  gold:l(12)  },
+      { day:'Sun', blue:rest,   white:rest,   green:rest,   gold:rest   },
+    ]
+  },
+  {
+    num:15, dateRange:'Aug 31 – Sep 6, 2026', phase:'intro', meet:'Run for the Gold', jv:'Champions 1 (Wed)',
+    note:'Monday REST all groups. Long Run Friday before race. Run for the Gold Saturday.',
+    totals:{ blue:23, white:28, green:35, gold:40 },
+    days:[
+      { day:'Mon', blue:rest,   white:rest,   green:rest,   gold:rest   },
+      { day:'Tue',
+        blue:q('4x800m@RP w/2:30',  4),
+        white:q('5x800m@I w/2:30',  5.5),
+        green:q('6x800m@I w/2:30',  7),
+        gold:q('7x800m@I w/2:30',   8) },
+      { day:'Wed', blue:e(3.5), white:e(4),   green:e(5.5), gold:e(6)   },
+      { day:'Thu',
+        blue:q("1mi@T — 3min@E — 1mi@T + 4x200m@R", 4),
+        white:q("1mi@T — 5min@E — 1mi@T + 4x200m@R",5),
+        green:q("1.5mi@T — 5min@E — 1.5mi@T + 4–6x200m@R",6),
+        gold:q("2mi@T — 5min@E — 2mi@T + 4–6x200m@R",7) },
+      { day:'Fri', blue:l(5.5), white:l(7.5), green:l(10.5),gold:l(13)  },
+      { day:'Sat',
+        blue:r('Run for the Gold',5),
+        white:r('Run for the Gold',6),
+        green:r('Run for the Gold',6),
+        gold:r('Run for the Gold', 6) },
+      { day:'Sun', blue:rest,   white:rest,   green:rest,   gold:rest   },
+    ]
+  },
+  {
+    num:16, dateRange:'Sep 7–13, 2026', phase:'champ', meet:null, jv:null,
+    note:'No race this week — Long Run Saturday. Southern Showcase approaches next week.',
+    totals:{ blue:25, white:33, green:38, gold:41 },
+    days:[
+      { day:'Mon', blue:e(3.5), white:e(5),   green:e(5.5), gold:e(6)   },
+      { day:'Tue',
+        blue:q('8x200m@R w/200j',   3.5),
+        white:q('12x200m@R w/200j', 4.5),
+        green:q('14x200m@R w/200j', 5.5),
+        gold:q('16x200m@R w/200j',  6.5) },
+      { day:'Wed', blue:e(3.5), white:e(5),   green:e(5.5), gold:e(6)   },
+      { day:'Thu',
+        blue:q('2x1mi@T w/1:00 + 4x200m@R',  4.5),
+        white:q('3x1mi@T w/1:00 + 4x200m@R', 5.5),
+        green:q('4x1mi@T w/1:00 + 4x200m@R', 6),
+        gold:q('4x1mi@T w/1:00 + 4–6x200m@R',7) },
+      { day:'Fri', blue:e(3.5), white:e(4.5), green:e(5.5), gold:e(5.5) },
+      { day:'Sat', blue:l(6.5), white:l(8.5), green:l(10),  gold:l(10)  },
+      { day:'Sun', blue:rest,   white:rest,   green:rest,   gold:rest   },
+    ]
+  },
+  {
+    num:17, dateRange:'Sep 14–20, 2026', phase:'champ', meet:'Southern Showcase', jv:'Trinity Inv. (Sat)',
+    note:'Biggest invitational of the season. Race to solidify team chemistry and establish hierarchies. Sunday: 20–30min shakeout + mobility.',
+    totals:{ blue:25, white:35, green:45, gold:53 },
+    days:[
+      { day:'Mon', blue:e(3.5), white:e(5),   green:e(7),   gold:e(9)   },
+      { day:'Tue',
+        blue:q('3x1000m@I w/90s',  4.5),
+        white:q('4x1000m@I w/90s', 6),
+        green:q('5x1000m@I w/90s', 8),
+        gold:q('6x1000m@I w/90s',  10) },
+      { day:'Wed', blue:e(3.5), white:e(5),   green:e(7.5), gold:e(9)   },
+      { day:'Thu',
+        blue:q('3x1000m@T w/1:00 + 4x200m@R',   4.5),
+        white:q('4x1000m@T w/1:00 + 4x200m@R',  6),
+        green:q('5x1000m@T w/1:00 + 4x200m@R',  8),
+        gold:q('6x1000m@T w/1:00 + 4–6x200m@R', 10) },
+      { day:'Fri', blue:e(3.5), white:e(4),   green:e(5.5), gold:e(5.5) },
+      { day:'Sat',
+        blue:r('Southern Showcase',5),
+        white:r('Southern Showcase',6),
+        green:r('Southern Showcase',6),
+        gold:r('Southern Showcase', 6) },
+      { day:'Sun',
+        blue:s(0.5,'~5min jog'),
+        white:s(3,'20–30min shakeout'),
+        green:s(3,'20–30min shakeout'),
+        gold:s(3.5,'20–30min shakeout') },
+    ]
+  },
+  {
+    num:18, dateRange:'Sep 21–27, 2026', phase:'champ', meet:'✈️ Palatine Invitational', jv:'Champions 2 (Wed)',
+    note:'Traveling to Chicago for one of the Midwest\'s premier invitationals. Sunday: 20–30min shakeout + mobility.',
+    totals:{ blue:25, white:32, green:40, gold:45 },
+    days:[
+      { day:'Mon', blue:e(3.5), white:e(4.5), green:e(6.5), gold:e(7)   },
+      { day:'Tue',
+        blue:q('6x300m@R w/200j',   4),
+        white:q('8x300m@R w/200j',  5),
+        green:q('10x300m@R w/200j', 6.5),
+        gold:q('12x300m@R w/200j',  7.5) },
+      { day:'Wed', blue:e(3.5), white:e(4.5), green:e(6),   gold:e(6.5) },
+      { day:'Thu',
+        blue:q('2mi@T + 4x200m@R',       4.5),
+        white:q('2.5mi@T + 4x200m@R',   5.5),
+        green:q('3mi@T + 4–6x200m@R',   7),
+        gold:q('4mi@T + 4–6x200m@R',    8) },
+      { day:'Fri', blue:e(4),   white:e(5),   green:e(6),   gold:e(7.5) },
+      { day:'Sat',
+        blue:r('Palatine Inv.',5),
+        white:r('Palatine Inv.',6),
+        green:r('Palatine Inv.',6),
+        gold:r('Palatine Inv.', 6) },
+      { day:'Sun',
+        blue:s(0.5,'~5min jog'),
+        white:s(1.5,'20–30min shakeout'),
+        green:s(2,'20–30min shakeout'),
+        gold:s(2.5,'20–30min shakeout') },
+    ]
+  },
+  {
+    num:19, dateRange:'Sep 28 – Oct 4, 2026', phase:'champ', meet:'Louisville XC Classic', jv:'Trinity Dual (Tue)',
+    note:'Championship-level race experience in our home market. Sunday: easy.',
+    totals:{ blue:25, white:32, green:40, gold:50 },
+    days:[
+      { day:'Mon', blue:e(3.5), white:e(4.5), green:e(5.5), gold:e(7.5) },
+      { day:'Tue',
+        blue:q('3x1200m@I w/3:00',  4),
+        white:q('3x1200m@I w/3:00', 5),
+        green:q('4x1200m@I w/3:00', 7),
+        gold:q('5x1200m@I w/3:00',  8) },
+      { day:'Wed', blue:e(3.5), white:e(4.5), green:e(6),   gold:e(7)   },
+      { day:'Thu',
+        blue:q('1mi@T — 1:00 — 1mi@T + 4x200m@R',      4.5),
+        white:q('1.5mi@T — 1:00 — 1.5mi@T + 4x200m@R', 5.5),
+        green:q('2mi@T — 1:00 — 2mi@T + 4x200m@R',     7),
+        gold:q('2mi@T — 1:00 — 2mi@T + 4–6x200m@R',    8.5) },
+      { day:'Fri', blue:e(3.5), white:e(4),   green:e(5),   gold:e(5)   },
+      { day:'Sat',
+        blue:r('LXC Classic',5),
+        white:r('LXC Classic',6),
+        green:r('LXC Classic',6),
+        gold:r('LXC Classic', 6) },
+      { day:'Sun', blue:e(1),   white:e(2.5), green:e(3.5), gold:e(8)   },
+    ]
+  },
+  {
+    num:20, dateRange:'Oct 5–11, 2026', phase:'champ', meet:'Haunted Woods XC', jv:'Haunted Woods (Sat)',
+    note:'Important competitive stimulus before championship season. Sunday: easy.',
+    totals:{ blue:24, white:28, green:38, gold:45 },
+    days:[
+      { day:'Mon', blue:e(3),   white:e(3.5), green:e(5.5), gold:e(6.5) },
+      { day:'Tue',
+        blue:q('3x1200m@I w/2:30',  4),
+        white:q('3x1200m@I w/2:30', 4.5),
+        green:q('4x1200m@I w/2:30', 6.5),
+        gold:q('5x1200m@I w/2:30',  8) },
+      { day:'Wed', blue:e(3),   white:e(3.5), green:e(5.5), gold:e(6.5) },
+      { day:'Thu',
+        blue:q('6x400m@R w/2:00',   4),
+        white:q('8x400m@R w/2:00',  4.5),
+        green:q('10x400m@R w/2:00', 6.5),
+        gold:q('12x400m@R w/2:00',  7.5) },
+      { day:'Fri', blue:e(3),   white:e(3.5), green:e(4),   gold:e(5)   },
+      { day:'Sat',
+        blue:r('Haunted Woods XC',5),
+        white:r('Haunted Woods XC',6),
+        green:r('Haunted Woods XC',6),
+        gold:r('Haunted Woods XC', 6) },
+      { day:'Sun', blue:e(2),   white:e(3),   green:e(4),   gold:e(5.5) },
+    ]
+  },
+  {
+    num:21, dateRange:'Oct 12–18, 2026', phase:'taper', meet:null, jv:null,
+    note:'Major taper begins — optimizing freshness for HOKA 2-Mile and Regional. Monday: REST.',
+    totals:{ blue:21, white:24, green:32, gold:35 },
+    days:[
+      { day:'Mon', blue:rest,   white:rest,   green:rest,   gold:rest   },
+      { day:'Tue',
+        blue:q('6x400m@R w/200j',   3.5),
+        white:q('8x400m@R w/200j',  4.5),
+        green:q('10x400m@R w/200j', 6),
+        gold:q('12x400m@R w/200j',  6.5) },
+      { day:'Wed', blue:e(3),   white:e(3.5), green:e(4.5), gold:e(5)   },
+      { day:'Thu',
+        blue:q('2x1600m@I w/2:30',  4),
+        white:q('3x1600m@I w/2:30', 5),
+        green:q('4x1600m@I w/2:30', 6.5),
+        gold:q('4x1600m@I w/2:30',  7) },
+      { day:'Fri', blue:e(3),   white:e(3.5), green:e(4.5), gold:e(5)   },
+      { day:'Sat', blue:l(7.5), white:l(7.5), green:l(10.5),gold:l(11.5)},
+      { day:'Sun', blue:rest,   white:rest,   green:rest,   gold:rest   },
+    ]
+  },
+  {
+    num:22, dateRange:'Oct 19–25, 2026', phase:'taper', meet:'Regional Championships', jv:'JV Regional (Thu)',
+    note:'Primary focus: qualify for State. Volume significantly reduced. Tempo Monday, 300s Wednesday.',
+    totals:{ blue:21, white:22, green:30, gold:33 },
+    days:[
+      { day:'Mon',
+        blue:q('2x1000m@T + 4x200m@R',         3.5),
+        white:q('2x2000m@T w/1:00 + 4x200m@R', 3.5),
+        green:q('3x2000m@T w/1:00 + 4x200m@R', 6),
+        gold:q('3x2000m@T w/1:00 + 4–6x200m@R',7) },
+      { day:'Tue', blue:e(3),   white:e(3),   green:e(5),   gold:e(5.5) },
+      { day:'Wed',
+        blue:q('6x300m@R w/3:00',   3.5),
+        white:q('8x300m@R w/3:00',  3.5),
+        green:q('10x300m@R w/3:00', 4.5),
+        gold:q('10x300m@R w/3:00',  5.5) },
+      { day:'Thu', blue:e(3),   white:e(2.5), green:e(4),   gold:e(4.5) },
+      { day:'Fri', blue:e(3),   white:e(2.5), green:e(4.5), gold:e(4.5) },
+      { day:'Sat',
+        blue:r('Regionals',5),
+        white:r('Regionals',6),
+        green:r('Regionals',6),
+        gold:r('Regionals', 6) },
+      { day:'Sun', blue:rest,   white:rest,   green:rest,   gold:rest   },
+    ]
+  },
+  {
+    num:23, dateRange:'Oct 26 – Nov 1, 2026', phase:'state', meet:'🏆 STATE CHAMPIONSHIPS', jv:null,
+    note:'The pinnacle of the season — all training has led to this moment.',
+    totals:{ blue:20, white:22, green:28, gold:30 },
+    days:[
+      { day:'Mon', blue:e(3),   white:e(3.5), green:e(4.5), gold:e(5)   },
+      { day:'Tue',
+        blue:q('3x1000m@T w/1:00 + 4x200m@R',   4),
+        white:q('4x1000m@T w/1:00 + 4x200m@R',  4),
+        green:q('5x1000m@T w/1:00 + 4–6x200m@R',5.5),
+        gold:q('6x1000m@T w/1:00 + 4–6x200m@R', 6) },
+      { day:'Wed', blue:e(3),   white:e(3),   green:e(4),   gold:e(4.5) },
+      { day:'Thu',
+        blue:q('10x200m@R w/2:00',  4),
+        white:q('12x200m@R w/2:00', 4),
+        green:q('14x200m@R w/2:00', 5),
+        gold:q('16x200m@R w/2:00',  5.5) },
+      { day:'Fri', blue:e(1),   white:e(1.5), green:e(3),   gold:e(3)   },
+      { day:'Sat',
+        blue:r('STATE',5),
+        white:r('STATE',6),
+        green:r('STATE',6),
+        gold:r('STATE', 6) },
+      { day:'Sun', blue:rest,   white:rest,   green:rest,   gold:rest   },
+    ]
+  },
+];
+
+// ── RENDER FUNCTIONS ──
+
+function cellHTML(entry, isBlueStarted) {
+  if (entry === null) {
+    return isBlueStarted ? `<div class="cell"><span class="cell-none">—</span></div>` :
+      `<div class="cell"><span class="cell-none">Not started</span></div>`;
+  }
+  const t = entry.type;
+  const cls = t==='Q'?'is-q': t==='R'?'is-r': t==='L'?'is-l': t==='REST'?'is-rest': t==='S'?'is-s': '';
+  const milesStr = entry.miles > 0 ? `${entry.miles}mi` : '';
+  return `<div class="cell ${cls}">
+    <span class="cell-text">${entry.text}</span>
+    ${milesStr ? `<span class="cell-miles">${milesStr}</span>` : ''}
+  </div>`;
+}
+
+function getDayType(day) {
+  const types = [day.blue, day.white, day.green, day.gold]
+    .filter(Boolean).map(d => d.type);
+  if (types.includes('R')) return 'day-r';
+  if (types.includes('Q')) return 'day-q';
+  if (types.includes('L')) return 'day-l';
+  if (types.every(t => t==='REST')) return 'day-rest';
+  return '';
+}
+
+function renderWeek(w) {
+  const phase = PHASES[w.phase];
+  const isRace = !!w.meet;
+  const isState = w.phase === 'state';
+  const blueStarted = w.totals.blue !== null;
+
+  let cardClass = 'week-card';
+  if (isState) cardClass += ' is-state';
+  else if (isRace) cardClass += ' is-race';
+
+  const meetBadge = w.meet
+    ? `<span class="meet-badge ${isState?'state':''}">${w.meet}</span>` : '';
+  const jvBadge = w.jv
+    ? `<span class="jv-badge">JV: ${w.jv}</span>` : '';
+
+  const th = (label, group, total) => {
+    const t = total !== null ? `<span class="th-total">${total} mi/wk</span>` : `<span class="th-total">—</span>`;
+    return `<th class="col-${group}"><div class="th-inner"><span>${label}</span>${t}</div></th>`;
+  };
+
+  const dayRows = w.days.map(day => {
+    const rc = getDayType(day);
+    return `<tr class="${rc}">
+      <td class="col-day">${day.day}</td>
+      <td class="col-blue">${cellHTML(day.blue, blueStarted)}</td>
+      <td class="col-white">${cellHTML(day.white, true)}</td>
+      <td class="col-green">${cellHTML(day.green, true)}</td>
+      <td class="col-gold">${cellHTML(day.gold, true)}</td>
+    </tr>`;
+  }).join('');
+
+  const noteBar = w.note
+    ? `<div class="week-note">${w.note}</div>` : '';
+
+  return `
+  <div class="${cardClass}" id="week-${w.num}">
+    <div class="week-header">
+      <div class="week-num">WEEK ${w.num} <span>${w.dateRange}</span></div>
+      <span class="phase-badge ${phase.cls}">${phase.label}</span>
+      ${meetBadge}
+      ${jvBadge}
+    </div>
+    ${noteBar}
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="col-day"></th>
+            ${th('Blue', 'blue', w.totals.blue)}
+            ${th('White', 'white', w.totals.white)}
+            ${th('Green', 'green', w.totals.green)}
+            ${th('Gold', 'gold', w.totals.gold)}
+          </tr>
+        </thead>
+        <tbody>${dayRows}</tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+function renderSummary() {
+  const MAX = 55;
+  const grid = document.getElementById('summaryGrid');
+  const header = `<div class="summary-row header">
+    <div>Wk</div><div>Dates</div>
+    <div class="col-blue">Blue</div>
+    <div class="col-white">White</div>
+    <div class="col-green">Green</div>
+    <div class="col-gold">Gold</div>
+  </div>`;
+
+  const rows = WEEKS.map(w => {
+    const bar = (val, cls) => {
+      if (val === null) return `<div class="sum-bar-wrap"><div class="sum-bar-bg"><div class="sum-bar bg-none"></div></div></div>`;
+      const pct = Math.min(100, Math.round(val/MAX*100));
+      return `<div class="sum-bar-wrap"><div class="sum-bar-bg"><div class="sum-bar bg-${cls}" style="width:${pct}%"><span>${val}</span></div></div></div>`;
+    };
+    const raceClass = w.meet ? 'is-race' : '';
+    return `<div class="summary-row ${raceClass}">
+      <div class="sum-week"><a href="#week-${w.num}" style="color:inherit;text-decoration:none">W${w.num}</a>${w.meet?'🏁':''}</div>
+      <div class="sum-dates" style="font-size:10px">${w.dateRange.split(',')[0]}</div>
+      <div class="col-blue">${bar(w.totals.blue,'blue')}</div>
+      <div class="col-white">${bar(w.totals.white,'white')}</div>
+      <div class="col-green">${bar(w.totals.green,'green')}</div>
+      <div class="col-gold">${bar(w.totals.gold,'gold')}</div>
+    </div>`;
+  }).join('');
+
+  grid.innerHTML = header + rows;
+}
+
+function renderWeekPills() {
+  const container = document.getElementById('weekPills');
+  container.style.cssText = 'display:flex;flex-wrap:wrap;gap:4px';
+  WEEKS.forEach(w => {
+    const a = document.createElement('a');
+    a.href = `#week-${w.num}`;
+    a.className = 'week-pill' + (w.meet ? ' race' : '');
+    a.textContent = w.num;
+    a.title = w.meet || w.dateRange;
+    container.appendChild(a);
+  });
+}
+
+function setFilter(group) {
+  const body = document.body;
+  body.className = body.className.replace(/show-\w+/g,'').trim();
+  if (group !== 'all') body.classList.add('show-' + group);
+  document.querySelectorAll('.group-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.group-btn.${group}`).classList.add('active');
+}
+
+// ── INIT ──
+const schedEl = document.getElementById('schedule');
+schedEl.innerHTML = WEEKS.map(renderWeek).join('');
+renderWeekPills();
+renderSummary();
+</script>
+</body>
+</html>

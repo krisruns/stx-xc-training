@@ -1,1101 +1,544 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STX Track & XC Training Hub</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #2c5530, #4a7c59);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-        }
-        
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-        
-        .header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            margin-bottom: 5px;
-        }
-        
-        .season-info {
-            font-size: 1rem;
-            opacity: 0.8;
-            font-style: italic;
-        }
-        
-        .content {
-            padding: 40px 30px;
-        }
-        
-        /* Archive Section Styling */
-        .archive-header {
-            background: #e8f5e8;
-            padding: 20px 30px;
-            margin: 30px -30px;
-            border-left: 5px solid #4a7c59;
-        }
-        
-        .archive-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #2c5530;
-            margin-bottom: 8px;
-        }
-        
-        .archive-subtitle {
-            font-size: 1rem;
-            color: #666;
-            font-style: italic;
-        }
-        
-        /* Collapsible Section */
-        .collapsible-section {
-            margin-bottom: 15px;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        
-        .collapsible-header {
-            background: #f8f9fa;
-            padding: 15px 20px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: background 0.3s ease;
-        }
-        
-        .collapsible-header:hover {
-            background: #e9ecef;
-        }
-        
-        .collapsible-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #2c5530;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .toggle-icon {
-            font-size: 1.2rem;
-            transition: transform 0.3s ease;
-        }
-        
-        .collapsible-header.active .toggle-icon {
-            transform: rotate(90deg);
-        }
-        
-        .collapsible-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease;
-            padding: 0 20px;
-        }
-        
-        .collapsible-content.active {
-            max-height: 5000px;
-            padding: 20px;
-        }
-        
-        /* Phase Section */
-        .phase-section {
-            margin-bottom: 40px;
-        }
-        
-        .phase-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #2c5530;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #4a7c59;
-        }
-        
-        .phase-description {
-            font-size: 1rem;
-            color: #666;
-            margin-bottom: 25px;
-            line-height: 1.6;
-        }
-        
-        .weeks-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        }
-        
-        .week-card {
-            background: #f8f9fa;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
-            padding: 20px;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-        
-        .week-card:hover {
-            border-color: #4a7c59;
-            box-shadow: 0 4px 15px rgba(74, 124, 89, 0.15);
-            transform: translateY(-2px);
-        }
-        
-        .week-number {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #2c5530;
-            margin-bottom: 8px;
-        }
-        
-        .week-dates {
-            font-size: 1rem;
-            color: #666;
-            margin-bottom: 12px;
-        }
-        
-        .week-highlights {
-            font-size: 0.9rem;
-            color: #495057;
-            list-style-position: inside;
-        }
-        
-        .week-highlights li {
-            margin-bottom: 4px;
-        }
-        
-        .current-week {
-            border-color: #ffc107;
-            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
-        }
-        
-        .current-week .week-number {
-            color: #856404;
-        }
-        
-        .current-badge {
-            display: inline-block;
-            background: #ffc107;
-            color: #856404;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-left: 10px;
-        }
-        
-        .stats-section {
-            background: #e8f5e8;
-            padding: 30px;
-            border-radius: 10px;
-            margin: 40px 0;
-        }
-        
-        .stats-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: #2c5530;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-        
-        .stat-item {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #4a7c59;
-            margin-bottom: 5px;
-        }
-        
-        .stat-label {
-            font-size: 0.9rem;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .footer {
-            background: #f8f9fa;
-            padding: 20px;
-            text-align: center;
-            color: #666;
-            font-size: 0.9rem;
-        }
-        
-        .phase-info {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 15px 20px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-        }
-        
-        .phase-info p {
-            margin: 0;
-            color: #856404;
-            font-size: 0.95rem;
-        }
-        
-        .header-nav {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STX Training Hub 2026–27</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--gold:#B8960C;--green:#1A3A2A;--green-mid:#2D5C3F;--green-light:#E6F0EA;--white:#FDFCF8;--gray-50:#FAF9F5;--gray-100:#F5F3EE;--gray-200:#E8E4D8;--gray-400:#A09880;--gray-600:#6B6354;--gray-900:#1C1A14;--c-race-bg:#D1FAE5;--c-race-fg:#065F46;--c-meet-bg:#DBEAFE;--c-meet-fg:#1E3A8A;--c-key-bg:#FEF3C7;--c-key-fg:#92400E;--c-champ-bg:#FEE2E2;--c-champ-fg:#991B1B;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--gray-900);font-size:15px;line-height:1.6;min-height:100vh;}
+    header{background:var(--green);border-bottom:3px solid var(--gold);position:sticky;top:0;z-index:100;}
+    .hdr{max-width:980px;margin:0 auto;padding:13px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+    .logo{display:flex;align-items:center;gap:11px;}
+    .logo-mark{width:42px;height:42px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;color:var(--green);line-height:1.25;text-align:center;flex-shrink:0;}
+    .logo-text h1{font-size:15px;font-weight:600;color:#fff;letter-spacing:-.2px;}
+    .logo-text p{font-size:10px;color:rgba(255,255,255,.45);font-family:'DM Mono',monospace;letter-spacing:.07em;}
+    .hdr-act{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+    .pill{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:5px 13px;border-radius:99px;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.65);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:all .15s;white-space:nowrap;}
+    .pill:hover{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.4);}
+    .pill-today{background:var(--gold);color:var(--green);border-color:var(--gold);font-weight:600;}
+    .pill-today:hover{background:#c8a010;color:var(--green);}
+    .pill-week{background:rgba(255,255,255,.18);color:#fff;border-color:rgba(255,255,255,.3);}
+    .stats-bar{background:var(--gray-100);border-bottom:1px solid var(--gray-200);}
+    .sbi{max-width:980px;margin:0 auto;padding:10px 24px;display:flex;}
+    .stat{flex:1;text-align:center;padding:0 8px;border-right:1px solid var(--gray-200);}
+    .stat:last-child{border-right:none;}
+    .stat-num{font-size:20px;font-weight:600;color:var(--green);font-family:'DM Mono',monospace;line-height:1;}
+    .stat-label{font-size:10px;color:var(--gray-400);text-transform:uppercase;letter-spacing:.07em;margin-top:2px;}
+    main{max-width:980px;margin:0 auto;padding:24px 24px 60px;}
+    .phase{margin-bottom:8px;border:1px solid var(--gray-200);border-radius:10px;overflow:hidden;}
+    .ph{padding:13px 18px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background .15s;user-select:none;background:var(--gray-50);}
+    .ph:hover{background:var(--gray-100);}
+    .ph-l{display:flex;align-items:center;gap:12px;}
+    .ph-icon{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+    .ph-name{font-size:14px;font-weight:600;color:var(--gray-900);}
+    .ph-meta{font-size:10px;font-family:'DM Mono',monospace;color:var(--gray-400);letter-spacing:.05em;margin-top:1px;}
+    .ph-r{display:flex;align-items:center;gap:10px;}
+    .ph-ct{font-size:11px;font-family:'DM Mono',monospace;color:var(--gray-400);}
+    .ph-cv{font-size:10px;color:var(--gray-400);transition:transform .25s;}
+    .ph.open .ph-cv{transform:rotate(90deg);}
+    .pi-base{background:#E8F5E9;}.pi-peak{background:#FFF3E0;}.pi-xc{background:#E3F2FD;}
+    .pi-win{background:#F3E5F5;}.pi-in{background:#FCE4EC;}.pi-out{background:#E8EAF6;}
+    .ph-body{display:none;padding:0 18px 18px;}
+    .ph-body.open{display:block;}
+    .ph-desc{font-size:12px;color:var(--gray-600);padding:12px 0 14px;border-bottom:1px solid var(--gray-200);margin-bottom:14px;}
+    .wg{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;}
+    .wc{border:1px solid var(--gray-200);border-radius:8px;padding:12px 14px;background:var(--white);text-decoration:none;color:var(--gray-900);display:block;transition:all .15s;}
+    .wc:hover{border-color:var(--green-mid);background:var(--green-light);box-shadow:0 2px 8px rgba(0,0,0,.07);}
+    .wc.cur{border-color:var(--gold);background:#FFFBEF;box-shadow:0 0 0 2px rgba(184,150,12,.2);}
+    .wc-t{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:5px;}
+    .wc-n{font-size:10px;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--gray-400);line-height:1;}
+    .wc-now{font-size:9px;font-family:'DM Mono',monospace;background:var(--gold);color:var(--green);padding:2px 6px;border-radius:99px;font-weight:500;letter-spacing:.04em;}
+    .wc-d{font-size:12px;font-weight:500;color:var(--green-mid);margin-bottom:7px;}
+    .wc-tags{display:flex;flex-wrap:wrap;gap:4px;}
+    .tag{font-size:10px;font-weight:500;padding:2px 7px;border-radius:99px;letter-spacing:.02em;white-space:nowrap;}
+    .tm{background:var(--c-race-bg);color:var(--c-race-fg);}.tk{background:var(--c-key-bg);color:var(--c-key-fg);}
+    .tv{background:var(--gray-100);color:var(--gray-600);font-family:'DM Mono',monospace;}
+    .tt{background:var(--c-meet-bg);color:var(--c-meet-fg);}.tc{background:var(--c-champ-bg);color:var(--c-champ-fg);}
+    footer{border-top:1px solid var(--gray-200);padding:20px 24px;text-align:center;font-size:11px;color:var(--gray-400);font-family:'DM Mono',monospace;letter-spacing:.04em;}
+    @media(max-width:620px){.hdr{flex-direction:column;align-items:flex-start;}.wg{grid-template-columns:1fr 1fr;}.stat-num{font-size:16px;}}
 
-        .header-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            background: rgba(255,255,255,0.15);
-            color: white;
-            text-decoration: none;
-            padding: 10px 22px;
-            border-radius: 25px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            letter-spacing: 0.02em;
-            border: 2px solid rgba(255,255,255,0.4);
-            transition: all 0.25s ease;
-            backdrop-filter: blur(4px);
-        }
-
-        .header-btn:hover {
-            background: rgba(255,255,255,0.28);
-            border-color: rgba(255,255,255,0.75);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 14px rgba(0,0,0,0.2);
-        }
-
-        .header-btn.primary {
-            background: #c8972a;
-            border-color: #c8972a;
-            color: #fff;
-        }
-
-        .header-btn.primary:hover {
-            background: #e8b84b;
-            border-color: #e8b84b;
-            color: #1a2e1a;
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-            
-            .header {
-                padding: 30px 15px;
-            }
-            
-            .header h1 {
-                font-size: 2rem;
-            }
-            
-            .content {
-                padding: 30px 20px;
-            }
-            
-            .weeks-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .archive-header {
-                margin: 20px -20px;
-                padding: 15px 20px;
-            }
-            
-            .collapsible-content.active {
-                padding: 15px;
-            }
-        }
-    </style>
+    /* ── Archive section ── */
+    .phase-archive { border-color: var(--gray-200); opacity: .92; }
+    .phase-archive .ph { background: var(--gray-50); }
+    .phase-archive .ph:hover { background: var(--gray-100); }
+    .pi-arc { background: var(--gray-200); }
+    .arc-grid { display: flex; flex-direction: column; gap: 8px; }
+    .arc-card {
+      border: 1px solid var(--gray-200); border-radius: 8px;
+      padding: 13px 16px; background: var(--white);
+      text-decoration: none; color: var(--gray-900);
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; transition: all .15s;
+    }
+    .arc-card:hover { border-color: var(--green-mid); background: var(--green-light); box-shadow: 0 2px 8px rgba(0,0,0,.07); }
+    .arc-card-left { display: flex; align-items: center; gap: 12px; }
+    .arc-badge { width: 36px; height: 36px; background: var(--gray-100); border: 1px solid var(--gray-200); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+    .arc-title { font-size: 13px; font-weight: 600; color: var(--gray-900); }
+    .arc-meta  { font-size: 11px; font-family: 'DM Mono', monospace; color: var(--gray-400); letter-spacing: .04em; margin-top: 2px; }
+    .arc-tags  { display: flex; gap: 6px; flex-wrap: wrap; }
+    .arc-arrow { font-size: 12px; color: var(--gray-400); flex-shrink: 0; }
+    .arc-card:hover .arc-arrow { color: var(--green-mid); }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🏃‍♂️ ST. XAVIER XC/TRACK & FIELD</h1>
-            <p>2025-26 Training Hub</p>
-            <div class="season-info">Indoor Track → Outdoor Track → Summer Base Building</div>
-            <nav class="header-nav">
-                <a href="training_overview.html" class="header-btn primary">
-                    &#128203; Weekly Overview
-                </a>
-            </nav>
-            <nav class="header-nav">
-                <a href="https://stxrunning.github.io/stx-track-reports/" class="header-btn primary">
-                    &#128203; Results
-                </a>
-            </nav>
-             <nav class="header-nav">
-                <a href="stx_xc_schedule.html" class="header-btn primary">
-                    &#128203; Calendar
-                </a>
-            </nav>
-        </div>
-        
-        <div class="content">
-            
-            <!-- CURRENT TRACK SEASON -->
-            <div class="phase-section">
-                <h2 class="phase-title">Track Season 2025-26</h2>
-                <p class="phase-description">
-                    Winter indoor preparation transitioning to outdoor track season. Focus on speed development, 
-                    race-specific training, and peak performance for championship meets.
-                </p>
 
-                <!-- INDOOR TRACK (Collapsible) -->
-                <div class="collapsible-section">
-                    <div class="collapsible-header" onclick="toggleSection(this)">
-                        <div class="collapsible-title">
-                            <span class="toggle-icon">▶</span>
-                            <span>🏟️ Indoor Track Season (Weeks 33–41)</span>
-                        </div>
-                        <span style="color: #666; font-size: 0.9rem;">January 5 – March 8</span>
-                    </div>
-                    <div class="collapsible-content">
-                        <p class="phase-description">
-                            Indoor track competition phase. Speed endurance development, event-specific workouts, 
-                            and championship preparation culminating in Indoor State.
-                        </p>
-                        <div class="weeks-grid">
-                            <a href="week33.html" class="week-card">
-                                <div class="week-number">Week 33</div>
-                                <div class="week-dates">January 5 - January 11</div>
-                                <ul class="week-highlights">
-                                    <li>Indoor track base building</li>
-                                    <li>Speed endurance focus</li>
-                                    <li>Winter training progression</li>
-                                </ul>
-                            </a>
-
-                            <a href="week34.html" class="week-card">
-                                <div class="week-number">Week 34</div>
-                                <div class="week-dates">January 12 - January 18</div>
-                                <ul class="week-highlights">
-                                    <li>Indoor competition prep</li>
-                                    <li>Event-specific training</li>
-                                    <li>Intensity building</li>
-                                </ul>
-                            </a>
-
-                            <a href="week35.html" class="week-card">
-                                <div class="week-number">Week 35</div>
-                                <div class="week-dates">January 19 - January 25</div>
-                                <ul class="week-highlights">
-                                    <li>Meet: Centre Indoor Games (V)</li>
-                                </ul>
-                            </a>
-
-                            <a href="week36.html" class="week-card">
-                                <div class="week-number">Week 36</div>
-                                <div class="week-dates">January 26 - February 1</div>
-                                <ul class="week-highlights">
-                                    <li>Meet: Norton JCPS Meet 2 (V)</li>
-                                </ul>
-                            </a>
-
-                            <a href="week37.html" class="week-card">
-                                <div class="week-number">Week 37</div>
-                                <div class="week-dates">February 2 - February 8</div>
-                                <ul class="week-highlights">
-                                    <li>Meet: Norton JCPS Meet 3 (JV)</li>
-                                    <li>Meet: Eastern Indoor (V)</li>
-                                </ul>
-                            </a>
-
-                            <a href="week38.html" class="week-card">
-                                <div class="week-number">Week 38</div>
-                                <div class="week-dates">February 9 - February 15</div>
-                                <ul class="week-highlights">
-                                    <li>Meet: President's Day @ Norton (V)</li>
-                                    <li>Winter Break (Friday)</li>
-                                </ul>
-                            </a>
-
-                            <a href="week39.html" class="week-card">
-                                <div class="week-number">Week 39</div>
-                                <div class="week-dates">February 16 - February 22</div>
-                                <ul class="week-highlights">
-                                    <li>Meet: Norton High School Games (V)</li>
-                                    <li>Winter Break (Mon-Tues)</li>
-                                </ul>
-                            </a>
-
-                            <a href="week40.html" class="week-card">
-                                <div class="week-number">Week 40</div>
-                                <div class="week-dates">February 23 - March 1</div>
-                                <ul class="week-highlights">
-                                    <li>Indoor championship prep</li>
-                                    <li>Sharpening phase</li>
-                                </ul>
-                            </a>
-
-                            <a href="week41.html" class="week-card">
-                                <div class="week-number">Week 41</div>
-                                <div class="week-dates">March 2 - March 8</div>
-                                <ul class="week-highlights">
-                                    <li>Meet: Indoor State (V)</li>
-                                    <li>Indoor season culmination</li>
-                                </ul>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- OUTDOOR TRACK SEASON -->
-                <div class="phase-info" style="margin-top: 25px;">
-                    <p><strong>Current Phase:</strong> Outdoor Track Season • Spring 2026</p>
-                </div>
-
-                <div class="weeks-grid">
-                    <a href="week42.html" class="week-card">
-                        <div class="week-number">Week 42</div>
-                        <div class="week-dates">March 9 - March 15</div>
-                        <ul class="week-highlights">
-                            <li>Transition to Outdoor Training</li>
-                            <li>Time Trial</li>
-                        </ul>
-                    </a>
-
-                    <a href="week43.html" class="week-card">
-                        <div class="week-number">Week 43</div>
-                        <div class="week-dates">March 16 - March 22</div>
-                        <ul class="week-highlights">
-                            <li>Meet: Adidas Indoor Nationals (V)</li>
-                            <li>Meet: Oldham County (JV)</li>
-                            <li>Time Trial (JV)</li>
-                        </ul>
-                    </a>
-
-                    <a href="week44.html" class="week-card">
-                        <div class="week-number">Week 44</div>
-                        <div class="week-dates">March 23 - March 29</div>
-                        <ul class="week-highlights">
-                            <li>Meet: Johnny Conn Inv. (V)</li>
-                            <li>Meet: Assumption Distance Night (JV)</li>
-                        </ul>
-                    </a>
-
-                    <a href="week45.html" class="week-card">
-                        <div class="week-number">Week 45</div>
-                        <div class="week-dates">March 30 - April 5</div>
-                        <ul class="week-highlights">
-                            <li>Meet: STX Mini Meet</li>
-                            <!-- <li>Speed development</li> -->
-                        </ul>
-                    </a>
-
-                    <a href="week46.html" class="week-card">
-                        <div class="week-number">Week 46</div>
-                        <div class="week-dates">April 6 - April 12</div>
-                        <ul class="week-highlights">
-                            <li>Easter / Spring Break</li>
-                        </ul>
-                    </a>
-
-                    <a href="week47.html" class="week-card">
-                        <div class="week-number">Week 47</div>
-                        <div class="week-dates">April 13 - April 19</div>
-                        <ul class="week-highlights">
-                            <li>Meet: Eastern Relays (V)</li>
-                        </ul>
-                    </a>
-
-                    <a href="week48.html" class="week-card">
-                        <div class="week-number">Week 48</div>
-                        <div class="week-dates">April 20 - April 26</div>
-                        <ul class="week-highlights">
-                            <li>Meet: Brother Borgia Inv. (V)</li>
-                        </ul>
-                    </a>
-
-                    <a href="week49.html" class="week-card">
-                        <div class="week-number">Week 49</div>
-                        <div class="week-dates">April 27 - May 3</div>
-                        <ul class="week-highlights">
-                            <li>Meet: STX Mini Meet (JV)</li>
-                            <li>Meet: Ballard (All)</li>
-                            <li>Meet: Dream Mile (V)</li>
-                            <li>Meet: Run for the Roses (All)</li>
-                        </ul>
-                    </a>
-
-                    <a href="week50.html" class="week-card">
-                        <div class="week-number">Week 50</div>
-                        <div class="week-dates">May 4 - May 10</div>
-                        <ul class="week-highlights">
-                            <li>Meet: Freshman Championships (F)</li>
-                            <li>Meet: JV Championships (JV)</li>
-                            <li>Meet: Metro Meet of Champions (V)</li>
-                        </ul>
-                    </a>
-
-                    <a href="week51.html" class="week-card">
-                        <div class="week-number">Week 51</div>
-                        <div class="week-dates">May 11 - May 17</div>
-                        <ul class="week-highlights">
-                            <li>Meet: Regional Championships (V)</li>
-                        </ul>
-                    </a>
-
-                    <a href="week52.html" class="week-card">
-                        <div class="week-number">Week 52</div>
-                        <div class="week-dates">May 18 - May 24</div>
-                        <ul class="week-highlights">
-                            <li>Meet: State Championships (V)</li>
-                        </ul>
-                    </a>
-                </div>
-            </div>
-            
-            <!-- XC SEASON ARCHIVE -->
-            <div class="archive-header">
-                <div class="archive-title">📦 2025 Cross Country Season Archive</div>
-                <div class="archive-subtitle">Summer conditioning through state championships • Click sections below to expand</div>
-            </div>
-            
-            <!-- SUMMER BASE BUILDING (Collapsible) -->
-            <div class="collapsible-section">
-                <div class="collapsible-header" onclick="toggleSection(this)">
-                    <div class="collapsible-title">
-                        <span class="toggle-icon">▶</span>
-                        <span>Summer Base Building (Weeks 1-7)</span>
-                    </div>
-                    <span style="color: #666; font-size: 0.9rem;">May 26 - July 13</span>
-                </div>
-                <div class="collapsible-content">
-                    <p class="phase-description">
-                        Foundation phase focusing on aerobic base development, stride progression, and movement consistency.
-                        JV/Sophomore groups begin May 26, Freshmen and Varsity begin June 16.
-                    </p>
-                    <div class="weeks-grid">
-                        <a href="week01.html" class="week-card">
-                            <div class="week-number">Week 1</div>
-                            <div class="week-dates">May 26 - June 1</div>
-                            <ul class="week-highlights">
-                                <li>JV/Soph training begins</li>
-                                <li>4x20s strides @ 5k effort</li>
-                                <li>White: 18 miles, Green: 22 miles</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week02.html" class="week-card">
-                            <div class="week-number">Week 2</div>
-                            <div class="week-dates">June 2 - June 8</div>
-                            <ul class="week-highlights">
-                                <li>Varsity recovery week 1</li>
-                                <li>First fartlek: 1min on/4min steady</li>
-                                <li>White: 20 miles, Green: 25 miles</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week03.html" class="week-card">
-                            <div class="week-number">Week 3</div>
-                            <div class="week-dates">June 9 - June 15</div>
-                            <ul class="week-highlights">
-                                <li>Varsity recovery week 2</li>
-                                <li>First progression runs</li>
-                                <li>White: 22 miles, Green: 28 miles</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week04.html" class="week-card">
-                            <div class="week-number">Week 4</div>
-                            <div class="week-dates">June 16 - June 22</div>
-                            <ul class="week-highlights">
-                                <li>Freshmen & Varsity training begins</li>
-                                <li>STX XC Camp</li>
-                                <li>All groups: 12-40 mile range</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week05.html" class="week-card">
-                            <div class="week-number">Week 5</div>
-                            <div class="week-dates">June 23 - June 29</div>
-                            <ul class="week-highlights">
-                                <li>Dead Period begins June 25</li>
-                                <li>Team Activity: Top Golf</li>
-                                <li>Strides: 5k→3200m effort</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week06.html" class="week-card">
-                            <div class="week-number">Week 6</div>
-                            <div class="week-dates">June 30 - July 6</div>
-                            <ul class="week-highlights">
-                                <li>Dead Period continues</li>
-                                <li>3min on/2min steady fartleks</li>
-                                <li>Strides: 5k→1600m effort</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week07.html" class="week-card">
-                            <div class="week-number">Week 7</div>
-                            <div class="week-dates">July 7 - July 13</div>
-                            <ul class="week-highlights">
-                                <li>Dead Period ends July 9</li>
-                                <li>Team reconvenes July 10</li>
-                                <li>6x20s strides: 3200m→1600m</li>
-                            </ul>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- SUMMER PEAK PHASE (Collapsible) -->
-            <div class="collapsible-section">
-                <div class="collapsible-header" onclick="toggleSection(this)">
-                    <div class="collapsible-title">
-                        <span class="toggle-icon">▶</span>
-                        <span>Summer Peak Phase (Weeks 8-11)</span>
-                    </div>
-                    <span style="color: #666; font-size: 0.9rem;">July 14 - August 10</span>
-                </div>
-                <div class="collapsible-content">
-                    <p class="phase-description">
-                        Peak summer volume with hill work introduction and aerobic repeats. Mandatory practice begins July 14.
-                        Focus on maximal aerobic development while preparing for race-specific training.
-                    </p>
-                    <div class="weeks-grid">
-                        <a href="week08.html" class="week-card">
-                            <div class="week-number">Week 8</div>
-                            <div class="week-dates">July 14 - July 20</div>
-                            <ul class="week-highlights">
-                                <li>Mandatory practice begins</li>
-                                <li>Team Activity: Canoe Trip</li>
-                                <li>Volume: 19-48 miles</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week09.html" class="week-card">
-                            <div class="week-number">Week 9</div>
-                            <div class="week-dates">July 21 - July 27</div>
-                            <ul class="week-highlights">
-                                <li>Two Mile Time Trial July 26</li>
-                                <li>Peak building: 20-53 miles</li>
-                                <li>Summer conditioning peak</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week10.html" class="week-card">
-                            <div class="week-number">Week 10</div>
-                            <div class="week-dates">July 28 - August 3</div>
-                            <ul class="week-highlights">
-                                <li>Hill Workout Intro July 31</li>
-                                <li>Summer peak: 21-55 miles</li>
-                                <li>First hill repetitions</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week11.html" class="week-card">
-                            <div class="week-number">Week 11</div>
-                            <div class="week-dates">August 4 - August 10</div>
-                            <ul class="week-highlights">
-                                <li>Orientation August 6-7</li>
-                                <li>Practice meet vs Manual Aug 9</li>
-                                <li>Alumni Run & Team Picnic</li>
-                            </ul>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- CROSS COUNTRY SEASON (Collapsible) -->
-            <div class="collapsible-section">
-                <div class="collapsible-header" onclick="toggleSection(this)">
-                    <div class="collapsible-title">
-                        <span class="toggle-icon">▶</span>
-                        <span>Cross Country Season (Weeks 12-23)</span>
-                    </div>
-                    <span style="color: #666; font-size: 0.9rem;">August 11 - November 2</span>
-                </div>
-                <div class="collapsible-content">
-                    <p class="phase-description">
-                        Competition phase with race-specific workouts and strategic tapering. School begins August 8.
-                        Peak performance focus culminating in Regional and State Championships.
-                    </p>
-                    <div class="weeks-grid">
-                        <a href="week12.html" class="week-card">
-                            <div class="week-number">Week 12</div>
-                            <div class="week-dates">August 11 - August 17</div>
-                            <ul class="week-highlights">
-                                <li>First Day of School August 8</li>
-                                <li>Pre-season adjustment</li>
-                                <li>School schedule adaptation</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week13.html" class="week-card">
-                            <div class="week-number">Week 13</div>
-                            <div class="week-dates">August 18 - August 24</div>
-                            <ul class="week-highlights">
-                                <li>XC Season begins</li>
-                                <li>Build phase intensity</li>
-                                <li>All groups reaching peak</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week14.html" class="week-card">
-                            <div class="week-number">Week 14</div>
-                            <div class="week-dates">August 25 - August 31</div>
-                            <ul class="week-highlights">
-                                <li>Tiger Run August 30</li>
-                                <li>First major competition</li>
-                                <li>Race intensity building</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week15.html" class="week-card">
-                            <div class="week-number">Week 15</div>
-                            <div class="week-dates">September 1 - September 7</div>
-                            <ul class="week-highlights">
-                                <li>Labor Day (No School) Sept 1</li>
-                                <li>Season intensity building</li>
-                                <li>Freshman peak approaching</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week16.html" class="week-card">
-                            <div class="week-number">Week 16</div>
-                            <div class="week-dates">September 8 - September 14</div>
-                            <ul class="week-highlights">
-                                <li>Champions Series #1 Sept 10</li>
-                                <li>Southern Showcase Sept 13</li>
-                                <li>Freshman & White peak miles</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week17.html" class="week-card">
-                            <div class="week-number">Week 17</div>
-                            <div class="week-dates">September 15 - September 21</div>
-                            <ul class="week-highlights">
-                                <li>Trinity Invitational Sept 20</li>
-                                <li>Student X Day September 19</li>
-                                <li>Green & Gold at peak</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week18.html" class="week-card">
-                            <div class="week-number">Week 18</div>
-                            <div class="week-dates">September 22 - September 28</div>
-                            <ul class="week-highlights">
-                                <li>Champions Series #2 Sept 24</li>
-                                <li>Palentine Invitational Sept 27</li>
-                                <li>Early taper begins for Gold</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week19.html" class="week-card">
-                            <div class="week-number">Week 19</div>
-                            <div class="week-dates">September 29 - October 5</div>
-                            <ul class="week-highlights">
-                                <li>JV Dual vs Trinity Sept 30</li>
-                                <li>Louisville XC Classic Oct 4</li>
-                                <li>Championship preparation</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week20.html" class="week-card">
-                            <div class="week-number">Week 20</div>
-                            <div class="week-dates">October 6 - October 12</div>
-                            <ul class="week-highlights">
-                                <li>PSAT/Senior Holiday Oct 9</li>
-                                <li>Fall Break October 10-14</li>
-                                <li>Haunted Woods Classic Oct 11</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week21.html" class="week-card">
-                            <div class="week-number">Week 21</div>
-                            <div class="week-dates">October 13 - October 19</div>
-                            <ul class="week-highlights">
-                                <li>HOKA 2 Mile October 19</li>
-                                <li>Pre-championship prep</li>
-                                <li>Volume reduction</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week22.html" class="week-card">
-                            <div class="week-number">Week 22</div>
-                            <div class="week-dates">October 20 - October 26</div>
-                            <ul class="week-highlights">
-                                <li>JV Regionals October 23</li>
-                                <li>Student X Day October 24</li>
-                                <li>AAA Region 3 Champs Oct 25</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week23.html" class="week-card">
-                            <div class="week-number">Week 23</div>
-                            <div class="week-dates">October 27 - November 2</div>
-                            <ul class="week-highlights">
-                                <li>AAA State Championships Nov 1</li>
-                                <li>Season culmination</li>
-                                <li>Peak performance week</li>
-                            </ul>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- POST-SEASON (Collapsible) -->
-            <div class="collapsible-section">
-                <div class="collapsible-header" onclick="toggleSection(this)">
-                    <div class="collapsible-title">
-                        <span class="toggle-icon">▶</span>
-                        <span>Post-Season & Winter Base (Weeks 24-32)</span>
-                    </div>
-                    <span style="color: #666; font-size: 0.9rem;">November 3 - January 4</span>
-                </div>
-                <div class="collapsible-content">
-                    <p class="phase-description">
-                        Optional national-level competition path for qualifying athletes.
-                        Recovery phase and winter base building transitioning to track preparation.
-                    </p>
-                    <div class="weeks-grid">
-                        <a href="week24.html" class="week-card">
-                            <div class="week-number">Week 24</div>
-                            <div class="week-dates">November 3 - November 9</div>
-                            <ul class="week-highlights">
-                                <li>National Path Selection Nov 4</li>
-                                <li>Recovery OR NXR rebuild</li>
-                                <li>Optional for qualifiers</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week25.html" class="week-card">
-                            <div class="week-number">Week 25</div>
-                            <div class="week-dates">November 10 - November 16</div>
-                            <ul class="week-highlights">
-                                <li>No School November 10</li>
-                                <li>Final NXR Workout November 15</li>
-                                <li>NXR prep OR winter base</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week26.html" class="week-card">
-                            <div class="week-number">Week 26</div>
-                            <div class="week-dates">November 17 - November 23</div>
-                            <ul class="week-highlights">
-                                <li>Nike Cross Regionals Nov 22</li>
-                                <li>National competition</li>
-                                <li>OR winter building</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week27.html" class="week-card">
-                            <div class="week-number">Week 27</div>
-                            <div class="week-dates">November 24 - November 30</div>
-                            <ul class="week-highlights">
-                                <li>Thanksgiving Break Nov 26-28</li>
-                                <li>NXN build OR winter base</li>
-                                <li>Family time and recovery</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week28.html" class="week-card">
-                            <div class="week-number">Week 28</div>
-                            <div class="week-dates">December 1 - December 7</div>
-                            <ul class="week-highlights">
-                                <li>Feast Day December 3</li>
-                                <li>Nike Cross Nationals Dec 6</li>
-                                <li>Season culmination</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week29.html" class="week-card">
-                            <div class="week-number">Week 29</div>
-                            <div class="week-dates">December 8 - December 14</div>
-                            <ul class="week-highlights">
-                                <li>Winter base building</li>
-                                <li>Recovery emphasis</li>
-                                <li>Track transition</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week30.html" class="week-card">
-                            <div class="week-number">Week 30</div>
-                            <div class="week-dates">December 15 - December 21</div>
-                            <ul class="week-highlights">
-                                <li>Winter base continuation</li>
-                                <li>Aerobic foundation</li>
-                                <li>Holiday approach</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week31.html" class="week-card">
-                            <div class="week-number">Week 31</div>
-                            <div class="week-dates">December 22 - December 28</div>
-                            <ul class="week-highlights">
-                                <li>Holiday break training</li>
-                                <li>Flexible scheduling</li>
-                                <li>Maintenance phase</li>
-                            </ul>
-                        </a>
-                        
-                        <a href="week32.html" class="week-card">
-                            <div class="week-number">Week 32</div>
-                            <div class="week-dates">December 29 - January 4</div>
-                            <ul class="week-highlights">
-                                <li>New Year's week</li>
-                                <li>Winter base completion</li>
-                                <li>Track prep begins</li>
-                            </ul>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- TRAINING STATS -->
-            <div class="stats-section">
-                <h3 class="stats-title">2025-26 Season Overview</h3>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-number">52</div>
-                        <div class="stat-label">Training Weeks</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">4</div>
-                        <div class="stat-label">Training Groups</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">55</div>
-                        <div class="stat-label">Peak XC Miles</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">25+</div>
-                        <div class="stat-label">Race Opportunities</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="footer">
-            <p>St. Xavier Track & Cross Country Training Hub • Updated Weekly • Coach Access</p>
-            <p>Questions? Contact coaching staff through TeamApp</p>
-        </div>
+<header>
+  <div class="hdr">
+    <div class="logo">
+      <div class="logo-mark">STX<br>T&amp;F</div>
+      <div class="logo-text">
+        <h1>Training Hub 2026–27</h1>
+        <p>ST. XAVIER HIGH SCHOOL</p>
+      </div>
     </div>
-    
-    <script>
-        function toggleSection(header) {
-            // Toggle the clicked section
-            header.classList.toggle('active');
-            const content = header.nextElementSibling;
-            content.classList.toggle('active');
-            
-            // Smooth scroll adjustment
-            if (header.classList.contains('active')) {
-                setTimeout(() => {
-                    header.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }, 400);
-            }
-        }
-        
-        // Automatically highlight current week based on date
-        function setCurrentWeek() {
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            
-            // Get all week cards
-            const weekCards = document.querySelectorAll('.week-card');
-            
-            weekCards.forEach(card => {
-                const dateText = card.querySelector('.week-dates');
-                if (!dateText) return;
-                
-                // Parse date range (e.g., "January 5 - January 11")
-                const dateRange = dateText.textContent.trim();
-                const parts = dateRange.split(' - ');
-                
-                if (parts.length === 2) {
-                    // Helper function to assign correct year based on month
-                    function assignYear(dateStr) {
-                        const tempDate = new Date(dateStr + ', 2025');
-                        const month = tempDate.getMonth(); // 0-11
-                        
-                        // May (4) through December (11) = 2025
-                        // January (0) through April (3) = 2026
-                        if (month >= 4) {
-                            return new Date(dateStr + ', 2025');
-                        } else {
-                            return new Date(dateStr + ', 2026');
-                        }
-                    }
-                    
-                    // Parse start and end dates with correct years
-                    const startDate = assignYear(parts[0].trim());
-                    const endDate = assignYear(parts[1].trim());
-                    
-                    // Check if today falls within this week
-                    if (today >= startDate && today <= endDate) {
-                        // Add current week styling
-                        card.classList.add('current-week');
-                        
-                        // Add CURRENT badge to week number
-                        const weekNumber = card.querySelector('.week-number');
-                        if (weekNumber && !weekNumber.querySelector('.current-badge')) {
-                            weekNumber.innerHTML += ' <span class="current-badge">CURRENT</span>';
-                        }
-                    }
-                }
-            });
-        }
-        
-        // Run on page load
-        document.addEventListener('DOMContentLoaded', setCurrentWeek);
-    </script>
+    <div class="hdr-act">
+      <button class="pill pill-today" onclick="goToday()">Today</button>
+      <button class="pill pill-week" id="btn-wk" onclick="goWeek()">Current Week</button>
+      <a class="pill" href="stx_xc_schedule.html">Calendar</a>
+      <a class="pill" href="https://stxrunning.github.io/stx-track-reports/">Results</a>
+      <a class="pill" href="training_overview.html">Overview</a>
+    </div>
+  </div>
+</header>
+
+<div class="stats-bar">
+  <div class="sbi">
+    <div class="stat"><div class="stat-num" id="s-wk">—</div><div class="stat-label">Current Week</div></div>
+    <div class="stat"><div class="stat-num">52</div><div class="stat-label">Total Weeks</div></div>
+    <div class="stat"><div class="stat-num">20</div><div class="stat-label">Meets</div></div>
+    <div class="stat"><div class="stat-num" id="s-days">—</div><div class="stat-label">Days to XC State</div></div>
+    <div class="stat"><div class="stat-num" id="s-phase">—</div><div class="stat-label">Phase</div></div>
+  </div>
+</div>
+
+<main>
+  <div class="phase">
+    <div class="ph" onclick="tog(this)">
+      <div class="ph-l">
+        <div class="ph-icon pi-base">&#9728;</div>
+        <div><div class="ph-name">Summer Base Building</div><div class="ph-meta">WEEKS 1-7 · MAY 25 – JULY 12, 2026</div></div>
+      </div>
+      <div class="ph-r"><span class="ph-ct">7 weeks</span><span class="ph-cv">&#9658;</span></div>
+    </div>
+    <div class="ph-body">
+      <p class="ph-desc">Independent summer training. Easy running, progressive fartleks, and long runs before mandatory practice begins.</p>
+      <div class="wg">
+        <a class="wc" href="week01.html">
+          <div class="wc-t"><span class="wc-n">Week 01</span></div>
+          <div class="wc-d">May 25 – 31, 2026</div>
+          <div class="wc-tags"><span class="tag tk">Easy running</span><span class="tag tv">28-18 mi</span></div>
+        </a>
+        <a class="wc" href="week02.html">
+          <div class="wc-t"><span class="wc-n">Week 02</span></div>
+          <div class="wc-d">June 1 – 7, 2026</div>
+          <div class="wc-tags"><span class="tag tk">Fartlek 1</span><span class="tag tv">32-20 mi</span></div>
+        </a>
+        <a class="wc" href="week03.html">
+          <div class="wc-t"><span class="wc-n">Week 03</span></div>
+          <div class="wc-d">June 8 – 14, 2026</div>
+          <div class="wc-tags"><span class="tag tk">Progression 1</span><span class="tag tv">36-22 mi</span></div>
+        </a>
+        <a class="wc" href="week04.html">
+          <div class="wc-t"><span class="wc-n">Week 04</span></div>
+          <div class="wc-d">June 15 – 21, 2026</div>
+          <div class="wc-tags"><span class="tag tk">Fartlek 2</span><span class="tag tv">40-12 mi</span></div>
+        </a>
+        <a class="wc" href="week05.html">
+          <div class="wc-t"><span class="wc-n">Week 05</span></div>
+          <div class="wc-d">June 22 – 28, 2026</div>
+          <div class="wc-tags"><span class="tag tk">Progression 2</span><span class="tag tv">43-14 mi</span></div>
+        </a>
+        <a class="wc" href="week06.html">
+          <div class="wc-t"><span class="wc-n">Week 06</span></div>
+          <div class="wc-d">June 29 – July 5, 2026</div>
+          <div class="wc-tags"><span class="tag tk">Fartlek 3</span><span class="tag tv">46-16 mi</span></div>
+        </a>
+        <a class="wc" href="week07.html">
+          <div class="wc-t"><span class="wc-n">Week 07</span></div>
+          <div class="wc-d">July 6 – 12, 2026</div>
+          <div class="wc-tags"><span class="tag tk">Progression 3</span><span class="tag tv">48-18 mi</span></div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="phase">
+    <div class="ph" onclick="tog(this)">
+      <div class="ph-l">
+        <div class="ph-icon pi-peak">&#128293;</div>
+        <div><div class="ph-name">Summer Peak Phase</div><div class="ph-meta">WEEKS 8-11 · JULY 13 – AUGUST 9, 2026</div></div>
+      </div>
+      <div class="ph-r"><span class="ph-ct">4 weeks</span><span class="ph-cv">&#9658;</span></div>
+    </div>
+    <div class="ph-body">
+      <p class="ph-desc">Mandatory practice begins July 13. Peak summer volume, hills, and the first race test at Tom Sawyer.</p>
+      <div class="wg">
+        <a class="wc" href="week08.html">
+          <div class="wc-t"><span class="wc-n">Week 08</span></div>
+          <div class="wc-d">July 13 – 19, 2026</div>
+          <div class="wc-tags"><span class="tag tk">Mandatory starts</span><span class="tag tv">51-20 mi</span></div>
+        </a>
+        <a class="wc" href="week09.html">
+          <div class="wc-t"><span class="wc-n">Week 09</span></div>
+          <div class="wc-d">July 20 – 26, 2026</div>
+          <div class="wc-tags"><span class="tag tm">2 Mile Time Trial</span><span class="tag tv">53-20 mi</span></div>
+        </a>
+        <a class="wc" href="week10.html">
+          <div class="wc-t"><span class="wc-n">Week 10</span></div>
+          <div class="wc-d">July 27 – Aug 2, 2026</div>
+          <div class="wc-tags"><span class="tag tk">Peak volume</span><span class="tag tv">55-21 mi</span></div>
+        </a>
+        <a class="wc" href="week11.html">
+          <div class="wc-t"><span class="wc-n">Week 11</span></div>
+          <div class="wc-d">August 3 – 9, 2026</div>
+          <div class="wc-tags"><span class="tag tm">Alumni Run</span><span class="tag tv">43-22 mi</span></div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="phase">
+    <div class="ph" onclick="tog(this)">
+      <div class="ph-l">
+        <div class="ph-icon pi-xc">&#127807;</div>
+        <div><div class="ph-name">Cross Country Season</div><div class="ph-meta">WEEKS 12-23 · AUGUST 10 – NOVEMBER 1, 2026</div></div>
+      </div>
+      <div class="ph-r"><span class="ph-ct">12 weeks</span><span class="ph-cv">&#9658;</span></div>
+    </div>
+    <div class="ph-body">
+      <p class="ph-desc">Official XC season. Weekly races build toward Regional and State championships.</p>
+      <div class="wg">
+        <a class="wc" href="week12.html">
+          <div class="wc-t"><span class="wc-n">Week 12</span></div>
+          <div class="wc-d">August 10 – 16, 2026</div>
+          <div class="wc-tags"><span class="tag tk">School begins</span><span class="tag tv">55-24 mi</span></div>
+        </a>
+        <a class="wc" href="week13.html">
+          <div class="wc-t"><span class="wc-n">Week 13</span></div>
+          <div class="wc-d">August 17 – 23, 2026</div>
+          <div class="wc-tags"><span class="tag tm">Tiger Run</span><span class="tag tv">55-25 mi</span></div>
+        </a>
+        <a class="wc" href="week14.html">
+          <div class="wc-t"><span class="wc-n">Week 14</span></div>
+          <div class="wc-d">August 24 – 30, 2026</div>
+          <div class="wc-tags"><span class="tag tm">Race</span><span class="tag tk">4x1mi@T + hills</span></div>
+        </a>
+        <a class="wc" href="week15.html">
+          <div class="wc-t"><span class="wc-n">Week 15</span></div>
+          <div class="wc-d">Aug 31 – Sep 6, 2026</div>
+          <div class="wc-tags"><span class="tag tm">Run for the Gold</span><span class="tag tm">Champions 1</span></div>
+        </a>
+        <a class="wc" href="week16.html">
+          <div class="wc-t"><span class="wc-n">Week 16</span></div>
+          <div class="wc-d">September 7 – 13, 2026</div>
+          <div class="wc-tags"><span class="tag tk">16x200m speed</span><span class="tag tv">41-25 mi</span></div>
+        </a>
+        <a class="wc" href="week17.html">
+          <div class="wc-t"><span class="wc-n">Week 17</span></div>
+          <div class="wc-d">September 14 – 20, 2026</div>
+          <div class="wc-tags"><span class="tag tm">Southern Showcase</span><span class="tag tm">Trinity Inv.</span></div>
+        </a>
+        <a class="wc" href="week18.html">
+          <div class="wc-t"><span class="wc-n">Week 18</span></div>
+          <div class="wc-d">September 21 – 27, 2026</div>
+          <div class="wc-tags"><span class="tag tt">Palatine (travel)</span><span class="tag tm">Champions 2</span></div>
+        </a>
+        <a class="wc" href="week19.html">
+          <div class="wc-t"><span class="wc-n">Week 19</span></div>
+          <div class="wc-d">Sep 28 – Oct 4, 2026</div>
+          <div class="wc-tags"><span class="tag tm">Louisville Classic</span><span class="tag tm">Trinity Dual</span></div>
+        </a>
+        <a class="wc" href="week20.html">
+          <div class="wc-t"><span class="wc-n">Week 20</span></div>
+          <div class="wc-d">October 5 – 11, 2026</div>
+          <div class="wc-tags"><span class="tag tm">Haunted Woods</span><span class="tag tv">45-24 mi</span></div>
+        </a>
+        <a class="wc" href="week21.html">
+          <div class="wc-t"><span class="wc-n">Week 21</span></div>
+          <div class="wc-d">October 12 – 18, 2026</div>
+          <div class="wc-tags"><span class="tag tm">HOKA 2 Mile</span><span class="tag tk">Volume taper</span></div>
+        </a>
+        <a class="wc" href="week22.html">
+          <div class="wc-t"><span class="wc-n">Week 22</span></div>
+          <div class="wc-d">October 19 – 25, 2026</div>
+          <div class="wc-tags"><span class="tag tc">Regional</span><span class="tag tm">JV Regional</span></div>
+        </a>
+        <a class="wc" href="week23.html">
+          <div class="wc-t"><span class="wc-n">Week 23</span></div>
+          <div class="wc-d">Oct 26 – Nov 1, 2026</div>
+          <div class="wc-tags"><span class="tag tc">State Championship</span><span class="tag tv">30-20 mi</span></div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="phase">
+    <div class="ph" onclick="tog(this)">
+      <div class="ph-l">
+        <div class="ph-icon pi-win">&#10052;</div>
+        <div><div class="ph-name">Post-Season &amp; Winter Base</div><div class="ph-meta">WEEKS 24-32 · NOV 2, 2026 – JAN 3, 2027</div></div>
+      </div>
+      <div class="ph-r"><span class="ph-ct">9 weeks</span><span class="ph-cv">&#9658;</span></div>
+    </div>
+    <div class="ph-body">
+      <p class="ph-desc">Post-XC recovery, optional NXR, holiday base building, and bridge into indoor track.</p>
+      <div class="wg">
+        <a class="wc" href="week24.html">
+          <div class="wc-t"><span class="wc-n">Week 24</span></div>
+          <div class="wc-d">November 2 – 8, 2026</div>
+          <div class="wc-tags"><span class="tag tk">Post-State recovery</span></div>
+        </a>
+        <a class="wc" href="week25.html">
+          <div class="wc-t"><span class="wc-n">Week 25</span></div>
+          <div class="wc-d">November 9 – 15, 2026</div>
+          <div class="wc-tags"><span class="tag tk">Winter base</span></div>
+        </a>
+        <a class="wc" href="week26.html">
+          <div class="wc-t"><span class="wc-n">Week 26</span></div>
+          <div class="wc-d">November 16 – 22, 2026</div>
+          <div class="wc-tags"><span class="tag tm">Nike Cross Regionals</span></div>
+        </a>
+        <a class="wc" href="week27.html">
+          <div class="wc-t"><span class="wc-n">Week 27</span></div>
+          <div class="wc-d">November 23 – 29, 2026</div>
+          <div class="wc-tags"><span class="tag tk">Thanksgiving week</span></div>
+        </a>
+        <a class="wc" href="week28.html">
+          <div class="wc-t"><span class="wc-n">Week 28</span></div>
+          <div class="wc-d">Nov 30 – Dec 6, 2026</div>
+          <div class="wc-tags"><span class="tag tk">Aerobic base</span></div>
+        </a>
+        <a class="wc" href="week29.html">
+          <div class="wc-t"><span class="wc-n">Week 29</span></div>
+          <div class="wc-d">December 7 – 13, 2026</div>
+          <div class="wc-tags"><span class="tag tk">Speed endurance</span></div>
+        </a>
+        <a class="wc" href="week30.html">
+          <div class="wc-t"><span class="wc-n">Week 30</span></div>
+          <div class="wc-d">December 14 – 20, 2026</div>
+          <div class="wc-tags"><span class="tag tk">Pre-holiday peak</span></div>
+        </a>
+        <a class="wc" href="week31.html">
+          <div class="wc-t"><span class="wc-n">Week 31</span></div>
+          <div class="wc-d">December 21 – 27, 2026</div>
+          <div class="wc-tags"><span class="tag tk">Holiday week</span></div>
+        </a>
+        <a class="wc" href="week32.html">
+          <div class="wc-t"><span class="wc-n">Week 32</span></div>
+          <div class="wc-d">Dec 28 – Jan 3, 2027</div>
+          <div class="wc-tags"><span class="tag tk">Indoor track prep</span></div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="phase">
+    <div class="ph" onclick="tog(this)">
+      <div class="ph-l">
+        <div class="ph-icon pi-in">&#127967;</div>
+        <div><div class="ph-name">Indoor Track Season</div><div class="ph-meta">WEEKS 33-41 · JANUARY 4 – MARCH 7, 2027</div></div>
+      </div>
+      <div class="ph-r"><span class="ph-ct">9 weeks</span><span class="ph-cv">&#9658;</span></div>
+    </div>
+    <div class="ph-body">
+      <p class="ph-desc">Indoor season. Speed endurance and event-specific development through winter meets.</p>
+      <div class="wg">
+        <a class="wc" href="week33.html">
+          <div class="wc-t"><span class="wc-n">Week 33</span></div>
+          <div class="wc-d">January 4 – 10, 2027</div>
+          <div class="wc-tags"><span class="tag tk">Indoor base</span></div>
+        </a>
+        <a class="wc" href="week34.html">
+          <div class="wc-t"><span class="wc-n">Week 34</span></div>
+          <div class="wc-d">January 11 – 17, 2027</div>
+          <div class="wc-tags"><span class="tag tk">Competition prep</span></div>
+        </a>
+        <a class="wc" href="week35.html">
+          <div class="wc-t"><span class="wc-n">Week 35</span></div>
+          <div class="wc-d">January 18 – 24, 2027</div>
+          <div class="wc-tags"><span class="tag tm">Centre Indoor Games</span></div>
+        </a>
+        <a class="wc" href="week36.html">
+          <div class="wc-t"><span class="wc-n">Week 36</span></div>
+          <div class="wc-d">January 25 – 31, 2027</div>
+          <div class="wc-tags"><span class="tag tk">Speed development</span></div>
+        </a>
+        <a class="wc" href="week37.html">
+          <div class="wc-t"><span class="wc-n">Week 37</span></div>
+          <div class="wc-d">February 1 – 7, 2027</div>
+          <div class="wc-tags"><span class="tag tk">Lactate threshold</span></div>
+        </a>
+        <a class="wc" href="week38.html">
+          <div class="wc-t"><span class="wc-n">Week 38</span></div>
+          <div class="wc-d">February 8 – 14, 2027</div>
+          <div class="wc-tags"><span class="tag tm">Competition week</span></div>
+        </a>
+        <a class="wc" href="week39.html">
+          <div class="wc-t"><span class="wc-n">Week 39</span></div>
+          <div class="wc-d">February 15 – 21, 2027</div>
+          <div class="wc-tags"><span class="tag tk">Championship build</span></div>
+        </a>
+        <a class="wc" href="week40.html">
+          <div class="wc-t"><span class="wc-n">Week 40</span></div>
+          <div class="wc-d">February 22 – 28, 2027</div>
+          <div class="wc-tags"><span class="tag tk">Final sharpening</span></div>
+        </a>
+        <a class="wc" href="week41.html">
+          <div class="wc-t"><span class="wc-n">Week 41</span></div>
+          <div class="wc-d">March 1 – 7, 2027</div>
+          <div class="wc-tags"><span class="tag tc">Indoor State</span></div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="phase">
+    <div class="ph" onclick="tog(this)">
+      <div class="ph-l">
+        <div class="ph-icon pi-out">&#127748;</div>
+        <div><div class="ph-name">Outdoor Track Season</div><div class="ph-meta">WEEKS 42-52 · MARCH 8 – MAY 23, 2027</div></div>
+      </div>
+      <div class="ph-r"><span class="ph-ct">11 weeks</span><span class="ph-cv">&#9658;</span></div>
+    </div>
+    <div class="ph-body">
+      <p class="ph-desc">Outdoor track season. Event specialization and championships to close the 2026-27 athletic year.</p>
+      <div class="wg">
+        <a class="wc" href="week42.html">
+          <div class="wc-t"><span class="wc-n">Week 42</span></div>
+          <div class="wc-d">March 8 – 14, 2027</div>
+          <div class="wc-tags"><span class="tag tk">Outdoor opens</span></div>
+        </a>
+        <a class="wc" href="week43.html">
+          <div class="wc-t"><span class="wc-n">Week 43</span></div>
+          <div class="wc-d">March 15 – 21, 2027</div>
+          <div class="wc-tags"><span class="tag tk">Early meets</span></div>
+        </a>
+        <a class="wc" href="week44.html">
+          <div class="wc-t"><span class="wc-n">Week 44</span></div>
+          <div class="wc-d">March 22 – 28, 2027</div>
+          <div class="wc-tags"><span class="tag tk">Event-specific</span></div>
+        </a>
+        <a class="wc" href="week45.html">
+          <div class="wc-t"><span class="wc-n">Week 45</span></div>
+          <div class="wc-d">Mar 29 – Apr 4, 2027</div>
+          <div class="wc-tags"><span class="tag tk">Spring meets</span></div>
+        </a>
+        <a class="wc" href="week46.html">
+          <div class="wc-t"><span class="wc-n">Week 46</span></div>
+          <div class="wc-d">April 5 – 11, 2027</div>
+          <div class="wc-tags"><span class="tag tk">Volume + speed</span></div>
+        </a>
+        <a class="wc" href="week47.html">
+          <div class="wc-t"><span class="wc-n">Week 47</span></div>
+          <div class="wc-d">April 12 – 18, 2027</div>
+          <div class="wc-tags"><span class="tag tm">Eastern Relays</span></div>
+        </a>
+        <a class="wc" href="week48.html">
+          <div class="wc-t"><span class="wc-n">Week 48</span></div>
+          <div class="wc-d">April 19 – 25, 2027</div>
+          <div class="wc-tags"><span class="tag tm">Borgia</span></div>
+        </a>
+        <a class="wc" href="week49.html">
+          <div class="wc-t"><span class="wc-n">Week 49</span></div>
+          <div class="wc-d">Apr 26 – May 2, 2027</div>
+          <div class="wc-tags"><span class="tag tm">Ballard</span><span class="tag tm">Run for the Roses</span></div>
+        </a>
+        <a class="wc" href="week50.html">
+          <div class="wc-t"><span class="wc-n">Week 50</span></div>
+          <div class="wc-d">May 3 – 9, 2027</div>
+          <div class="wc-tags"><span class="tag tm">Metro Meet of Champs</span></div>
+        </a>
+        <a class="wc" href="week51.html">
+          <div class="wc-t"><span class="wc-n">Week 51</span></div>
+          <div class="wc-d">May 10 – 16, 2027</div>
+          <div class="wc-tags"><span class="tag tc">Region Championship</span></div>
+        </a>
+        <a class="wc" href="week52.html">
+          <div class="wc-t"><span class="wc-n">Week 52</span></div>
+          <div class="wc-d">May 17 – 23, 2027</div>
+          <div class="wc-tags"><span class="tag tc">State Championship</span></div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <!-- ══ ARCHIVE ══ -->
+  <div class="phase phase-archive">
+    <div class="ph" onclick="tog(this)">
+      <div class="ph-l">
+        <div class="ph-icon pi-arc">&#128190;</div>
+        <div><div class="ph-name">Season Archives</div><div class="ph-meta">PRIOR SEASONS</div></div>
+      </div>
+      <div class="ph-r"><span class="ph-ct" id="arc-ct">1 season</span><span class="ph-cv">&#9658;</span></div>
+    </div>
+    <div class="ph-body">
+      <p class="ph-desc">Complete weekly training logs from prior seasons. Add new entries each year by duplicating the card below.</p>
+      <div class="arc-grid">
+
+        <a class="arc-card" href="training-2025-2026-may-26-24-2026-archive.html">
+          <div class="arc-card-left">
+            <div class="arc-badge">&#127939;</div>
+            <div>
+              <div class="arc-title">2025–26 Season</div>
+              <div class="arc-meta">MAY 26, 2025 – MAY 24, 2026 · 51 WEEKS</div>
+            </div>
+          </div>
+          <div class="arc-tags">
+            <span class="tag tv">XC + Indoor + Outdoor</span>
+          </div>
+          <div class="arc-arrow">&#8594;</div>
+        </a>
+
+        <!-- Add future archive links here:
+        <a class="arc-card" href="ARCHIVE_FILENAME.html">
+          <div class="arc-card-left">
+            <div class="arc-badge">&#127939;</div>
+            <div>
+              <div class="arc-title">202X-2X Season</div>
+              <div class="arc-meta">START DATE – END DATE · 52 WEEKS</div>
+            </div>
+          </div>
+          <div class="arc-tags"><span class="tag tv">XC + Indoor + Outdoor</span></div>
+          <div class="arc-arrow">&#8594;</div>
+        </a>
+        -->
+
+      </div>
+    </div>
+  </div>
+
+
+</main>
+
+<footer>STX XC / TRACK &amp; FIELD · 2026–27 TRAINING HUB · ST. XAVIER HIGH SCHOOL</footer>
+
+<script>
+  const W1=new Date('2026-05-25T00:00:00'),STA=new Date('2026-10-31T00:00:00'),MSW=7*24*60*60*1000;
+  const DAYS=['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+  const PHASES=[{n:'Base',s:1,e:7},{n:'Peak',s:8,e:11},{n:'XC',s:12,e:23},{n:'Winter',s:24,e:32},{n:'Indoor',s:33,e:41},{n:'Outdoor',s:42,e:52}];
+  function cwn(){const r=Math.floor((new Date()-W1)/MSW)+1;return Math.max(1,Math.min(52,r));}
+  function wf(n){return'week'+String(n).padStart(2,'0')+'.html';}
+  function goWeek(){window.location.href=wf(cwn());}
+  function goToday(){window.location.href=wf(cwn())+'#'+DAYS[new Date().getDay()];}
+  function tog(h){const b=h.nextElementSibling;h.classList.toggle('open');b.classList.toggle('open');}
+  document.addEventListener('DOMContentLoaded',()=>{
+    const w=cwn();
+    document.getElementById('s-wk').textContent=w;
+    const p=PHASES.find(p=>w>=p.s&&w<=p.e);
+    document.getElementById('s-phase').textContent=p?p.n:'—';
+    const d=Math.max(0,Math.round((STA-new Date())/86400000));
+    document.getElementById('s-days').textContent=d>0?d:'—';
+    document.getElementById('btn-wk').textContent='Week '+w;
+    const tf=wf(w);
+    document.querySelectorAll('.wc').forEach(c=>{
+      if(c.getAttribute('href')===tf){
+        c.classList.add('cur');
+        const b=document.createElement('span');b.className='wc-now';b.textContent='NOW';
+        c.querySelector('.wc-t').appendChild(b);
+        const bd=c.closest('.ph-body'),hd=bd?.previousElementSibling;
+        if(bd&&!bd.classList.contains('open')){bd.classList.add('open');hd?.classList.add('open');}
+        setTimeout(()=>c.scrollIntoView({behavior:'smooth',block:'center'}),250);
+      }
+    });
+  });
+</script>
 </body>
 </html>
