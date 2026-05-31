@@ -25,15 +25,15 @@
 
 *Blue group not yet reporting. First quality session: Fartlek 1.*
 
-| Day | White (20 mi) | Green (25 mi) | Gold (32 mi) |
-|:----|:---|:---|:---|
-| **Mon** | Easy *3mi* | Easy *4mi* | Easy *5mi* |
-| **Tue** | **Fartlek 1 — 4x(1:00 on/4:00 steady)** *4mi* | **Fartlek 1 — 5x(1:00 on/4:00 steady)** *5mi* | **Fartlek 1 — 6x(1:00 on/4:00 steady)** *6.5mi* |
-| **Wed** | Easy *3mi* | Easy *4mi* | Easy *5mi* |
-| **Thu** | Easy *3.5mi* | Easy *4.5mi* | Easy *5mi* |
-| **Fri** | Easy *2.5mi* | Easy *3mi* | Easy *3.5mi* |
-| **Sat** | **Long Run** *4mi* | **Long Run** *4.5mi* | **Long Run** *7mi* |
-| **Sun** | **REST** | **REST** | **REST** |
+| Day | Blue (14 mi) | White (20 mi) | Green (25 mi) | Gold (32 mi) |
+|:----|:---|:---|:---|:---|
+| **Mon** | Easy *2mi* | Easy *3mi* | Easy *4mi* | Easy *5mi* |
+| **Tue** | **Fartlek 1 — 3x(1:00 on/4:00 steady)** *3mi* |**Fartlek 1 — 4x(1:00 on/4:00 steady)** *4mi* | **Fartlek 1 — 5x(1:00 on/4:00 steady)** *5mi* | **Fartlek 1 — 6x(1:00 on/4:00 steady)** *6.5mi* |
+| **Wed** | Easy *2mi* | Easy *3mi* | Easy *4mi* | Easy *5mi* |
+| **Thu** | Easy *2mi* | Easy *3.5mi* | Easy *4.5mi* | Easy *5mi* |
+| **Fri** | Easy *2mi* | Easy *2.5mi* | Easy *3mi* | Easy *3.5mi* |
+| **Sat** | **Long Run** *3mi* |**Long Run** *4mi* | **Long Run** *4.5mi* | **Long Run** *7mi* |
+| **Sun** | **REST** | **REST** | **REST** | **REST** |
 
 ---
 
@@ -41,14 +41,14 @@
 
 *Blue group not yet reporting. Progression 1 introduces controlled tempo building.*
 
-| Day | White (22 mi) | Green (28 mi) | Gold (36 mi) |
-|:----|:---|:---|:---|
-| **Mon** | Easy *3mi* | Easy *4mi* | Easy *5mi* |
-| **Tue** | **Progression 1 — 5min easy / 15min steady / 10min faster / 5min easy** *4.5mi* | **Progression 1 — 5min easy / 15min steady / 10min faster / 5min easy** *6mi* | **Progression 1 — 5min easy / 15min steady / 10min faster / 5min easy** *7.5mi* |
-| **Wed** | Easy *3.5mi* | Easy *4mi* | Easy *5.5mi* |
-| **Thu** | Easy *3.5mi* | Easy *4mi* | Easy *5mi* |
-| **Fri** | Easy *2.5mi* | Easy *3mi* | Easy *4mi* |
-| **Sat** | **Long Run** *5mi* | **Long Run** *7mi* | **Long Run** *9mi* |
+| Day | Blue (15 mi) | White (22 mi) | Green (28 mi) | Gold (36 mi) |
+|:----|:---|:---|:---|:---|
+| **Mon** | Easy *2mi* | Easy *3mi* | Easy *4mi* | Easy *5mi* |
+| **Tue** | **Progression 1 — 5min easy / 5min steady / 5min faster / 5min easy** *3mi* | **Progression 1 — 5min easy / 15min steady / 10min faster / 5min easy** *4.5mi* | **Progression 1 — 5min easy / 15min steady / 10min faster / 5min easy** *6mi* | **Progression 1 — 5min easy / 15min steady / 10min faster / 5min easy** *7.5mi* |
+| **Wed** | Easy *2mi* | Easy *3.5mi* | Easy *4mi* | Easy *5.5mi* |
+| **Thu** | Easy *2mi* | Easy *3.5mi* | Easy *4mi* | Easy *5mi* |
+| **Fri** | Easy *2mi* | Easy *2.5mi* | Easy *3mi* | Easy *4mi* |
+| **Sat** | **Long Run** *4mi* | **Long Run** *5mi* | **Long Run** *7mi* | **Long Run** *9mi* |
 | **Sun** | **REST** | **REST** | **REST** |
 
 ---
@@ -57,28 +57,28 @@
 
 *Blue starts with easy running only. Fartlek 2 for upper groups.*
 
-| Day | Blue (12 mi) | White (24 mi) | Green (31 mi) | Gold (40 mi) |
+| Day | Blue (14 mi) | White (24 mi) | Green (31 mi) | Gold (40 mi) |
 |:----|:---|:---|:---|:---|
 | **Mon** | Easy *2mi* | Easy *3.5mi* | Easy *4.5mi* | Easy *5.5mi* |
-| **Tue** | Easy *2.5mi* | **Fartlek 2 — 3x(2:00 on/3:00 steady)** *4.5mi* | **Fartlek 2 — 4x(2:00 on/3:00 steady)** *6mi* | **Fartlek 2 — 5x(2:00 on/3:00 steady)** *7.5mi* |
+| **Tue** | Easy *2mi* | **Fartlek 2 — 3x(2:00 on/3:00 steady)** *4.5mi* | **Fartlek 2 — 4x(2:00 on/3:00 steady)** *6mi* | **Fartlek 2 — 5x(2:00 on/3:00 steady)** *7.5mi* |
 | **Wed** | Easy *2mi* | Easy *4mi* | Easy *5mi* | Easy *6.5mi* |
-| **Thu** | Easy *2.5mi* | Easy *4mi* | Easy *4.5mi* | Easy *6mi* |
+| **Thu** | XC Camp Race *3mi* | Easy *4mi* | Easy *4.5mi* | Easy *6mi* |
 | **Fri** | Easy *1mi* | Easy *3mi* | Easy *4mi* | Easy *4.5mi* |
-| **Sat** | **Long Run** *2mi* | **Long Run** *5mi* | **Long Run** *7mi* | **Long Run** *10mi* |
+| **Sat** | **Long Run** *4mi* | **Long Run** *5mi* | **Long Run** *7mi* | **Long Run** *10mi* |
 | **Sun** | **REST** | **REST** | **REST** | **REST** |
 
 ---
 
 ## **WEEK 5: JUNE 22–28, 2026** — Summer Base Build
 
-| Day | Blue (14 mi) | White (26 mi) | Green (34 mi) | Gold (43 mi) |
+| Day | Blue (16 mi) | White (26 mi) | Green (34 mi) | Gold (43 mi) |
 |:----|:---|:---|:---|:---|
 | **Mon** | Easy *2.5mi* | Easy *4mi* | Easy *5mi* | Easy *6mi* |
-| **Tue** | Easy *2.5mi* | **Progression 2 — 5min easy / 15min steady / 10min faster / 5min fastest / 5min easy** *4.5mi* | **Progression 2 — 5min easy / 15min steady / 10min faster / 5min fastest / 5min easy** *6.5mi* | **Progression 2 — 5min easy / 15min steady / 10min faster / 5min fastest / 5min easy** *8mi* |
+| **Tue** |**Progression 2 — 5min easy / 10min steady / 5min faster / 5min easy** *3mi* | **Progression 2 — 5min easy / 15min steady / 10min faster / 5min fastest / 5min easy** *4.5mi* | **Progression 2 — 5min easy / 15min steady / 10min faster / 5min fastest / 5min easy** *6.5mi* | **Progression 2 — 5min easy / 15min steady / 10min faster / 5min fastest / 5min easy** *8mi* |
 | **Wed** | Easy *2.5mi* | Easy *4.5mi* | Easy *5.5mi* | Easy *6.5mi* |
 | **Thu** | Easy *2.5mi* | Easy *4.5mi* | Easy *5mi* | Easy *6.5mi* |
 | **Fri** | Easy *1.5mi* | Easy *3.5mi* | Easy *4mi* | Easy *5mi* |
-| **Sat** | **Long Run** *2.5mi* | **Long Run** *5mi* | **Long Run** *8mi* | **Long Run** *11mi* |
+| **Sat** | **Long Run** *4mi* | **Long Run** *5mi* | **Long Run** *8mi* | **Long Run** *11mi* |
 | **Sun** | **REST** | **REST** | **REST** | **REST** |
 
 ---
@@ -88,7 +88,7 @@
 | Day | Blue (16 mi) | White (28 mi) | Green (36 mi) | Gold (46 mi) |
 |:----|:---|:---|:---|:---|
 | **Mon** | Easy *2.5mi* | Easy *4mi* | Easy *5mi* | Easy *6.5mi* |
-| **Tue** | Easy *3mi* | **Fartlek 3 — 4x(3:00 on/2:00 steady)** *5mi* | **Fartlek 3 — 5x(3:00 on/2:00 steady)** *7mi* | **Fartlek 3 — 6x(3:00 on/2:00 steady)** *8.5mi* |
+| **Tue** | **Fartlek 3 — 3x(3:00 on/2:00 steady)** *3mi* | **Fartlek 3 — 4x(3:00 on/2:00 steady)** *5mi* | **Fartlek 3 — 5x(3:00 on/2:00 steady)** *7mi* | **Fartlek 3 — 6x(3:00 on/2:00 steady)** *8.5mi* |
 | **Wed** | Easy *2.5mi* | Easy *4.5mi* | Easy *6mi* | Easy *7mi* |
 | **Thu** | Easy *2.5mi* | Easy *4.5mi* | Easy *5.5mi* | Easy *6.5mi* |
 | **Fri** | Easy *1.5mi* | Easy *3.5mi* | Easy *4mi* | Easy *6mi* |
@@ -108,23 +108,23 @@
 | **Wed** | Easy *3mi* | Easy *5mi* | Easy *6.5mi* | Easy *7.5mi* |
 | **Thu** | Easy *3.5mi* | Easy *4.5mi* | Easy *5.5mi* | Easy *7mi* |
 | **Fri** | Easy *2mi* | Easy *3.5mi* | Easy *4.5mi* | Easy *5.5mi* |
-| **Sat** | **Long Run** *3mi* | **Long Run** *7mi* | **Long Run** *9mi* | **Long Run** *12.5mi* |
+| **Sat** | **Long Run** *3mi* | **Long Run** *7mi* | **Long Run** *9mi* | **Long Run** *12mi/90min* |
 | **Sun** | **REST** | **REST** | **REST** | **REST** |
 
 ---
 
 ## **WEEK 8: JULY 13–19, 2026** — Summer Peak Phase
 
-*Fartlek shifts to Wednesday; Hills added Thursday. Mandatory practice in effect.*
+*Mandatory practice in begins.*
 
 | Day | Blue (20 mi) | White (32 mi) | Green (40 mi) | Gold (51 mi) |
 |:----|:---|:---|:---|:---|
 | **Mon** | Easy *3mi* | Easy *4mi* | Easy *5.5mi* | Easy *7mi* |
-| **Tue** | Easy *3mi* | Easy *5mi* | Easy *6mi* | Easy *8mi* |
-| **Wed** | **Fartlek 1 — 4x(1:00 on/4:00 steady)** *3.5mi* | **Fartlek 1 — 5x(1:00 on/4:00 steady)** *5.5mi* | **Fartlek 1 — 6x(1:00 on/4:00 steady)** *7mi* | **Fartlek 1 — 7x(1:00 on/4:00 steady)** *8.5mi* |
+| **Tue** | **Fartlek 1 — 4x(1:00 on/4:00 steady)** *3.5mi* | **Fartlek 1 — 5x(1:00 on/4:00 steady)** *5.5mi* | **Fartlek 1 — 6x(1:00 on/4:00 steady)** *7mi* | **Fartlek 1 — 7x(1:00 on/4:00 steady)** *8.5mi* |
+| **Wed** | Easy *3mi* | Easy *5mi* | Easy *6mi* | Easy *8mi* |
 | **Thu** | **Hill Repeats** *3.5mi* | **Hill Repeats** *5mi* | **Hill Repeats** *6.5mi* | **Hill Repeats** *8mi* |
 | **Fri** | Easy *3mi* | Easy *4mi* | Easy *5mi* | Easy *6mi* |
-| **Sat** | **Long Run** *4mi* | **Long Run** *8.5mi* | **Long Run** *10mi* | **Long Run** *13.5mi* |
+| **Sat** | **Long Run** *4mi* | **Long Run** *8.5mi* | **Long Run** *10mi* | **Long Run** *12mi/90min* |
 | **Sun** | **REST** | **REST** | **REST** | **REST** |
 
 ---

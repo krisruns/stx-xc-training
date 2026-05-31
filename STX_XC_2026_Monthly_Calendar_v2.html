@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STX XC 2026 — Monthly Training Calendar</title>
+<style>
+/* ── RESET & BASE ── */
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;
+  background:#f4f4f4;color:#1a1a1a;font-size:13px;line-height:1.4;
+}
+
+/* ── HEADER ── */
+.site-header{
+  background:#1a1a1a;color:#fff;
+  padding:18px 24px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+}
+.header-brand{display:flex;align-items:baseline;gap:10px}
+.brand-stx{font-size:28px;font-weight:800;letter-spacing:.06em;color:#c9a84c}
+.brand-title{font-size:15px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#fff}
+.brand-sub{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#777;margin-top:3px}
+.header-right{display:flex;align-items:center;gap:8px}
+
+/* ── CONTROLS BAR ── */
+.controls{
+  background:#fff;border-bottom:2px solid #e0e0e0;
+  padding:10px 20px;
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  box-shadow:0 2px 6px rgba(0,0,0,.06);
+}
+.ctrl-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#999;margin-right:4px}
+.group-btn{
+  padding:5px 16px;border-radius:20px;border:1.5px solid;
+  font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  cursor:pointer;transition:all .15s;background:#fff;
+}
+.group-btn.gold{border-color:#d4b04a;color:#a07e1a}
+.group-btn.gold.active{background:#1a1a1a;border-color:#1a1a1a;color:#c9a84c}
+.group-btn.green{border-color:#4a7c59;color:#2c5530}
+.group-btn.green.active{background:#2c5530;border-color:#2c5530;color:#fff}
+.group-btn.white{border-color:#aaa;color:#555}
+.group-btn.white.active{background:#555;border-color:#555;color:#fff}
+.group-btn.blue{border-color:#5585c8;color:#1d4ea0}
+.group-btn.blue.active{background:#1d4ea0;border-color:#1d4ea0;color:#fff}
+.ctrl-sep{width:1px;height:26px;background:#e0e0e0;margin:0 4px}
+.print-btn{
+  margin-left:auto;
+  padding:6px 16px;border-radius:6px;border:1.5px solid #1a1a1a;
+  background:#1a1a1a;color:#c9a84c;
+  font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px;
+}
+.print-btn:hover{background:#333;border-color:#333}
+.print-btn svg{width:14px;height:14px;flex-shrink:0}
+
+/* ── PRINT GROUP LABEL (hidden on screen) ── */
+.print-group-label{display:none}
+
+/* ── MONTHS ── */
+.months{max-width:1180px;margin:0 auto;padding:24px 16px 60px;display:flex;flex-direction:column;gap:28px}
+
+/* ── MONTH BLOCK ── */
+.month-card{
+  background:#fff;border-radius:8px;
+  box-shadow:0 2px 10px rgba(0,0,0,.08);
+  overflow:hidden;
+}
+.month-title{
+  background:#1a1a1a;color:#fff;
+  padding:12px 18px;
+  display:flex;align-items:baseline;gap:10px;
+}
+.month-name{font-size:20px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.month-name em{color:#c9a84c;font-style:normal}
+.month-year{font-size:13px;color:#888;letter-spacing:.06em}
+
+/* ── CALENDAR TABLE ── */
+.cal-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.cal{
+  width:100%;
+  border-collapse:collapse;
+  min-width:700px;
+  table-layout:fixed;  /* KEY: columns won't reflow */
+}
+
+/* Colgroup for fixed widths */
+col.col-wk   { width:5.5% }
+col.col-day  { width:12.5% }
+col.col-tot  { width:7% }
+
+/* Header row */
+.cal thead tr{background:#2a2a2a}
+.cal thead th{
+  padding:7px 5px;
+  font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:#aaa;text-align:center;
+  border-right:1px solid #3a3a3a;
+}
+.cal thead th:last-child{border-right:none}
+.cal thead th.th-wk{color:#c9a84c}
+.cal thead th.th-tot{color:#c9a84c}
+.cal thead th.th-day-sat,.cal thead th.th-day-sun{color:#777}
+
+/* Body rows */
+.cal tbody tr{border-bottom:1px solid #e8e8e8}
+.cal tbody tr:last-child{border-bottom:none}
+
+/* Week number cell */
+.wk-cell{
+  text-align:center;vertical-align:middle;
+  border-right:1px solid #e0e0e0;
+  background:#fafafa;padding:3px;
+  overflow:hidden;
+}
+.wk-badge{
+  display:inline-flex;flex-direction:column;align-items:center;
+  background:#1a1a1a;border-radius:5px;padding:5px 3px;width:36px;
+}
+.wk-n{font-size:14px;font-weight:800;color:#c9a84c;line-height:1}
+.wk-l{font-size:8px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#777;margin-top:2px;line-height:1}
+
+/* Total cell */
+.tot-cell{
+  text-align:center;vertical-align:middle;
+  border-left:1px solid #e0e0e0;
+  background:#fafafa;padding:3px;
+  overflow:hidden;
+}
+.tot-badge{
+  display:inline-flex;flex-direction:column;align-items:center;
+  border:1.5px solid;border-radius:5px;padding:5px 4px;width:54px;
+}
+.tot-n{font-size:16px;font-weight:800;line-height:1}
+.tot-u{font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#999;margin-top:2px;line-height:1}
+.tot-badge.tg-gold{border-color:#d4b04a}.tot-badge.tg-gold .tot-n{color:#9a6f00}
+.tot-badge.tg-green{border-color:#4a7c59}.tot-badge.tg-green .tot-n{color:#2c5530}
+.tot-badge.tg-white{border-color:#aaa}.tot-badge.tg-white .tot-n{color:#444}
+.tot-badge.tg-blue{border-color:#5585c8}.tot-badge.tg-blue .tot-n{color:#1d4ea0}
+
+/* Day cell */
+.day-cell{
+  vertical-align:top;padding:5px 4px;
+  border-right:1px solid #ececec;
+  overflow:hidden;    /* critical for fixed layout */
+}
+.day-cell:last-of-type{border-right:none}
+.day-cell.out-month{background:#f9f9f9;opacity:.5}
+.day-cell.is-weekend{background:#fdfdfd}
+
+/* Workout type tints */
+.day-cell.wt-quality{background:#fffcf0}
+.day-cell.wt-race{background:#fff5f5}
+.day-cell.wt-long{background:#f0f7ff}
+.day-cell.wt-rest{background:#f9f9f9}
+
+.day-num{
+  font-size:10px;font-weight:700;color:#bbb;
+  text-align:right;margin-bottom:3px;line-height:1;
+  white-space:nowrap;overflow:hidden;
+}
+.day-cell.out-month .day-num{color:#ddd}
+
+.wk-label{
+  font-size:10px;font-weight:700;
+  overflow:hidden;white-space:nowrap;text-overflow:ellipsis;
+  line-height:1.25;margin-bottom:3px;
+  max-width:100%;
+}
+.wk-label.wt-easy{color:#888}
+.wk-label.wt-quality{color:#9a6f00}
+.wk-label.wt-race{color:#c0392b;font-weight:700}
+.wk-label.wt-long{color:#1a56a0}
+.wk-label.wt-rest{color:#ccc;font-style:italic}
+.wk-label.wt-shakeout{color:#2980b9;font-style:italic}
+.wk-label.wt-none{color:#ddd;font-style:italic}
+
+.day-mi{
+  font-size:14px;font-weight:800;line-height:1;
+  white-space:nowrap;overflow:hidden;
+}
+.day-mi .unit{font-size:9px;font-weight:500;color:#aaa;margin-left:1px}
+.day-mi.mg-gold{color:#9a6f00}
+.day-mi.mg-green{color:#2c5530}
+.day-mi.mg-white{color:#444}
+.day-mi.mg-blue{color:#1d4ea0}
+.day-mi.mg-zero{color:#ddd}
+
+/* ═══════════════════════════════════════════════
+   PRINT STYLES
+═══════════════════════════════════════════════ */
+@media print{
+  @page{size:letter landscape;margin:.4in .45in}
+
+  body{background:#fff;font-size:11px}
+  .controls,.site-header{display:none}
+
+  .months{padding:0;gap:0;max-width:none;display:flex;flex-direction:column}
+  .month-card{
+    page-break-after:avoid;
+    break-after:avoid;
+    box-shadow:none;border-radius:0;
+    border:none;
+    break-inside:avoid;
+    margin-bottom:18px;  /* breathing room between the two months on the same page */
+  }
+  /* Page break after every 2nd month → two per page */
+  .month-card:nth-child(2n){
+    page-break-after:always;
+    break-after:always;
+    margin-bottom:0;
+  }
+  .month-card:last-child{
+    page-break-after:avoid;
+    break-after:avoid;
+  }
+
+  /* Show print group label */
+  .print-group-label{
+    display:block;
+    font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    color:#888;padding:6px 0 4px;border-bottom:1px solid #e0e0e0;margin-bottom:0;
+  }
+
+  .month-title{padding:8px 14px;background:#1a1a1a !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .month-name{font-size:16px}
+  .cal-wrap{overflow:visible}
+
+  /* CRITICAL: fixed layout locks column widths on print */
+  .cal{
+    width:100%;
+    table-layout:fixed;
+    /* letter landscape @ 0.45in margins = 10.1in content = ~970px */
+  }
+  col.col-wk {width:52px}
+  col.col-day{width:120px}  /* 7 × 120 = 840 */
+  col.col-tot{width:72px}
+  /* total: 52+840+72 = 964px ≈ 10.04in — fits letter landscape with .45in margins */
+
+  .cal thead{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .cal thead tr{background:#2a2a2a !important}
+
+  /* Keep tints on print */
+  .day-cell.wt-quality{background:#fffcf0 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .day-cell.wt-race{background:#fff5f5 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .day-cell.wt-long{background:#f0f7ff !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .day-cell.wt-rest{background:#f9f9f9 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .wk-cell,.tot-cell{background:#fafafa !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .wk-badge{background:#1a1a1a !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+
+  .day-cell{padding:4px 3px}
+  .wk-label{font-size:9px}
+  .day-mi{font-size:12px}
+  .day-num{font-size:9px}
+  .wk-n{font-size:12px}
+  .tot-n{font-size:14px}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div>
+    <div class="header-brand">
+      <span class="brand-stx">STX</span>
+      <span class="brand-title">Cross Country 2026</span>
+    </div>
+    <div class="brand-sub">Monthly Training Calendar · Weeks 1–23 · May 25 – Nov 1</div>
+  </div>
+</header>
+
+<div class="controls" id="controls">
+  <span class="ctrl-label">Group</span>
+  <button class="group-btn gold active" onclick="setGroup('gold')">Gold</button>
+  <button class="group-btn green" onclick="setGroup('green')">Green</button>
+  <button class="group-btn white" onclick="setGroup('white')">White</button>
+  <button class="group-btn blue" onclick="setGroup('blue')">Blue</button>
+  <div class="ctrl-sep"></div>
+  <button class="print-btn" onclick="window.print()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 6 2 18 2 18 9"/>
+      <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+      <rect x="6" y="14" width="12" height="8"/>
+    </svg>
+    Print / Save PDF
+  </button>
+</div>
+
+<div class="months" id="months"></div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────
+const e   = (m)     => ({type:'E',   miles:m, text:'Easy'});
+const l   = (m)     => ({type:'L',   miles:m, text:'Long Run'});
+const rest          =  {type:'REST', miles:0, text:'REST'};
+const s   = (m)     => ({type:'S',   miles:m, text:'Shakeout'});
+const q   = (t,m)   => ({type:'Q',   miles:m, text:t});
+const r   = (t,m)   => ({type:'R',   miles:m, text:t});
+
+const W = [
+  {num:1, totals:{blue:null,white:18, green:22, gold:28}, meet:null,
+   days:[
+    {blue:null,white:e(2.5),green:e(3.5),gold:e(4.5)},
+    {blue:null,white:e(3),  green:e(4),  gold:e(5)  },
+    {blue:null,white:e(3),  green:e(3.5),gold:e(4.5)},
+    {blue:null,white:e(3),  green:e(3.5),gold:e(4.5)},
+    {blue:null,white:e(2.5),green:e(3),  gold:e(4)  },
+    {blue:null,white:l(4),  green:l(4.5),gold:l(5.5)},
+    {blue:null,white:rest,  green:rest,  gold:rest  }]},
+  {num:2, totals:{blue:null,white:20, green:25, gold:32}, meet:null,
+   days:[
+    {blue:null,white:e(3),  green:e(4),  gold:e(5)  },
+    {blue:null,white:q('F1 — 4×(1:00/4:00)',4),  green:q('F1 — 5×(1:00/4:00)',5),  gold:q('F1 — 6×(1:00/4:00)',6.5)},
+    {blue:null,white:e(3),  green:e(4),  gold:e(5)  },
+    {blue:null,white:e(3.5),green:e(4.5),gold:e(5)  },
+    {blue:null,white:e(2.5),green:e(3),  gold:e(3.5)},
+    {blue:null,white:l(4),  green:l(4.5),gold:l(7)  },
+    {blue:null,white:rest,  green:rest,  gold:rest  }]},
+  {num:3, totals:{blue:null,white:22, green:28, gold:36}, meet:null,
+   days:[
+    {blue:null,white:e(3),  green:e(4),  gold:e(5)  },
+    {blue:null,white:q('Progression 1',4.5),green:q('Progression 1',6),gold:q('Progression 1',7.5)},
+    {blue:null,white:e(3.5),green:e(4),  gold:e(5.5)},
+    {blue:null,white:e(3.5),green:e(4),  gold:e(5)  },
+    {blue:null,white:e(2.5),green:e(3),  gold:e(4)  },
+    {blue:null,white:l(5),  green:l(7),  gold:l(9)  },
+    {blue:null,white:rest,  green:rest,  gold:rest  }]},
+  {num:4, totals:{blue:12, white:24, green:31, gold:40}, meet:null,
+   days:[
+    {blue:e(2),  white:e(3.5),green:e(4.5),gold:e(5.5)},
+    {blue:e(2.5),white:q('F2 — 3×(2:00/3:00)',4.5),green:q('F2 — 4×(2:00/3:00)',6),gold:q('F2 — 5×(2:00/3:00)',7.5)},
+    {blue:e(2),  white:e(4),  green:e(5),  gold:e(6.5)},
+    {blue:e(2.5),white:e(4),  green:e(4.5),gold:e(6)  },
+    {blue:e(1),  white:e(3),  green:e(4),  gold:e(4.5)},
+    {blue:l(2),  white:l(5),  green:l(7),  gold:l(10) },
+    {blue:rest,  white:rest,  green:rest,  gold:rest  }]},
+  {num:5, totals:{blue:14, white:26, green:34, gold:43}, meet:null,
+   days:[
+    {blue:e(2.5),white:e(4),  green:e(5),  gold:e(6)  },
+    {blue:e(2.5),white:q('Progression 2',4.5),green:q('Progression 2',6.5),gold:q('Progression 2',8)},
+    {blue:e(2.5),white:e(4.5),green:e(5.5),gold:e(6.5)},
+    {blue:e(2.5),white:e(4.5),green:e(5),  gold:e(6.5)},
+    {blue:e(1.5),white:e(3.5),green:e(4),  gold:e(5)  },
+    {blue:l(2.5),white:l(5),  green:l(8),  gold:l(11) },
+    {blue:rest,  white:rest,  green:rest,  gold:rest  }]},
+  {num:6, totals:{blue:16, white:28, green:36, gold:46}, meet:null,
+   days:[
+    {blue:e(2.5),white:e(4),  green:e(5),  gold:e(6.5)},
+    {blue:e(3),  white:q('F3 — 4×(3:00/2:00)',5),green:q('F3 — 5×(3:00/2:00)',7),gold:q('F3 — 6×(3:00/2:00)',8.5)},
+    {blue:e(2.5),white:e(4.5),green:e(6),  gold:e(7)  },
+    {blue:e(2.5),white:e(4.5),green:e(5.5),gold:e(6.5)},
+    {blue:e(1.5),white:e(3.5),green:e(4),  gold:e(6)  },
+    {blue:l(4),  white:l(6.5),green:l(8.5),gold:l(11.5)},
+    {blue:rest,  white:rest,  green:rest,  gold:rest  }]},
+  {num:7, totals:{blue:18, white:30, green:38, gold:48}, meet:null,
+   days:[
+    {blue:e(3),  white:e(4.5),green:e(5.5),gold:e(7)  },
+    {blue:e(3.5),white:q('Progression 3',5.5),green:q('Progression 3',7),gold:q('Progression 3',8.5)},
+    {blue:e(3),  white:e(5),  green:e(6.5),gold:e(7.5)},
+    {blue:e(3.5),white:e(4.5),green:e(5.5),gold:e(7)  },
+    {blue:e(2),  white:e(3.5),green:e(4.5),gold:e(5.5)},
+    {blue:l(3),  white:l(7),  green:l(9),  gold:l(12.5)},
+    {blue:rest,  white:rest,  green:rest,  gold:rest  }]},
+  {num:8, totals:{blue:20, white:32, green:40, gold:51}, meet:null,
+   days:[
+    {blue:e(3),  white:e(4),  green:e(5.5),gold:e(7)  },
+    {blue:e(3),  white:e(5),  green:e(6),  gold:e(8)  },
+    {blue:q('F1 — 4×(1:00/4:00)',3.5),white:q('F1 — 5×(1:00/4:00)',5.5),green:q('F1 — 6×(1:00/4:00)',7),gold:q('F1 — 7×(1:00/4:00)',8.5)},
+    {blue:q('Hills',3.5),white:q('Hills',5),green:q('Hills',6.5),gold:q('Hills',8)},
+    {blue:e(3),  white:e(4),  green:e(5),  gold:e(6)  },
+    {blue:l(4),  white:l(8.5),green:l(10), gold:l(13.5)},
+    {blue:rest,  white:rest,  green:rest,  gold:rest  }]},
+  {num:9, totals:{blue:20, white:34, green:44, gold:53}, meet:'2mi Time Trial',
+   days:[
+    {blue:e(3),  white:e(5),  green:e(6),  gold:e(8)  },
+    {blue:e(3),  white:e(5),  green:e(6.5),gold:e(8)  },
+    {blue:e(3),  white:e(5),  green:e(6.5),gold:e(8)  },
+    {blue:l(4),  white:l(6.5),green:l(8),  gold:l(9)  },
+    {blue:e(2.5),white:e(3.5),green:e(4.5),gold:e(4.5)},
+    {blue:r('2mi Time Trial',4.5),white:r('2mi Time Trial',6),green:r('2mi Time Trial',6),gold:r('2mi Time Trial',6)},
+    {blue:rest,  white:e(3),  green:e(6.5),gold:e(9.5)}]},
+  {num:10,totals:{blue:21, white:35, green:45, gold:55}, meet:null,
+   days:[
+    {blue:e(3),  white:e(5),  green:e(6),  gold:e(8)  },
+    {blue:e(3.5),white:q('1+1mi @T + 200s',5.5),green:q('2+1mi @T + 200s',7),gold:q('2+1mi @T + 200s',9)},
+    {blue:e(3),  white:e(5),  green:e(6.5),gold:e(8)  },
+    {blue:q('Hills',3.5),white:q('Hills',5.5),green:q('Hills',6.5),gold:q('Hills',8)},
+    {blue:e(3),  white:e(5),  green:e(6),  gold:e(8)  },
+    {blue:l(5),  white:l(9),  green:l(13), gold:l(14) },
+    {blue:rest,  white:rest,  green:rest,  gold:rest  }]},
+  {num:11,totals:{blue:22, white:30, green:37, gold:43}, meet:'Alumni Run',
+   days:[
+    {blue:e(3),  white:e(4),  green:e(5),  gold:e(6.5)},
+    {blue:q('4×2:00 Fartlek',3.5),white:q('5×2:00 Fartlek',4.5),green:q('6×2:00 Fartlek',6),gold:q('7×2:00 Fartlek',7)},
+    {blue:e(3),  white:e(4),  green:e(5.5),gold:e(6)  },
+    {blue:e(3.5),white:q('2mi @T + 4×200',4.5),green:q('2.5mi @T + 6×200',5.5),gold:q('3mi @T + 6×200',7)},
+    {blue:e(2.5),white:e(3),  green:e(4),  gold:e(4.5)},
+    {blue:r('Alumni Run',5),white:r('Alumni Run',6),green:r('Alumni Run',6),gold:r('Alumni Run',6)},
+    {blue:e(1.5),white:e(4),  green:e(5),  gold:e(6)  }]},
+  {num:12,totals:{blue:24, white:34, green:43, gold:55}, meet:null,
+   days:[
+    {blue:e(3.5),white:e(4.5),green:e(5.5),gold:e(7.5)},
+    {blue:e(3.5),white:q('2+1mi @T + 4×200',5.5),green:q('3+1mi @T + 4×200',7),gold:q('3+1mi @T + 6×200',9)},
+    {blue:e(3.5),white:e(4.5),green:e(6),  gold:e(7.5)},
+    {blue:q('Hills',4),white:q('Hills',5),green:q('Hills',6.5),gold:q('Hills',8)},
+    {blue:e(3.5),white:e(4.5),green:e(5.5),gold:e(7)  },
+    {blue:l(5),  white:l(8.5),green:l(11), gold:l(13) },
+    {blue:e(1),  white:e(1.5),green:e(1.5),gold:e(3)  }]},
+  {num:13,totals:{blue:25, white:34, green:45, gold:55}, meet:'Tiger Run',
+   days:[
+    {blue:e(3.5),white:e(4.5),green:e(6),  gold:e(8)  },
+    {blue:e(3.5),white:e(5),  green:e(6.5),gold:e(8.5)},
+    {blue:q('4×3:00 Fartlek',4),white:q('5×3:00 Fartlek',5.5),green:q('6×3:00 Fartlek',7),gold:q('7×3:00 Fartlek',8)},
+    {blue:e(3.5),white:q('1.5+1.5mi @T',5),green:q('2+2mi @T + 200s',7),gold:q('2+2mi @T + 200s',8)},
+    {blue:l(6),  white:e(3.5),green:e(4.5),gold:e(4.5)},
+    {blue:e(2),  white:r('Tiger Run',6),green:r('Tiger Run',6),gold:r('Tiger Run',6)},
+    {blue:e(2.5),white:e(4.5),green:e(8),  gold:e(12) }]},
+  {num:14,totals:{blue:24, white:31, green:37, gold:42}, meet:null,
+   days:[
+    {blue:e(3),  white:e(3.5),green:e(4.5),gold:e(5)  },
+    {blue:e(3),  white:r('Varsity TT',5),green:r('Varsity TT',6),gold:r('Varsity TT',6)},
+    {blue:e(3.5),white:e(4),  green:e(5.5),gold:e(6.5)},
+    {blue:q('2×1mi @T + 200s',4),white:q('3×1mi @T + 200s',5),green:q('4×1mi @T + 200s',6),gold:q('4×1mi @T + 200s',7)},
+    {blue:e(3),  white:e(3.5),green:e(5),  gold:e(5.5)},
+    {blue:l(7.5),white:l(10), green:l(10), gold:l(12) },
+    {blue:rest,  white:rest,  green:rest,  gold:rest  }]},
+  {num:15,totals:{blue:23, white:28, green:35, gold:40}, meet:'Run for Gold',
+   days:[
+    {blue:rest,  white:rest,  green:rest,  gold:rest  },
+    {blue:q('4×800 @RP',4),white:q('5×800 @I',5.5),green:q('6×800 @I',7),gold:q('7×800 @I',8)},
+    {blue:e(3.5),white:e(4),  green:e(5.5),gold:e(6)  },
+    {blue:q('1+1mi @T + 200s',4),white:q('1+1mi @T + 200s',5),green:q('1.5+1.5mi @T',6),gold:q('2+2mi @T + 200s',7)},
+    {blue:l(5.5),white:l(7.5),green:l(10.5),gold:l(13)},
+    {blue:r('Run for Gold',5),white:r('Run for Gold',6),green:r('Run for Gold',6),gold:r('Run for Gold',6)},
+    {blue:rest,  white:rest,  green:rest,  gold:rest  }]},
+  {num:16,totals:{blue:25, white:33, green:38, gold:41}, meet:null,
+   days:[
+    {blue:e(3.5),white:e(5),  green:e(5.5),gold:e(6)  },
+    {blue:q('8×200 @R',3.5),white:q('12×200 @R',4.5),green:q('14×200 @R',5.5),gold:q('16×200 @R',6.5)},
+    {blue:e(3.5),white:e(5),  green:e(5.5),gold:e(6)  },
+    {blue:q('2×1mi @T + 200s',4.5),white:q('3×1mi @T + 200s',5.5),green:q('4×1mi @T + 200s',6),gold:q('4×1mi @T + 200s',7)},
+    {blue:e(3.5),white:e(4.5),green:e(5.5),gold:e(5.5)},
+    {blue:l(6.5),white:l(8.5),green:l(10), gold:l(10) },
+    {blue:rest,  white:rest,  green:rest,  gold:rest  }]},
+  {num:17,totals:{blue:25, white:35, green:45, gold:53}, meet:'S. Showcase',
+   days:[
+    {blue:e(3.5),white:e(5),  green:e(7),  gold:e(9)  },
+    {blue:q('3×1000 @I',4.5),white:q('4×1000 @I',6),green:q('5×1000 @I',8),gold:q('6×1000 @I',10)},
+    {blue:e(3.5),white:e(5),  green:e(7.5),gold:e(9)  },
+    {blue:q('3×1000 @T',4.5),white:q('4×1000 @T',6),green:q('5×1000 @T',8),gold:q('6×1000 @T',10)},
+    {blue:e(3.5),white:e(4),  green:e(5.5),gold:e(5.5)},
+    {blue:r('S. Showcase',5),white:r('S. Showcase',6),green:r('S. Showcase',6),gold:r('S. Showcase',6)},
+    {blue:s(.5), white:s(3),  green:s(3),  gold:s(3.5)}]},
+  {num:18,totals:{blue:25, white:32, green:40, gold:45}, meet:'Palatine Inv.',
+   days:[
+    {blue:e(3.5),white:e(4.5),green:e(6.5),gold:e(7)  },
+    {blue:q('6×300 @R',4),white:q('8×300 @R',5),green:q('10×300 @R',6.5),gold:q('12×300 @R',7.5)},
+    {blue:e(3.5),white:e(4.5),green:e(6),  gold:e(6.5)},
+    {blue:q('2mi @T + 200s',4.5),white:q('2.5mi @T + 200s',5.5),green:q('3mi @T + 200s',7),gold:q('4mi @T + 200s',8)},
+    {blue:e(4),  white:e(5),  green:e(6),  gold:e(7.5)},
+    {blue:r('Palatine Inv.',5),white:r('Palatine Inv.',6),green:r('Palatine Inv.',6),gold:r('Palatine Inv.',6)},
+    {blue:s(.5), white:s(1.5),green:s(2),  gold:s(2.5)}]},
+  {num:19,totals:{blue:25, white:32, green:40, gold:50}, meet:'LXC Classic',
+   days:[
+    {blue:e(3.5),white:e(4.5),green:e(5.5),gold:e(7.5)},
+    {blue:q('3×1200 @I',4),white:q('3×1200 @I',5),green:q('4×1200 @I',7),gold:q('5×1200 @I',8)},
+    {blue:e(3.5),white:e(4.5),green:e(6),  gold:e(7)  },
+    {blue:q('1+1mi @T + 200s',4.5),white:q('1.5+1.5mi @T',5.5),green:q('2+2mi @T + 200s',7),gold:q('2+2mi @T + 200s',8.5)},
+    {blue:e(3.5),white:e(4),  green:e(5),  gold:e(5)  },
+    {blue:r('LXC Classic',5),white:r('LXC Classic',6),green:r('LXC Classic',6),gold:r('LXC Classic',6)},
+    {blue:e(1),  white:e(2.5),green:e(3.5),gold:e(8)  }]},
+  {num:20,totals:{blue:24, white:28, green:38, gold:45}, meet:'Haunted Woods',
+   days:[
+    {blue:e(3),  white:e(3.5),green:e(5.5),gold:e(6.5)},
+    {blue:q('3×1200 @I',4),white:q('3×1200 @I',4.5),green:q('4×1200 @I',6.5),gold:q('5×1200 @I',8)},
+    {blue:e(3),  white:e(3.5),green:e(5.5),gold:e(6.5)},
+    {blue:q('6×400 @R',4),white:q('8×400 @R',4.5),green:q('10×400 @R',6.5),gold:q('12×400 @R',7.5)},
+    {blue:e(3),  white:e(3.5),green:e(4),  gold:e(5)  },
+    {blue:r('Haunted Woods',5),white:r('Haunted Woods',6),green:r('Haunted Woods',6),gold:r('Haunted Woods',6)},
+    {blue:e(2),  white:e(3),  green:e(4),  gold:e(5.5)}]},
+  {num:21,totals:{blue:21, white:24, green:32, gold:35}, meet:null,
+   days:[
+    {blue:rest,  white:rest,  green:rest,  gold:rest  },
+    {blue:q('6×400 @R',3.5),white:q('8×400 @R',4.5),green:q('10×400 @R',6),gold:q('12×400 @R',6.5)},
+    {blue:e(3),  white:e(3.5),green:e(4.5),gold:e(5)  },
+    {blue:q('2×1600 @I',4),white:q('3×1600 @I',5),green:q('4×1600 @I',6.5),gold:q('4×1600 @I',7)},
+    {blue:e(3),  white:e(3.5),green:e(4.5),gold:e(5)  },
+    {blue:l(7.5),white:l(7.5),green:l(10.5),gold:l(11.5)},
+    {blue:rest,  white:rest,  green:rest,  gold:rest  }]},
+  {num:22,totals:{blue:21, white:22, green:30, gold:33}, meet:'Regionals',
+   days:[
+    {blue:q('2×1000 @T',3.5),white:q('2×2000 @T',3.5),green:q('3×2000 @T',6),gold:q('3×2000 @T',7)},
+    {blue:e(3),  white:e(3),  green:e(5),  gold:e(5.5)},
+    {blue:q('6×300 @R',3.5),white:q('8×300 @R',3.5),green:q('10×300 @R',4.5),gold:q('10×300 @R',5.5)},
+    {blue:e(3),  white:e(2.5),green:e(4),  gold:e(4.5)},
+    {blue:e(3),  white:e(2.5),green:e(4.5),gold:e(4.5)},
+    {blue:r('Regionals',5),white:r('Regionals',6),green:r('Regionals',6),gold:r('Regionals',6)},
+    {blue:rest,  white:rest,  green:rest,  gold:rest  }]},
+  {num:23,totals:{blue:20, white:22, green:28, gold:30}, meet:'STATE',
+   days:[
+    {blue:e(3),  white:e(3.5),green:e(4.5),gold:e(5)  },
+    {blue:q('3×1000 @T',4),white:q('4×1000 @T',4),green:q('5×1000 @T',5.5),gold:q('6×1000 @T',6)},
+    {blue:e(3),  white:e(3),  green:e(4),  gold:e(4.5)},
+    {blue:q('10×200 @R',4),white:q('12×200 @R',4),green:q('14×200 @R',5),gold:q('16×200 @R',5.5)},
+    {blue:e(1),  white:e(1.5),green:e(3),  gold:e(3)  },
+    {blue:r('STATE 🏆',5),white:r('STATE 🏆',6),green:r('STATE 🏆',6),gold:r('STATE 🏆',6)},
+    {blue:rest,  white:rest,  green:rest,  gold:rest  }]},
+];
+
+// ─── HELPERS ────────────────────────────────────────────────
+let GROUP = 'gold';
+const SEASON_START = new Date(2026,4,25); // May 25, 2026 (Monday)
+const MONTH_NAMES = ['January','February','March','April','May','June',
+  'July','August','September','October','November','December'];
+
+function isoDate(d){
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+// Build date → {week, dayIdx}
+const DATE_MAP = (() => {
+  const m={};
+  W.forEach((wk,wi)=>{
+    wk.days.forEach((_,di)=>{
+      const d=new Date(SEASON_START);
+      d.setDate(d.getDate()+wi*7+di);
+      m[isoDate(d)]={wk,di};
+    });
+  });
+  return m;
+})();
+
+function mondayOf(d){
+  const dow=d.getDay();
+  const off=dow===0?-6:1-dow;
+  const m=new Date(d);m.setDate(d.getDate()+off);return m;
+}
+
+function workoutClass(text){
+  if(!text||text==='REST') return 'rest';
+  if(text==='Easy') return 'easy';
+  if(text==='Long Run') return 'long';
+  if(text==='Shakeout') return 'shakeout';
+  const races=['Time Trial','Alumni Run','Tiger Run','Run for Gold','Varsity TT',
+    'S. Showcase','Palatine','LXC Classic','Haunted Woods','Regionals','STATE'];
+  if(races.some(r=>text.includes(r))) return 'race';
+  return 'quality';
+}
+
+// ─── RENDER ─────────────────────────────────────────────────
+function renderMonth(year, month){
+  const first=new Date(year,month,1);
+  const last=new Date(year,month+1,0);
+  let calStart=mondayOf(first);
+  let calEnd=new Date(last);
+  const lastDow=last.getDay();
+  calEnd.setDate(calEnd.getDate()+(lastDow===0?0:7-lastDow));
+
+  // Build week rows
+  const rows=[];
+  let cur=new Date(calStart);
+  while(cur<=calEnd){
+    const wds=[];
+    for(let d=0;d<7;d++){wds.push(new Date(cur));cur.setDate(cur.getDate()+1);}
+    rows.push(wds);
+  }
+
+  const groupLabel=GROUP.charAt(0).toUpperCase()+GROUP.slice(1);
+
+  let html=`
+  <div class="month-card" id="m${year}-${month}">
+    <div class="print-group-label" id="pgl-${year}-${month}">
+      STX XC 2026 Training Calendar &nbsp;·&nbsp; Group: ${groupLabel}
+    </div>
+    <div class="month-title">
+      <span class="month-name">${MONTH_NAMES[month]}</span>
+      <span class="month-year">${year}</span>
+    </div>
+    <div class="cal-wrap">
+    <table class="cal">
+      <colgroup>
+        <col class="col-wk">
+        <col class="col-day"><col class="col-day"><col class="col-day">
+        <col class="col-day"><col class="col-day">
+        <col class="col-day"><col class="col-day">
+        <col class="col-tot">
+      </colgroup>
+      <thead>
+        <tr>
+          <th class="th-wk">WK</th>
+          <th class="th-day">MON</th><th class="th-day">TUE</th>
+          <th class="th-day">WED</th><th class="th-day">THU</th>
+          <th class="th-day">FRI</th>
+          <th class="th-day-sat">SAT</th><th class="th-day-sun">SUN</th>
+          <th class="th-tot">TOTAL</th>
+        </tr>
+      </thead>
+      <tbody>`;
+
+  rows.forEach(wds=>{
+    const monISO=isoDate(wds[0]);
+    const wkData=DATE_MAP[monISO];
+    const wkObj=wkData?wkData.wk:null;
+
+    // Does any training day in this week have a race?
+    const rowHasRace=wds.some(d=>{
+      const e=DATE_MAP[isoDate(d)];
+      if(!e)return false;
+      const g=e.wk.days[e.di][GROUP];
+      return g&&g.type==='R';
+    });
+
+    html+=`<tr>`;
+
+    // Week badge
+    if(wkObj){
+      html+=`<td class="wk-cell"><div class="wk-badge"><span class="wk-n">${wkObj.num}</span><span class="wk-l">Week</span></div></td>`;
+    } else {
+      html+=`<td class="wk-cell"></td>`;
+    }
+
+    // Day cells (Mon=0 … Sun=6)
+    wds.forEach((dayDate,di)=>{
+      const inMonth=dayDate.getMonth()===month;
+      const iso=isoDate(dayDate);
+      const entry=DATE_MAP[iso];
+      const isWknd=di>=5;
+      const outCls=!inMonth?' out-month':'';
+      const wkndCls=isWknd?' is-weekend':'';
+
+      if(!entry){
+        html+=`<td class="day-cell${outCls}${wkndCls}"><div class="day-num">${dayDate.getDate()}</div></td>`;
+        return;
+      }
+
+      const g=entry.wk.days[entry.di][GROUP];
+
+      if(!g){
+        // Group not yet started (Blue w1-3)
+        html+=`<td class="day-cell${outCls}${wkndCls} wt-rest">
+          <div class="day-num">${dayDate.getDate()}</div>
+          <div class="wk-label wt-none">—</div>
+        </td>`;
+        return;
+      }
+
+      const wc=workoutClass(g.text);
+      const cellTint=` wt-${wc}`;
+      const miCls=g.miles===0?'mg-zero':`mg-${GROUP}`;
+      const miStr=g.miles>0?`${g.miles}`:'—';
+
+      html+=`<td class="day-cell${outCls}${wkndCls}${cellTint}">
+        <div class="day-num">${dayDate.getDate()}</div>
+        <div class="wk-label wt-${wc}">${g.text}</div>
+        ${g.miles>0?`<div class="day-mi ${miCls}">${miStr}<span class="unit">mi</span></div>`:''}
+      </td>`;
+    });
+
+    // Total
+    if(wkObj){
+      const tot=wkObj.totals[GROUP];
+      const totStr=tot!==null?tot:'—';
+      html+=`<td class="tot-cell">
+        <div class="tot-badge tg-${GROUP}">
+          <span class="tot-n">${totStr}</span>
+          <span class="tot-u">mi/wk</span>
+        </div>
+      </td>`;
+    } else {
+      html+=`<td class="tot-cell"></td>`;
+    }
+
+    html+=`</tr>`;
+  });
+
+  html+=`</tbody></table></div></div>`;
+  return html;
+}
+
+const MONTHS=[[2026,4],[2026,5],[2026,6],[2026,7],[2026,8],[2026,9],[2026,10]];
+
+function render(){
+  document.getElementById('months').innerHTML=
+    MONTHS.map(([y,m])=>renderMonth(y,m)).join('');
+}
+
+function setGroup(g){
+  GROUP=g;
+  document.querySelectorAll('.group-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector(`.group-btn.${g}`).classList.add('active');
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
