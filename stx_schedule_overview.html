@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STX XC Schedule Overview</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f0f0ed;color:#1a1a1a;min-height:100vh}
+
+/* ---- HEADER ---- */
+header{background:#2c5530;color:#fff;padding:0 20px;display:flex;align-items:center;gap:0;position:sticky;top:0;z-index:200;height:52px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+header h1{font-size:15px;font-weight:700;letter-spacing:.03em;margin-right:20px;white-space:nowrap}
+.nav-group{display:flex;align-items:center;gap:4px;margin-right:12px}
+.hbtn{height:34px;padding:0 12px;font-size:12px;border:1px solid rgba(255,255,255,.25);border-radius:5px;background:transparent;color:#fff;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px;transition:background .15s}
+.hbtn:hover{background:rgba(255,255,255,.15)}
+.hbtn:disabled{opacity:.35;cursor:default}
+.hbtn.active{background:#4a7c59;border-color:#4a7c59}
+select.hsel{height:34px;padding:0 8px;font-size:12px;border:1px solid rgba(255,255,255,.25);border-radius:5px;background:#1e3d22;color:#fff;cursor:pointer}
+.week-label{font-size:13px;font-weight:600;color:rgba(255,255,255,.9);min-width:58px;text-align:center}
+.spacer{flex:1}
+.status{font-size:11px;color:rgba(255,255,255,.55);white-space:nowrap}
+
+/* ---- WEEK INFO BAR ---- */
+.week-bar{background:#fff;border-bottom:1px solid #ddd;padding:10px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.week-title-txt{font-size:14px;font-weight:700;color:#2c5530}
+.week-phase-txt{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#666;background:#f0f0ed;padding:2px 8px;border-radius:10px}
+.miles-badges{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+.mbadge{font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px}
+.mb-Gold{background:#FFF3CD;color:#7A5800}
+.mb-Green{background:#D4EDDA;color:#155724}
+.mb-White{background:#EBEBEB;color:#444}
+.mb-Blue{background:#D1E8FF;color:#0C3866}
+
+/* ---- MAIN GRID ---- */
+main{padding:16px 20px;max-width:1400px;margin:0 auto}
+
+/* ---- OVERVIEW TABLE ---- */
+.overview-wrap{overflow-x:auto}
+.overview-table{width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08);font-size:12px}
+.overview-table th{background:#2c5530;color:#fff;padding:8px 10px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+.overview-table th.day-th{width:80px}
+.overview-table td{padding:7px 10px;border-bottom:1px solid #f0f0ee;vertical-align:top;line-height:1.35}
+.overview-table tr:last-child td{border-bottom:none}
+.overview-table tr:hover td{background:#fafaf8}
+.td-day{font-weight:700;color:#444;white-space:nowrap;width:60px}
+.td-easy{color:#444}
+.td-quality{color:#1d4ed8;font-weight:600}
+.td-race{color:#92400e;font-weight:600}
+.td-rest{color:#bbb;font-style:italic}
+.td-miles{font-weight:700;color:#2c5530;white-space:nowrap;text-align:right}
+.group-col-head{font-size:10px;opacity:.8}
+
+/* ---- DETAIL VIEW ---- */
+.detail-grid{display:flex;flex-direction:column;gap:10px}
+.day-card{background:#fff;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.08);overflow:hidden}
+.day-card-header{background:linear-gradient(135deg,#2c5530,#4a7c59);color:#fff;padding:10px 16px;font-size:13px;font-weight:700;letter-spacing:.05em}
+.day-card-body{padding:4px 0}
+.workout-row{display:flex;align-items:flex-start;gap:10px;padding:8px 16px;border-bottom:1px solid #f5f5f3}
+.workout-row:last-child{border-bottom:none}
+.wr-badge{font-size:10px;font-weight:700;text-transform:uppercase;min-width:52px;padding-top:2px}
+.wr-badge.Gold{color:#B8860B}
+.wr-badge.Green{color:#2c5530}
+.wr-badge.White{color:#555}
+.wr-badge.Blue{color:#1E3A8A}
+.wr-main{flex:1;min-width:0}
+.wr-workout{font-size:13px;color:#1a1a1a;line-height:1.4}
+.wr-workout.quality{color:#1d4ed8;font-weight:600}
+.wr-workout.race{color:#92400e;font-weight:600}
+.wr-workout.rest-cell{color:#bbb;font-style:italic}
+.wr-pre,.wr-post{font-size:11px;color:#888;margin-top:2px}
+.wr-miles{font-size:12px;font-weight:700;color:#2c5530;white-space:nowrap;margin-left:8px;padding-top:2px}
+
+/* ---- LOADING / ERROR ---- */
+.loading{text-align:center;padding:60px;color:#666;font-size:14px}
+.error-box{background:#fff0f0;border:1px solid #fca5a5;border-radius:8px;padding:20px;color:#b91c1c;font-size:13px;margin:20px 0}
+
+/* ---- VIEW TOGGLE ---- */
+.view-btns{display:flex;gap:4px;margin-right:8px}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>STX XC 2026</h1>
+  <div class="view-btns">
+    <button class="hbtn active" id="btnOverview" onclick="setView('overview')">Overview</button>
+    <button class="hbtn" id="btnDetail" onclick="setView('detail')">Detail</button>
+  </div>
+  <div class="nav-group">
+    <button class="hbtn" id="prevBtn" onclick="changeWeek(-1)">&#8592;</button>
+    <span class="week-label" id="weekLabel">Week 2</span>
+    <button class="hbtn" id="nextBtn" onclick="changeWeek(1)">&#8594;</button>
+  </div>
+  <select class="hsel" id="weekSel" onchange="setWeek(+this.value)"></select>
+  <div class="spacer"></div>
+  <span class="status" id="statusTxt">Loading&hellip;</span>
+</header>
+
+<div class="week-bar" id="weekBar" style="display:none">
+  <span class="week-title-txt" id="wbTitle"></span>
+  <span class="week-phase-txt" id="wbPhase"></span>
+  <div class="miles-badges" id="wbMiles"></div>
+</div>
+
+<main id="main"><div class="loading">Loading week 2&hellip;</div></main>
+
+<script>
+// File naming: week02.html, week03.html ... week23.html
+// Place this viewer in the same folder as the week files.
+
+const WEEK_MIN = 2;
+const WEEK_MAX = 23;
+const DAYS_ORDER = ["MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY","SUNDAY"];
+const DAY_SHORT = {MONDAY:"Mon",TUESDAY:"Tue",WEDNESDAY:"Wed",THURSDAY:"Thu",FRIDAY:"Fri",SATURDAY:"Sat",SUNDAY:"Sun"};
+const GROUPS = ["Gold","Green","White","Blue"];
+
+let currentWeek = 2;
+let viewMode = "overview"; // "overview" | "detail"
+let cache = {}; // weekNum -> parsed data
+
+function weekFile(n) {
+  return "week" + String(n).padStart(2,"0") + ".html";
+}
+
+function isQuality(t){return t&&/fartlek|progression|@[TRI]|hill|interval|repeat|x\[|tempo|stride.*prog/i.test(t);}
+function isRace(t){return t&&/race|championship|classic|invit|dual|regional|state|time trial/i.test(t);}
+function isRest(t){return !t||/^(rest)$/i.test(t.trim());}
+
+function stripLinks(el){return el?el.textContent.trim():"";}
+
+function parseWeekHTML(htmlText, weekNum) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlText, "text/html");
+  
+  // Title / date
+  const h1 = doc.querySelector("h1");
+  const titleText = h1 ? h1.textContent : "";
+  const dateMatch = titleText.match(/Week\s+\d+\s+[\u2014\u2013\-]+\s*(.+)/i);
+  const date = dateMatch ? dateMatch[1].trim() : "";
+  
+  // Subtitle / phase
+  const subtitle = doc.querySelector(".subtitle");
+  const phase = subtitle ? subtitle.textContent.trim().replace(/^\*/,"").replace(/\*$/,"") : "";
+  
+  // Mileage totals from .total elements
+  const miles = {};
+  doc.querySelectorAll(".total").forEach(el => {
+    const label = el.querySelector(".total-label");
+    const miEl = el.querySelector(".total-miles");
+    if (label && miEl) {
+      const g = label.textContent.trim();
+      const v = miEl.textContent.trim();
+      if (GROUPS.includes(g) && v !== "0") miles[g] = v;
+    }
+  });
+  
+  // Days
+  const days = {};
+  doc.querySelectorAll(".day").forEach(dayEl => {
+    const hdr = dayEl.querySelector(".day-header span");
+    if (!hdr) return;
+    const dayName = hdr.textContent.trim().toUpperCase();
+    days[dayName] = [];
+    
+    dayEl.querySelectorAll(".workout-item").forEach(item => {
+      const group = item.dataset.group || "";
+      const descEl = item.querySelector(".workout-desc span:first-child");
+      const workout = descEl ? descEl.textContent.trim() : "";
+      const preEl = item.querySelector(".workout-pre");
+      const postEl = item.querySelector(".workout-post");
+      const milesEl = item.querySelector(".workout-miles");
+      days[dayName].push({
+        group,
+        workout,
+        pre: stripLinks(preEl),
+        post: stripLinks(postEl),
+        miles: milesEl ? milesEl.textContent.trim() : ""
+      });
+    });
+  });
+  
+  return {weekNum, date, phase, miles, days};
+}
+
+async function loadWeek(n) {
+  if (cache[n]) return cache[n];
+  const res = await fetch(weekFile(n));
+  if (!res.ok) throw new Error("HTTP " + res.status + " for " + weekFile(n));
+  const text = await res.text();
+  const data = parseWeekHTML(text, n);
+  cache[n] = data;
+  return data;
+}
+
+function renderOverview(data) {
+  const {days, miles} = data;
+  let html = '<div class="overview-wrap"><table class="overview-table"><thead><tr>';
+  html += '<th class="day-th">Day</th>';
+  GROUPS.filter(g => miles[g]).forEach(g => {
+    html += `<th><div>${g}</div><div class="group-col-head">${miles[g]} mi total</div></th>`;
+  });
+  html += '</tr></thead><tbody>';
+  
+  const groups = GROUPS.filter(g => miles[g]);
+  
+  for (const day of DAYS_ORDER) {
+    const dd = days[day];
+    if (!dd || !dd.length) continue;
+    html += `<tr><td class="td-day">${DAY_SHORT[day]}</td>`;
+    groups.forEach(g => {
+      const entry = dd.find(e => e.group === g);
+      if (!entry) { html += '<td class="td-rest">—</td>'; return; }
+      const w = entry.workout;
+      let cls = "td-easy";
+      if (isRest(w)) cls = "td-rest";
+      else if (isRace(w)) cls = "td-race";
+      else if (isQuality(w)) cls = "td-quality";
+      const miTxt = (entry.miles && !isRest(entry.miles)) ? `<div class="td-miles">${entry.miles}</div>` : '';
+      html += `<td><div class="${cls}">${isRest(w)?'Rest':w}</div>${miTxt}</td>`;
+    });
+    html += '</tr>';
+  }
+  html += '</tbody></table></div>';
+  return html;
+}
+
+function renderDetail(data) {
+  const {days} = data;
+  let html = '<div class="detail-grid">';
+  for (const day of DAYS_ORDER) {
+    const dd = days[day];
+    if (!dd || !dd.length) continue;
+    html += `<div class="day-card"><div class="day-card-header">${day}</div><div class="day-card-body">`;
+    dd.forEach(entry => {
+      const w = entry.workout;
+      let wCls = "";
+      if (isRest(w)) wCls = "rest-cell";
+      else if (isRace(w)) wCls = "race";
+      else if (isQuality(w)) wCls = "quality";
+      html += `<div class="workout-row">
+        <div class="wr-badge ${entry.group}">${entry.group}</div>
+        <div class="wr-main">
+          <div class="wr-workout ${wCls}">${isRest(w)?'Rest':w}</div>
+          ${entry.pre ? `<div class="wr-pre">Before: ${entry.pre}</div>` : ''}
+          ${entry.post ? `<div class="wr-post">After: ${entry.post}</div>` : ''}
+        </div>
+        ${(entry.miles && !isRest(entry.miles)) ? `<div class="wr-miles">${entry.miles}</div>` : ''}
+      </div>`;
+    });
+    html += '</div></div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function updateWeekBar(data) {
+  const bar = document.getElementById("weekBar");
+  document.getElementById("wbTitle").textContent = `Week ${data.weekNum}${data.date ? " — " + data.date : ""}`;
+  document.getElementById("wbPhase").textContent = data.phase || "";
+  document.getElementById("wbPhase").style.display = data.phase ? "" : "none";
+  const mb = document.getElementById("wbMiles");
+  mb.innerHTML = GROUPS.filter(g => data.miles[g]).map(g =>
+    `<span class="mbadge mb-${g}">${g}: ${data.miles[g]} mi</span>`
+  ).join("");
+  bar.style.display = "";
+}
+
+async function setWeek(n) {
+  currentWeek = Math.max(WEEK_MIN, Math.min(WEEK_MAX, n));
+  document.getElementById("weekSel").value = currentWeek;
+  document.getElementById("weekLabel").textContent = "Week " + currentWeek;
+  document.getElementById("prevBtn").disabled = currentWeek <= WEEK_MIN;
+  document.getElementById("nextBtn").disabled = currentWeek >= WEEK_MAX;
+  document.getElementById("main").innerHTML = '<div class="loading">Loading week ' + currentWeek + '&hellip;</div>';
+  document.getElementById("statusTxt").textContent = "Loading…";
+  try {
+    const data = await loadWeek(currentWeek);
+    updateWeekBar(data);
+    document.getElementById("main").innerHTML = viewMode === "overview" ? renderOverview(data) : renderDetail(data);
+    document.getElementById("statusTxt").textContent = cache[currentWeek] ? "week" + String(currentWeek).padStart(2,"0") + ".html" : "";
+  } catch(e) {
+    document.getElementById("weekBar").style.display = "none";
+    document.getElementById("main").innerHTML = `<div class="error-box"><strong>Could not load ${weekFile(currentWeek)}</strong><br>${e.message}<br><br>Make sure this viewer is in the same folder as your week HTML files.</div>`;
+    document.getElementById("statusTxt").textContent = "Error";
+  }
+}
+
+function changeWeek(d) { setWeek(currentWeek + d); }
+
+function setView(v) {
+  viewMode = v;
+  ["overview","detail"].forEach(x => {
+    document.getElementById("btn" + x.charAt(0).toUpperCase() + x.slice(1)).classList.toggle("active", x===v);
+  });
+  if (cache[currentWeek]) {
+    document.getElementById("main").innerHTML = v === "overview" ? renderOverview(cache[currentWeek]) : renderDetail(cache[currentWeek]);
+  }
+}
+
+// Build week selector
+function buildSelect() {
+  const sel = document.getElementById("weekSel");
+  sel.innerHTML = "";
+  for (let i=WEEK_MIN; i<=WEEK_MAX; i++) {
+    const o = document.createElement("option");
+    o.value = i;
+    o.textContent = "Week " + i;
+    sel.appendChild(o);
+  }
+  sel.value = currentWeek;
+}
+
+buildSelect();
+setWeek(currentWeek);
+</script>
+</body>
+</html>

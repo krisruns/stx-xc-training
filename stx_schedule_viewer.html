@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STX XC 2026 Schedule Viewer</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:14px;background:#f5f5f3;color:#1a1a1a;min-height:100vh}
+header{background:#1a1a1a;color:#fff;padding:14px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+header h1{font-size:15px;font-weight:600;letter-spacing:.02em}
+.controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-left:auto}
+.btn{height:32px;padding:0 12px;font-size:12px;border:1px solid rgba(255,255,255,.2);border-radius:6px;background:transparent;color:#fff;cursor:pointer;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.btn:hover{background:rgba(255,255,255,.1)}
+.btn.active{background:#fff;color:#1a1a1a;border-color:#fff}
+.btn svg{width:14px;height:14px;flex-shrink:0}
+select{height:32px;padding:0 8px;font-size:12px;border:1px solid rgba(255,255,255,.2);border-radius:6px;background:#333;color:#fff;cursor:pointer}
+.nav-group{display:flex;align-items:center;gap:4px}
+.nav-label{font-size:12px;color:rgba(255,255,255,.6);min-width:52px;text-align:center}
+main{max-width:1400px;margin:0 auto;padding:20px}
+.week-card{background:#fff;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,.08);margin-bottom:0}
+.week-header{padding:16px 20px 12px;border-bottom:1px solid #eee}
+.week-title{font-size:16px;font-weight:600}
+.week-date{font-size:12px;color:#666;margin-top:2px}
+.week-phase{display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;padding:2px 8px;border-radius:4px;margin-top:6px;background:#f0f0ee;color:#555}
+.week-note{font-size:12px;color:#555;margin-top:8px;padding:8px 10px;background:#fafafa;border-left:3px solid #ddd;border-radius:0 4px 4px 0}
+.miles-row{display:flex;gap:6px;flex-wrap:wrap;padding:10px 20px 0}
+.mbadge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
+.mb-blue{background:#dbeafe;color:#1d4ed8}
+.mb-white{background:#f1f0eb;color:#44403c}
+.mb-green{background:#dcfce7;color:#15803d}
+.mb-gold{background:#fef3c7;color:#92400e}
+.day-table{width:100%;border-collapse:collapse;margin:10px 0}
+.day-table th{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#888;padding:6px 12px;text-align:left;border-bottom:1px solid #eee}
+.day-table td{padding:7px 12px;font-size:12px;line-height:1.4;border-bottom:1px solid #f5f5f5;vertical-align:top}
+.day-table tr:last-child td{border-bottom:none}
+.day-col{font-weight:600;color:#444;white-space:nowrap;width:44px}
+.cell-quality{background:#eff6ff;color:#1e40af;border-radius:4px;padding:4px 8px;display:inline-block}
+.cell-race{background:#fef9c3;color:#854d0e;border-radius:4px;padding:4px 8px;display:inline-block}
+.cell-rest{color:#bbb;font-style:italic}
+.col-head-day{width:44px}
+.source-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;padding:4px 12px;color:#888;border-bottom:1px solid #eee}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#eee}
+.compare-pane{background:#fff}
+.compare-pane .source-label{background:#fafafa}
+.diff-row td{background:#fff8e1 !important}
+.loading{text-align:center;padding:60px;color:#888;font-size:14px}
+.error{text-align:center;padding:40px;color:#dc2626;font-size:13px}
+.status-dot{width:8px;height:8px;border-radius:50%;display:inline-block;background:#22c55e;margin-right:6px;flex-shrink:0}
+.status-dot.loading{background:#f59e0b;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.week-content{padding:0 8px 12px}
+</style>
+</head>
+<body>
+<header>
+  <h1>STX XC 2026</h1>
+  <div class="controls">
+    <div class="nav-group">
+      <button class="btn" id="prevBtn" onclick="changeWeek(-1)">&#8592;</button>
+      <span class="nav-label" id="navLabel">Week 1</span>
+      <button class="btn" id="nextBtn" onclick="changeWeek(1)">&#8594;</button>
+    </div>
+    <select id="weekSel" onchange="setWeek(+this.value)"></select>
+    <button class="btn active" id="btnGH" onclick="setSource('github')">GitHub (live)</button>
+    <button class="btn" id="btnLocal" onclick="setSource('local')">Project file</button>
+    <button class="btn" id="btnBoth" onclick="setSource('both')">Compare</button>
+    <button class="btn" id="refreshBtn" onclick="refreshGH()">&#8635; Refresh</button>
+    <span id="statusDot" class="status-dot loading"></span>
+  </div>
+</header>
+<main id="main"><div class="loading">Loading from GitHub&hellip;</div></main>
+
+<script>
+const GH_URL = "https://raw.githubusercontent.com/krisruns/stx-xc-training/main/STX_XC_2026_Complete_Schedule_Weeks_1-23.md";
+const LOCAL_MD = "# ST. XAVIER XC 2026 COMPLETE TRAINING SCHEDULE\n## All Groups \u2014 Weeks 1\u201323 (May 25 \u2013 November 1, 2026)\n\n*Group mileage targets per 2026 Training Master CSV. Per-group workout breakdowns scaled from Gold (Varsity) baseline using 2025 season as reference. Blue = new Freshman group.*\n\n---\n\n## **WEEK 1: MAY 25\u201331, 2026** \u2014 Early Summer Introduction\n\n*Blue group not yet reporting. All easy running \u2014 aerobic re-establishment.*\n\n| Day | White (18 mi) | Green (22 mi) | Gold (28 mi) |\n|:----|:---|:---|:---|\n| **Mon** | Easy *2.5mi* | Easy *3.5mi* | Easy *4.5mi* |\n| **Tue** | Easy *3mi* | Easy *4mi* | Easy *5mi* |\n| **Wed** | Easy *3mi* | Easy *3.5mi* | Easy *4.5mi* |\n| **Thu** | Easy *3mi* | Easy *3.5mi* | Easy *4.5mi* |\n| **Fri** | Easy *2.5mi* | Easy *3mi* | Easy *4mi* |\n| **Sat** | **Long Run** *4mi* | **Long Run** *4.5mi* | **Long Run** *5.5mi* |\n| **Sun** | **REST** | **REST** | **REST** |\n\n---\n\n## **WEEK 2: JUNE 1\u20137, 2026** \u2014 Early Summer Base\n\n*Blue group not yet reporting. First quality session: Fartlek 1.*\n\n| Day | Blue (14 mi) | White (20 mi) | Green (25 mi) | Gold (32 mi) |\n|:----|:---|:---|:---|:---|\n| **Mon** | Easy *2mi* | Easy *3mi* | Easy *4mi* | Easy *5mi* |\n| **Tue** | **Fartlek 1 \u2014 3x(1:00 on/4:00 steady)** *3mi* |**Fartlek 1 \u2014 4x(1:00 on/4:00 steady)** *4mi* | **Fartlek 1 \u2014 5x(1:00 on/4:00 steady)** *5mi* | **Fartlek 1 \u2014 6x(1:00 on/4:00 steady)** *6.5mi* |\n| **Wed** | Easy *2mi* | Easy *3mi* | Easy *4mi* | Easy *5mi* |\n| **Thu** | Easy *2mi* | Easy *3.5mi* | Easy *4.5mi* | Easy *5mi* |\n| **Fri** | Easy *2mi* | Easy *2.5mi* | Easy *3mi* | Easy *3.5mi* |\n| **Sat** | **Long Run** *3mi* |**Long Run** *4mi* | **Long Run** *4.5mi* | **Long Run** *7mi* |\n| **Sun** | **REST** | **REST** | **REST** | **REST** |\n\n---\n\n## **WEEK 3: JUNE 8\u201314, 2026** \u2014 Early Summer Base\n\n*Blue group not yet reporting. Progression 1 introduces controlled tempo building.*\n\n| Day | Blue (15 mi) | White (22 mi) | Green (28 mi) | Gold (36 mi) |\n|:----|:---|:---|:---|:---|\n| **Mon** | Easy *2mi* | Easy *3mi* | Easy *4mi* | Easy *5mi* |\n| **Tue** | **Progression 1 \u2014 5min easy / 5min steady / 5min faster / 5min easy** *3mi* | **Progression 1 \u2014 5min easy / 15min steady / 10min faster / 5min easy** *4.5mi* | **Progression 1 \u2014 5min easy / 15min steady / 10min faster / 5min easy** *6mi* | **Progression 1 \u2014 5min easy / 15min steady / 10min faster / 5min easy** *7.5mi* |\n| **Wed** | Easy *2mi* | Easy *3.5mi* | Easy *4mi* | Easy *5.5mi* |\n| **Thu** | Easy *2mi* | Easy *3.5mi* | Easy *4mi* | Easy *5mi* |\n| **Fri** | Easy *2mi* | Easy *2.5mi* | Easy *3mi* | Easy *4mi* |\n| **Sat** | **Long Run** *4mi* | **Long Run** *5mi* | **Long Run** *7mi* | **Long Run** *9mi* |\n| **Sun** | **REST** | **REST** | **REST** |\n\n---\n\n## **WEEK 4: JUNE 15\u201321, 2026** \u2014 Blue Group Begins\n\n*Blue starts with easy running only. Fartlek 2 for upper groups.*\n\n| Day | Blue (14 mi) | White (24 mi) | Green (31 mi) | Gold (40 mi) |\n|:----|:---|:---|:---|:---|\n| **Mon** | Easy *2mi* | Easy *3.5mi* | Easy *4.5mi* | Easy *5.5mi* |\n| **Tue** | Easy *2mi* | **Fartlek 2 \u2014 3x(2:00 on/3:00 steady)** *4.5mi* | **Fartlek 2 \u2014 4x(2:00 on/3:00 steady)** *6mi* | **Fartlek 2 \u2014 5x(2:00 on/3:00 steady)** *7.5mi* |\n| **Wed** | Easy *2mi* | Easy *4mi* | Easy *5mi* | Easy *6.5mi* |\n| **Thu** | XC Camp Race *3mi* | Easy *4mi* | Easy *4.5mi* | Easy *6mi* |\n| **Fri** | Easy *1mi* | Easy *3mi* | Easy *4mi* | Easy *4.5mi* |\n| **Sat** | **Long Run** *4mi* | **Long Run** *5mi* | **Long Run** *7mi* | **Long Run** *10mi* |\n| **Sun** | **REST** | **REST** | **REST** | **REST** |\n\n---\n\n## **WEEK 5: JUNE 22\u201328, 2026** \u2014 Summer Base Build\n\n| Day | Blue (16 mi) | White (26 mi) | Green (34 mi) | Gold (43 mi) |\n|:----|:---|:---|:---|:---|\n| **Mon** | Easy *2.5mi* | Easy *4mi* | Easy *5mi* | Easy *6mi* |\n| **Tue** |**Progression 2 \u2014 5min easy / 10min steady / 5min faster / 5min easy** *3mi* | **Progression 2 \u2014 5min easy / 15min steady / 10min faster / 5min fastest / 5min easy** *4.5mi* | **Progression 2 \u2014 5min easy / 15min steady / 10min faster / 5min fastest / 5min easy** *6.5mi* | **Progression 2 \u2014 5min easy / 15min steady / 10min faster / 5min fastest / 5min easy** *8mi* |\n| **Wed** | Easy *2.5mi* | Easy *4.5mi* | Easy *5.5mi* | Easy *6.5mi* |\n| **Thu** | Easy *2.5mi* | Easy *4.5mi* | Easy *5mi* | Easy *6.5mi* |\n| **Fri** | Easy *1.5mi* | Easy *3.5mi* | Easy *4mi* | Easy *5mi* |\n| **Sat** | **Long Run** *4mi* | **Long Run** *5mi* | **Long Run** *8mi* | **Long Run** *11mi* |\n| **Sun** | **REST** | **REST** | **REST** | **REST** |\n\n---\n\n## **WEEK 6: JUNE 29 \u2013 JULY 5, 2026** \u2014 Summer Build\n\n| Day | Blue (16 mi) | White (28 mi) | Green (36 mi) | Gold (46 mi) |\n|:----|:---|:---|:---|:---|\n| **Mon** | Easy *2.5mi* | Easy *4mi* | Easy *5mi* | Easy *6.5mi* |\n| **Tue** | **Fartlek 3 \u2014 3x(3:00 on/2:00 steady)** *3mi* | **Fartlek 3 \u2014 4x(3:00 on/2:00 steady)** *5mi* | **Fartlek 3 \u2014 5x(3:00 on/2:00 steady)** *7mi* | **Fartlek 3 \u2014 6x(3:00 on/2:00 steady)** *8.5mi* |\n| **Wed** | Easy *2.5mi* | Easy *4.5mi* | Easy *6mi* | Easy *7mi* |\n| **Thu** | Easy *2.5mi* | Easy *4.5mi* | Easy *5.5mi* | Easy *6.5mi* |\n| **Fri** | Easy *1.5mi* | Easy *3.5mi* | Easy *4mi* | Easy *6mi* |\n| **Sat** | **Long Run** *4mi* | **Long Run** *6.5mi* | **Long Run** *8.5mi* | **Long Run** *11.5mi* |\n| **Sun** | **REST** | **REST** | **REST** | **REST** |\n\n---\n\n## **WEEK 7: JULY 6\u201312, 2026** \u2014 Final Build Before Mandatory Practice\n\n*Official mandatory practice begins July 14, leading to the first Time Trial.*\n\n| Day | Blue (18 mi) | White (30 mi) | Green (38 mi) | Gold (48 mi) |\n|:----|:---|:---|:---|:---|\n| **Mon** | Easy *3mi* | Easy *4.5mi* | Easy *5.5mi* | Easy *7mi* |\n| **Tue** | Easy *3.5mi* | **Progression 3 \u2014 5min easy / 15min steady / 15min faster / 5min fastest / 5min easy** *5.5mi* | **Progression 3 \u2014 5min easy / 15min steady / 15min faster / 5min fastest / 5min easy** *7mi* | **Progression 3 \u2014 5min easy / 15min steady / 15min faster / 5min fastest / 5min easy** *8.5mi* |\n| **Wed** | Easy *3mi* | Easy *5mi* | Easy *6.5mi* | Easy *7.5mi* |\n| **Thu** | Easy *3.5mi* | Easy *4.5mi* | Easy *5.5mi* | Easy *7mi* |\n| **Fri** | Easy *2mi* | Easy *3.5mi* | Easy *4.5mi* | Easy *5.5mi* |\n| **Sat** | **Long Run** *3mi* | **Long Run** *7mi* | **Long Run** *9mi* | **Long Run** *12mi/90min* |\n| **Sun** | **REST** | **REST** | **REST** | **REST** |\n\n---\n\n## **WEEK 8: JULY 13\u201319, 2026** \u2014 Summer Peak Phase\n\n*Mandatory practice in begins.*\n\n| Day | Blue (20 mi) | White (32 mi) | Green (40 mi) | Gold (51 mi) |\n|:----|:---|:---|:---|:---|\n| **Mon** | Easy *3mi* | Easy *4mi* | Easy *5.5mi* | Easy *7mi* |\n| **Tue** | **Fartlek 1 \u2014 4x(1:00 on/4:00 steady)** *3.5mi* | **Fartlek 1 \u2014 5x(1:00 on/4:00 steady)** *5.5mi* | **Fartlek 1 \u2014 6x(1:00 on/4:00 steady)** *7mi* | **Fartlek 1 \u2014 7x(1:00 on/4:00 steady)** *8.5mi* |\n| **Wed** | Easy *3mi* | Easy *5mi* | Easy *6mi* | Easy *8mi* |\n| **Thu** | **Hill Repeats** *3.5mi* | **Hill Repeats** *5mi* | **Hill Repeats** *6.5mi* | **Hill Repeats** *8mi* |\n| **Fri** | Easy *3mi* | Easy *4mi* | Easy *5mi* | Easy *6mi* |\n| **Sat** | **Long Run** *4mi* | **Long Run** *8.5mi* | **Long Run** *10mi* | **Long Run** *12mi/90min* |\n| **Sun** | **REST** | **REST** | **REST** | **REST** |\n\n---\n\n## **WEEK 9: JULY 20\u201326, 2026** \u2014 Time Trial Week\n\n*2-Mile Time Trial at Tom Sawyer Park \u2014 first race test of the season. Focus on pacing and competitive assessment.*\n\n| Day | Blue (20 mi) | White (34 mi) | Green (44 mi) | Gold (53 mi) |\n|:----|:---|:---|:---|:---|\n| **Mon** | Easy *3mi* | Easy *5mi* | Easy *6mi* | Easy *8mi* |\n| **Tue** | Easy *3mi* | Easy *5mi* | Easy *6.5mi* | Easy *8mi* |\n| **Wed** | Easy *3mi* | Easy *5mi* | Easy *6.5mi* | Easy *8mi* |\n| **Thu** | **Long Run** *4mi* | **Long Run** *6.5mi* | **Long Run** *8mi* | **Long Run** *9mi* |\n| **Fri** | Easy *2.5mi* | Easy *3.5mi* | Easy *4.5mi* | Easy *4.5mi* |\n| **Sat** | **2-Mile Time Trial** *4.5mi* | **2-Mile Time Trial** *6mi* | **2-Mile Time Trial** *6mi* | **2-Mile Time Trial** *6mi* |\n| **Sun** | **REST** | *3mi* | *6.5mi* | *9.5mi* |\n\n---\n\n## **WEEK 10: JULY 27 \u2013 AUGUST 2, 2026** \u2014 Summer Peak Phase\n\n| Day | Blue (21 mi) | White (35 mi) | Green (45 mi) | Gold (55 mi) |\n|:----|:---|:---|:---|:---|\n| **Mon** | Easy *3mi* | Easy *5mi* | Easy *6mi* | Easy *8mi* |\n| **Tue** | Easy *3.5mi* | **1mi@T - (2:00) - 1mi@T + 4x200m@R** *5.5mi* | **2mi@T - (2:00) - 1mi@T + 4-6x200m@R** *7mi* | **2mi@T - (2:00) - 1mi@T + 4-6x200m@R** *9mi* |\n| **Wed** | Easy *3mi* | Easy *5mi* | Easy *6.5mi* | Easy *8mi* |\n| **Thu** | **Hill Repeats** *3.5mi* | **Hill Repeats** *5.5mi* | **Hill Repeats** *6.5mi* | **Hill Repeats** *8mi* |\n| **Fri** | Easy *3mi* | Easy *5mi* | Easy *6mi* | Easy *8mi* |\n| **Sat** | **Long Run** *5mi* | **Long Run** *9mi* | **Long Run** *13mi* | **Long Run** *14mi* |\n| **Sun** | **REST** | **REST** | **REST** | **REST** |\n\n---\n\n## **WEEK 11: AUGUST 3\u20139, 2026** \u2014 Recovery + Alumni Run\n\n*Purposeful mileage reduction after Week 10 peak. Alumni Run Saturday. Sunday = easy.*\n\n| Day | Blue (22 mi) | White (30 mi) | Green (37 mi) | Gold (43 mi) |\n|:----|:---|:---|:---|:---|\n| **Mon** | Easy *3mi* | Easy *4mi* | Easy *5mi* | Easy *6.5mi* |\n| **Tue** | **4x(2:00 on/3:00 off)** *3.5mi* | **5x(2:00 on/3:00 off)** *4.5mi* | **6x(2:00 on/3:00 off)** *6mi* | **7x(2:00 on/3:00 off)** *7mi* |\n| **Wed** | Easy *3mi* | Easy *4mi* | Easy *5.5mi* | Easy *6mi* |\n| **Thu** | Easy *3.5mi* | **2mi@T + 4x200m@R** *4.5mi* | **2.5mi@T + 6x200m@R** *5.5mi* | **3mi@T + 6x200m@R** *7mi* |\n| **Fri** | Easy *2.5mi* | Easy *3mi* | Easy *4mi* | Easy *4.5mi* |\n| **Sat** | **Alumni Run** *5mi* | **Alumni Run** *6mi* | **Alumni Run** *6mi* | **Alumni Run** *6mi* |\n| **Sun** | *1.5mi* | *4mi* | *5mi* | *6mi* |\n\n---\n\n## **WEEK 12: AUGUST 10\u201316, 2026** \u2014 Pre-Season Adjustment\n\n*School begins. Sunday = easy recovery.*\n\n| Day | Blue (24 mi) | White (34 mi) | Green (43 mi) | Gold (55 mi) |\n|:----|:---|:---|:---|:---|\n| **Mon** | Easy *3.5mi* | Easy *4.5mi* | Easy *5.5mi* | Easy *7.5mi* |\n| **Tue** | Easy *3.5mi* | **2mi@T - 2min@E - 1mi@T + 4x200m@R** *5.5mi* | **3mi@T - 2min@E - 1mi@T + 4x200m@R** *7mi* | **3mi@T - 2min@E - 1mi@T + 6x200m@R** *9mi* |\n| **Wed** | Easy *3.5mi* | Easy *4.5mi* | Easy *6mi* | Easy *7.5mi* |\n| **Thu** | **Hill Repeats** *4mi* | **Hill Repeats** *5mi* | **Hill Repeats** *6.5mi* | **Hill Repeats** *8mi* |\n| **Fri** | Easy *3.5mi* | Easy *4.5mi* | Easy *5.5mi* | Easy *7mi* |\n| **Sat** | **Long Run** *5mi* | **Long Run** *8.5mi* | **Long Run** *11mi* | **Long Run** *13mi* |\n| **Sun** | *1mi* | *1.5mi* | *1.5mi* | *3mi* |\n\n---\n\n## **WEEK 13: AUGUST 17\u201323, 2026** \u2014 Peak Mileage + Tiger Run\n\n*Tiger Run on Saturday. Gold/Green/White: easy Friday pre-race. Blue: Long Run Friday. Sunday = easy.*\n\n| Day | Blue (25 mi) | White (34 mi) | Green (45 mi) | Gold (55 mi) |\n|:----|:---|:---|:---|:---|\n| **Mon** | Easy *3.5mi* | Easy *4.5mi* | Easy *6mi* | Easy *8mi* |\n| **Tue** | Easy *3.5mi* | Easy *5mi* | Easy *6.5mi* | Easy *8.5mi* |\n| **Wed** | **4x(3:00 on/2:00 off)** *4mi* | **5x(3:00 on/2:00 off)** *5.5mi* | **6x(3:00 on/2:00 off)** *7mi* | **7x(3:00 on/2:00 off)** *8mi* |\n| **Thu** | Easy *3.5mi* | **1.5mi@T - (1:00) - 1.5mi@T + 4x200m@R** *5mi* | **2mi@T - (1:00) - 2mi@T + 4x200m@R** *7mi* | **2mi@T - (1:00) - 2mi@T + 6x200m@R** *8mi* |\n| **Fri** | **Long Run** *6mi* | Easy *3.5mi* | Easy *4.5mi* | Easy *4.5mi* |\n| **Sat** | Easy *2mi* | **Tiger Run** *6mi* | **Tiger Run** *6mi* | **Tiger Run** *6mi* |\n| **Sun** | *2.5mi* | *4.5mi* | *8mi* | *12mi* |\n\n---\n\n## **WEEK 14: AUGUST 24\u201330, 2026** \u2014 Varsity Time Trial + Long Run Week\n\n*Tuesday: Varsity time trial / race event. Long Run on Saturday (no race).*\n\n| Day | Blue (24 mi) | White (31 mi) | Green (37 mi) | Gold (42 mi) |\n|:----|:---|:---|:---|:---|\n| **Mon** | Easy *3mi* | Easy *3.5mi* | Easy *4.5mi* | Easy *5mi* |\n| **Tue** | Easy *3mi* | **Varsity Time Trial** *5mi* | **Varsity Time Trial** *6mi* | **Varsity Time Trial** *6mi* |\n| **Wed** | Easy *3.5mi* | Easy *4mi* | Easy *5.5mi* | Easy *6.5mi* |\n| **Thu** | **2x1mi@T w/1:00 + 4x200m@R** *4mi* | **3x1mi@T w/1:00 + 4x200m@R** *5mi* | **4x1mi@T w/1:00 + 4x200m@R** *6mi* | **4x1mi@T w/1:00 + 4-6x200m@R** *7mi* |\n| **Fri** | Easy *3mi* | Easy *3.5mi* | Easy *5mi* | Easy *5.5mi* |\n| **Sat** | **Long Run** *7.5mi* | **Long Run** *10mi* | **Long Run** *10mi* | **Long Run** *12mi* |\n| **Sun** | **REST** | **REST** | **REST** | **REST** |\n\n---\n\n## **WEEK 15: AUGUST 31 \u2013 SEPTEMBER 6, 2026** \u2014 Run for the Gold\n\n*Monday REST for all groups. Long Run on Friday before race. Run for the Gold on Saturday. JV: Champions 1 on Wednesday.*\n\n| Day | Blue (23 mi) | White (28 mi) | Green (35 mi) | Gold (40 mi) |\n|:----|:---|:---|:---|:---|\n| **Mon** | **REST** | **REST** | **REST** | **REST** |\n| **Tue** | **4x800m@RP w/2:30** *4mi* | **5x800m@I w/2:30** *5.5mi* | **6x800m@I w/2:30** *7mi* | **7x800m@I w/2:30** *8mi* |\n| **Wed** | Easy *3.5mi* | Easy *4mi* | Easy *5.5mi* | Easy *6mi* |\n| **Thu** | **1mi@T - 3min@E - 1mi@T + 4x200m@R** *4mi* | **1mi@T - 5min@E - 1mi@T + 4x200m@R** *5mi* | **1.5mi@T - 5min@E - 1.5mi@T + 4-6x200m@R** *6mi* | **2mi@T - 5min@E - 2mi@T + 4-6x200m@R** *7mi* |\n| **Fri** | **Long Run** *5.5mi* | **Long Run** *7.5mi* | **Long Run** *10.5mi* | **Long Run** *13mi* |\n| **Sat** | **Run for the Gold** *5mi* | **Run for the Gold** *6mi* | **Run for the Gold** *6mi* | **Run for the Gold** *6mi* |\n| **Sun** | **REST** | **REST** | **REST** | **REST** |\n\n> **JV \u2014 Week 15 (Wed):** Champions 1\n\n---\n\n## **WEEK 16: SEPTEMBER 7\u201313, 2026** \u2014 Long Run Week (No Race)\n\n*Southern Showcase approaching next week \u2014 major invitational prep. Long Run Saturday.*\n\n| Day | Blue (25 mi) | White (33 mi) | Green (38 mi) | Gold (41 mi) |\n|:----|:---|:---|:---|:---|\n| **Mon** | Easy *3.5mi* | Easy *5mi* | Easy *5.5mi* | Easy *6mi* |\n| **Tue** | **8x200m@R w/200j** *3.5mi* | **12x200m@R w/200j** *4.5mi* | **14x200m@R w/200j** *5.5mi* | **16x200m@R w/200j** *6.5mi* |\n| **Wed** | Easy *3.5mi* | Easy *5mi* | Easy *5.5mi* | Easy *6mi* |\n| **Thu** | **2x1mi@T w/1:00 + 4x200m@R** *4.5mi* | **3x1mi@T w/1:00 + 4x200m@R** *5.5mi* | **4x1mi@T w/1:00 + 4x200m@R** *6mi* | **4x1mi@T w/1:00 + 4-6x200m@R** *7mi* |\n| **Fri** | Easy *3.5mi* | Easy *4.5mi* | Easy *5.5mi* | Easy *5.5mi* |\n| **Sat** | **Long Run** *6.5mi* | **Long Run** *8.5mi* | **Long Run** *10mi* | **Long Run** *10mi* |\n| **Sun** | **REST** | **REST** | **REST** | **REST** |\n\n---\n\n## **WEEK 17: SEPTEMBER 14\u201320, 2026** \u2014 Southern Showcase\n\n*Biggest invitational of the season. Use this race to solidify team chemistry and establish racing hierarchies. Sunday = 20\u201330min shakeout run + mobility.*\n\n| Day | Blue (25 mi) | White (35 mi) | Green (45 mi) | Gold (53 mi) |\n|:----|:---|:---|:---|:---|\n| **Mon** | Easy *3.5mi* | Easy *5mi* | Easy *7mi* | Easy *9mi* |\n| **Tue** | **3x1000m@I w/90s** *4.5mi* | **4x1000m@I w/90s** *6mi* | **5x1000m@I w/90s** *8mi* | **6x1000m@I w/90s** *10mi* |\n| **Wed** | Easy *3.5mi* | Easy *5mi* | Easy *7.5mi* | Easy *9mi* |\n| **Thu** | **3x1000m@T w/1:00 + 4x200m@R** *4.5mi* | **4x1000m@T w/1:00 + 4x200m@R** *6mi* | **5x1000m@T w/1:00 + 4x200m@R** *8mi* | **6x1000m@T w/1:00 + 4-6x200m@R** *10mi* |\n| **Fri** | Easy *3.5mi* | Easy *4mi* | Easy *5.5mi* | Easy *5.5mi* |\n| **Sat** | **Southern Showcase** *5mi* | **Southern Showcase** *6mi* | **Southern Showcase** *6mi* | **Southern Showcase** *6mi* |\n| **Sun** | *0.5mi shakeout* | *3mi shakeout* | *3mi shakeout* | *3.5mi shakeout* |\n\n> **JV \u2014 Week 17 (Sat):** Trinity Invitational\n\n---\n\n## **WEEK 18: SEPTEMBER 21\u201327, 2026** \u2014 \u2708\ufe0f Palatine Invitational\n\n*Traveling to Chicago for one of the Midwest's premier invitationals. Sunday = 20\u201330min shakeout + mobility. Wednesday: easy (unstructured).*\n\n| Day | Blue (25 mi) | White (32 mi) | Green (40 mi) | Gold (45 mi) |\n|:----|:---|:---|:---|:---|\n| **Mon** | Easy *3.5mi* | Easy *4.5mi* | Easy *6.5mi* | Easy *7mi* |\n| **Tue** | **6x300m@R w/200j** *4mi* | **8x300m@R w/200j** *5mi* | **10x300m@R w/200j** *6.5mi* | **12x300m@R w/200j** *7.5mi* |\n| **Wed** | Easy *3.5mi* | Easy *4.5mi* | Easy *6mi* | Easy *6.5mi* |\n| **Thu** | **2mi@T + 4x200m@R** *4.5mi* | **2.5mi@T + 4x200m@R** *5.5mi* | **3mi@T + 4-6x200m@R** *7mi* | **4mi@T + 4-6x200m@R** *8mi* |\n| **Fri** | Easy *4mi* | Easy *5mi* | Easy *6mi* | Easy *7.5mi* |\n| **Sat** | **Palatine Inv.** *5mi* | **Palatine Inv.** *6mi* | **Palatine Inv.** *6mi* | **Palatine Inv.** *6mi* |\n| **Sun** | *0.5mi shakeout* | *1.5mi shakeout* | *2mi shakeout* | *2.5mi shakeout* |\n\n> **JV \u2014 Week 18 (Wed):** Champions 2\n\n---\n\n## **WEEK 19: SEPTEMBER 28 \u2013 OCTOBER 4, 2026** \u2014 Louisville XC Classic\n\n*Championship-level race experience in our home market. Sunday = easy.*\n\n| Day | Blue (25 mi) | White (32 mi) | Green (40 mi) | Gold (50 mi) |\n|:----|:---|:---|:---|:---|\n| **Mon** | Easy *3.5mi* | Easy *4.5mi* | Easy *5.5mi* | Easy *7.5mi* |\n| **Tue** | **3x1200m@I w/3:00** *4mi* | **3x1200m@I w/3:00** *5mi* | **4x1200m@I w/3:00** *7mi* | **5x1200m@I w/3:00** *8mi* |\n| **Wed** | Easy *3.5mi* | Easy *4.5mi* | Easy *6mi* | Easy *7mi* |\n| **Thu** | **1mi@T - 1:00 - 1mi@T + 4x200m@R** *4.5mi* | **1.5mi@T - 1:00 - 1.5mi@T + 4x200m@R** *5.5mi* | **2mi@T - 1:00 - 2mi@T + 4x200m@R** *7mi* | **2mi@T - 1:00 - 2mi@T + 4-6x200m@R** *8.5mi* |\n| **Fri** | Easy *3.5mi* | Easy *4mi* | Easy *5mi* | Easy *5mi* |\n| **Sat** | **LXC Classic** *5mi* | **LXC Classic** *6mi* | **LXC Classic** *6mi* | **LXC Classic** *6mi* |\n| **Sun** | *1mi* | *2.5mi* | *3.5mi* | *8mi* |\n\n> **JV \u2014 Week 19 (Tue):** Trinity Dual Meet\n\n---\n\n## **WEEK 20: OCTOBER 5\u201311, 2026** \u2014 Haunted Woods XC\n\n*Important competitive stimulus before championship season. Sunday = easy.*\n\n| Day | Blue (24 mi) | White (28 mi) | Green (38 mi) | Gold (45 mi) |\n|:----|:---|:---|:---|:---|\n| **Mon** | Easy *3mi* | Easy *3.5mi* | Easy *5.5mi* | Easy *6.5mi* |\n| **Tue** | **3x1200m@I w/2:30** *4mi* | **3x1200m@I w/2:30** *4.5mi* | **4x1200m@I w/2:30** *6.5mi* | **5x1200m@I w/2:30** *8mi* |\n| **Wed** | Easy *3mi* | Easy *3.5mi* | Easy *5.5mi* | Easy *6.5mi* |\n| **Thu** | **6x400m@R w/2:00** *4mi* | **8x400m@R w/2:00** *4.5mi* | **10x400m@R w/2:00** *6.5mi* | **12x400m@R w/2:00** *7.5mi* |\n| **Fri** | Easy *3mi* | Easy *3.5mi* | Easy *4mi* | Easy *5mi* |\n| **Sat** | **Haunted Woods XC** *5mi* | **Haunted Woods XC** *6mi* | **Haunted Woods XC** *6mi* | **Haunted Woods XC** *6mi* |\n| **Sun** | *2mi* | *3mi* | *4mi* | *5.5mi* |\n\n> **JV \u2014 Week 20 (Sat):** Haunted Woods\n\n---\n\n## **WEEK 21: OCTOBER 12\u201318, 2026** \u2014 Significant Volume Reduction\n\n*Major taper begins \u2014 optimizing freshness for HOKA 2-Mile and Regional. Monday: REST.*\n\n| Day | Blue (21 mi) | White (24 mi) | Green (32 mi) | Gold (35 mi) |\n|:----|:---|:---|:---|:---|\n| **Mon** | **REST** | **REST** | **REST** | **REST** |\n| **Tue** | **6x400m@R w/200j** *3.5mi* | **8x400m@R w/200j** *4.5mi* | **10x400m@R w/200j** *6mi* | **12x400m@R w/200j** *6.5mi* |\n| **Wed** | Easy *3mi* | Easy *3.5mi* | Easy *4.5mi* | Easy *5mi* |\n| **Thu** | **2x1600m@I w/2:30** *4mi* | **3x1600m@I w/2:30** *5mi* | **4x1600m@I w/2:30** *6.5mi* | **4x1600m@I w/2:30** *7mi* |\n| **Fri** | Easy *3mi* | Easy *3.5mi* | Easy *4.5mi* | Easy *5mi* |\n| **Sat** | **Long Run** *7.5mi* | **Long Run** *7.5mi* | **Long Run** *10.5mi* | **Long Run** *11.5mi* |\n| **Sun** | **REST** | **REST** | **REST** | **REST** |\n\n---\n\n## **WEEK 22: OCTOBER 19\u201325, 2026** \u2014 Regional Championships\n\n*Primary focus: qualify for State. Volume significantly reduced. Tempo on Monday, 300s on Wednesday.*\n\n| Day | Blue (21 mi) | White (22 mi) | Green (30 mi) | Gold (33 mi) |\n|:----|:---|:---|:---|:---|\n| **Mon** | **2x1000m@T + 4x200m@R** *3.5mi* | **2x2000m@T w/1:00 + 4x200m@R** *3.5mi* | **3x2000m@T w/1:00 + 4x200m@R** *6mi* | **3x2000m@T w/1:00 + 4-6x200m@R** *7mi* |\n| **Tue** | Easy *3mi* | Easy *3mi* | Easy *5mi* | Easy *5.5mi* |\n| **Wed** | **6x300m@R w/3:00** *3.5mi* | **8x300m@R w/3:00** *3.5mi* | **10x300m@R w/3:00** *4.5mi* | **10x300m@R w/3:00** *5.5mi* |\n| **Thu** | Easy *3mi* | Easy *2.5mi* | Easy *4mi* | Easy *4.5mi* |\n| **Fri** | Easy *3mi* | Easy *2.5mi* | Easy *4.5mi* | Easy *4.5mi* |\n| **Sat** | **Regionals** *5mi* | **Regionals** *6mi* | **Regionals** *6mi* | **Regionals** *6mi* |\n| **Sun** | **REST** | **REST** | **REST** | **REST** |\n\n> **JV \u2014 Week 22 (Thu):** JV Regional\n\n---\n\n## **WEEK 23: OCTOBER 26 \u2013 NOVEMBER 1, 2026** \u2014 \ud83c\udfc6 STATE CHAMPIONSHIPS\n\n*The pinnacle of the season \u2014 all training has led to this moment.*\n\n| Day | Blue (20 mi) | White (22 mi) | Green (28 mi) | Gold (30 mi) |\n|:----|:---|:---|:---|:---|\n| **Mon** | Easy *3mi* | Easy *3.5mi* | Easy *4.5mi* | Easy *5mi* |\n| **Tue** | **3x1000m@T w/1:00 + 4x200m@R** *4mi* | **4x1000m@T w/1:00 + 4x200m@R** *4mi* | **5x1000m@T w/1:00 + 4-6x200m@R** *5.5mi* | **6x1000m@T w/1:00 + 4-6x200m@R** *6mi* |\n| **Wed** | Easy *3mi* | Easy *3mi* | Easy *4mi* | Easy *4.5mi* |\n| **Thu** | **10x200m@R w/2:00** *4mi* | **12x200m@R w/2:00** *4mi* | **14x200m@R w/2:00** *5mi* | **16x200m@R w/2:00** *5.5mi* |\n| **Fri** | Easy *1mi* | Easy *1.5mi* | Easy *3mi* | Easy *3mi* |\n| **Sat** | **STATE** *5mi* | **STATE** *6mi* | **STATE** *6mi* | **STATE** *6mi* |\n| **Sun** | **REST** | **REST** | **REST** | **REST** |\n\n---\n\n## **MILEAGE SUMMARY BY WEEK**\n\n| Week | Dates | Blue | White | Green | Gold | Phase |\n|:----:|:------|:----:|:-----:|:-----:|:----:|:------|\n| 1 | May 25\u201331 | \u2014 | 18 | 22 | 28 | Early Summer Intro |\n| 2 | June 1\u20137 | \u2014 | 20 | 25 | 32 | Early Summer (Fartlek 1) |\n| 3 | June 8\u201314 | \u2014 | 22 | 28 | 36 | Early Summer (Progression 1) |\n| 4 | June 15\u201321 | 12 | 24 | 31 | 40 | Blue Begins (Fartlek 2) |\n| 5 | June 22\u201328 | 14 | 26 | 34 | 43 | Build (Progression 2) |\n| 6 | June 29\u2013July 5 | 16 | 28 | 36 | 46 | Build (Fartlek 3) |\n| 7 | July 6\u201312 | 18 | 30 | 38 | 48 | Final Build (Progression 3) |\n| 8 | July 13\u201319 | 20 | 32 | 40 | 51 | Mandatory Practice Begins |\n| 9 | July 20\u201326 | 20 | 34 | 44 | 53 | Time Trial Week |\n| 10 | July 27\u2013Aug 2 | 21 | 35 | 45 | **55** | Summer Peak |\n| 11 | Aug 3\u20139 | 22 | 30 | 37 | 43 | Recovery + Alumni Run |\n| 12 | Aug 10\u201316 | 24 | 34 | 43 | **55** | Pre-Season Adjustment |\n| 13 | Aug 17\u201323 | 25 | 34 | 45 | **55** | Peak Mileage + Tiger Run |\n| 14 | Aug 24\u201330 | 24 | 31 | 37 | 42 | Time Trial Tue + Long Run Sat |\n| 15 | Aug 31\u2013Sep 6 | 23 | 28 | 35 | 40 | Run for the Gold |\n| 16 | Sep 7\u201313 | 25 | 33 | 38 | 41 | Long Run Week (No Race) |\n| 17 | Sep 14\u201320 | 25 | 35 | 45 | 53 | Southern Showcase |\n| 18 | Sep 21\u201327 | 25 | 32 | 40 | 45 | \u2708\ufe0f Palatine Invitational |\n| 19 | Sep 28\u2013Oct 4 | 25 | 32 | 40 | 50 | Louisville XC Classic |\n| 20 | Oct 5\u201311 | 24 | 28 | 38 | 45 | Haunted Woods XC |\n| 21 | Oct 12\u201318 | 21 | 24 | 32 | 35 | Major Taper |\n| 22 | Oct 19\u201325 | 21 | 22 | 30 | 33 | Regional Championships |\n| 23 | Oct 26\u2013Nov 1 | 20 | 22 | 28 | 30 | \ud83c\udfc6 STATE |\n\n---\n\n## **JV SCHEDULE**\n\n| Week | Date | Meet | Day |\n|:----:|:-----|:-----|:----|\n| 15 | Aug 31 \u2013 Sep 6 | Champions 1 | Wednesday |\n| 17 | Sep 14\u201320 | Trinity Invitational | Saturday |\n| 18 | Sep 21\u201327 | Champions 2 | Wednesday |\n| 19 | Sep 28\u2013Oct 4 | Trinity Dual Meet | Tuesday |\n| 20 | Oct 5\u201311 | Haunted Woods | Saturday |\n| 22 | Oct 19\u201325 | JV Regional | Thursday |\n\n---\n\n## **TRAINING PHASES**\n\n**\ud83c\udf31 EARLY SUMMER** (Weeks 1\u20133): Easy running + Tuesday quality only; aerobic base re-establishment  \n**\ud83c\udfc3 SUMMER BASE** (Weeks 4\u20137): Blue group joins; alternating Fartlek/Progression on Tuesdays; progressive mileage  \n**\ud83d\udd1d MANDATORY PRACTICE + SUMMER PEAK** (Weeks 8\u201310): Fartlek/Hills shift structure; peak volume builds to 55mi Gold  \n**\u267b\ufe0f RECOVERY** (Week 11): Alumni Run; planned mileage reduction  \n**\ud83d\udcda PRE-SEASON** (Week 12): School schedule adjustment; mileage restored  \n**\ud83d\udc2f XC BUILD** (Week 13): Peak mileage + Tiger Run  \n**\ud83c\udfc1 RACE INTRODUCTION** (Weeks 14\u201315): Varsity time trial; Run for the Gold; volume moderated  \n**\ud83c\udfaf CHAMPIONSHIP PREP** (Weeks 16\u201320): Southern Showcase \u2192 Palatine \u2192 LXC Classic \u2192 Haunted Woods  \n**\ud83d\udcc9 TAPER** (Weeks 21\u201322): Significant volume reduction; optimize freshness  \n**\ud83c\udfc6 STATE** (Week 23): The pinnacle\n\n---\n\n## **PACE GUIDE (ALL GROUPS)**\n\n- **@E:** Easy pace (conversational, 65\u201375% max HR)\n- **@T:** Threshold pace (comfortably hard, 15K\u2013HM race effort, 85\u201390% max HR)\n- **@I:** Interval pace (VO2 max, 3K\u20135K race effort, 95\u2013100% max HR)\n- **@R:** Repetition pace (speed work, mile pace or faster, neuromuscular power)\n- **@RP:** Race pace (current 5K fitness level)\n\n**Fartlek intervals:** \"on\" = controlled surge at roughly 5K\u201310K effort; \"steady\" = comfortable recovery pace (not walking)  \n**Progression runs:** All groups run the same time structure at their own appropriate effort level \u2014 pacing by feel, not by watch\n\n---\n\n## **KEY CHANGES FROM 2025**\n\n| Item | 2025 | 2026 |\n|:-----|:-----|:-----|\n| Freshman group name | Freshman | Blue |\n| Weeks 1\u20137 quality structure | Various | Tuesday only (alternating Fartlek/Progression) |\n| Week 8 Fartlek day | Tuesday | Wednesday |\n| Tiger Run timing | Week 14 | Week 13 |\n| New race: Alumni Run | \u2014 | Week 11 (Saturday) |\n| New race: Run for the Gold | \u2014 | Week 15 (Saturday) |\n| Week 14 Saturday | Tiger Run (race) | Long Run |\n| Week 14 Tuesday | Race-pace workout | Varsity Time Trial / Race |\n| Week 15 Monday | Easy | REST (all groups) |\n| Week 16 | Race week | Long Run week (no race) |\n| Palatine week | 18 (same) | 18 (same) |\n| Weeks 16\u201320 mileage | Per 2025 plan | Updated per 2026 CSV |\n| Race day standardization | 6mi V / 5mi FR | 6mi Gold/Green/White / 5mi Blue |\n";
+
+const DAYS = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+const GROUPS = ["Blue","White","Green","Gold"];
+const BADGE = {Blue:"mb-blue",White:"mb-white",Green:"mb-green",Gold:"mb-gold"};
+
+let ghParsed = null;
+let localParsed = parseSchedule(LOCAL_MD);
+let currentWeek = 1;
+let maxWeek = 23;
+let source = "github";
+
+function parseSchedule(text) {
+  const weeks = {};
+  const re = /##\s+\*\*WEEK\s+(\d+)[:\u003a]/gi;
+  const pts = [];
+  let m;
+  while ((m = re.exec(text)) !== null) pts.push({idx:m.index, num:+m[1]});
+  pts.forEach((p,i) => p.end = i+1 < pts.length ? pts[i+1].idx : text.length);
+  
+  for (const p of pts) {
+    const block = text.slice(p.idx, p.end);
+    const lines = block.split("\n");
+    const h = lines[0];
+    const dateM = h.match(/WEEK\s+\d+:\s*([^*\u2014\u2013\-]+)/i);
+    const phaseM = h.match(/[\u2014\u2013\-]\s*(.+?)(?:\*\*|$)/);
+    const noteM = block.match(/^\*([^*\n]+)\*/m);
+    const miles = {};
+    const days = {};
+    
+    // parse header row for mileage
+    const headerRow = lines.find(l => l.includes("| Day |") || (l.includes("|") && (l.includes("Gold") || l.includes("Blue") || l.includes("Green") || l.includes("White")) && !l.startsWith("|:-")));
+    if (headerRow) {
+      headerRow.split("|").slice(1,-1).forEach(cell => {
+        const mm = cell.match(/([A-Za-z]+)\s*\((\d+(?:\.\d+)?)\s*mi\)/i);
+        if (mm) miles[mm[1]] = parseFloat(mm[2]);
+      });
+    }
+    
+    // parse day rows
+    const tableLines = lines.filter(l => l.trim().startsWith("|"));
+    let headers = [];
+    for (const line of tableLines) {
+      const cols = line.split("|").slice(1,-1).map(c => c.trim());
+      if (!cols.length) continue;
+      if (cols[0].toLowerCase() === "day") { headers = cols.slice(1).map(h => h.replace(/\s*\(.*?\)/,"").trim()); continue; }
+      if (cols[0].startsWith(":-")) continue;
+      const d = DAYS.find(d => cols[0].replace(/\*/g,"").trim().startsWith(d));
+      if (!d) continue;
+      days[d] = {};
+      headers.forEach((g,i) => { days[d][g] = (cols[i+1]||"").replace(/\*\*/g,"").trim(); });
+    }
+    
+    weeks[p.num] = {
+      date: dateM ? dateM[1].trim() : "",
+      phase: phaseM ? phaseM[1].replace(/\*\*/g,"").trim() : "",
+      note: noteM ? noteM[1].trim() : "",
+      miles, days
+    };
+  }
+  return weeks;
+}
+
+function isQuality(t){return t&&/(@T|@R|@I|fartlek|progression|hill|time trial|interval|repeats|x\(|x\d)/i.test(t);}
+function isRace(t){return t&&/race|championship|classic|invit|dual|regional|state/i.test(t);}
+function isRest(t){return !t||/^(rest|\*\*rest\*\*)$/i.test(t.trim());}
+function clean(t){return (t||"").replace(/\*/g,"").trim();}
+
+function renderTable(wd) {
+  if (!wd || !wd.days || !Object.keys(wd.days).length) return "<div style='padding:20px;color:#888;font-size:13px'>No schedule data parsed.</div>";
+  const groups = GROUPS.filter(g => Object.values(wd.days).some(d => d[g] !== undefined && d[g] !== ""));
+  let h = `<table class="day-table"><thead><tr><th class="col-head-day">Day</th>${groups.map(g=>`<th>${g}</th>`).join("")}</tr></thead><tbody>`;
+  for (const day of DAYS) {
+    const dd = wd.days[day];
+    if (!dd) continue;
+    h += `<tr><td class="day-col">${day}</td>`;
+    groups.forEach(g => {
+      const raw = dd[g] || "";
+      const txt = clean(raw);
+      let cell = txt || "—";
+      if (isRest(raw)) cell = `<span class="cell-rest">Rest</span>`;
+      else if (isRace(raw)) cell = `<span class="cell-race">${txt}</span>`;
+      else if (isQuality(raw)) cell = `<span class="cell-quality">${txt}</span>`;
+      h += `<td>${cell}</td>`;
+    });
+    h += "</tr>";
+  }
+  return h + "</tbody></table>";
+}
+
+function renderPanel(wd, label) {
+  if (!wd) return `<div class="source-label">${label}</div><div style="padding:20px;color:#888;font-size:13px">No data available.</div>`;
+  let h = "";
+  if (label) h += `<div class="source-label">${label}</div>`;
+  h += `<div class="week-header">`;
+  h += `<div class="week-title">Week ${currentWeek}${wd.date ? " &mdash; " + wd.date : ""}</div>`;
+  if (wd.phase) h += `<div><span class="week-phase">${wd.phase}</span></div>`;
+  if (wd.note) h += `<div class="week-note">${wd.note}</div>`;
+  h += `</div>`;
+  if (wd.miles && Object.keys(wd.miles).length) {
+    h += `<div class="miles-row">`;
+    Object.entries(wd.miles).forEach(([g,mi]) => h += `<span class="mbadge ${BADGE[g]||"mb-white"}">${g}: ${mi}mi</span>`);
+    h += `</div>`;
+  }
+  h += `<div class="week-content">${renderTable(wd)}</div>`;
+  return h;
+}
+
+function diffRows(wd1, wd2) {
+  // returns set of days where content differs
+  const diffs = new Set();
+  if (!wd1 || !wd2) return diffs;
+  for (const d of DAYS) {
+    const d1 = wd1.days[d] || {};
+    const d2 = wd2.days[d] || {};
+    const keys = new Set([...Object.keys(d1), ...Object.keys(d2)]);
+    for (const k of keys) {
+      if (clean(d1[k] || "") !== clean(d2[k] || "")) { diffs.add(d); break; }
+    }
+  }
+  return diffs;
+}
+
+function render() {
+  const gh = ghParsed && ghParsed[currentWeek];
+  const loc = localParsed && localParsed[currentWeek];
+  const main = document.getElementById("main");
+  
+  let html = `<div class="week-card">`;
+  
+  if (source === "github") {
+    html += renderPanel(gh, null);
+  } else if (source === "local") {
+    html += renderPanel(loc, null);
+  } else {
+    // compare side by side, highlight diffs
+    const diffs = diffRows(gh, loc);
+    html += `<div class="compare-grid">`;
+    html += `<div class="compare-pane">${renderPanel(gh, "GitHub &mdash; live")}</div>`;
+    html += `<div class="compare-pane">${renderPanel(loc, "Project file &mdash; saved")}</div>`;
+    html += `</div>`;
+    if (diffs.size) html += `<div style="padding:8px 16px;font-size:11px;color:#92400e;background:#fef9c3;border-top:1px solid #fde68a">Differences detected on: ${[...diffs].join(", ")}</div>`;
+    else if (gh && loc) html += `<div style="padding:8px 16px;font-size:11px;color:#15803d;background:#f0fdf4;border-top:1px solid #bbf7d0">&#10003; Both versions match for this week</div>`;
+  }
+  
+  html += `</div>`;
+  main.innerHTML = html;
+}
+
+async function refreshGH() {
+  const dot = document.getElementById("statusDot");
+  dot.className = "status-dot loading";
+  document.getElementById("refreshBtn").textContent = "Loading…";
+  try {
+    const res = await fetch(GH_URL + "?t=" + Date.now());
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const text = await res.text();
+    ghParsed = parseSchedule(text);
+    maxWeek = Math.max(...Object.keys(ghParsed).map(Number));
+    buildSelect();
+    dot.className = "status-dot";
+    document.getElementById("statusDot").title = "GitHub loaded ✓";
+  } catch(e) {
+    dot.className = "status-dot";
+    dot.style.background = "#ef4444";
+    document.getElementById("statusDot").title = "GitHub fetch failed: " + e.message;
+    alert("Could not fetch from GitHub: " + e.message + "\n\nURL: " + GH_URL);
+  }
+  document.getElementById("refreshBtn").textContent = "↺ Refresh";
+  render();
+}
+
+function buildSelect() {
+  const sel = document.getElementById("weekSel");
+  sel.innerHTML = "";
+  for (let i=1;i<=maxWeek;i++) {
+    const o = document.createElement("option");
+    o.value = i; o.textContent = "Week " + i;
+    sel.appendChild(o);
+  }
+  sel.value = currentWeek;
+}
+
+function changeWeek(d) { setWeek(currentWeek + d); }
+function setWeek(n) {
+  currentWeek = Math.max(1, Math.min(maxWeek, n));
+  document.getElementById("weekSel").value = currentWeek;
+  document.getElementById("navLabel").textContent = "Week " + currentWeek;
+  document.getElementById("prevBtn").disabled = currentWeek <= 1;
+  document.getElementById("nextBtn").disabled = currentWeek >= maxWeek;
+  render();
+}
+function setSource(s) {
+  source = s;
+  ["github","local","both"].forEach(x => document.getElementById("btn"+x.charAt(0).toUpperCase()+x.slice(1)).classList.remove("active"));
+  const ids = {github:"btnGH",local:"btnLocal",both:"btnBoth"};
+  document.getElementById(ids[s]).classList.add("active");
+  render();
+}
+
+// init
+localParsed = parseSchedule(LOCAL_MD);
+maxWeek = Math.max(...Object.keys(localParsed).map(Number), 23);
+buildSelect();
+render();
+refreshGH();
+</script>
+</body>
+</html>
