@@ -178,9 +178,9 @@ def parse_workout_description(description):
     for duration, pace_type in time_matches:
         pace_needs.append(('mile', pace_type))
 
-    # Handle distance-in-miles workouts: 2miles@T, 3miles@Tempo, 2 miles@CV, etc.
+    # Handle distance-in-miles workouts: 2mi@T, 2miles@T, 3miles@Tempo, 2 miles@CV, etc.
     # Also look up per-mile pace for these.
-    miles_pattern = r'(\d+(?:\.\d+)?)\s*miles?@([\w\d]+)'
+    miles_pattern = r'(\d+(?:\.\d+)?)\s*mi(?:les?)?@([\w\d]+)'
     miles_matches = re.findall(miles_pattern, desc_without_brackets)
     for mileage, pace_type in miles_matches:
         pace_needs.append(('mile', pace_type))
@@ -291,7 +291,7 @@ def get_pace_range_for_group(vdot_paces, athletes, distance, pace_type):
         'i': '5k',
         'interval': '5k',
         'rp': '5k',
-        'T': 'tempo',
+        't': 'tempo',
         'tempo': 'tempo',
         'threshold': 'tempo',
         'r': 'mile',
