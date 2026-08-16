@@ -191,25 +191,25 @@
 
 ---
 
-## **WEEK 13: AUGUST 17–23, 2026** — Peak Mileage + Tiger Run
+## **WEEK 13: AUGUST 17–23, 2026** — Tiger Run
 
-*Tiger Run on Saturday. Gold/Green/White: easy Friday pre-race. Blue: Long Run Friday. Sunday = easy.*
+*Tiger Run on Saturday.*
 
-| Day | Blue (25 mi) | White (34 mi) | Green (45 mi) | Gold (55 mi) |
+| Day | Blue (24 mi) | White (30 mi) | Green (34 mi) | Gold (45 mi) |
 |:----|:---|:---|:---|:---|
-| **Mon** | Easy *3.5mi* | Easy *4.5mi* | Easy *6mi* | Easy *8mi* |
-| **Tue** | Easy *3.5mi* | Easy *5mi* | Easy *6.5mi* | Easy *8.5mi* |
-| **Wed** | **4x(3:00 on/2:00 off)** *4mi* | **5x(3:00 on/2:00 off)** *5.5mi* | **6x(3:00 on/2:00 off)** *7mi* | **7x(3:00 on/2:00 off)** *8mi* |
-| **Thu** | Easy *3.5mi* | **1.5mi@T - (1:00) - 1.5mi@T + 4x200m@R** *5mi* | **2mi@T - (1:00) - 2mi@T + 4x200m@R** *7mi* | **2mi@T - (1:00) - 2mi@T + 6x200m@R** *8mi* |
-| **Fri** | **Long Run** *6mi* | Easy *3.5mi* | Easy *4.5mi* | Easy *4.5mi* |
-| **Sat** | Easy *2mi* | **Tiger Run** *6mi* | **Tiger Run** *6mi* | **Tiger Run** *6mi* |
-| **Sun** | *2.5mi* | *4.5mi* | *8mi* | *12mi* |
+| **Mon** | Easy *4mi* | Easy *5mi* | Easy *6mi* | Easy *8mi* |
+| **Tue** | **4x(3:00 on/2:00 off)** *4mi* | **5x(3:00 on/2:00 off)** *5.5mi* | **6x(3:00 on/2:00 off)** *6mi* | **7x(3:00 on/2:00 off)** *7mi* |
+| **Wed** | Easy *4mi* | Easy *5mi* | Easy *6mi* | Easy *8mi* |
+| **Thu** |  **2mi@T+ 4x200m@R** *4mi* | **2mi@T - (1:00) - 1mi@T + 5x200m@R** *5.5mi* | **2mi@T - (1:00) - 2mi@T + 6x200m@R** *7mi* | **2mi@T - (1:00) - 2mi@T + 6x200m@R** *7mi* |
+| **Fri** | Easy *3mi* | Easy *3mi* | Easy *4mi* | Easy *4mi* |
+| **Sat** | **Tiger Run** *5mi*| **Tiger Run** *5mi* | **Tiger Run** *6mi* | **Tiger Run** *6mi* |
+| **Sun** | *Rest* | *Rest* | *30min shakeout* | *30min shakeout* |
 
 ---
 
-## **WEEK 14: AUGUST 24–30, 2026** — Varsity Time Trial + Long Run Week
+## **WEEK 14: AUGUST 24–30, 2026** 
 
-*Tuesday: Varsity time trial / race event. Long Run on Saturday (no race).*
+*Long Run on Saturday (no race).*
 
 | Day | Blue (24 mi) | White (31 mi) | Green (37 mi) | Gold (42 mi) |
 |:----|:---|:---|:---|:---|
@@ -217,8 +217,8 @@
 | **Tue** | Easy *3mi* | **Varsity Time Trial** *5mi* | **Varsity Time Trial** *6mi* | **Varsity Time Trial** *6mi* |
 | **Wed** | Easy *3.5mi* | Easy *4mi* | Easy *5.5mi* | Easy *6.5mi* |
 | **Thu** | **2x1mi@T w/1:00 + 4x200m@R** *4mi* | **3x1mi@T w/1:00 + 4x200m@R** *5mi* | **4x1mi@T w/1:00 + 4x200m@R** *6mi* | **4x1mi@T w/1:00 + 4-6x200m@R** *7mi* |
-| **Fri** | Easy *3mi* | Easy *3.5mi* | Easy *5mi* | Easy *5.5mi* |
-| **Sat** | **Long Run** *7.5mi* | **Long Run** *10mi* | **Long Run** *10mi* | **Long Run** *12mi* |
+| **Fri** | Easy *3mi/20min* | Easy *3mi20min* | Easy *4mi/30min* | Easy *4mi/30min* |
+| **Sat** | **Long Run** *6mi* | **Long Run** *8mi* | **Long Run** *10mi* | **Long Run** *12mi* |
 | **Sun** | **REST** | **REST** | **REST** | **REST** |
 
 ---
