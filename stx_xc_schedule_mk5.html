@@ -71,9 +71,6 @@ main{max-width:980px;margin:0 auto;padding:20px 24px 60px;}
 .month-heading{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--gray-400);padding-bottom:8px;border-bottom:1.5px solid var(--gray-200);margin-bottom:4px;}
 .event-row{display:grid;grid-template-columns:72px 1fr 190px 88px;gap:0 14px;align-items:center;padding:10px 10px;border-radius:8px;transition:background .1s;}
 .event-row:hover{background:var(--gray-100);}
-.event-row.past{opacity:.38;}
-.today-marker{display:flex;align-items:center;gap:10px;margin:8px 0 4px;font-size:11px;font-weight:600;color:var(--green);text-transform:uppercase;letter-spacing:.08em;}
-.today-marker::before,.today-marker::after{content:'';flex:1;height:1.5px;background:var(--green);opacity:.4;}
 .event-date{text-align:right;}
 .event-date .weekday{font-size:10px;color:var(--gray-400);text-transform:uppercase;letter-spacing:.07em;}
 .event-date .date{font-size:14px;font-weight:600;font-family:'DM Mono',monospace;}
@@ -408,44 +405,31 @@ function getFiltered() {
 }
 
 // ── LIST RENDER ────────────────────────────────
-function renderList(scrollToToday = false) {
+function renderList() {
   const events = getFiltered();
   const el = document.getElementById('list-view');
   if (!events.length) {
     el.innerHTML = `<div class="state-box"><div class="icon">🔍</div><h3>No events found</h3><p>Try a different filter or search term.</p></div>`;
     return;
   }
-
-  const now        = new Date(); now.setHours(0,0,0,0);
-  const byMonth    = {};
-  let   markerDone = false;
-
+  const byMonth = {};
   events.forEach(ev => {
     const d = parseStart(ev);
     const k = `${d.getFullYear()}-${String(d.getMonth()).padStart(2,'0')}`;
     (byMonth[k]=byMonth[k]||[]).push(ev);
   });
-
   let html = '';
   for (const k of Object.keys(byMonth).sort()) {
     const [yr,mo] = k.split('-');
     html += `<div class="month-section"><div class="month-heading">${MONTHS_LONG[+mo]} ${yr}</div>`;
     for (const ev of byMonth[k]) {
-      const d    = parseStart(ev); d.setHours(0,0,0,0);
-      const past = d < now;
+      const d   = parseStart(ev);
       const cats = getCategories(ev);
-      const loc  = ev.location ? ev.location.split(',').slice(0,2).join(',') : '—';
-      const act  = isACT(ev) ? '<span class="act-dot" title="ACT Test Date — plan ahead"></span>' : '';
+      const loc = ev.location ? ev.location.split(',').slice(0,2).join(',') : '—';
+      const act = isACT(ev) ? '<span class="act-dot" title="ACT Test Date — plan ahead"></span>' : '';
       const desc = ev.description ? ev.description.replace(/<[^>]+>/g,'').replace(/\[.*?\]/g,'').trim().slice(0,90) : '';
-
-      // Insert "Today" marker before the first upcoming event
-      if (!past && !markerDone) {
-        html += `<div class="today-marker" id="today-marker">Today</div>`;
-        markerDone = true;
-      }
-
       html += `
-        <div class="event-row${past ? ' past' : ''}">
+        <div class="event-row">
           <div class="event-date">
             <div class="weekday">${DAYS_SHORT[d.getDay()]}</div>
             <div class="date">${MONTHS_SHORT[d.getMonth()]} ${d.getDate()}</div>
@@ -461,12 +445,6 @@ function renderList(scrollToToday = false) {
     html += `</div>`;
   }
   el.innerHTML = html;
-
-  // Scroll to today marker
-  if (scrollToToday) {
-    const marker = document.getElementById('today-marker');
-    if (marker) setTimeout(() => marker.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
-  }
 }
 
 // ── CALENDAR RENDER ────────────────────────────
@@ -570,7 +548,7 @@ async function fetchEvents() {
     // Seed calendar to first month with events
     const seed = allEvents.length ? parseStart(allEvents[0]) : new Date();
     calYear=seed.getFullYear(); calMonth=seed.getMonth();
-    renderList(true);
+    renderList();
   } catch(err) {
     document.getElementById('list-view').innerHTML = `
       <div class="state-box"><div class="icon">⚠️</div><h3>Could not load calendar</h3>
