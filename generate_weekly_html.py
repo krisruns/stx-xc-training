@@ -46,8 +46,9 @@ Flags:
     itself and only prompts you if it can't (e.g. more than one .md file is
     present). If --weeks/--start/--yes aren't given, it prompts for which
     week(s) you want - a single number, a range like 5-7, a comma list like
-    5,9,14-16, or 'all' - and asks for confirmation before overwriting any
-    weekN.html that already exists.
+    5,9,14-16, or 'all' - and if any of the target weekN.html files already
+    exist, it lists them and asks once whether to overwrite all of them
+    (rather than asking file-by-file).
 
 To change the page's look/behavior for every future week: edit STYLE_BLOCK,
 SCRIPT_BLOCK, or MODAL_BLOCK below (these were originally lifted from the
@@ -493,15 +494,41 @@ def parse_cell(raw):
     return label, qty, plain
 
 
-def extract_miles(qty_text):
+def extract_miles_minutes(qty_text):
+    """Parse a cell's italic quantity text into (miles, minutes_text).
+    Handles plain '4mi', and combined mile/time entries like '3mi/20min'
+    or '4mi/25-30min' (minutes_text keeps the original '25-30' form).
+    Uses \\b after 'mi' so a time-only value like '30min shakeout' isn't
+    misread as 30 miles (since 'min' starts with 'mi')."""
     if not qty_text:
+        return None, None
+    m = re.match(r"([\d.]+)\s*mi\b(?:\s*/\s*([\d]+(?:\s*-\s*[\d]+)?)\s*min)?", qty_text)
+    if not m:
+        return None, None
+    miles = float(m.group(1))
+    minutes = m.group(2).replace(" ", "") if m.group(2) else None
+    return miles, minutes
+
+
+def format_dist(miles, minutes):
+    """(6.0, None) -> '6mi'   (3.0, '20-25') -> '3mi / 20-25min'"""
+    if miles is None:
         return None
-    m = re.match(r"([\d.]+)\s*mi", qty_text)
-    return float(m.group(1)) if m else None
+    s = f"{miles:g}mi"
+    if minutes:
+        s += f" / {minutes}min"
+    return s
+
+
+def is_rest_cell(cell_raw):
+    """True for a cell that's just REST in any markdown decoration:
+    '**REST**', '*Rest*', 'REST', etc."""
+    cleaned = re.sub(r"\*+", "", cell_raw).strip()
+    return cleaned.lower() == "rest"
 
 
 def classify(label, cell_raw):
-    if cell_raw.strip() == "**REST**" or (label and label.strip().upper() == "REST"):
+    if is_rest_cell(cell_raw) or (label and label.strip().upper() == "REST"):
         return "rest"
     if not label:
         return "easy"
@@ -608,8 +635,14 @@ def render_items(items):
 
 def build_workout(day_abbr, group_name, cell_raw):
     label, qty, plain = parse_cell(cell_raw)
-    wtype = classify(label, cell_raw)
-    miles = extract_miles(qty)
+    # Some quality workouts aren't bolded in the source markdown (e.g. a
+    # plain "6x200m@RP/200 steady *4mi*" with no ** around it) - fall back
+    # to the plain leftover text so those still get classified correctly
+    # instead of defaulting to "easy".
+    effective_label = label or (plain if plain else None)
+    wtype = classify(effective_label, cell_raw)
+    miles, minutes = extract_miles_minutes(qty)
+    dist_txt = format_dist(miles, minutes)
 
     if wtype == "rest":
         return {
@@ -618,7 +651,7 @@ def build_workout(day_abbr, group_name, cell_raw):
         }
 
     if wtype == "easy":
-        desc = f"{miles:g}mi easy" if miles is not None else (plain or qty or "Easy")
+        desc = f"{dist_txt} easy" if dist_txt else (plain or qty or "Easy")
         if day_abbr == "Mon":
             pre = [(REF_FOOT, "Foot Drills"), (REF_WARMUP, "Dynamics"), (None, "Buildups")]
         else:
@@ -630,7 +663,7 @@ def build_workout(day_abbr, group_name, cell_raw):
         }
 
     if wtype == "long_run":
-        desc = f"Long Run {miles:g}mi" if miles is not None else (label or "Long Run")
+        desc = f"Long Run {dist_txt}" if dist_txt else (label or "Long Run")
         pre = [(REF_WARMUP, "Awesomizer"), (REF_WARMUP, "Lunge Matrix")]
         post = [(REF_WARMUP, "Strides"), (REF_MOBILITY, "Mobility A"), (None, "24s")]
         return {
@@ -650,7 +683,7 @@ def build_workout(day_abbr, group_name, cell_raw):
     # quality
     desc = label or plain or qty or "Workout"
     pre = [(REF_WARMUP, "WU"), (REF_WARMUP, "Dynamics"), (None, "stride progression")]
-    if re.search(r"@r\b", (label or "").lower()) or "200m" in (label or "").lower():
+    if re.search(r"@r\b", (effective_label or "").lower()) or "200m" in (effective_label or "").lower():
         post = [(REF_WARMUP, "Strides"), (REF_MOBILITY, "Mobility/Strength A")]
     else:
         post = [(REF_MOBILITY, "Mobility/Strength B")]
@@ -698,23 +731,30 @@ def render_workout_item(group_name, wo):
                     </div>'''
 
 
-def render_day(day_abbr, day_cells):
-    workouts = {}
-    has_quality = False
-    for group_name, cell_raw in day_cells.items():
-        wo = build_workout(day_abbr, group_name, cell_raw)
-        workouts[group_name] = wo
-        if wo["type"] == "quality":
-            has_quality = True
+def compute_week_workouts(week):
+    """Build every cell's workout dict once per week, keyed by day then
+    group. Reused for both rendering and the weekly mileage totals so the
+    totals bar always matches what's actually shown in the daily rows."""
+    computed = {}
+    for day_abbr, day_cells in week["days"].items():
+        computed[day_abbr] = {
+            group_name: build_workout(day_abbr, group_name, cell_raw)
+            for group_name, cell_raw in day_cells.items()
+        }
+    return computed
+
+
+def render_day(day_abbr, day_workouts):
+    has_quality = any(wo["type"] == "quality" for wo in day_workouts.values())
 
     groups_btn = (
         ' <a href="athlete_groups.html" target="_blank" class="groups-btn" '
         'title="View training groups">👥 Groups</a>' if has_quality else ""
     )
 
-    ordered_groups = [g for g in GROUP_DISPLAY_ORDER if g in workouts]
+    ordered_groups = [g for g in GROUP_DISPLAY_ORDER if g in day_workouts]
     items_html = "\n".join(
-        render_workout_item(g, workouts[g]) for g in ordered_groups
+        render_workout_item(g, day_workouts[g]) for g in ordered_groups
     )
 
     return f'''    <div class="day">
@@ -733,12 +773,30 @@ def render_day(day_abbr, day_cells):
 def render_week_html(week):
     groups = [g["name"] for g in week["groups"]]
     ordered_groups = [g for g in GROUP_DISPLAY_ORDER if g in groups]
-    totals_map = {g["name"]: g["total"] for g in week["groups"]}
+    header_totals = {g["name"]: g["total"] for g in week["groups"]}
+
+    workouts_by_day = compute_week_workouts(week)
+
+    computed_totals = {g: 0.0 for g in ordered_groups}
+    for day_abbr, day_workouts in workouts_by_day.items():
+        for group_name, wo in day_workouts.items():
+            if group_name in computed_totals and wo["miles"] is not None:
+                computed_totals[group_name] += wo["miles"]
+
+    for g in ordered_groups:
+        header_val = header_totals.get(g)
+        if header_val is not None and abs(header_val - computed_totals[g]) > 0.05:
+            print(
+                f"WARNING: Week {week['num']} {g} - markdown header says "
+                f"{header_val:g} mi but the daily cells add up to "
+                f"{computed_totals[g]:g} mi; using the computed total",
+                file=sys.stderr,
+            )
 
     totals_html = "\n".join(
         f'''        <div class="total {GROUP_CLASS.get(g, g.lower())}" onclick="filterGroup('{g}')" id="total-{g}">
             <div class="total-label">{g}</div>
-            <div class="total-miles">{totals_map[g]:g}</div>
+            <div class="total-miles">{computed_totals[g]:g}</div>
         </div>''' for g in ordered_groups
     )
 
@@ -747,7 +805,7 @@ def render_week_html(week):
     )
 
     days_html = "\n".join(
-        render_day(d, week["days"][d]) for d in DAY_ORDER if d in week["days"]
+        render_day(d, workouts_by_day[d]) for d in DAY_ORDER if d in workouts_by_day
     )
 
     title = f'🏃 STX Training - Week {week["num"]} — {week["date_range"].title()}'
@@ -986,16 +1044,29 @@ def main():
 
     os.makedirs(outdir, exist_ok=True)
 
+    existing = [
+        os.path.join(outdir, f"week{week['num']}.html")
+        for week in sorted(weeks, key=lambda w: w["num"])
+        if os.path.exists(os.path.join(outdir, f"week{week['num']}.html"))
+    ]
+    overwrite_all = args.force
+    if existing and not args.force:
+        print(f"\n{len(existing)} file(s) already exist and would be overwritten:")
+        for p in existing:
+            print(f"  - {os.path.basename(p)}")
+        answer = input("Overwrite all of these? [y/N]: ").strip().lower()
+        overwrite_all = answer in ("y", "yes")
+        if not overwrite_all:
+            print("Skipping all existing files (new weeks will still be written).")
+
     written, skipped = 0, 0
     for week in sorted(weeks, key=lambda w: w["num"]):
         out_path = os.path.join(outdir, f"week{week['num']}.html")
 
-        if os.path.exists(out_path) and not args.force:
-            answer = input(f"{out_path} already exists - overwrite? [y/N]: ").strip().lower()
-            if answer not in ("y", "yes"):
-                print(f"Skipped {out_path}")
-                skipped += 1
-                continue
+        if os.path.exists(out_path) and not overwrite_all:
+            print(f"Skipped {out_path}")
+            skipped += 1
+            continue
 
         html = render_week_html(week)
         with open(out_path, "w", encoding="utf-8") as f:

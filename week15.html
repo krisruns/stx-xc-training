@@ -275,28 +275,28 @@
 </head>
 <body>
     <a class="back-btn" href="index.html">← Schedule</a>
-    <h1>🏃 STX Training - Week 15 — August 31 - September 6, 2026</h1>
-    <div class="subtitle"><strong>Training Week</strong></div>
-    
+    <h1>🏃 STX Training - Week 15 — August 31 – September 6, 2026</h1>
+    <div class="subtitle"><strong>Run for the Gold</strong></div>
+
     <div class="totals">
         <div class="total gold" onclick="filterGroup('Gold')" id="total-Gold">
             <div class="total-label">Gold</div>
-            <div class="total-miles">34-37.5</div>
+            <div class="total-miles">36.5</div>
         </div>
         <div class="total green" onclick="filterGroup('Green')" id="total-Green">
             <div class="total-label">Green</div>
-            <div class="total-miles">32-34</div>
+            <div class="total-miles">33.5</div>
         </div>
         <div class="total white" onclick="filterGroup('White')" id="total-White">
             <div class="total-label">White</div>
-            <div class="total-miles">27.5-28</div>
+            <div class="total-miles">28.5</div>
         </div>
         <div class="total blue" onclick="filterGroup('Blue')" id="total-Blue">
             <div class="total-label">Blue</div>
-            <div class="total-miles">25.5-23</div>
+            <div class="total-miles">24.5</div>
         </div>
     </div>
-    
+
     <div class="filters">
         <button class="filter-btn active" onclick="showAll()">Show All</button>
         <button class="filter-btn" onclick="filterGroup('Gold')">Gold</button>
@@ -304,32 +304,10 @@
         <button class="filter-btn" onclick="filterGroup('White')">White</button>
         <button class="filter-btn" onclick="filterGroup('Blue')">Blue</button>
     </div>
-    
-    <!-- ============================================================
-         WEEK NOTES SECTION
-         To activate: Remove the opening and closing comment tags
-         To edit: Replace the text between <p> tags below
-         ============================================================ -->
-    <!--
-    <div class="week-notes">
-        <div class="notes-header">📝 Week Notes</div>
-        <div class="notes-content">
-            <p><strong>Important:</strong> Add your notes here!</p>
-            <p>Examples:</p>
-            <ul>
-                <li>Meet schedule changes</li>
-                <li>Special workout modifications</li>
-                <li>Weather considerations</li>
-                <li>Reminders for the week</li>
-            </ul>
-        </div>
-    </div>
-    -->
-    <!-- ============================================================ -->
-    
+
     <div class="day">
         <div class="day-header">
-            <span>MONDAY</span> <a href="athlete_groups.html" target="_blank" class="groups-btn" title="View training groups">👥 Groups</a>
+            <span>MONDAY</span>
         </div>
         <div class="day-content">
                 <div class="section">
@@ -337,54 +315,50 @@
                     <div class="workout-item gold" data-group="Gold">
                         <div class="group-badge gold">Gold</div>
                         <div class="workout-details">
-                            <div class="workout-pre"><a href="STX_XC_Foot_Drills_Reference.html" target="_blank" class="ref-link">Foot Drills</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility A/B</a></div>
+                            <div class="workout-pre"><a href="STX_XC_Foot_Drills_Reference.html" target="_blank" class="ref-link">Foot Drills</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, Buildups</div>
                             <div class="workout-desc">
-                                <span>REST</span>
-                                
-                                
+                                <span>7mi easy</span>
+                                <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
                             </div>
-                            <div class="workout-post"><a href="mobility-strength.html" target="_blank" class="ref-link">Strength</a></div>
+                            <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Strides</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility/Strength A</a></div>
                         </div>
-                        <div class="workout-miles">REST</div>
+                        <div class="workout-miles">7.0 mi</div>
                     </div>
                     <div class="workout-item green" data-group="Green">
                         <div class="group-badge green">Green</div>
                         <div class="workout-details">
-                            <div class="workout-pre"><a href="STX_XC_Foot_Drills_Reference.html" target="_blank" class="ref-link">Foot Drills</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility A/B</a></div>
+                            <div class="workout-pre"><a href="STX_XC_Foot_Drills_Reference.html" target="_blank" class="ref-link">Foot Drills</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, Buildups</div>
                             <div class="workout-desc">
-                                <span>REST</span>
-                                
-                                
+                                <span>6mi easy</span>
+                                <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
                             </div>
-                            <div class="workout-post"><a href="mobility-strength.html" target="_blank" class="ref-link">Strength</a></div>
+                            <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Strides</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility/Strength A</a></div>
                         </div>
-                        <div class="workout-miles">REST</div>
+                        <div class="workout-miles">6.0 mi</div>
                     </div>
                     <div class="workout-item white" data-group="White">
                         <div class="group-badge white">White</div>
                         <div class="workout-details">
-                            <div class="workout-pre"><a href="STX_XC_Foot_Drills_Reference.html" target="_blank" class="ref-link">Foot Drills</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility A/B</a></div>
+                            <div class="workout-pre"><a href="STX_XC_Foot_Drills_Reference.html" target="_blank" class="ref-link">Foot Drills</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, Buildups</div>
                             <div class="workout-desc">
-                                <span>REST</span>
-                                
-                                
+                                <span>5mi easy</span>
+                                <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
                             </div>
-                            <div class="workout-post"><a href="mobility-strength.html" target="_blank" class="ref-link">Strength</a></div>
+                            <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Strides</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility/Strength A</a></div>
                         </div>
-                        <div class="workout-miles">REST</div>
+                        <div class="workout-miles">5.0 mi</div>
                     </div>
                     <div class="workout-item blue" data-group="Blue">
                         <div class="group-badge blue">Blue</div>
                         <div class="workout-details">
-                            <div class="workout-pre"><a href="STX_XC_Foot_Drills_Reference.html" target="_blank" class="ref-link">Foot Drills</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility A/B</a></div>
+                            <div class="workout-pre"><a href="STX_XC_Foot_Drills_Reference.html" target="_blank" class="ref-link">Foot Drills</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, Buildups</div>
                             <div class="workout-desc">
-                                <span>REST</span>
-                                
-                                
+                                <span>4mi easy</span>
+                                <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
                             </div>
-                            <div class="workout-post"><a href="mobility-strength.html" target="_blank" class="ref-link">Strength</a></div>
+                            <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Strides</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility/Strength A</a></div>
                         </div>
-                        <div class="workout-miles">REST</div>
+                        <div class="workout-miles">4.0 mi</div>
                     </div>
                 </div>
         </div>
@@ -401,9 +375,66 @@
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
                             <div class="workout-desc">
-                                <span>7x800m@I (2:30)</span>
+                                <span>8x800m@I w/2:30</span>
                                 
+                            </div>
+                            <div class="workout-post"><a href="mobility-strength.html" target="_blank" class="ref-link">Mobility/Strength B</a></div>
+                        </div>
+                        <div class="workout-miles">6.0 mi</div>
+                    </div>
+                    <div class="workout-item green" data-group="Green">
+                        <div class="group-badge green">Green</div>
+                        <div class="workout-details">
+                            <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
+                            <div class="workout-desc">
+                                <span>7x800m@I w/2:30</span>
                                 
+                            </div>
+                            <div class="workout-post"><a href="mobility-strength.html" target="_blank" class="ref-link">Mobility/Strength B</a></div>
+                        </div>
+                        <div class="workout-miles">5.5 mi</div>
+                    </div>
+                    <div class="workout-item white" data-group="White">
+                        <div class="group-badge white">White</div>
+                        <div class="workout-details">
+                            <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
+                            <div class="workout-desc">
+                                <span>6x800m@I w/2:30</span>
+                                
+                            </div>
+                            <div class="workout-post"><a href="mobility-strength.html" target="_blank" class="ref-link">Mobility/Strength B</a></div>
+                        </div>
+                        <div class="workout-miles">5.0 mi</div>
+                    </div>
+                    <div class="workout-item blue" data-group="Blue">
+                        <div class="group-badge blue">Blue</div>
+                        <div class="workout-details">
+                            <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
+                            <div class="workout-desc">
+                                <span>4x800m@I w/2:30</span>
+                                
+                            </div>
+                            <div class="workout-post"><a href="mobility-strength.html" target="_blank" class="ref-link">Mobility/Strength B</a></div>
+                        </div>
+                        <div class="workout-miles">4.0 mi</div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="day">
+        <div class="day-header">
+            <span>WEDNESDAY</span>
+        </div>
+        <div class="day-content">
+                <div class="section">
+                    <div class="section-label">WORKOUT</div>
+                    <div class="workout-item gold" data-group="Gold">
+                        <div class="group-badge gold">Gold</div>
+                        <div class="workout-details">
+                            <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
+                            <div class="workout-desc">
+                                <span>6mi easy</span>
+                                <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
                             </div>
                             <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Strides</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility/Strength A</a></div>
                         </div>
@@ -414,164 +445,38 @@
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
                             <div class="workout-desc">
-                                <span>6x800m@I (2:30)</span>
-                                
-                                
+                                <span>5mi easy</span>
+                                <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
                             </div>
                             <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Strides</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility/Strength A</a></div>
                         </div>
-                        <div class="workout-miles">5.5 mi</div>
+                        <div class="workout-miles">5.0 mi</div>
                     </div>
                     <div class="workout-item white" data-group="White">
                         <div class="group-badge white">White</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
                             <div class="workout-desc">
-                                <span>5x800m@I (2:30)</span>
-                                
-                                
+                                <span>4mi easy</span>
+                                <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
                             </div>
                             <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Strides</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility/Strength A</a></div>
                         </div>
-                        <div class="workout-miles">5.0 mi</div>
+                        <div class="workout-miles">4.0 mi</div>
                     </div>
                     <div class="workout-item blue" data-group="Blue">
                         <div class="group-badge blue">Blue</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
                             <div class="workout-desc">
-                                <span>4x800m@I (2:30)</span>
-                                
-                                
+                                <span>3mi easy</span>
+                                <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
                             </div>
                             <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Strides</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility/Strength A</a></div>
                         </div>
-                        <div class="workout-miles">4.5 mi</div>
+                        <div class="workout-miles">3.0 mi</div>
                     </div>
                 </div>
-        </div>
-    </div>
-    <div class="day">
-        <div class="day-header">
-            <span>WEDNESDAY</span>
-        </div>
-        <div class="day-content">
-            <div class="status-section">
-                <div class="status-title">Varsity</div>
-                <div class="section">
-                    <div class="section-label">WORKOUT</div>
-                    <div class="workout-item gold" data-group="Gold">
-                        <div class="group-badge gold">Gold</div>
-                        <div class="workout-details">
-                            <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Awesomizer</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Lunge Matrix</a></div>
-                            <div class="workout-desc">
-                                <span>9mi easy</span>
-                                <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
-                                
-                            </div>
-                            <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Strides</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility A</a>, 24s</div>
-                        </div>
-                        <div class="workout-miles">9.0 mi</div>
-                    </div>
-                    <div class="workout-item green" data-group="Green">
-                        <div class="group-badge green">Green</div>
-                        <div class="workout-details">
-                            <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Awesomizer</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Lunge Matrix</a></div>
-                            <div class="workout-desc">
-                                <span>7.5mi easy</span>
-                                <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
-                                
-                            </div>
-                            <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Strides</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility A</a>, 24s</div>
-                        </div>
-                        <div class="workout-miles">7.5 mi</div>
-                    </div>
-                    <div class="workout-item white" data-group="White">
-                        <div class="group-badge white">White</div>
-                        <div class="workout-details">
-                            <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Awesomizer</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Lunge Matrix</a></div>
-                            <div class="workout-desc">
-                                <span>5.5mi easy</span>
-                                <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
-                                
-                            </div>
-                            <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Strides</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility A</a>, 24s</div>
-                        </div>
-                        <div class="workout-miles">5.5 mi</div>
-                    </div>
-                    <div class="workout-item blue" data-group="Blue">
-                        <div class="group-badge blue">Blue</div>
-                        <div class="workout-details">
-                            <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Awesomizer</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Lunge Matrix</a></div>
-                            <div class="workout-desc">
-                                <span>2.5mi easy</span>
-                                <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
-                                
-                            </div>
-                            <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Strides</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility A</a>, 24s</div>
-                        </div>
-                        <div class="workout-miles">2.5 mi</div>
-                    </div>
-                </div>
-            </div>
-            <div class="status-section">
-                <div class="status-title">JV</div>
-                <div class="section">
-                    <div class="section-label">WORKOUT</div>
-                    <div class="workout-item gold" data-group="Gold">
-                        <div class="group-badge gold">Gold</div>
-                        <div class="workout-details">
-                            <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Race Day WU</a></div>
-                            <div class="workout-desc">
-                                <span>Race</span>
-                                
-                                
-                            </div>
-                            <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Post Race</a></div>
-                        </div>
-                        <div class="workout-miles">5.5 mi</div>
-                    </div>
-                    <div class="workout-item green" data-group="Green">
-                        <div class="group-badge green">Green</div>
-                        <div class="workout-details">
-                            <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Race Day WU</a></div>
-                            <div class="workout-desc">
-                                <span>Race</span>
-                                
-                                
-                            </div>
-                            <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Post Race</a></div>
-                        </div>
-                        <div class="workout-miles">5.5 mi</div>
-                    </div>
-                    <div class="workout-item white" data-group="White">
-                        <div class="group-badge white">White</div>
-                        <div class="workout-details">
-                            <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Race Day WU</a></div>
-                            <div class="workout-desc">
-                                <span>Race</span>
-                                
-                                
-                            </div>
-                            <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Post Race</a></div>
-                        </div>
-                        <div class="workout-miles">5.0 mi</div>
-                    </div>
-                    <div class="workout-item blue" data-group="Blue">
-                        <div class="group-badge blue">Blue</div>
-                        <div class="workout-details">
-                            <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Race Day WU</a></div>
-                            <div class="workout-desc">
-                                <span>Race</span>
-                                
-                                
-                            </div>
-                            <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Post Race</a></div>
-                        </div>
-                        <div class="workout-miles">5.0 mi</div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <div class="day">
@@ -586,52 +491,48 @@
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
                             <div class="workout-desc">
-                                <span>Tempo</span>
-                                
+                                <span>8x1000m@T w/1:00 + 6x200m@R</span>
                                 
                             </div>
-                            <div class="workout-post"><a href="mobility-strength.html" target="_blank" class="ref-link">Mobility/Strength B</a></div>
+                            <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Strides</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility/Strength A</a></div>
                         </div>
-                        <div class="workout-miles">7.0 mi</div>
+                        <div class="workout-miles">7.5 mi</div>
                     </div>
                     <div class="workout-item green" data-group="Green">
                         <div class="group-badge green">Green</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
                             <div class="workout-desc">
-                                <span>Tempo</span>
-                                
+                                <span>7x1000m@T w/1:00 + 6x200m@R</span>
                                 
                             </div>
-                            <div class="workout-post"><a href="mobility-strength.html" target="_blank" class="ref-link">Mobility/Strength B</a></div>
+                            <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Strides</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility/Strength A</a></div>
                         </div>
-                        <div class="workout-miles">6.5 mi</div>
+                        <div class="workout-miles">7.0 mi</div>
                     </div>
                     <div class="workout-item white" data-group="White">
                         <div class="group-badge white">White</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
                             <div class="workout-desc">
-                                <span>Tempo</span>
-                                
+                                <span>6x1000m@T w/1:00 + 5x200m@R</span>
                                 
                             </div>
-                            <div class="workout-post"><a href="mobility-strength.html" target="_blank" class="ref-link">Mobility/Strength B</a></div>
+                            <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Strides</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility/Strength A</a></div>
                         </div>
-                        <div class="workout-miles">5.5 mi</div>
+                        <div class="workout-miles">6.5 mi</div>
                     </div>
                     <div class="workout-item blue" data-group="Blue">
                         <div class="group-badge blue">Blue</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
                             <div class="workout-desc">
-                                <span>Tempo</span>
-                                
+                                <span>5x1000m@T w/1:00 + 4x200m@R</span>
                                 
                             </div>
-                            <div class="workout-post"><a href="mobility-strength.html" target="_blank" class="ref-link">Mobility/Strength B</a></div>
+                            <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Strides</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility/Strength A</a></div>
                         </div>
-                        <div class="workout-miles">5.0 mi</div>
+                        <div class="workout-miles">5.5 mi</div>
                     </div>
                 </div>
         </div>
@@ -646,54 +547,50 @@
                     <div class="workout-item gold" data-group="Gold">
                         <div class="group-badge gold">Gold</div>
                         <div class="workout-details">
-                            <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Awesomizer</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Lunge Matrix</a></div>
+                            <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
                             <div class="workout-desc">
-                                <span>Long Run 10mi</span>
-                                
-                                
+                                <span>4mi / 30min easy</span>
+                                <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
                             </div>
-                            <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Strides</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility A</a>, 24s</div>
+                            <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Strides</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility/Strength A</a></div>
                         </div>
-                        <div class="workout-miles">10.0 mi</div>
+                        <div class="workout-miles">4.0 mi</div>
                     </div>
                     <div class="workout-item green" data-group="Green">
                         <div class="group-badge green">Green</div>
                         <div class="workout-details">
-                            <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Awesomizer</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Lunge Matrix</a></div>
+                            <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
                             <div class="workout-desc">
-                                <span>Long Run 9mi</span>
-                                
-                                
+                                <span>4mi / 25-30min easy</span>
+                                <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
                             </div>
-                            <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Strides</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility A</a>, 24s</div>
+                            <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Strides</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility/Strength A</a></div>
                         </div>
-                        <div class="workout-miles">9.0 mi</div>
+                        <div class="workout-miles">4.0 mi</div>
                     </div>
                     <div class="workout-item white" data-group="White">
                         <div class="group-badge white">White</div>
                         <div class="workout-details">
-                            <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Awesomizer</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Lunge Matrix</a></div>
+                            <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
                             <div class="workout-desc">
-                                <span>Long Run 7mi</span>
-                                
-                                
+                                <span>3mi / 20-25min easy</span>
+                                <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
                             </div>
-                            <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Strides</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility A</a>, 24s</div>
+                            <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Strides</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility/Strength A</a></div>
                         </div>
-                        <div class="workout-miles">7.0 mi</div>
+                        <div class="workout-miles">3.0 mi</div>
                     </div>
                     <div class="workout-item blue" data-group="Blue">
                         <div class="group-badge blue">Blue</div>
                         <div class="workout-details">
-                            <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Awesomizer</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Lunge Matrix</a></div>
+                            <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
                             <div class="workout-desc">
-                                <span>Long Run 6mi</span>
-                                
-                                
+                                <span>3mi / 20min easy</span>
+                                <span class="info-icon" onclick="openModal('easy-run')" title="Click for workout details">i</span>
                             </div>
-                            <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Strides</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility A</a>, 24s</div>
+                            <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Strides</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility/Strength A</a></div>
                         </div>
-                        <div class="workout-miles">6.0 mi</div>
+                        <div class="workout-miles">3.0 mi</div>
                     </div>
                 </div>
         </div>
@@ -710,34 +607,31 @@
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Race Day WU</a></div>
                             <div class="workout-desc">
-                                <span>Race</span>
-                                
+                                <span>Run for the Gold</span>
                                 
                             </div>
                             <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Post Race</a></div>
                         </div>
-                        <div class="workout-miles">5.5 mi</div>
+                        <div class="workout-miles">6.0 mi</div>
                     </div>
                     <div class="workout-item green" data-group="Green">
                         <div class="group-badge green">Green</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Race Day WU</a></div>
                             <div class="workout-desc">
-                                <span>Race</span>
-                                
+                                <span>Run for the Gold</span>
                                 
                             </div>
                             <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Post Race</a></div>
                         </div>
-                        <div class="workout-miles">5.5 mi</div>
+                        <div class="workout-miles">6.0 mi</div>
                     </div>
                     <div class="workout-item white" data-group="White">
                         <div class="group-badge white">White</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Race Day WU</a></div>
                             <div class="workout-desc">
-                                <span>Race</span>
-                                
+                                <span>Run for the Gold</span>
                                 
                             </div>
                             <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Post Race</a></div>
@@ -749,8 +643,7 @@
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Race Day WU</a></div>
                             <div class="workout-desc">
-                                <span>Race</span>
-                                
+                                <span>Run for the Gold</span>
                                 
                             </div>
                             <div class="workout-post"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Post Race</a></div>
@@ -770,54 +663,30 @@
                     <div class="workout-item gold" data-group="Gold">
                         <div class="group-badge gold">Gold</div>
                         <div class="workout-details">
-                            <div class="workout-pre"><a href="STX_XC_Foot_Drills_Reference.html" target="_blank" class="ref-link">Foot Drills</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility A/B</a></div>
-                            <div class="workout-desc">
-                                <span>REST</span>
-                                
-                                
-                            </div>
-                            <div class="workout-post"><a href="mobility-strength.html" target="_blank" class="ref-link">Strength</a></div>
+                            <div class="workout-desc"><span>REST</span></div>
                         </div>
-                        <div class="workout-miles">REST</div>
+                        <div class="workout-miles">&mdash;</div>
                     </div>
                     <div class="workout-item green" data-group="Green">
                         <div class="group-badge green">Green</div>
                         <div class="workout-details">
-                            <div class="workout-pre"><a href="STX_XC_Foot_Drills_Reference.html" target="_blank" class="ref-link">Foot Drills</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility A/B</a></div>
-                            <div class="workout-desc">
-                                <span>REST</span>
-                                
-                                
-                            </div>
-                            <div class="workout-post"><a href="mobility-strength.html" target="_blank" class="ref-link">Strength</a></div>
+                            <div class="workout-desc"><span>REST</span></div>
                         </div>
-                        <div class="workout-miles">REST</div>
+                        <div class="workout-miles">&mdash;</div>
                     </div>
                     <div class="workout-item white" data-group="White">
                         <div class="group-badge white">White</div>
                         <div class="workout-details">
-                            <div class="workout-pre"><a href="STX_XC_Foot_Drills_Reference.html" target="_blank" class="ref-link">Foot Drills</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility A/B</a></div>
-                            <div class="workout-desc">
-                                <span>REST</span>
-                                
-                                
-                            </div>
-                            <div class="workout-post"><a href="mobility-strength.html" target="_blank" class="ref-link">Strength</a></div>
+                            <div class="workout-desc"><span>REST</span></div>
                         </div>
-                        <div class="workout-miles">REST</div>
+                        <div class="workout-miles">&mdash;</div>
                     </div>
                     <div class="workout-item blue" data-group="Blue">
                         <div class="group-badge blue">Blue</div>
                         <div class="workout-details">
-                            <div class="workout-pre"><a href="STX_XC_Foot_Drills_Reference.html" target="_blank" class="ref-link">Foot Drills</a>, <a href="mobility-strength.html" target="_blank" class="ref-link">Mobility A/B</a></div>
-                            <div class="workout-desc">
-                                <span>REST</span>
-                                
-                                
-                            </div>
-                            <div class="workout-post"><a href="mobility-strength.html" target="_blank" class="ref-link">Strength</a></div>
+                            <div class="workout-desc"><span>REST</span></div>
                         </div>
-                        <div class="workout-miles">REST</div>
+                        <div class="workout-miles">&mdash;</div>
                     </div>
                 </div>
         </div>

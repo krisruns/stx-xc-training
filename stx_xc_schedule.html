@@ -568,8 +568,9 @@ async function fetchEvents() {
     allEvents = data.items || [];
     updateStats();
     // Seed calendar to first month with events
-    const seed = allEvents.length ? parseStart(allEvents[0]) : new Date();
-    calYear=seed.getFullYear(); calMonth=seed.getMonth();
+    const today = new Date();
+calYear  = today.getFullYear();
+calMonth = today.getMonth();
     renderList(true);
   } catch(err) {
     document.getElementById('list-view').innerHTML = `

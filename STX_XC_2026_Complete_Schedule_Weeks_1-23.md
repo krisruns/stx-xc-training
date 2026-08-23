@@ -49,7 +49,7 @@
 | **Thu** | Easy *2mi* | Easy *3.5mi* | Easy *4mi* | Easy *5mi* |
 | **Fri** | Easy *2mi* | Easy *2.5mi* | Easy *3mi* | Easy *4mi* |
 | **Sat** | **Long Run** *4mi* | **Long Run** *5mi* | **Long Run** *7mi* | **Long Run** *9mi* |
-| **Sun** | **REST** | **REST** | **REST** |
+| **Sun** | **REST** | **REST** | **REST** | **REST** |
 
 ---
 
@@ -117,7 +117,7 @@
 
 *Mandatory practice in begins.*
 
-| Day | Blue (20 mi) | White (32 mi) | Green (40 mi) | Gold (51 mi) |
+| Day | Blue (20 mi) | White (32 mi) | Green (40 mi) | Gold (49.5 mi) |
 |:----|:---|:---|:---|:---|
 | **Mon** | Easy *3mi* | Easy *4mi* | Easy *5.5mi* | Easy *7mi* |
 | **Tue** | **Fartlek 1 — 4x(1:00 on/4:00 steady)** *3.5mi* | **Fartlek 1 — 5x(1:00 on/4:00 steady)** *5.5mi* | **Fartlek 1 — 6x(1:00 on/4:00 steady)** *7mi* | **Fartlek 1 — 7x(1:00 on/4:00 steady)** *8.5mi* |
@@ -195,7 +195,7 @@
 
 *Tiger Run on Saturday.*
 
-| Day | Blue (24 mi) | White (30 mi) | Green (34 mi) | Gold (45 mi) |
+| Day | Blue (24 mi) | White (29 mi) | Green (35 mi) | Gold (40 mi) |
 |:----|:---|:---|:---|:---|
 | **Mon** | Easy *4mi* | Easy *5mi* | Easy *6mi* | Easy *8mi* |
 | **Tue** | **4x(3:00 on/2:00 off)** *4mi* | **5x(3:00 on/2:00 off)** *5.5mi* | **6x(3:00 on/2:00 off)** *6mi* | **7x(3:00 on/2:00 off)** *7mi* |
@@ -211,13 +211,13 @@
 
 *Long Run on Saturday (no race).*
 
-| Day | Blue (24 mi) | White (31 mi) | Green (37 mi) | Gold (42 mi) |
+| Day | Blue (24 mi) | White (30 mi) | Green (37 mi) | Gold (43 mi) |
 |:----|:---|:---|:---|:---|
-| **Mon** | Easy *3mi* | Easy *3.5mi* | Easy *4.5mi* | Easy *5mi* |
-| **Tue** | Easy *3mi* | **Varsity Time Trial** *5mi* | **Varsity Time Trial** *6mi* | **Varsity Time Trial** *6mi* |
-| **Wed** | Easy *3.5mi* | Easy *4mi* | Easy *5.5mi* | Easy *6.5mi* |
+| **Mon** | Easy *4mi* | Easy *5mi* | Easy *6mi* | Easy *7mi* |
+| **Tue** | **8x200m@RP/200 steady** *4mi* | **12x200m@RP/200 steady** *5mi* | **16x200m@RP/200 steady** *6mi* | **20x200m@RP/200 steady** *7mi* |
+| **Wed** | Easy *3mi* | Easy *4mi* | Easy *5mi* | Easy *6mi* |
 | **Thu** | **2x1mi@T w/1:00 + 4x200m@R** *4mi* | **3x1mi@T w/1:00 + 4x200m@R** *5mi* | **4x1mi@T w/1:00 + 4x200m@R** *6mi* | **4x1mi@T w/1:00 + 4-6x200m@R** *7mi* |
-| **Fri** | Easy *3mi/20min* | Easy *3mi20min* | Easy *4mi/30min* | Easy *4mi/30min* |
+| **Fri** | Easy *3mi/20min* | Easy *3mi/20-25min* | Easy *4mi/25-30min* | Easy *4mi/30min* |
 | **Sat** | **Long Run** *6mi* | **Long Run** *8mi* | **Long Run** *10mi* | **Long Run** *12mi* |
 | **Sun** | **REST** | **REST** | **REST** | **REST** |
 
@@ -225,16 +225,14 @@
 
 ## **WEEK 15: AUGUST 31 – SEPTEMBER 6, 2026** — Run for the Gold
 
-*Monday REST for all groups. Long Run on Friday before race. Run for the Gold on Saturday. JV: Champions 1 on Wednesday.*
-
-| Day | Blue (23 mi) | White (28 mi) | Green (35 mi) | Gold (40 mi) |
+| Day | Blue (24.5 mi) | White (28 mi) | Green (33.5 mi) | Gold (36.5 mi) |
 |:----|:---|:---|:---|:---|
-| **Mon** | **REST** | **REST** | **REST** | **REST** |
-| **Tue** | **4x800m@RP w/2:30** *4mi* | **5x800m@I w/2:30** *5.5mi* | **6x800m@I w/2:30** *7mi* | **7x800m@I w/2:30** *8mi* |
-| **Wed** | Easy *3.5mi* | Easy *4mi* | Easy *5.5mi* | Easy *6mi* |
-| **Thu** | **1mi@T - 3min@E - 1mi@T + 4x200m@R** *4mi* | **1mi@T - 5min@E - 1mi@T + 4x200m@R** *5mi* | **1.5mi@T - 5min@E - 1.5mi@T + 4-6x200m@R** *6mi* | **2mi@T - 5min@E - 2mi@T + 4-6x200m@R** *7mi* |
-| **Fri** | **Long Run** *5.5mi* | **Long Run** *7.5mi* | **Long Run** *10.5mi* | **Long Run** *13mi* |
-| **Sat** | **Run for the Gold** *5mi* | **Run for the Gold** *6mi* | **Run for the Gold** *6mi* | **Run for the Gold** *6mi* |
+| **Mon** | Easy *4mi* | Easy *5mi* | Easy *6mi* | Easy *7mi* |
+| **Tue** | **4x800m@I w/2:30** *4mi* | **6x800m@I w/2:30** *5mi* | **7x800m@I w/2:30** *5.5mi* | **8x800m@I w/2:30** *6mi* |
+| **Wed** | Easy *3mi* | Easy *4mi* | Easy *5mi* | Easy *6mi* |
+| **Thu** | **5x1000m@T w/1:00 + 4x200m@R** *5.5mi* | **6x1000m@T w/1:00 + 5x200m@R** *6.5mi* | **7x1000m@T w/1:00 + 6x200m@R** *7mi* | **8x1000m@T w/1:00 + 6x200m@R** *7.5mi* |
+| **Fri** | Easy *3mi/20min* | Easy *3mi/20-25min* | Easy *4mi/25-30min* | Easy *4mi/30min* |
+| **Sat** | **Run for the Gold** *5mi* | **Run for the Gold** *5mi* | **Run for the Gold** *6mi* | **Run for the Gold** *6mi* |
 | **Sun** | **REST** | **REST** | **REST** | **REST** |
 
 > **JV — Week 15 (Wed):** Champions 1
@@ -245,14 +243,14 @@
 
 *Southern Showcase approaching next week — major invitational prep. Long Run Saturday.*
 
-| Day | Blue (25 mi) | White (33 mi) | Green (38 mi) | Gold (41 mi) |
+| Day | Blue (25 mi) | White (31.5 mi) | Green (38 mi) | Gold (43 mi) |
 |:----|:---|:---|:---|:---|
-| **Mon** | Easy *3.5mi* | Easy *5mi* | Easy *5.5mi* | Easy *6mi* |
-| **Tue** | **8x200m@R w/200j** *3.5mi* | **12x200m@R w/200j** *4.5mi* | **14x200m@R w/200j** *5.5mi* | **16x200m@R w/200j** *6.5mi* |
-| **Wed** | Easy *3.5mi* | Easy *5mi* | Easy *5.5mi* | Easy *6mi* |
-| **Thu** | **2x1mi@T w/1:00 + 4x200m@R** *4.5mi* | **3x1mi@T w/1:00 + 4x200m@R** *5.5mi* | **4x1mi@T w/1:00 + 4x200m@R** *6mi* | **4x1mi@T w/1:00 + 4-6x200m@R** *7mi* |
-| **Fri** | Easy *3.5mi* | Easy *4.5mi* | Easy *5.5mi* | Easy *5.5mi* |
-| **Sat** | **Long Run** *6.5mi* | **Long Run** *8.5mi* | **Long Run** *10mi* | **Long Run** *10mi* |
+| **Mon** | Easy *4mi* | Easy *5mi* | Easy *6mi* | Easy *7mi* |
+| **Tue** | **12x200m@R w/200j** *5mi* | **16x200m@R w/200j** *6mi* | **18x200m@R w/200j** *6.5mi* | **20x200m@R w/200j** *7mi* |
+| **Wed** | Easy *3mi* | Easy *4mi* | Easy *5mi* | Easy *6mi* |
+| **Thu** | **15min@T + 4x200m@R** *4.5mi* | **20min@T + 5x200m@R** *5.5mi* | **25min@T  + 6x200m@R** *6mi* | **30min@T + 6x200m@R** *7mi* |
+| **Fri** | Easy *3mi/20min* | Easy *3mi/20-25min* | Easy *4mi/25-30min* | Easy *4mi/30min* |
+| **Sat** | **Long Run** *6mi* | **Long Run** *8mi* | **Long Run** *10mi* | **Long Run** *12mi* |
 | **Sun** | **REST** | **REST** | **REST** | **REST** |
 
 ---
@@ -261,15 +259,15 @@
 
 *Biggest invitational of the season. Use this race to solidify team chemistry and establish racing hierarchies. Sunday = 20–30min shakeout run + mobility.*
 
-| Day | Blue (25 mi) | White (35 mi) | Green (45 mi) | Gold (53 mi) |
+| Day | Blue (26 mi) | White (31.5 mi) | Green (38 mi) | Gold (42.5 mi) |
 |:----|:---|:---|:---|:---|
-| **Mon** | Easy *3.5mi* | Easy *5mi* | Easy *7mi* | Easy *9mi* |
+| **Mon** | Easy *4mi* | Easy *5mi* | Easy *6mi* | Easy *7mi* |
 | **Tue** | **3x1000m@I w/90s** *4.5mi* | **4x1000m@I w/90s** *6mi* | **5x1000m@I w/90s** *8mi* | **6x1000m@I w/90s** *10mi* |
-| **Wed** | Easy *3.5mi* | Easy *5mi* | Easy *7.5mi* | Easy *9mi* |
-| **Thu** | **3x1000m@T w/1:00 + 4x200m@R** *4.5mi* | **4x1000m@T w/1:00 + 4x200m@R** *6mi* | **5x1000m@T w/1:00 + 4x200m@R** *8mi* | **6x1000m@T w/1:00 + 4-6x200m@R** *10mi* |
-| **Fri** | Easy *3.5mi* | Easy *4mi* | Easy *5.5mi* | Easy *5.5mi* |
-| **Sat** | **Southern Showcase** *5mi* | **Southern Showcase** *6mi* | **Southern Showcase** *6mi* | **Southern Showcase** *6mi* |
-| **Sun** | *0.5mi shakeout* | *3mi shakeout* | *3mi shakeout* | *3.5mi shakeout* |
+| **Wed** | Easy *3mi* | Easy *4mi* | Easy *5mi* | Easy *6mi* |
+| **Thu** | **5x1000m@T w/1:00 + 4x200m@R** *5.5mi* | **6x1000m@T w/1:00 + 5x200m@R** *6.5mi* | **7x1000m@T w/1:00 + 6x200m@R** *7mi* | **8x1000m@T w/1:00 + 6x200m@R** *7.5mi* |
+| **Fri** | Easy *3mi/20min* | Easy *3mi/20-25min* | Easy *4mi/25-30min* | Easy *4mi/30min* |
+| **Sat** | **Southern Showcase** *5mi* | **Southern Showcase** *5mi* | **Southern Showcase** *6mi* | **Southern Showcase** *6mi* |
+| **Sun** | *1mi shakeout for racers* | *2mi shakeout for racers** | *2mi shakeout for racers** | *2mi shakeout for racers** |
 
 > **JV — Week 17 (Sat):** Trinity Invitational
 
@@ -279,15 +277,15 @@
 
 *Traveling to Chicago for one of the Midwest's premier invitationals. Sunday = 20–30min shakeout + mobility. Wednesday: easy (unstructured).*
 
-| Day | Blue (25 mi) | White (32 mi) | Green (40 mi) | Gold (45 mi) |
+| Day | Blue (25 mi) | White (30 mi) | Green (35.5 mi) | Gold (39 mi) |
 |:----|:---|:---|:---|:---|
-| **Mon** | Easy *3.5mi* | Easy *4.5mi* | Easy *6.5mi* | Easy *7mi* |
+| **Mon** | Easy *4mi* | Easy *5mi* | Easy *6mi* | Easy *7mi* |
 | **Tue** | **6x300m@R w/200j** *4mi* | **8x300m@R w/200j** *5mi* | **10x300m@R w/200j** *6.5mi* | **12x300m@R w/200j** *7.5mi* |
 | **Wed** | Easy *3.5mi* | Easy *4.5mi* | Easy *6mi* | Easy *6.5mi* |
-| **Thu** | **2mi@T + 4x200m@R** *4.5mi* | **2.5mi@T + 4x200m@R** *5.5mi* | **3mi@T + 4-6x200m@R** *7mi* | **4mi@T + 4-6x200m@R** *8mi* |
-| **Fri** | Easy *4mi* | Easy *5mi* | Easy *6mi* | Easy *7.5mi* |
+| **Thu** | **3x1mi@T + 4x200m@R** *5.5mi* | **4x1mi@T + 5x200m@R** *6.5mi* | **4x1mi@T + 6x200m@R** *7mi* | **5x1mi@T + 6x200m@R** *8mi* |
+| **Fri** | Easy *3mi/20min* | Easy *3mi/20-25min* | Easy *4mi/25-30min* | Easy *4mi/30min* |
 | **Sat** | **Palatine Inv.** *5mi* | **Palatine Inv.** *6mi* | **Palatine Inv.** *6mi* | **Palatine Inv.** *6mi* |
-| **Sun** | *0.5mi shakeout* | *1.5mi shakeout* | *2mi shakeout* | *2.5mi shakeout* |
+| **Sun** | **REST** | **REST** | **REST** | **REST** |
 
 > **JV — Week 18 (Wed):** Champions 2
 
@@ -297,15 +295,15 @@
 
 *Championship-level race experience in our home market. Sunday = easy.*
 
-| Day | Blue (25 mi) | White (32 mi) | Green (40 mi) | Gold (50 mi) |
+| Day | Blue (23.5 mi) | White (28.5 mi) | Green (34 mi) | Gold (38.5 mi) |
 |:----|:---|:---|:---|:---|
-| **Mon** | Easy *3.5mi* | Easy *4.5mi* | Easy *5.5mi* | Easy *7.5mi* |
-| **Tue** | **3x1200m@I w/3:00** *4mi* | **3x1200m@I w/3:00** *5mi* | **4x1200m@I w/3:00** *7mi* | **5x1200m@I w/3:00** *8mi* |
-| **Wed** | Easy *3.5mi* | Easy *4.5mi* | Easy *6mi* | Easy *7mi* |
+| **Mon** | Easy *4mi* | Easy *5mi* | Easy *6mi* | Easy *7mi* |
+| **Tue** | **3x1200m@I w/3:00** *4mi* | **4x1200m@I w/3:00** *5mi* | **5x1200m@I w/3:00** *6mi* | **6x1200m@I w/3:00** *7mi* |
+| **Wed** | Easy *3mi* | Easy *4mi* | Easy *5mi* | Easy *6mi* |
 | **Thu** | **1mi@T - 1:00 - 1mi@T + 4x200m@R** *4.5mi* | **1.5mi@T - 1:00 - 1.5mi@T + 4x200m@R** *5.5mi* | **2mi@T - 1:00 - 2mi@T + 4x200m@R** *7mi* | **2mi@T - 1:00 - 2mi@T + 4-6x200m@R** *8.5mi* |
-| **Fri** | Easy *3.5mi* | Easy *4mi* | Easy *5mi* | Easy *5mi* |
+| **Fri** | Easy *3mi/20min* | Easy *3mi/20-25min* | Easy *4mi/25-30min* | Easy *4mi/30min* |
 | **Sat** | **LXC Classic** *5mi* | **LXC Classic** *6mi* | **LXC Classic** *6mi* | **LXC Classic** *6mi* |
-| **Sun** | *1mi* | *2.5mi* | *3.5mi* | *8mi* |
+| **Sun** | **REST** | **REST** | **REST** | **REST** |
 
 > **JV — Week 19 (Tue):** Trinity Dual Meet
 
@@ -315,17 +313,16 @@
 
 *Important competitive stimulus before championship season. Sunday = easy.*
 
-| Day | Blue (24 mi) | White (28 mi) | Green (38 mi) | Gold (45 mi) |
+| Day | Blue (22 mi) | White (25 mi) | Green (32 mi) | Gold (36 mi) |
 |:----|:---|:---|:---|:---|
-| **Mon** | Easy *3mi* | Easy *3.5mi* | Easy *5.5mi* | Easy *6.5mi* |
-| **Tue** | **3x1200m@I w/2:30** *4mi* | **3x1200m@I w/2:30** *4.5mi* | **4x1200m@I w/2:30** *6.5mi* | **5x1200m@I w/2:30** *8mi* |
-| **Wed** | Easy *3mi* | Easy *3.5mi* | Easy *5.5mi* | Easy *6.5mi* |
+| **Mon** | Easy *3mi* | Easy *4mi* | Easy *5mi* | Easy *6mi* |
+| **Tue** | **3x1200m@I w/2:30** *4mi* | **4x1200m@I w/2:30** *5mi* | **5x1200m@I w/2:30** *6mi* | **6x1200m@I w/2:30** *7mi* |
+| **Wed** | Easy *2mi* | Easy *3mi* | Easy *4mi* | Easy *5mi* |
 | **Thu** | **6x400m@R w/2:00** *4mi* | **8x400m@R w/2:00** *4.5mi* | **10x400m@R w/2:00** *6.5mi* | **12x400m@R w/2:00** *7.5mi* |
-| **Fri** | Easy *3mi* | Easy *3.5mi* | Easy *4mi* | Easy *5mi* |
-| **Sat** | **Haunted Woods XC** *5mi* | **Haunted Woods XC** *6mi* | **Haunted Woods XC** *6mi* | **Haunted Woods XC** *6mi* |
-| **Sun** | *2mi* | *3mi* | *4mi* | *5.5mi* |
+| **Fri** | Easy *3mi/20min* | Easy *3mi/20-25min* | Easy *4mi/25-30min* | Easy *4mi/30min* |
+| **Sat** | **Haunted Woods XC** *5mi* | **Haunted Woods XC** *5mi* | **Haunted Woods XC** *6mi* | **Haunted Woods XC** *6mi* |
+| **Sun** | **REST** | **REST** | **REST** | **REST** |
 
-> **JV — Week 20 (Sat):** Haunted Woods
 
 ---
 
@@ -333,14 +330,14 @@
 
 *Major taper begins — optimizing freshness for HOKA 2-Mile and Regional. Monday: REST.*
 
-| Day | Blue (21 mi) | White (24 mi) | Green (32 mi) | Gold (35 mi) |
+| Day | Blue (17.5 mi) | White (21.5 mi) | Green (28.5 mi) | Gold (32.5 mi) |
 |:----|:---|:---|:---|:---|
-| **Mon** | **REST** | **REST** | **REST** | **REST** |
+| **Mon** | Easy *2mi* | Easy *3mi* | Easy *4mi* | Easy *5mi* |
 | **Tue** | **6x400m@R w/200j** *3.5mi* | **8x400m@R w/200j** *4.5mi* | **10x400m@R w/200j** *6mi* | **12x400m@R w/200j** *6.5mi* |
-| **Wed** | Easy *3mi* | Easy *3.5mi* | Easy *4.5mi* | Easy *5mi* |
-| **Thu** | **2x1600m@I w/2:30** *4mi* | **3x1600m@I w/2:30** *5mi* | **4x1600m@I w/2:30** *6.5mi* | **4x1600m@I w/2:30** *7mi* |
-| **Fri** | Easy *3mi* | Easy *3.5mi* | Easy *4.5mi* | Easy *5mi* |
-| **Sat** | **Long Run** *7.5mi* | **Long Run** *7.5mi* | **Long Run** *10.5mi* | **Long Run** *11.5mi* |
+| **Wed** | Easy *2mi* | Easy *3mi* | Easy *4mi* | Easy *5mi* |
+| **Thu** | **3x1600m@I w/2:30** *4mi* | **4x1600m@I w/2:30** *5mi* | **5x1600m@I w/2:30** *6.5mi* | **6x1600m@I w/2:30** *7mi* |
+| **Fri** | Easy *3mi/20min* | Easy *3mi/20-25min* | Easy *4mi/25-30min* | Easy *4mi/30min* |
+| **Sat** | **Long Run** *5mi* | **Long Run** *6mi* | **Long Run** *8mi* | **Long Run** *10mi* |
 | **Sun** | **REST** | **REST** | **REST** | **REST** |
 
 ---
@@ -349,13 +346,13 @@
 
 *Primary focus: qualify for State. Volume significantly reduced. Tempo on Monday, 300s on Wednesday.*
 
-| Day | Blue (21 mi) | White (22 mi) | Green (30 mi) | Gold (33 mi) |
+| Day | Blue (21 mi) | White (24.5 mi) | Green (29 mi) | Gold (31.5 mi) |
 |:----|:---|:---|:---|:---|
-| **Mon** | **2x1000m@T + 4x200m@R** *3.5mi* | **2x2000m@T w/1:00 + 4x200m@R** *3.5mi* | **3x2000m@T w/1:00 + 4x200m@R** *6mi* | **3x2000m@T w/1:00 + 4-6x200m@R** *7mi* |
-| **Tue** | Easy *3mi* | Easy *3mi* | Easy *5mi* | Easy *5.5mi* |
+| **Mon** | **4x1000m@T w/1:00 + 4x200m@R** *5mi* | **5x1000m@T w/1:00 + 5x200m@R** *6mi* | **6x1000m@T w/1:00 + 6x200m@R** *6.5mi* | **7x1000m@T w/1:00 + 6x200m@R** *7mi* |
+| **Tue** | Easy *2mi* | Easy *3mi* | Easy *4mi* | Easy *5mi* |
 | **Wed** | **6x300m@R w/3:00** *3.5mi* | **8x300m@R w/3:00** *3.5mi* | **10x300m@R w/3:00** *4.5mi* | **10x300m@R w/3:00** *5.5mi* |
-| **Thu** | Easy *3mi* | Easy *2.5mi* | Easy *4mi* | Easy *4.5mi* |
-| **Fri** | Easy *3mi* | Easy *2.5mi* | Easy *4.5mi* | Easy *4.5mi* |
+| **Thu** | Easy *3mi* | Easy *3mi* | Easy *4mi* | Easy *4mi* |
+| **Fri** | Easy *3mi/20min* | Easy *3mi/20-25min* | Easy *4mi/25-30min* | Easy *4mi/30min* |
 | **Sat** | **Regionals** *5mi* | **Regionals** *6mi* | **Regionals** *6mi* | **Regionals** *6mi* |
 | **Sun** | **REST** | **REST** | **REST** | **REST** |
 
@@ -367,13 +364,13 @@
 
 *The pinnacle of the season — all training has led to this moment.*
 
-| Day | Blue (20 mi) | White (22 mi) | Green (28 mi) | Gold (30 mi) |
+| Day | Blue (22 mi) | White (23.5 mi) | Green (29 mi) | Gold (31 mi) |
 |:----|:---|:---|:---|:---|
 | **Mon** | Easy *3mi* | Easy *3.5mi* | Easy *4.5mi* | Easy *5mi* |
 | **Tue** | **3x1000m@T w/1:00 + 4x200m@R** *4mi* | **4x1000m@T w/1:00 + 4x200m@R** *4mi* | **5x1000m@T w/1:00 + 4-6x200m@R** *5.5mi* | **6x1000m@T w/1:00 + 4-6x200m@R** *6mi* |
 | **Wed** | Easy *3mi* | Easy *3mi* | Easy *4mi* | Easy *4.5mi* |
 | **Thu** | **10x200m@R w/2:00** *4mi* | **12x200m@R w/2:00** *4mi* | **14x200m@R w/2:00** *5mi* | **16x200m@R w/2:00** *5.5mi* |
-| **Fri** | Easy *1mi* | Easy *1.5mi* | Easy *3mi* | Easy *3mi* |
+| **Fri** | Easy *3mi/20min* | Easy *3mi/20-25min* | Easy *4mi/25-30min* | Easy *4mi/30min* |
 | **Sat** | **STATE** *5mi* | **STATE** *6mi* | **STATE** *6mi* | **STATE** *6mi* |
 | **Sun** | **REST** | **REST** | **REST** | **REST** |
 
@@ -386,26 +383,26 @@
 | 1 | May 25–31 | — | 18 | 22 | 28 | Early Summer Intro |
 | 2 | June 1–7 | — | 20 | 25 | 32 | Early Summer (Fartlek 1) |
 | 3 | June 8–14 | — | 22 | 28 | 36 | Early Summer (Progression 1) |
-| 4 | June 15–21 | 12 | 24 | 31 | 40 | Blue Begins (Fartlek 2) |
-| 5 | June 22–28 | 14 | 26 | 34 | 43 | Build (Progression 2) |
+| 4 | June 15–21 | 14 | 24 | 31 | 40 | Blue Begins (Fartlek 2) |
+| 5 | June 22–28 | 16 | 26 | 34 | 43 | Build (Progression 2) |
 | 6 | June 29–July 5 | 16 | 28 | 36 | 46 | Build (Fartlek 3) |
 | 7 | July 6–12 | 18 | 30 | 38 | 48 | Final Build (Progression 3) |
-| 8 | July 13–19 | 20 | 32 | 40 | 51 | Mandatory Practice Begins |
+| 8 | July 13–19 | 20 | 32 | 40 | 49.5 | Mandatory Practice Begins |
 | 9 | July 20–26 | 20 | 34 | 44 | 53 | Time Trial Week |
-| 10 | July 27–Aug 2 | 21 | 35 | 45 | **55** | Summer Peak |
+| 10 | July 27–Aug 2 | 21 | 35 | 45 | 55 | Summer Peak |
 | 11 | Aug 3–9 | 22 | 30 | 37 | 43 | Recovery + Alumni Run |
-| 12 | Aug 10–16 | 24 | 34 | 43 | **55** | Pre-Season Adjustment |
-| 13 | Aug 17–23 | 25 | 34 | 45 | **55** | Peak Mileage + Tiger Run |
-| 14 | Aug 24–30 | 24 | 31 | 37 | 42 | Time Trial Tue + Long Run Sat |
-| 15 | Aug 31–Sep 6 | 23 | 28 | 35 | 40 | Run for the Gold |
-| 16 | Sep 7–13 | 25 | 33 | 38 | 41 | Long Run Week (No Race) |
-| 17 | Sep 14–20 | 25 | 35 | 45 | 53 | Southern Showcase |
-| 18 | Sep 21–27 | 25 | 32 | 40 | 45 | ✈️ Palatine Invitational |
-| 19 | Sep 28–Oct 4 | 25 | 32 | 40 | 50 | Louisville XC Classic |
-| 20 | Oct 5–11 | 24 | 28 | 38 | 45 | Haunted Woods XC |
-| 21 | Oct 12–18 | 21 | 24 | 32 | 35 | Major Taper |
-| 22 | Oct 19–25 | 21 | 22 | 30 | 33 | Regional Championships |
-| 23 | Oct 26–Nov 1 | 20 | 22 | 28 | 30 | 🏆 STATE |
+| 12 | Aug 10–16 | 24 | 34 | 43 | 55 | Pre-Season Adjustment |
+| 13 | Aug 17–23 | 24 | 29 | 35 | 40 | Peak Mileage + Tiger Run |
+| 14 | Aug 24–30 | 24 | 30 | 37 | 43 | Time Trial Tue + Long Run Sat |
+| 15 | Aug 31–Sep 6 | 24.5 | 28 | 33.5 | 36.5 | Run for the Gold |
+| 16 | Sep 7–13 | 25 | 31.5 | 38 | 43 | Long Run Week (No Race) |
+| 17 | Sep 14–20 | 26 | 31.5 | 38 | 42.5 | Southern Showcase |
+| 18 | Sep 21–27 | 25 | 30 | 35.5 | 39 | ✈️ Palatine Invitational |
+| 19 | Sep 28–Oct 4 | 23.5 | 28.5 | 34 | 38.5 | Louisville XC Classic |
+| 20 | Oct 5–11 | 23 | 27 | 36 | 42 | Haunted Woods XC |
+| 21 | Oct 12–18 | 17.5 | 21.5 | 28.5 | 32.5 | Major Taper |
+| 22 | Oct 19–25 | 21 | 24.5 | 29 | 31.5 | Regional Championships |
+| 23 | Oct 26–Nov 1 | 22 | 23.5 | 29 | 31 | 🏆 STATE |
 
 ---
 
