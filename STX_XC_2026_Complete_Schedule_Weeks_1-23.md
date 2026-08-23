@@ -214,7 +214,7 @@
 | Day | Blue (24 mi) | White (30 mi) | Green (37 mi) | Gold (43 mi) |
 |:----|:---|:---|:---|:---|
 | **Mon** | Easy *4mi* | Easy *5mi* | Easy *6mi* | Easy *7mi* |
-| **Tue** | **8x200m@RP/200 steady** *4mi* | **12x200m@RP/200 steady** *5mi* | **16x200m@RP/200 steady** *6mi* | **20x200m@RP/200 steady** *7mi* |
+| **Tue** | **8x200m@RP/200 steady (4 loops)** *4.5mi* | **10x200m@RP/200 steady (5 loops)** *5mi* | **12x200m@RP/200 steady (6 loops)** *6mi* | **14x200m@RP/200 steady (7 loops)** *7mi* |
 | **Wed** | Easy *3mi* | Easy *4mi* | Easy *5mi* | Easy *6mi* |
 | **Thu** | **2x1mi@T w/1:00 + 4x200m@R** *4mi* | **3x1mi@T w/1:00 + 4x200m@R** *5mi* | **4x1mi@T w/1:00 + 4x200m@R** *6mi* | **4x1mi@T w/1:00 + 4-6x200m@R** *7mi* |
 | **Fri** | Easy *3mi/20min* | Easy *3mi/20-25min* | Easy *4mi/25-30min* | Easy *4mi/30min* |
