@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5K Time / 200m Pace Chart</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background-color: #f5f5f5;
+        color: #333;
+        padding: 20px;
+    }
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+    .header {
+        background: linear-gradient(135deg, #003366, #004488);
+        color: white;
+        padding: 25px 20px;
+        text-align: center;
+    }
+    .header h1 {
+        font-size: 1.7rem;
+        margin-bottom: 6px;
+    }
+    .header p {
+        font-size: 0.95rem;
+        opacity: 0.9;
+    }
+    .content {
+        padding: 25px;
+    }
+    .print-btn {
+        display: block;
+        margin: 0 auto 20px auto;
+        padding: 10px 20px;
+        background: #2e7d32;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    .print-btn:hover { background: #1b5e20; }
+    .tables {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    table {
+        border-collapse: collapse;
+        min-width: 160px;
+    }
+    th, td {
+        padding: 6px 14px;
+        text-align: center;
+        border-bottom: 1px solid #eee;
+        font-size: 0.95rem;
+    }
+    th {
+        background: #e3f2fd;
+        color: #1565c0;
+        font-weight: 700;
+        border-bottom: 2px solid #1565c0;
+    }
+    tr:nth-child(even) td { background: #fafafa; }
+    .footer {
+        text-align: center;
+        margin-top: 25px;
+        padding-top: 15px;
+        border-top: 1px solid #ddd;
+        color: #777;
+        font-size: 0.85rem;
+    }
+    @media print {
+        body { background: white; padding: 0; }
+        .print-btn { display: none; }
+        .container { box-shadow: none; }
+    }
+    @media (max-width: 600px) {
+        .tables { flex-direction: column; align-items: center; }
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>5K Time ↔ 200m Pace Chart</h1>
+        <p>200m splits in 1-second increments &middot; covers 15:00–30:00 5K range</p>
+    </div>
+    <div class="content">
+        <button class="print-btn" onclick="window.print()">🖨️ Print</button>
+        <div class="tables">
+            <table>
+                <tr><th>200m</th><th>5K Time</th></tr>
+                <tr><td>36s</td><td>15:00</td></tr>
+                <tr><td>37s</td><td>15:25</td></tr>
+                <tr><td>38s</td><td>15:50</td></tr>
+                <tr><td>39s</td><td>16:15</td></tr>
+                <tr><td>40s</td><td>16:40</td></tr>
+                <tr><td>41s</td><td>17:05</td></tr>
+                <tr><td>42s</td><td>17:30</td></tr>
+                <tr><td>43s</td><td>17:55</td></tr>
+                <tr><td>44s</td><td>18:20</td></tr>
+                <tr><td>45s</td><td>18:45</td></tr>
+                <tr><td>46s</td><td>19:10</td></tr>
+                <tr><td>47s</td><td>19:35</td></tr>
+                <tr><td>48s</td><td>20:00</td></tr>
+            </table>
+            <table>
+                <tr><th>200m</th><th>5K Time</th></tr>
+                <tr><td>49s</td><td>20:25</td></tr>
+                <tr><td>50s</td><td>20:50</td></tr>
+                <tr><td>51s</td><td>21:15</td></tr>
+                <tr><td>52s</td><td>21:40</td></tr>
+                <tr><td>53s</td><td>22:05</td></tr>
+                <tr><td>54s</td><td>22:30</td></tr>
+                <tr><td>55s</td><td>22:55</td></tr>
+                <tr><td>56s</td><td>23:20</td></tr>
+                <tr><td>57s</td><td>23:45</td></tr>
+                <tr><td>58s</td><td>24:10</td></tr>
+                <tr><td>59s</td><td>24:35</td></tr>
+                <tr><td>60s</td><td>25:00</td></tr>
+            </table>
+            <table>
+                <tr><th>200m</th><th>5K Time</th></tr>
+                <tr><td>61s</td><td>25:25</td></tr>
+                <tr><td>62s</td><td>25:50</td></tr>
+                <tr><td>63s</td><td>26:15</td></tr>
+                <tr><td>64s</td><td>26:40</td></tr>
+                <tr><td>65s</td><td>27:05</td></tr>
+                <tr><td>66s</td><td>27:30</td></tr>
+                <tr><td>67s</td><td>27:55</td></tr>
+                <tr><td>68s</td><td>28:20</td></tr>
+                <tr><td>69s</td><td>28:45</td></tr>
+                <tr><td>70s</td><td>29:10</td></tr>
+                <tr><td>71s</td><td>29:35</td></tr>
+                <tr><td>72s</td><td>30:00</td></tr>
+            </table>
+        </div>
+    </div>
+    <div class="footer">St. Xavier High School Cross Country &amp; Track &middot; 5K = 25 &times; 200m</div>
+</div>
+</body>
+</html>
