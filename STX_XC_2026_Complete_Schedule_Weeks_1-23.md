@@ -225,13 +225,15 @@
 
 ## **WEEK 15: AUGUST 31 – SEPTEMBER 6, 2026** — Run for the Gold
 
+*Practices moved to AM due to heat*
+
 | Day | Blue (24.5 mi) | White (28 mi) | Green (33.5 mi) | Gold (36.5 mi) |
 |:----|:---|:---|:---|:---|
-| **Mon** | Easy *4mi* | Easy *5mi* | Easy *6mi* | Easy *7mi* |
-| **Tue** | **4x800m@I w/2:30** *4mi* | **6x800m@I w/2:30** *5mi* | **7x800m@I w/2:30** *5.5mi* | **8x800m@I w/2:30** *6mi* |
-| **Wed** | Easy *3mi* | Easy *4mi* | Easy *5mi* | Easy *6mi* |
-| **Thu** | **5x1000m@T w/1:00 + 4x200m@R** *5.5mi* | **6x1000m@T w/1:00 + 5x200m@R** *6.5mi* | **7x1000m@T w/1:00 + 6x200m@R** *7mi* | **8x1000m@T w/1:00 + 6x200m@R** *7.5mi* |
-| **Fri** | Easy *3mi/20min* | Easy *3mi/20-25min* | Easy *4mi/25-30min* | Easy *4mi/30min* |
+| **Mon** | Easy *35min + 6x100m strides* | Easy *40min + 6x100m strides* | Easy *45min + 6x100m strides* | Easy *50min + 6x100m strides* |
+| **Tue** | **4x800m@I w/2:30** *4mi* | **5x800m@I w/2:30** *5mi* | **6x800m@I w/2:30** *5.5mi* | **7x800m@I w/2:30** *6mi* |
+| **Wed** | Easy *30min + 6x100m strides* | Easy *35min + 6x100m strides* | Easy *40min + 6x100m strides* | Easy *45min + 6x100m strides* |
+| **Thu** | **5x1000m@T w/1:00** *5.5mi* | **6x1000m@T w/1:00** *6.5mi* | **7x1000m@T w/1:00** *7mi* | **8x1000m@T w/1:00** *7.5mi* |
+| **Fri** | Easy *20min* | Easy *25min* | Easy *30min* | Easy *30min* |
 | **Sat** | **Run for the Gold** *5mi* | **Run for the Gold** *5mi* | **Run for the Gold** *6mi* | **Run for the Gold** *6mi* |
 | **Sun** | **REST** | **REST** | **REST** | **REST** |
 

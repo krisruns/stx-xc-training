@@ -103,6 +103,37 @@ DAY_FULL = {
 GROUP_DISPLAY_ORDER = ["Gold", "Green", "White", "Blue"]
 GROUP_CLASS = {"Gold": "gold", "Green": "green", "White": "white", "Blue": "blue"}
 
+# Minutes-per-mile easy pace used to *estimate* mileage for cells that only
+# give a duration (e.g. "Easy *35min + 6x100m strides*") with no explicit
+# "Xmi". Edit these if the group paces change.
+PACE_MIN_PER_MILE = {"Gold": 7.5, "Green": 8.0, "White": 8.5, "Blue": 9.0}
+
+# Which modal (defined in MODAL_BLOCK below) each workout type's info icon
+# opens. "rest" has no icon/modal. Edit MODAL_BLOCK's content directly to
+# change what a modal says; edit this dict if you rename/add a modal.
+MODAL_KEY_BY_TYPE = {
+    "easy": "easy-run",
+    "long_run": "long-run",
+    "race": "race-day",
+    # "quality" isn't listed here - it's split further into subtypes
+    # (threshold/interval/repetition/fartlek/progression/hill repeats)
+    # by classify_quality_subtype() / MODAL_KEY_BY_QUALITY_SUBTYPE below.
+}
+
+# Which modal a "quality" workout's info icon opens depends on which kind
+# of quality session it is - see classify_quality_subtype(). Anything that
+# doesn't match a specific subtype falls back to the generic
+# "quality-workout" modal.
+MODAL_KEY_BY_QUALITY_SUBTYPE = {
+    "threshold": "threshold",
+    "interval": "interval",
+    "repetition": "repetition",
+    "fartlek": "fartlek",
+    "progression": "progression",
+    "hill_repeats": "hill-repeats",
+    "quality": "quality-workout",
+}
+
 RACE_KEYWORDS = [
     "race", "trial", "invitational", "classic", "showcase", "regional",
     "championships", "meet", "tiger run", "alumni run", "run for the gold",
@@ -472,6 +503,186 @@ MODAL_BLOCK = """    <div id="modal-easy-run" class="modal">
             <div class="modal-section"><h3>Pace</h3><p>E pace from chart, conversational</p></div>
             <div class="modal-section"><h3>Duration</h3><p>varies</p></div>
         </div>
+    </div>
+    <div id="modal-long-run" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('long-run')">&times;</span>
+            <h2>Long Run</h2>
+
+            <div class="modal-section">
+                <h3>Overview</h3>
+                <p>Extended aerobic run to build endurance and mileage base - the longest run of the week.</p>
+            </div>
+            <div class="modal-section">
+                <h3>Key Points</h3>
+                <ul class="key-points">
+                    <li>• Steady, controlled effort throughout</li>
+<li>• Fuel/hydrate as needed for runs over ~60 minutes</li>
+                </ul>
+            </div>
+            <div class="modal-section"><h3>Pace</h3><p>Easy to Marathon pace from chart</p></div>
+            <div class="modal-section"><h3>Duration</h3><p>varies</p></div>
+        </div>
+    </div>
+    <div id="modal-threshold" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('threshold')">&times;</span>
+            <h2>Threshold</h2>
+
+            <div class="modal-section">
+                <h3>Overview</h3>
+                <p>Steady, prolonged/tempo runs (sometimes called cruise intervals), comfortably hard - roughly 15K to half-marathon race effort.</p>
+            </div>
+            <div class="modal-section">
+                <h3>Key Points</h3>
+                <ul class="key-points">
+                    <li>• Intensity: ~83-88% max VO2, ~88-92% max heart rate</li>
+<li>• Purpose: builds speed endurance</li>
+                </ul>
+            </div>
+            <div class="modal-section"><h3>Pace</h3><p>@T - Threshold pace from chart</p></div>
+            <div class="modal-section"><h3>Duration</h3><p>varies</p></div>
+        </div>
+    </div>
+    <div id="modal-interval" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('interval')">&times;</span>
+            <h2>Interval</h2>
+
+            <div class="modal-section">
+                <h3>Overview</h3>
+                <p>maxVO2 intervals - "high intensity" but not all-out, sustainable for 10-12 minutes in a serious race. Roughly 3K-5K race effort.</p>
+            </div>
+            <div class="modal-section">
+                <h3>Key Points</h3>
+                <ul class="key-points">
+                    <li>• Usually 3-5 min per rep (800m-1k), with equal recovery</li>
+<li>• Purpose: stress aerobic power (maxVO2) - takes ~2 min to hit maxVO2; after ~5 min the body shifts anaerobic</li>
+                </ul>
+            </div>
+            <div class="modal-section"><h3>Pace</h3><p>@I - Interval pace from chart (~95-100% max HR), or @RP - current race pace</p></div>
+            <div class="modal-section"><h3>Duration</h3><p>varies</p></div>
+        </div>
+    </div>
+    <div id="modal-repetition" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('repetition')">&times;</span>
+            <h2>Repetition</h2>
+
+            <div class="modal-section">
+                <h3>Overview</h3>
+                <p>Race (and faster) pace reps and strides - mile pace or faster, for neuromuscular power.</p>
+            </div>
+            <div class="modal-section">
+                <h3>Key Points</h3>
+                <ul class="key-points">
+                    <li>• FAST but not HARD - rest should allow full recovery between reps</li>
+<li>• Purpose: improve speed, economy, and efficiency (running relaxed)</li>
+                </ul>
+            </div>
+            <div class="modal-section"><h3>Pace</h3><p>@R - Repetition pace from chart</p></div>
+            <div class="modal-section"><h3>Duration</h3><p>varies</p></div>
+        </div>
+    </div>
+    <div id="modal-fartlek" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('fartlek')">&times;</span>
+            <h2>Fartlek</h2>
+
+            <div class="modal-section">
+                <h3>Overview</h3>
+                <p>"Speed play" - controlled surges mixed into a continuous run, alternating "on" and "steady" segments.</p>
+            </div>
+            <div class="modal-section">
+                <h3>Key Points</h3>
+                <ul class="key-points">
+                    <li>• "on" = controlled surge at roughly 5K-10K effort</li>
+<li>• "steady" = comfortable recovery pace (not walking)</li>
+                </ul>
+            </div>
+            <div class="modal-section"><h3>Pace</h3><p>Effort-based, per the on/steady cues above</p></div>
+            <div class="modal-section"><h3>Duration</h3><p>varies</p></div>
+        </div>
+    </div>
+    <div id="modal-progression" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('progression')">&times;</span>
+            <h2>Progression</h2>
+
+            <div class="modal-section">
+                <h3>Overview</h3>
+                <p>A continuous run that gradually shifts from easy to faster effort over set time blocks.</p>
+            </div>
+            <div class="modal-section">
+                <h3>Key Points</h3>
+                <ul class="key-points">
+                    <li>• All groups run the same time structure, at their own appropriate effort level</li>
+<li>• Pace by feel, not by watch</li>
+                </ul>
+            </div>
+            <div class="modal-section"><h3>Pace</h3><p>Effort-based - progresses from easy to faster</p></div>
+            <div class="modal-section"><h3>Duration</h3><p>varies</p></div>
+        </div>
+    </div>
+    <div id="modal-hill-repeats" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('hill-repeats')">&times;</span>
+            <h2>Hill Repeats</h2>
+
+            <div class="modal-section">
+                <h3>Overview</h3>
+                <p>Repeated hard efforts up a hill, with a walk/jog recovery back down between reps.</p>
+            </div>
+            <div class="modal-section">
+                <h3>Key Points</h3>
+                <ul class="key-points">
+                    <li>• Strong arm drive and knee lift - don't overstride</li>
+<li>• Recovery is the walk/jog back down the hill</li>
+                </ul>
+            </div>
+            <div class="modal-section"><h3>Pace</h3><p>Hard, controlled effort - not a sprint</p></div>
+            <div class="modal-section"><h3>Duration</h3><p>varies</p></div>
+        </div>
+    </div>
+    <div id="modal-quality-workout" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('quality-workout')">&times;</span>
+            <h2>Quality Workout</h2>
+
+            <div class="modal-section">
+                <h3>Overview</h3>
+                <p>Structured effort work to build speed, threshold, or race-specific fitness.</p>
+            </div>
+            <div class="modal-section">
+                <h3>Key Points</h3>
+                <ul class="key-points">
+                    <li>• Warm up thoroughly before starting</li>
+<li>• Hit the prescribed effort/pace for each rep, with full or prescribed recovery between</li>
+                </ul>
+            </div>
+            <div class="modal-section"><h3>Pace</h3><p>Interval / Threshold / Repetition pace from chart, per the workout</p></div>
+            <div class="modal-section"><h3>Duration</h3><p>varies</p></div>
+        </div>
+    </div>
+    <div id="modal-race-day" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal('race-day')">&times;</span>
+            <h2>Race Day</h2>
+
+            <div class="modal-section">
+                <h3>Overview</h3>
+                <p>Competition effort - execute the race plan and compete.</p>
+            </div>
+            <div class="modal-section">
+                <h3>Key Points</h3>
+                <ul class="key-points">
+                    <li>• Follow the race-day warmup routine</li>
+<li>• Start controlled, finish strong</li>
+                </ul>
+            </div>
+            <div class="modal-section"><h3>Pace</h3><p>Race effort, per current fitness</p></div>
+            <div class="modal-section"><h3>Duration</h3><p>Race distance</p></div>
+        </div>
     </div>"""
 
 
@@ -495,19 +706,22 @@ def parse_cell(raw):
 
 
 def extract_miles_minutes(qty_text):
-    """Parse a cell's italic quantity text into (miles, minutes_text).
+    """Parse a cell's italic quantity text into (miles, minutes_text, leftover).
     Handles plain '4mi', and combined mile/time entries like '3mi/20min'
     or '4mi/25-30min' (minutes_text keeps the original '25-30' form).
+    'leftover' is whatever trailing text follows the quantity, e.g. for
+    '4mi + strides' that's 'strides'.
     Uses \\b after 'mi' so a time-only value like '30min shakeout' isn't
     misread as 30 miles (since 'min' starts with 'mi')."""
     if not qty_text:
-        return None, None
+        return None, None, ""
     m = re.match(r"([\d.]+)\s*mi\b(?:\s*/\s*([\d]+(?:\s*-\s*[\d]+)?)\s*min)?", qty_text)
     if not m:
-        return None, None
+        return None, None, ""
     miles = float(m.group(1))
     minutes = m.group(2).replace(" ", "") if m.group(2) else None
-    return miles, minutes
+    leftover = qty_text[m.end():].strip()
+    return miles, minutes, leftover
 
 
 def format_dist(miles, minutes):
@@ -518,6 +732,34 @@ def format_dist(miles, minutes):
     if minutes:
         s += f" / {minutes}min"
     return s
+
+
+def extract_minutes_only(qty_text):
+    """For cells with a duration but no explicit mileage, e.g.
+    '35min + 6x100m strides' or '20-25min', return
+    (pace_minutes, duration_text, leftover):
+      pace_minutes  - the (midpoint) minutes value, used for the mileage estimate
+      duration_text - the original duration text as written, e.g. '35min' or '20-25min'
+      leftover      - whatever trailing text follows, e.g. '+ 6x100m strides'
+    Returns (None, None, "") if there's no leading 'Nmin'/'N-Mmin' to find."""
+    if not qty_text:
+        return None, None, ""
+    m = re.match(r"([\d.]+)(?:\s*-\s*([\d.]+))?\s*min\b", qty_text.strip())
+    if not m:
+        return None, None, ""
+    lo = float(m.group(1))
+    hi = float(m.group(2)) if m.group(2) else lo
+    pace_minutes = (lo + hi) / 2
+    duration_text = qty_text.strip()[:m.end()]
+    leftover = qty_text.strip()[m.end():].strip()
+    return pace_minutes, duration_text, leftover
+
+
+def estimate_miles_from_minutes(minutes, group_name):
+    pace = PACE_MIN_PER_MILE.get(group_name)
+    if pace is None or minutes is None:
+        return None
+    return round(minutes / pace, 1)
 
 
 def is_rest_cell(cell_raw):
@@ -537,13 +779,43 @@ def classify(label, cell_raw):
         return "long_run"
     if "rest" in ll:
         return "rest"
-    if "easy" in ll:
-        return "easy"
     if any(k in ll for k in RACE_KEYWORDS):
         return "race"
+    # Check quality markers before the plain "easy" substring check below -
+    # a Progression label like "5min easy / 15min steady / 5min easy"
+    # contains the word "easy" but is a quality workout, not an easy run.
     if any(k in ll for k in QUALITY_KEYWORDS) or any(p.search(ll) for p in QUALITY_PATTERNS):
         return "quality"
+    if "easy" in ll:
+        return "easy"
     return "easy"
+
+
+def classify_quality_subtype(label):
+    """For a workout already classified as "quality", figure out which
+    kind it is (threshold/interval/repetition/fartlek/progression/hill
+    repeats) so it can get its own info-icon modal. Checked in this order
+    since a single label can contain more than one marker - e.g.
+    "2mi@T + 4x200m@R" is a Threshold run with strides tacked on the end,
+    so @T (the main workout) wins over the trailing @R strides."""
+    if not label:
+        return "quality"
+    ll = label.lower()
+    # "Nx(1:00 on/4:00 steady)" style reps, with or without a "Fartlek"
+    # prefix - some weeks just number the reps without repeating the word.
+    if "fartlek" in ll or re.search(r"\bon\s*/\s*\d+:\d+\s*(off|steady)\b", ll):
+        return "fartlek"
+    if "progression" in ll:
+        return "progression"
+    if "hill" in ll:
+        return "hill_repeats"
+    if re.search(r"@t\b", ll):
+        return "threshold"
+    if re.search(r"@i\b", ll) or re.search(r"@rp\b", ll):
+        return "interval"
+    if re.search(r"@r\b", ll):
+        return "repetition"
+    return "quality"
 
 
 def parse_markdown(md_text):
@@ -633,7 +905,7 @@ def render_items(items):
     return ", ".join(parts)
 
 
-def build_workout(day_abbr, group_name, cell_raw):
+def build_workout(day_abbr, group_name, cell_raw, week_num=None):
     label, qty, plain = parse_cell(cell_raw)
     # Some quality workouts aren't bolded in the source markdown (e.g. a
     # plain "6x200m@RP/200 steady *4mi*" with no ** around it) - fall back
@@ -641,17 +913,48 @@ def build_workout(day_abbr, group_name, cell_raw):
     # instead of defaulting to "easy".
     effective_label = label or (plain if plain else None)
     wtype = classify(effective_label, cell_raw)
-    miles, minutes = extract_miles_minutes(qty)
+    miles, minutes, leftover = extract_miles_minutes(qty)
     dist_txt = format_dist(miles, minutes)
+    is_estimated = False
+    duration_txt = None  # raw duration text when there's no explicit mileage, e.g. "50min"
+
+    if miles is None and wtype in ("easy", "long_run"):
+        # No explicit mileage in the cell (e.g. "Easy *35min + 6x100m
+        # strides*") - estimate it from the duration and the group's easy
+        # pace instead of leaving it blank.
+        est_minutes, duration_txt, leftover = extract_minutes_only(qty)
+        estimated_miles = estimate_miles_from_minutes(est_minutes, group_name)
+        if estimated_miles is not None:
+            miles = estimated_miles
+            is_estimated = True
+            where = f"Week {week_num} " if week_num is not None else ""
+            print(
+                f"INFO: {where}{DAY_FULL.get(day_abbr, day_abbr)} {group_name} - "
+                f"estimated {miles:g} mi from {est_minutes:g} min @ "
+                f"{PACE_MIN_PER_MILE[group_name]:g} min/mi pace "
+                f"(no explicit mileage in source)",
+                file=sys.stderr,
+            )
+        else:
+            duration_txt = None
 
     if wtype == "rest":
         return {
             "type": "rest", "desc": "REST", "pre": None, "post": None,
-            "miles": None, "info_icon": False,
+            "miles": None, "modal": None, "estimated": False,
         }
 
     if wtype == "easy":
-        desc = f"{dist_txt} easy" if dist_txt else (plain or qty or "Easy")
+        # "easy" always sits right after the quantity (miles and/or
+        # duration), with any extra detail (e.g. "+ 6x100m strides")
+        # trailing after that: "50min easy + 6x100m strides".
+        quantity = dist_txt or duration_txt
+        if quantity:
+            desc = f"{quantity} easy" + (f" {leftover}" if leftover else "")
+        elif qty:
+            desc = f"{qty} easy"
+        else:
+            desc = plain or "Easy"
         if day_abbr == "Mon":
             pre = [(REF_FOOT, "Foot Drills"), (REF_WARMUP, "Dynamics"), (None, "Buildups")]
         else:
@@ -659,16 +962,22 @@ def build_workout(day_abbr, group_name, cell_raw):
         post = [(REF_WARMUP, "Strides"), (REF_MOBILITY, "Mobility/Strength A")]
         return {
             "type": "easy", "desc": desc, "pre": render_items(pre), "post": render_items(post),
-            "miles": miles, "info_icon": True,
+            "miles": miles, "modal": MODAL_KEY_BY_TYPE.get(wtype), "estimated": is_estimated,
         }
 
     if wtype == "long_run":
-        desc = f"Long Run {dist_txt}" if dist_txt else (label or "Long Run")
+        quantity = dist_txt or duration_txt
+        if quantity:
+            desc = f"Long Run {quantity}" + (f" {leftover}" if leftover else "")
+        elif qty:
+            desc = f"Long Run {qty}"
+        else:
+            desc = label or "Long Run"
         pre = [(REF_WARMUP, "Awesomizer"), (REF_WARMUP, "Lunge Matrix")]
         post = [(REF_WARMUP, "Strides"), (REF_MOBILITY, "Mobility A"), (None, "24s")]
         return {
             "type": "long_run", "desc": desc, "pre": render_items(pre), "post": render_items(post),
-            "miles": miles, "info_icon": False,
+            "miles": miles, "modal": MODAL_KEY_BY_TYPE.get(wtype), "estimated": is_estimated,
         }
 
     if wtype == "race":
@@ -677,19 +986,22 @@ def build_workout(day_abbr, group_name, cell_raw):
         post = [(REF_WARMUP, "Post Race")]
         return {
             "type": "race", "desc": desc, "pre": render_items(pre), "post": render_items(post),
-            "miles": miles, "info_icon": False,
+            "miles": miles, "modal": MODAL_KEY_BY_TYPE.get(wtype), "estimated": False,
         }
 
     # quality
     desc = label or plain or qty or "Workout"
+    subtype = classify_quality_subtype(effective_label)
     pre = [(REF_WARMUP, "WU"), (REF_WARMUP, "Dynamics"), (None, "stride progression")]
     if re.search(r"@r\b", (effective_label or "").lower()) or "200m" in (effective_label or "").lower():
         post = [(REF_WARMUP, "Strides"), (REF_MOBILITY, "Mobility/Strength A")]
     else:
         post = [(REF_MOBILITY, "Mobility/Strength B")]
     return {
-        "type": "quality", "desc": desc, "pre": render_items(pre), "post": render_items(post),
-        "miles": miles, "info_icon": False,
+        "type": "quality", "subtype": subtype, "desc": desc,
+        "pre": render_items(pre), "post": render_items(post),
+        "miles": miles, "modal": MODAL_KEY_BY_QUALITY_SUBTYPE.get(subtype, "quality-workout"),
+        "estimated": False,
     }
 
 
@@ -708,12 +1020,20 @@ def render_workout_item(group_name, wo):
                         <div class="workout-miles">&mdash;</div>
                     </div>'''
 
-    miles_txt = f'{wo["miles"]:.1f} mi' if wo["miles"] is not None else "&mdash;"
-    info_icon_html = (
-        '<span class="info-icon" onclick="openModal(\'easy-run\')" '
-        'title="Click for workout details">i</span>'
-        if wo["info_icon"] else ""
-    )
+    miles_txt = "&mdash;"
+    miles_title = ""
+    if wo["miles"] is not None:
+        if wo.get("estimated"):
+            miles_txt = f'~{wo["miles"]:.1f} mi'
+            miles_title = ' title="Estimated from the workout duration and easy pace - no explicit mileage in the source schedule"'
+        else:
+            miles_txt = f'{wo["miles"]:.1f} mi'
+    info_icon_html = ""
+    if wo.get("modal"):
+        info_icon_html = (
+            f'<span class="info-icon" onclick="openModal(\'{wo["modal"]}\')" '
+            f'title="Click for workout details">i</span>'
+        )
     pre_html = f'<div class="workout-pre">{wo["pre"]}</div>' if wo["pre"] else ""
     post_html = f'<div class="workout-post">{wo["post"]}</div>' if wo["post"] else ""
 
@@ -727,7 +1047,7 @@ def render_workout_item(group_name, wo):
                             </div>
                             {post_html}
                         </div>
-                        <div class="workout-miles">{miles_txt}</div>
+                        <div class="workout-miles"{miles_title}>{miles_txt}</div>
                     </div>'''
 
 
@@ -738,7 +1058,7 @@ def compute_week_workouts(week):
     computed = {}
     for day_abbr, day_cells in week["days"].items():
         computed[day_abbr] = {
-            group_name: build_workout(day_abbr, group_name, cell_raw)
+            group_name: build_workout(day_abbr, group_name, cell_raw, week_num=week["num"])
             for group_name, cell_raw in day_cells.items()
         }
     return computed
