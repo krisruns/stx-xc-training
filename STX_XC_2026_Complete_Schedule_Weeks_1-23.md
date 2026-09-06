@@ -249,9 +249,9 @@
 |:----|:---|:---|:---|:---|
 | **Mon** | Easy *4mi* | Easy *5mi* | Easy *6mi* | Easy *7mi* |
 | **Tue** | **12x200m@R w/200j** *5mi* | **16x200m@R w/200j** *6mi* | **18x200m@R w/200j** *6.5mi* | **20x200m@R w/200j** *7mi* |
-| **Wed** | Easy *3mi* | Easy *4mi* | Easy *5mi* | Easy *6mi* |
+| **Wed** | Easy *30min + 6x100m strides* | Easy *35min + 6x100m strides* | Easy *40min + 6x100m strides* | Easy *45min + 6x100m strides* |
 | **Thu** | **15min@T + 4x200m@R** *4.5mi* | **20min@T + 5x200m@R** *5.5mi* | **25min@T  + 6x200m@R** *6mi* | **30min@T + 6x200m@R** *7mi* |
-| **Fri** | Easy *3mi/20min* | Easy *3mi/20-25min* | Easy *4mi/25-30min* | Easy *4mi/30min* |
+| **Fri** | Easy *20min* | Easy *25min* | Easy *30min* | Easy *30min* |
 | **Sat** | **Long Run** *6mi* | **Long Run** *8mi* | **Long Run** *10mi* | **Long Run** *12mi* |
 | **Sun** | **REST** | **REST** | **REST** | **REST** |
 
@@ -267,17 +267,15 @@
 | **Tue** | **3x1000m@I w/90s** *4.5mi* | **4x1000m@I w/90s** *6mi* | **5x1000m@I w/90s** *8mi* | **6x1000m@I w/90s** *10mi* |
 | **Wed** | Easy *3mi* | Easy *4mi* | Easy *5mi* | Easy *6mi* |
 | **Thu** | **5x1000m@T w/1:00 + 4x200m@R** *5.5mi* | **6x1000m@T w/1:00 + 5x200m@R** *6.5mi* | **7x1000m@T w/1:00 + 6x200m@R** *7mi* | **8x1000m@T w/1:00 + 6x200m@R** *7.5mi* |
-| **Fri** | Easy *3mi/20min* | Easy *3mi/20-25min* | Easy *4mi/25-30min* | Easy *4mi/30min* |
+| **Fri** | Easy *20min* | Easy *25min* | Easy *30min* | Easy *30min* |
 | **Sat** | **Southern Showcase** *5mi* | **Southern Showcase** *5mi* | **Southern Showcase** *6mi* | **Southern Showcase** *6mi* |
 | **Sun** | *1mi shakeout for racers* | *2mi shakeout for racers** | *2mi shakeout for racers** | *2mi shakeout for racers** |
 
-> **JV — Week 17 (Sat):** Trinity Invitational
 
 ---
 
 ## **WEEK 18: SEPTEMBER 21–27, 2026** — ✈️ Palatine Invitational
 
-*Traveling to Chicago for one of the Midwest's premier invitationals. Sunday = 20–30min shakeout + mobility. Wednesday: easy (unstructured).*
 
 | Day | Blue (25 mi) | White (30 mi) | Green (35.5 mi) | Gold (39 mi) |
 |:----|:---|:---|:---|:---|
