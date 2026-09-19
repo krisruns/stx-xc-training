@@ -25,6 +25,17 @@
         .filter-btn { padding: 8px 16px; margin: 0 5px 5px 0; border: 2px solid #4a7c59; background: white; color: #4a7c59; border-radius: 4px; cursor: pointer; font-size: 0.9rem; transition: all 0.2s; }
         .filter-btn:hover, .filter-btn.active { background: #4a7c59; color: white; }
         
+        /* Varsity / JV split */
+        .squad-filters { margin: -8px 0 20px 0; }
+        .squad-btn { padding: 6px 14px; margin: 0 5px 5px 0; border: 2px solid #1E3A8A; background: white; color: #1E3A8A; border-radius: 16px; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; }
+        .squad-btn:hover, .squad-btn.active { background: #1E3A8A; color: white; }
+        .total-jv { font-size: 0.85rem; font-weight: 600; margin-top: 4px; opacity: 0.85; }
+        .jv-note { background: #E6F0FF; border: 1px solid #4169E1; border-radius: 6px; padding: 10px 15px; margin: 15px 0; font-size: 0.9rem; color: #1E3A8A; }
+        .squad-tag { display: block; width: fit-content; margin-top: 3px; padding: 1px 7px; border-radius: 8px; font-size: 0.62rem; letter-spacing: 0.5px; color: white; }
+        .squad-tag.varsity { background: #2c5530; }
+        .squad-tag.jv { background: #1E3A8A; }
+        .workout-item.jv-row { border-left-style: dashed; }
+
         /* Week Notes Section */
         .week-notes { 
             margin: 25px 0; 
@@ -298,11 +309,11 @@
     </div>
 
     <div class="filters">
-        <button class="filter-btn active" onclick="showAll()">Show All</button>
-        <button class="filter-btn" onclick="filterGroup('Gold')">Gold</button>
-        <button class="filter-btn" onclick="filterGroup('Green')">Green</button>
-        <button class="filter-btn" onclick="filterGroup('White')">White</button>
-        <button class="filter-btn" onclick="filterGroup('Blue')">Blue</button>
+        <button class="filter-btn active" data-group="" onclick="showAll()">Show All</button>
+        <button class="filter-btn" data-group="Gold" onclick="filterGroup('Gold')">Gold</button>
+        <button class="filter-btn" data-group="Green" onclick="filterGroup('Green')">Green</button>
+        <button class="filter-btn" data-group="White" onclick="filterGroup('White')">White</button>
+        <button class="filter-btn" data-group="Blue" onclick="filterGroup('Blue')">Blue</button>
     </div>
 
     <div class="day">
@@ -312,7 +323,7 @@
         <div class="day-content">
                 <div class="section">
                     <div class="section-label">WORKOUT</div>
-                    <div class="workout-item gold" data-group="Gold">
+                    <div class="workout-item gold" data-group="Gold" data-squad="all">
                         <div class="group-badge gold">Gold</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Foot_Drills_Reference.html" target="_blank" class="ref-link">Foot Drills</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, Buildups</div>
@@ -324,7 +335,7 @@
                         </div>
                         <div class="workout-miles">5.0 mi</div>
                     </div>
-                    <div class="workout-item green" data-group="Green">
+                    <div class="workout-item green" data-group="Green" data-squad="all">
                         <div class="group-badge green">Green</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Foot_Drills_Reference.html" target="_blank" class="ref-link">Foot Drills</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, Buildups</div>
@@ -336,7 +347,7 @@
                         </div>
                         <div class="workout-miles">4.0 mi</div>
                     </div>
-                    <div class="workout-item white" data-group="White">
+                    <div class="workout-item white" data-group="White" data-squad="all">
                         <div class="group-badge white">White</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Foot_Drills_Reference.html" target="_blank" class="ref-link">Foot Drills</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, Buildups</div>
@@ -348,7 +359,7 @@
                         </div>
                         <div class="workout-miles">3.0 mi</div>
                     </div>
-                    <div class="workout-item blue" data-group="Blue">
+                    <div class="workout-item blue" data-group="Blue" data-squad="all">
                         <div class="group-badge blue">Blue</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Foot_Drills_Reference.html" target="_blank" class="ref-link">Foot Drills</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, Buildups</div>
@@ -370,7 +381,7 @@
         <div class="day-content">
                 <div class="section">
                     <div class="section-label">WORKOUT</div>
-                    <div class="workout-item gold" data-group="Gold">
+                    <div class="workout-item gold" data-group="Gold" data-squad="all">
                         <div class="group-badge gold">Gold</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
@@ -382,7 +393,7 @@
                         </div>
                         <div class="workout-miles">6.5 mi</div>
                     </div>
-                    <div class="workout-item green" data-group="Green">
+                    <div class="workout-item green" data-group="Green" data-squad="all">
                         <div class="group-badge green">Green</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
@@ -394,7 +405,7 @@
                         </div>
                         <div class="workout-miles">6.0 mi</div>
                     </div>
-                    <div class="workout-item white" data-group="White">
+                    <div class="workout-item white" data-group="White" data-squad="all">
                         <div class="group-badge white">White</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
@@ -406,7 +417,7 @@
                         </div>
                         <div class="workout-miles">4.5 mi</div>
                     </div>
-                    <div class="workout-item blue" data-group="Blue">
+                    <div class="workout-item blue" data-group="Blue" data-squad="all">
                         <div class="group-badge blue">Blue</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
@@ -428,7 +439,7 @@
         <div class="day-content">
                 <div class="section">
                     <div class="section-label">WORKOUT</div>
-                    <div class="workout-item gold" data-group="Gold">
+                    <div class="workout-item gold" data-group="Gold" data-squad="all">
                         <div class="group-badge gold">Gold</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
@@ -440,7 +451,7 @@
                         </div>
                         <div class="workout-miles">5.0 mi</div>
                     </div>
-                    <div class="workout-item green" data-group="Green">
+                    <div class="workout-item green" data-group="Green" data-squad="all">
                         <div class="group-badge green">Green</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
@@ -452,7 +463,7 @@
                         </div>
                         <div class="workout-miles">4.0 mi</div>
                     </div>
-                    <div class="workout-item white" data-group="White">
+                    <div class="workout-item white" data-group="White" data-squad="all">
                         <div class="group-badge white">White</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
@@ -464,7 +475,7 @@
                         </div>
                         <div class="workout-miles">3.0 mi</div>
                     </div>
-                    <div class="workout-item blue" data-group="Blue">
+                    <div class="workout-item blue" data-group="Blue" data-squad="all">
                         <div class="group-badge blue">Blue</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
@@ -486,7 +497,7 @@
         <div class="day-content">
                 <div class="section">
                     <div class="section-label">WORKOUT</div>
-                    <div class="workout-item gold" data-group="Gold">
+                    <div class="workout-item gold" data-group="Gold" data-squad="all">
                         <div class="group-badge gold">Gold</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
@@ -498,7 +509,7 @@
                         </div>
                         <div class="workout-miles">7.0 mi</div>
                     </div>
-                    <div class="workout-item green" data-group="Green">
+                    <div class="workout-item green" data-group="Green" data-squad="all">
                         <div class="group-badge green">Green</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
@@ -510,7 +521,7 @@
                         </div>
                         <div class="workout-miles">6.5 mi</div>
                     </div>
-                    <div class="workout-item white" data-group="White">
+                    <div class="workout-item white" data-group="White" data-squad="all">
                         <div class="group-badge white">White</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
@@ -522,7 +533,7 @@
                         </div>
                         <div class="workout-miles">5.0 mi</div>
                     </div>
-                    <div class="workout-item blue" data-group="Blue">
+                    <div class="workout-item blue" data-group="Blue" data-squad="all">
                         <div class="group-badge blue">Blue</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
@@ -544,7 +555,7 @@
         <div class="day-content">
                 <div class="section">
                     <div class="section-label">WORKOUT</div>
-                    <div class="workout-item gold" data-group="Gold">
+                    <div class="workout-item gold" data-group="Gold" data-squad="all">
                         <div class="group-badge gold">Gold</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
@@ -556,7 +567,7 @@
                         </div>
                         <div class="workout-miles">4.0 mi</div>
                     </div>
-                    <div class="workout-item green" data-group="Green">
+                    <div class="workout-item green" data-group="Green" data-squad="all">
                         <div class="group-badge green">Green</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
@@ -568,7 +579,7 @@
                         </div>
                         <div class="workout-miles">4.0 mi</div>
                     </div>
-                    <div class="workout-item white" data-group="White">
+                    <div class="workout-item white" data-group="White" data-squad="all">
                         <div class="group-badge white">White</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
@@ -580,7 +591,7 @@
                         </div>
                         <div class="workout-miles">3.0 mi</div>
                     </div>
-                    <div class="workout-item blue" data-group="Blue">
+                    <div class="workout-item blue" data-group="Blue" data-squad="all">
                         <div class="group-badge blue">Blue</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">WU</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Dynamics</a>, stride progression</div>
@@ -602,7 +613,7 @@
         <div class="day-content">
                 <div class="section">
                     <div class="section-label">WORKOUT</div>
-                    <div class="workout-item gold" data-group="Gold">
+                    <div class="workout-item gold" data-group="Gold" data-squad="all">
                         <div class="group-badge gold">Gold</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Awesomizer</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Lunge Matrix</a></div>
@@ -614,7 +625,7 @@
                         </div>
                         <div class="workout-miles">10.0 mi</div>
                     </div>
-                    <div class="workout-item green" data-group="Green">
+                    <div class="workout-item green" data-group="Green" data-squad="all">
                         <div class="group-badge green">Green</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Awesomizer</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Lunge Matrix</a></div>
@@ -626,7 +637,7 @@
                         </div>
                         <div class="workout-miles">8.0 mi</div>
                     </div>
-                    <div class="workout-item white" data-group="White">
+                    <div class="workout-item white" data-group="White" data-squad="all">
                         <div class="group-badge white">White</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Awesomizer</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Lunge Matrix</a></div>
@@ -638,7 +649,7 @@
                         </div>
                         <div class="workout-miles">6.0 mi</div>
                     </div>
-                    <div class="workout-item blue" data-group="Blue">
+                    <div class="workout-item blue" data-group="Blue" data-squad="all">
                         <div class="group-badge blue">Blue</div>
                         <div class="workout-details">
                             <div class="workout-pre"><a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Awesomizer</a>, <a href="STX_XC_Movement___Warmup_Reference.html" target="_blank" class="ref-link">Lunge Matrix</a></div>
@@ -660,28 +671,28 @@
         <div class="day-content">
                 <div class="section">
                     <div class="section-label">WORKOUT</div>
-                    <div class="workout-item gold" data-group="Gold">
+                    <div class="workout-item gold" data-group="Gold" data-squad="all">
                         <div class="group-badge gold">Gold</div>
                         <div class="workout-details">
                             <div class="workout-desc"><span>REST</span></div>
                         </div>
                         <div class="workout-miles">&mdash;</div>
                     </div>
-                    <div class="workout-item green" data-group="Green">
+                    <div class="workout-item green" data-group="Green" data-squad="all">
                         <div class="group-badge green">Green</div>
                         <div class="workout-details">
                             <div class="workout-desc"><span>REST</span></div>
                         </div>
                         <div class="workout-miles">&mdash;</div>
                     </div>
-                    <div class="workout-item white" data-group="White">
+                    <div class="workout-item white" data-group="White" data-squad="all">
                         <div class="group-badge white">White</div>
                         <div class="workout-details">
                             <div class="workout-desc"><span>REST</span></div>
                         </div>
                         <div class="workout-miles">&mdash;</div>
                     </div>
-                    <div class="workout-item blue" data-group="Blue">
+                    <div class="workout-item blue" data-group="Blue" data-squad="all">
                         <div class="group-badge blue">Blue</div>
                         <div class="workout-details">
                             <div class="workout-desc"><span>REST</span></div>
@@ -893,27 +904,43 @@
     </div>
 
     <script>
-        let currentFilter = null;
-        
+        let currentFilter = null;   // selected group, or null for all groups
+        let currentSquad = 'all';   // 'all' | 'varsity' | 'jv'
+
+        function applyFilters() {
+            document.querySelectorAll('.workout-item').forEach(item => {
+                const groupOk = currentFilter === null || item.dataset.group === currentFilter;
+                const squad = item.dataset.squad || 'all';
+                const squadOk = currentSquad === 'all' || squad === 'all' || squad === currentSquad;
+                item.classList.toggle('hidden', !(groupOk && squadOk));
+            });
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.toggle('active', (btn.dataset.group || null) === currentFilter);
+            });
+            document.querySelectorAll('.squad-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.squad === currentSquad);
+            });
+            document.querySelectorAll('.total').forEach(t => {
+                t.classList.toggle('active', currentFilter !== null && t.id === 'total-' + currentFilter);
+            });
+        }
+
         function filterGroup(group) {
             currentFilter = group;
-            document.querySelectorAll('.workout-item').forEach(item => {
-                item.classList.toggle('hidden', item.dataset.group !== group);
-            });
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            document.querySelectorAll('.total').forEach(t => t.classList.remove('active'));
-            document.getElementById('total-' + group).classList.add('active');
+            applyFilters();
         }
-        
+
+        function filterSquad(squad) {
+            currentSquad = squad;
+            applyFilters();
+        }
+
         function showAll() {
             currentFilter = null;
-            document.querySelectorAll('.workout-item').forEach(item => item.classList.remove('hidden'));
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelector('.filter-btn').classList.add('active');
-            document.querySelectorAll('.total').forEach(t => t.classList.remove('active'));
+            currentSquad = 'all';
+            applyFilters();
         }
-        
+
         function openModal(workoutId) {
             const modal = document.getElementById('modal-' + workoutId);
             if (modal) {

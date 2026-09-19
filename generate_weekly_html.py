@@ -62,11 +62,14 @@ Notes / assumptions (read this if a week looks off):
                           (race, trial, invitational, classic, showcase,
                           regional, championships, meet, tiger run,
                           alumni run, run for the gold, haunted woods,
-                          palatine, state)
+                          palatine, state, champions, nationals, hoka)
       Quality/Workout -> bold label with rep/pace patterns
                           (fartlek, progression, hill repeats, NxM, @T/@I/@R,
                           distances like 800m/1000m/1200m/1600m/200m/300m/400m)
       Easy            -> everything else (default)
+      TBD             -> label is/contains "TBD" (e.g. **Workout TBD**). Shown as a
+                          placeholder row with no routines. Add *Nmi* if you know the
+                          mileage; if not, the week total that includes it gets a "+".
   - Pre/post routine tags are assigned by (day-of-week, type):
         Monday + easy      -> Foot Drills, Dynamics, Buildups / Strides, Mobility/Strength A
         other day + easy   -> WU, Dynamics, stride progression / Strides, Mobility/Strength A
@@ -79,6 +82,26 @@ Notes / assumptions (read this if a week looks off):
     These rules were reverse-engineered from the one hand-built example
     (Week 13) and are easy to edit below in `build_workout()` if St. X
     coaches want different wording.
+  - Varsity vs JV workouts (optional, per week). The main table in a week is
+    the Varsity / default schedule. When JV does something different on a
+    day, add a second table directly under the main one, introduced by a
+    line that starts with "#### JV Overrides" (or "**JV Overrides**"):
+
+        #### JV Overrides
+
+        | Day | Blue (27 mi) | White (33 mi) | Green (39 mi) | Gold (43.5 mi) |
+        |:----|:---|:---|:---|:---|
+        | **Tue** | Easy *3.5mi* | Easy *4.5mi* | Easy *6mi* | Easy *6.5mi* |
+        | **Wed** | **Champions 2** *5mi* | **Champions 2** *6mi* | | |
+
+    Same columns as the main table. Only list the days that differ, and
+    leave a cell blank (or "-" / "same") when that group's JV athletes do
+    what the main table says. Header totals on the override table are
+    optional; if present they are checked against the JV weekly total
+    (main cells, with overrides swapped in). On the page, any group/day with
+    an override shows a VARSITY row and a JV row, a Varsity/JV filter
+    appears, and each mileage total gets a "JV nn" line underneath.
+    Weeks with no override table render exactly as before.
   - The "info" (i) icon + Easy Run modal is only attached to Easy workouts,
     matching the reference page.
   - A day gets the small "👥 Groups" button whenever at least one group's
@@ -137,7 +160,7 @@ MODAL_KEY_BY_QUALITY_SUBTYPE = {
 RACE_KEYWORDS = [
     "race", "trial", "invitational", "classic", "showcase", "regional",
     "championships", "meet", "tiger run", "alumni run", "run for the gold",
-    "haunted woods", "palatine", "state",
+    "haunted woods", "palatine", "state", "champions", "nationals", "hoka",
 ]
 QUALITY_KEYWORDS = ["fartlek", "progression", "hill repeats"]
 QUALITY_PATTERNS = [
@@ -179,6 +202,17 @@ STYLE_BLOCK = """    <style>
         .filter-btn { padding: 8px 16px; margin: 0 5px 5px 0; border: 2px solid #4a7c59; background: white; color: #4a7c59; border-radius: 4px; cursor: pointer; font-size: 0.9rem; transition: all 0.2s; }
         .filter-btn:hover, .filter-btn.active { background: #4a7c59; color: white; }
         
+        /* Varsity / JV split */
+        .squad-filters { margin: -8px 0 20px 0; }
+        .squad-btn { padding: 6px 14px; margin: 0 5px 5px 0; border: 2px solid #1E3A8A; background: white; color: #1E3A8A; border-radius: 16px; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; }
+        .squad-btn:hover, .squad-btn.active { background: #1E3A8A; color: white; }
+        .total-jv { font-size: 0.85rem; font-weight: 600; margin-top: 4px; opacity: 0.85; }
+        .jv-note { background: #E6F0FF; border: 1px solid #4169E1; border-radius: 6px; padding: 10px 15px; margin: 15px 0; font-size: 0.9rem; color: #1E3A8A; }
+        .squad-tag { display: block; width: fit-content; margin-top: 3px; padding: 1px 7px; border-radius: 8px; font-size: 0.62rem; letter-spacing: 0.5px; color: white; }
+        .squad-tag.varsity { background: #2c5530; }
+        .squad-tag.jv { background: #1E3A8A; }
+        .workout-item.jv-row { border-left-style: dashed; }
+
         /* Week Notes Section */
         .week-notes { 
             margin: 25px 0; 
@@ -428,27 +462,43 @@ STYLE_BLOCK = """    <style>
     </style>"""
 
 SCRIPT_BLOCK = """    <script>
-        let currentFilter = null;
-        
+        let currentFilter = null;   // selected group, or null for all groups
+        let currentSquad = 'all';   // 'all' | 'varsity' | 'jv'
+
+        function applyFilters() {
+            document.querySelectorAll('.workout-item').forEach(item => {
+                const groupOk = currentFilter === null || item.dataset.group === currentFilter;
+                const squad = item.dataset.squad || 'all';
+                const squadOk = currentSquad === 'all' || squad === 'all' || squad === currentSquad;
+                item.classList.toggle('hidden', !(groupOk && squadOk));
+            });
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.toggle('active', (btn.dataset.group || null) === currentFilter);
+            });
+            document.querySelectorAll('.squad-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.squad === currentSquad);
+            });
+            document.querySelectorAll('.total').forEach(t => {
+                t.classList.toggle('active', currentFilter !== null && t.id === 'total-' + currentFilter);
+            });
+        }
+
         function filterGroup(group) {
             currentFilter = group;
-            document.querySelectorAll('.workout-item').forEach(item => {
-                item.classList.toggle('hidden', item.dataset.group !== group);
-            });
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            document.querySelectorAll('.total').forEach(t => t.classList.remove('active'));
-            document.getElementById('total-' + group).classList.add('active');
+            applyFilters();
         }
-        
+
+        function filterSquad(squad) {
+            currentSquad = squad;
+            applyFilters();
+        }
+
         function showAll() {
             currentFilter = null;
-            document.querySelectorAll('.workout-item').forEach(item => item.classList.remove('hidden'));
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelector('.filter-btn').classList.add('active');
-            document.querySelectorAll('.total').forEach(t => t.classList.remove('active'));
+            currentSquad = 'all';
+            applyFilters();
         }
-        
+
         function openModal(workoutId) {
             const modal = document.getElementById('modal-' + workoutId);
             if (modal) {
@@ -772,6 +822,9 @@ def is_rest_cell(cell_raw):
 def classify(label, cell_raw):
     if is_rest_cell(cell_raw) or (label and label.strip().upper() == "REST"):
         return "rest"
+    if re.sub(r"\*+", "", cell_raw).strip().lower() == "tbd" or (
+            label and re.search(r"\btbd\b", label, re.I)):
+        return "tbd"
     if not label:
         return "easy"
     ll = label.lower()
@@ -818,14 +871,127 @@ def classify_quality_subtype(label):
     return "quality"
 
 
+# A line like "#### JV Overrides" or "**JV Overrides**" directly above a
+# table marks it as the JV override table for that week.
+JV_HEADING_RE = re.compile(r"^(?:#{2,6}\s*|\*\*)\s*(?:JV|Junior\s+Varsity)\b", re.I)
+# Cells that mean "JV does the same thing as the main table".
+JV_BLANK_CELL_RE = re.compile(r"^\s*(?:|[-\u2013\u2014]+|=|same)\s*$", re.I)
+
+
+def _norm_cell(text):
+    return re.sub(r"\s+", " ", text.strip().lower())
+
+
+def parse_group_header(header_line):
+    """'| Day | Blue (25 mi) | Gold (39 mi) |' -> [{name, total}, ...].
+    The '(NN mi)' total is optional (used for JV override tables)."""
+    header_cells = [c.strip() for c in header_line.strip("|").split("|")]
+    groups = []
+    for gc in header_cells[1:]:
+        gm = re.match(r"(\w+)\s*\(([\d.]+)\s*mi\)", gc.strip())
+        if gm:
+            groups.append({"name": gm.group(1), "total": float(gm.group(2))})
+        else:
+            groups.append({"name": gc.strip(), "total": None})
+    return groups
+
+
+def find_tables(lines):
+    """Every markdown table whose header row starts with '| Day', as a list of
+    (preceding_line, table_lines). preceding_line is the nearest non-blank
+    line above the table ('' if none) - used to spot the '#### JV Overrides'
+    marker."""
+    tables = []
+    i = 0
+    while i < len(lines):
+        if lines[i].strip().startswith("| Day"):
+            prev = ""
+            for j in range(i - 1, -1, -1):
+                if lines[j].strip():
+                    prev = lines[j].strip()
+                    break
+            block = []
+            while i < len(lines) and lines[i].strip().startswith("|"):
+                block.append(lines[i].strip())
+                i += 1
+            tables.append((prev, block))
+        else:
+            i += 1
+    return tables
+
+
+def parse_table_rows(data_lines, groups, week_num, pad_missing):
+    """Data rows -> {day_abbr: {group_name: raw_cell}}.
+    pad_missing=True (main table): a short row reuses its last cell and warns.
+    pad_missing=False (JV table): a short row just gets blank cells."""
+    days = {}
+    for dl in data_lines:
+        cells = [c.strip() for c in dl.strip("|").split("|")]
+        day_abbr = re.sub(r"\*\*", "", cells[0]).strip()
+        if day_abbr not in DAY_ORDER:
+            continue
+        group_vals = cells[1:]
+        if len(group_vals) < len(groups):
+            if pad_missing:
+                print(
+                    f"WARNING: Week {week_num} {day_abbr} row has {len(group_vals)} "
+                    f"cells but {len(groups)} groups expected - padding with last cell",
+                    file=sys.stderr,
+                )
+                while len(group_vals) < len(groups):
+                    group_vals.append(group_vals[-1] if group_vals else "**REST**")
+            else:
+                group_vals = group_vals + [""] * (len(groups) - len(group_vals))
+        days[day_abbr] = {groups[i]["name"]: group_vals[i] for i in range(len(groups))}
+    return days
+
+
+def parse_jv_overrides(table_lines, groups, days, week_num):
+    """Parse a '#### JV Overrides' table. Returns (jv_groups, overrides) where
+    overrides is {day_abbr: {group_name: raw_cell}} containing ONLY the cells
+    that actually differ from the main table (blank / 'same' / identical
+    cells are dropped)."""
+    jv_groups = parse_group_header(table_lines[0])
+    main_names = {g["name"] for g in groups}
+    for g in jv_groups:
+        if g["name"] not in main_names:
+            print(
+                f"WARNING: Week {week_num} JV table has a '{g['name']}' column that isn't "
+                f"in the main table - ignoring that column",
+                file=sys.stderr,
+            )
+    raw = parse_table_rows(table_lines[2:], jv_groups, week_num, pad_missing=False)
+    overrides = {}
+    for day_abbr, cells in raw.items():
+        if day_abbr not in days:
+            print(
+                f"WARNING: Week {week_num} JV table has a {day_abbr} row but the main "
+                f"table doesn't - ignoring it",
+                file=sys.stderr,
+            )
+            continue
+        for gname, cell in cells.items():
+            if gname not in main_names:
+                continue
+            if JV_BLANK_CELL_RE.match(cell):
+                continue
+            if _norm_cell(cell) == _norm_cell(days[day_abbr].get(gname, "")):
+                continue
+            overrides.setdefault(day_abbr, {})[gname] = cell
+    return jv_groups, overrides
+
+
 def parse_markdown(md_text):
-    """Return a list of week dicts: {num, date_range, title, groups:[...], days: {abbr: {group: cell}}}"""
-    # The "— Title" suffix after the header is optional: some weeks (e.g. a
+    """Return a list of week dicts:
+    {num, date_range, title, groups:[...], days: {abbr: {group: cell}},
+     jv_groups:[...], jv_days: {abbr: {group: cell}}}
+    jv_days only holds cells where JV differs from the main (Varsity) table."""
+    # The "- Title" suffix after the header is optional: some weeks (e.g. a
     # source file's Week 14) only have "## **WEEK N: DATE**" with no title,
     # so that part of the header must not be required or the whole week
     # silently fails to match and gets skipped.
     week_re = re.compile(
-        r"## \*\*WEEK (\d+): ([^*]+)\*\*[ \t]*(?:—[ \t]*([^\n]+))?\n(.*?)"
+        r"## \*\*WEEK (\d+): ([^*]+)\*\*[ \t]*(?:\u2014[ \t]*([^\n]+))?\n(.*?)"
         r"(?=\n## \*\*WEEK \d+:|\n## \*\*MILEAGE SUMMARY|\Z)",
         re.S,
     )
@@ -836,48 +1002,30 @@ def parse_markdown(md_text):
         title = (m.group(3) or "").strip()
         body = m.group(4)
 
-        lines = body.splitlines()
-        header_idx = next((i for i, l in enumerate(lines) if l.strip().startswith("| Day")), None)
-        if header_idx is None:
+        tables = find_tables(body.splitlines())
+        if not tables:
             print(f"WARNING: no table found for Week {num}", file=sys.stderr)
             continue
 
-        table_lines = []
-        for l in lines[header_idx:]:
-            if l.strip().startswith("|"):
-                table_lines.append(l.strip())
-            else:
-                break
+        main_lines = tables[0][1]
+        groups = parse_group_header(main_lines[0])
+        # main_lines[1] is the separator row (":---|:---")
+        days = parse_table_rows(main_lines[2:], groups, num, pad_missing=True)
 
-        header_cells = [c.strip() for c in table_lines[0].strip("|").split("|")]
-        group_cells = header_cells[1:]
-        groups = []
-        for gc in group_cells:
-            gm = re.match(r"(\w+)\s*\(([\d.]+)\s*mi\)", gc.strip())
-            if gm:
-                groups.append({"name": gm.group(1), "total": float(gm.group(2))})
-            else:
-                groups.append({"name": gc.strip(), "total": None})
-
-        # table_lines[1] is the separator row (":---|:---")
-        data_lines = table_lines[2:]
-
-        days = {}
-        for dl in data_lines:
-            cells = [c.strip() for c in dl.strip("|").split("|")]
-            day_abbr = re.sub(r"\*\*", "", cells[0]).strip()
-            if day_abbr not in DAY_ORDER:
-                continue
-            group_vals = cells[1:]
-            if len(group_vals) < len(groups):
+        jv_groups, jv_days = [], {}
+        for prev_line, tbl in tables[1:]:
+            if not JV_HEADING_RE.match(prev_line):
                 print(
-                    f"WARNING: Week {num} {day_abbr} row has {len(group_vals)} "
-                    f"cells but {len(groups)} groups expected - padding with last cell",
+                    f"WARNING: Week {num} has an extra table that isn't introduced by a "
+                    f"'#### JV Overrides' line - ignoring it",
                     file=sys.stderr,
                 )
-                while len(group_vals) < len(groups):
-                    group_vals.append(group_vals[-1] if group_vals else "**REST**")
-            days[day_abbr] = {groups[i]["name"]: group_vals[i] for i in range(len(groups))}
+                continue
+            if jv_groups:
+                print(f"WARNING: Week {num} has more than one JV table - ignoring the extra one",
+                      file=sys.stderr)
+                continue
+            jv_groups, jv_days = parse_jv_overrides(tbl, groups, days, num)
 
         weeks.append({
             "num": num,
@@ -885,6 +1033,8 @@ def parse_markdown(md_text):
             "title": title,
             "groups": groups,
             "days": days,
+            "jv_groups": jv_groups,
+            "jv_days": jv_days,
         })
     return weeks
 
@@ -942,6 +1092,12 @@ def build_workout(day_abbr, group_name, cell_raw, week_num=None):
         return {
             "type": "rest", "desc": "REST", "pre": None, "post": None,
             "miles": None, "modal": None, "estimated": False,
+        }
+
+    if wtype == "tbd":
+        return {
+            "type": "tbd", "desc": label or "Workout TBD", "pre": None, "post": None,
+            "miles": miles, "modal": None, "estimated": False,
         }
 
     if wtype == "easy":
@@ -1009,11 +1165,22 @@ def build_workout(day_abbr, group_name, cell_raw, week_num=None):
 # HTML rendering
 # ---------------------------------------------------------------------------
 
-def render_workout_item(group_name, wo):
+SQUAD_LABEL = {"varsity": "VARSITY", "jv": "JV"}
+
+
+def render_workout_item(group_name, wo, squad="all"):
+    """squad: 'all' (everyone in the group does this), or 'varsity' / 'jv'
+    when the group has separate Varsity and JV workouts that day."""
     cls = GROUP_CLASS.get(group_name, group_name.lower())
+    squad_tag = (
+        f'<span class="squad-tag {squad}">{SQUAD_LABEL[squad]}</span>'
+        if squad in SQUAD_LABEL else ""
+    )
+    item_cls = f"{cls} jv-row" if squad == "jv" else cls
+
     if wo["type"] == "rest":
-        return f'''                    <div class="workout-item {cls}" data-group="{group_name}">
-                        <div class="group-badge {cls}">{group_name}</div>
+        return f'''                    <div class="workout-item {item_cls}" data-group="{group_name}" data-squad="{squad}">
+                        <div class="group-badge {cls}">{group_name}{squad_tag}</div>
                         <div class="workout-details">
                             <div class="workout-desc"><span>REST</span></div>
                         </div>
@@ -1037,8 +1204,8 @@ def render_workout_item(group_name, wo):
     pre_html = f'<div class="workout-pre">{wo["pre"]}</div>' if wo["pre"] else ""
     post_html = f'<div class="workout-post">{wo["post"]}</div>' if wo["post"] else ""
 
-    return f'''                    <div class="workout-item {cls}" data-group="{group_name}">
-                        <div class="group-badge {cls}">{group_name}</div>
+    return f'''                    <div class="workout-item {item_cls}" data-group="{group_name}" data-squad="{squad}">
+                        <div class="group-badge {cls}">{group_name}{squad_tag}</div>
                         <div class="workout-details">
                             {pre_html}
                             <div class="workout-desc">
@@ -1052,30 +1219,46 @@ def render_workout_item(group_name, wo):
 
 
 def compute_week_workouts(week):
-    """Build every cell's workout dict once per week, keyed by day then
-    group. Reused for both rendering and the weekly mileage totals so the
-    totals bar always matches what's actually shown in the daily rows."""
+    """Build every cell's workout dict once per week:
+        {day: {"main": {group: workout}, "jv": {group: workout}}}
+    "main" is the Varsity / default schedule; "jv" only has entries for the
+    group/days where the JV override table differs. Reused for rendering and
+    for the weekly mileage totals so the totals always match the daily rows."""
     computed = {}
+    jv_days = week.get("jv_days", {})
     for day_abbr, day_cells in week["days"].items():
         computed[day_abbr] = {
-            group_name: build_workout(day_abbr, group_name, cell_raw, week_num=week["num"])
-            for group_name, cell_raw in day_cells.items()
+            "main": {
+                group_name: build_workout(day_abbr, group_name, cell_raw, week_num=week["num"])
+                for group_name, cell_raw in day_cells.items()
+            },
+            "jv": {
+                group_name: build_workout(day_abbr, group_name, cell_raw, week_num=week["num"])
+                for group_name, cell_raw in jv_days.get(day_abbr, {}).items()
+            },
         }
     return computed
 
 
 def render_day(day_abbr, day_workouts):
-    has_quality = any(wo["type"] == "quality" for wo in day_workouts.values())
+    main, jv = day_workouts["main"], day_workouts["jv"]
+    has_quality = any(wo["type"] == "quality" for wo in list(main.values()) + list(jv.values()))
 
     groups_btn = (
         ' <a href="athlete_groups.html" target="_blank" class="groups-btn" '
         'title="View training groups">👥 Groups</a>' if has_quality else ""
     )
 
-    ordered_groups = [g for g in GROUP_DISPLAY_ORDER if g in day_workouts]
-    items_html = "\n".join(
-        render_workout_item(g, day_workouts[g]) for g in ordered_groups
-    )
+    items = []
+    for g in GROUP_DISPLAY_ORDER:
+        if g not in main:
+            continue
+        if g in jv:
+            items.append(render_workout_item(g, main[g], squad="varsity"))
+            items.append(render_workout_item(g, jv[g], squad="jv"))
+        else:
+            items.append(render_workout_item(g, main[g]))
+    items_html = "\n".join(items)
 
     return f'''    <div class="day">
         <div class="day-header">
@@ -1094,35 +1277,92 @@ def render_week_html(week):
     groups = [g["name"] for g in week["groups"]]
     ordered_groups = [g for g in GROUP_DISPLAY_ORDER if g in groups]
     header_totals = {g["name"]: g["total"] for g in week["groups"]}
+    jv_header_totals = {g["name"]: g["total"] for g in week.get("jv_groups", [])}
 
     workouts_by_day = compute_week_workouts(week)
 
-    computed_totals = {g: 0.0 for g in ordered_groups}
-    for day_abbr, day_workouts in workouts_by_day.items():
-        for group_name, wo in day_workouts.items():
-            if group_name in computed_totals and wo["miles"] is not None:
-                computed_totals[group_name] += wo["miles"]
+    # Varsity total = the main table. JV total = the main table with any JV
+    # override swapped in for that day.
+    varsity_totals = {g: 0.0 for g in ordered_groups}
+    jv_totals = {g: 0.0 for g in ordered_groups}
+    jv_group_names = set()   # groups that have at least one JV override this week
+    prov_varsity, prov_jv = set(), set()   # totals that omit a TBD workout with no mileage
+    jv_day_abbrs = []        # days (in week order) where any group's JV differs
+    for day_abbr in DAY_ORDER:
+        day = workouts_by_day.get(day_abbr)
+        if not day:
+            continue
+        if day["jv"]:
+            jv_day_abbrs.append(day_abbr)
+        for g in ordered_groups:
+            main_wo = day["main"].get(g)
+            jv_wo = day["jv"].get(g)
+            if main_wo is not None and main_wo["miles"] is not None:
+                varsity_totals[g] += main_wo["miles"]
+            if main_wo is not None and main_wo["type"] == "tbd" and main_wo["miles"] is None:
+                prov_varsity.add(g)
+            effective = jv_wo if jv_wo is not None else main_wo
+            if effective is not None and effective["miles"] is not None:
+                jv_totals[g] += effective["miles"]
+            if effective is not None and effective["type"] == "tbd" and effective["miles"] is None:
+                prov_jv.add(g)
+            if jv_wo is not None:
+                jv_group_names.add(g)
 
     for g in ordered_groups:
         header_val = header_totals.get(g)
-        if header_val is not None and abs(header_val - computed_totals[g]) > 0.05:
+        if header_val is not None and g not in prov_varsity and abs(header_val - varsity_totals[g]) > 0.05:
             print(
                 f"WARNING: Week {week['num']} {g} - markdown header says "
                 f"{header_val:g} mi but the daily cells add up to "
-                f"{computed_totals[g]:g} mi; using the computed total",
+                f"{varsity_totals[g]:g} mi; using the computed total",
+                file=sys.stderr,
+            )
+        jv_header_val = jv_header_totals.get(g)
+        if jv_header_val is not None and g not in prov_jv and abs(jv_header_val - jv_totals[g]) > 0.05:
+            print(
+                f"WARNING: Week {week['num']} {g} - JV table header says "
+                f"{jv_header_val:g} mi but the main cells + JV overrides add up to "
+                f"{jv_totals[g]:g} mi; using the computed total",
                 file=sys.stderr,
             )
 
-    totals_html = "\n".join(
-        f'''        <div class="total {GROUP_CLASS.get(g, g.lower())}" onclick="filterGroup('{g}')" id="total-{g}">
+    tbd_title = ' title="Doesn\'t include a TBD workout that has no mileage yet"'
+
+    def total_card(g):
+        jv_line = (
+            f'\n            <div class="total-jv"{tbd_title if g in prov_jv else ""}>'
+            f'JV {jv_totals[g]:g}{"+" if g in prov_jv else ""}</div>'
+            if g in jv_group_names else ""
+        )
+        return f'''        <div class="total {GROUP_CLASS.get(g, g.lower())}" onclick="filterGroup('{g}')" id="total-{g}">
             <div class="total-label">{g}</div>
-            <div class="total-miles">{computed_totals[g]:g}</div>
-        </div>''' for g in ordered_groups
+            <div class="total-miles"{tbd_title if g in prov_varsity else ""}>{varsity_totals[g]:g}{"+" if g in prov_varsity else ""}</div>{jv_line}
+        </div>'''
+
+    totals_html = "\n".join(total_card(g) for g in ordered_groups)
+
+    filters_html = '        <button class="filter-btn active" data-group="" onclick="showAll()">Show All</button>\n' + "\n".join(
+        f'        <button class="filter-btn" data-group="{g}" onclick="filterGroup(\'{g}\')">{g}</button>' for g in ordered_groups
     )
 
-    filters_html = '        <button class="filter-btn active" onclick="showAll()">Show All</button>\n' + "\n".join(
-        f'        <button class="filter-btn" onclick="filterGroup(\'{g}\')">{g}</button>' for g in ordered_groups
-    )
+    # Only weeks that actually have JV overrides get the note + squad filter.
+    note_html = ""
+    squad_html = ""
+    if jv_day_abbrs:
+        days_txt = ", ".join(DAY_FULL[d].title() for d in jv_day_abbrs)
+        note_html = (
+            '    <div class="jv-note">🔀 <strong>Separate Varsity &amp; JV workouts this week</strong> '
+            f'(JV differs on: {days_txt}). Where they differ, each group shows a Varsity row and a JV row. '
+            'Big mileage numbers are Varsity; JV mileage is shown underneath.</div>\n'
+        )
+        squad_html = (
+            '    <div class="filters squad-filters">\n'
+            '        <button class="squad-btn active" data-squad="all" onclick="filterSquad(\'all\')">Everyone</button>\n'
+            '        <button class="squad-btn" data-squad="varsity" onclick="filterSquad(\'varsity\')">Varsity</button>\n'
+            '        <button class="squad-btn" data-squad="jv" onclick="filterSquad(\'jv\')">JV</button>\n'
+            '    </div>\n'
+        )
 
     days_html = "\n".join(
         render_day(d, workouts_by_day[d]) for d in DAY_ORDER if d in workouts_by_day
@@ -1142,7 +1382,7 @@ def render_week_html(week):
     <a class="back-btn" href="index.html">← Schedule</a>
     <h1>{title}</h1>
     {f'<div class="subtitle"><strong>{week["title"]}</strong></div>' if week["title"] else ''}
-
+{note_html}
     <div class="totals">
 {totals_html}
     </div>
@@ -1150,7 +1390,7 @@ def render_week_html(week):
     <div class="filters">
 {filters_html}
     </div>
-
+{squad_html}
 {days_html}
 {MODAL_BLOCK}
 

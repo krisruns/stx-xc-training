@@ -287,14 +287,6 @@
 | **Sat** | **Palatine Inv.** *5mi* | **Palatine Inv.** *6mi* | **Palatine Inv.** *6mi* | **Palatine Inv.** *6mi* |
 | **Sun** | **REST** | **REST** | **REST** | **REST** |
 
-#### JV Overrides
-
-| Day | Blue (27 mi) | White (33 mi) | Green (39 mi) | Gold (43.5 mi) |
-|:----|:---|:---|:---|:---|
-| **Tue** | Easy *3.5mi* | Easy *4.5mi* | Easy *6mi* | Easy *6.5mi* |
-| **Wed** | **Champions 2** *5mi* | **Champions 2** *6mi* | **Champions 2** *6mi* | **Champions 2** *6mi* |
-| **Sat** | **Long Run** *6mi* | **Long Run** *8mi* | **Long Run** *10mi* | **Long Run** *12mi* |
-
 > **JV — Week 18 (Wed):** Champions 2
 
 ---
@@ -312,12 +304,6 @@
 | **Fri** | Easy *3mi/20min* | Easy *3mi/20-25min* | Easy *4mi/25-30min* | Easy *4mi/30min* |
 | **Sat** | **LXC Classic** *5mi* | **LXC Classic** *6mi* | **LXC Classic** *6mi* | **LXC Classic** *6mi* |
 | **Sun** | **REST** | **REST** | **REST** | **REST** |
-
-#### JV Overrides
-
-| Day | Blue (24.5 mi) | White (29.5 mi) | Green (34 mi) | Gold (37.5 mi) |
-|:----|:---|:---|:---|:---|
-| **Tue** | **Trinity Dual Meet** *5mi* | **Trinity Dual Meet** *6mi* | **Trinity Dual Meet** *6mi* | **Trinity Dual Meet** *6mi* |
 
 > **JV — Week 19 (Tue):** Trinity Dual Meet
 
@@ -370,17 +356,6 @@
 | **Sat** | **Regionals** *5mi* | **Regionals** *6mi* | **Regionals** *6mi* | **Regionals** *6mi* |
 | **Sun** | **REST** | **REST** | **REST** | **REST** |
 
-#### JV Overrides
-
-| Day | Blue | White | Green | Gold |
-|:----|:---|:---|:---|:---|
-| **Mon** | **Workout TBD** | **Workout TBD** | **Workout TBD** | **Workout TBD** |
-| **Wed** | Easy *2mi* | Easy *3mi* | Easy *4mi* | Easy *5mi* |
-| **Thu** | **JV Regional** *5mi* | **JV Regional** *6mi* | **JV Regional** *6mi* | **JV Regional** *6mi* |
-| **Sat** | Easy *3mi* | Easy *3mi* | Easy *4mi* | Easy *4mi* |
-
-> **JV — Week 22 (Mon):** JV workout TBD — shows as "Workout TBD" until filled in above.
-
 > **JV — Week 22 (Thu):** JV Regional
 
 ---
@@ -398,15 +373,6 @@
 | **Fri** | Easy *3mi/20min* | Easy *3mi/20-25min* | Easy *4mi/25-30min* | Easy *4mi/30min* |
 | **Sat** | **STATE** *5mi* | **STATE** *6mi* | **STATE** *6mi* | **STATE** *6mi* |
 | **Sun** | **REST** | **REST** | **REST** | **REST** |
-
-#### JV Overrides
-
-| Day | Blue | White | Green | Gold |
-|:----|:---|:---|:---|:---|
-| **Thu** | **HOKA 2 Mile Nationals** *5mi* | **HOKA 2 Mile Nationals** *6mi* | **HOKA 2 Mile Nationals** *6mi* | **HOKA 2 Mile Nationals** *6mi* |
-| **Sat** | **Workout TBD** | **Workout TBD** | **Workout TBD** | **Workout TBD** |
-
-> **JV — Week 23:** HOKA 2 Mile Nationals Thu 10/29. State (Sat) is Varsity only; JV Saturday TBD.
 
 ---
 
