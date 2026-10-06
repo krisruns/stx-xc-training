@@ -306,7 +306,7 @@
 | Day | Blue (23.5 mi) | White (28.5 mi) | Green (34 mi) | Gold (38.5 mi) |
 |:----|:---|:---|:---|:---|
 | **Mon** | Easy *4mi* | Easy *5mi* | Easy *6mi* | Easy *7mi* |
-| **Tue** | **3x1200m@I w/3:00** *4mi* | **4x1200m@I w/3:00** *5mi* | **5x1200m@I w/3:00** *6mi* | **6x1200m@I w/3:00** *7mi* |
+| **Tue** | **3x1200m@I w/2:30** *4mi* | **4x1200m@I w/2:30** *5mi* | **5x1200m@I w/2:30** *6mi* | **6x1200m@I w/2:30** *7mi* |
 | **Wed** | Easy *3mi* | Easy *4mi* | Easy *5mi* | Easy *6mi* |
 | **Thu** | **1mi@T - 1:00 - 1mi@T + 4x200m@R** *4.5mi* | **1.5mi@T - 1:00 - 1.5mi@T + 4x200m@R** *5.5mi* | **2mi@T - 1:00 - 2mi@T + 4x200m@R** *7mi* | **2mi@T - 1:00 - 2mi@T + 4-6x200m@R** *8.5mi* |
 | **Fri** | Easy *3mi/20min* | Easy *3mi/20-25min* | Easy *4mi/25-30min* | Easy *4mi/30min* |
@@ -332,8 +332,8 @@
 | **Mon** | Easy *3mi* | Easy *4mi* | Easy *5mi* | Easy *6mi* |
 | **Tue** | **3x1200m@I w/2:30** *4mi* | **4x1200m@I w/2:30** *5mi* | **5x1200m@I w/2:30** *6mi* | **6x1200m@I w/2:30** *7mi* |
 | **Wed** | Easy *2mi* | Easy *3mi* | Easy *4mi* | Easy *5mi* |
-| **Thu** | **6x400m@R w/2:00** *4mi* | **8x400m@R w/2:00** *4.5mi* | **10x400m@R w/2:00** *6.5mi* | **12x400m@R w/2:00** *7.5mi* |
-| **Fri** | Easy *3mi/20min* | Easy *3mi/20-25min* | Easy *4mi/25-30min* | Easy *4mi/30min* |
+| **Thu** | **2xmile hill loop** *4mi* | **3xmile hill loop** *5mi* | **4xmile hill loop** *6mi* | **4xmile hill loop** *7mi* |
+| **Fri** | Easy *20min* | Easy *25min* | Easy *30min* | Easy *30min* |
 | **Sat** | **Haunted Woods XC** *5mi* | **Haunted Woods XC** *5mi* | **Haunted Woods XC** *6mi* | **Haunted Woods XC** *6mi* |
 | **Sun** | **REST** | **REST** | **REST** | **REST** |
 
@@ -350,7 +350,7 @@
 | **Tue** | **6x400m@R w/200j** *3.5mi* | **8x400m@R w/200j** *4.5mi* | **10x400m@R w/200j** *6mi* | **12x400m@R w/200j** *6.5mi* |
 | **Wed** | Easy *2mi* | Easy *3mi* | Easy *4mi* | Easy *5mi* |
 | **Thu** | **3x1600m@I w/2:30** *4mi* | **4x1600m@I w/2:30** *5mi* | **5x1600m@I w/2:30** *6.5mi* | **6x1600m@I w/2:30** *7mi* |
-| **Fri** | Easy *3mi/20min* | Easy *3mi/20-25min* | Easy *4mi/25-30min* | Easy *4mi/30min* |
+| **Fri** | Easy *20min* | Easy *25min* | Easy *30min* | Easy *30min* |
 | **Sat** | **Long Run** *5mi* | **Long Run** *6mi* | **Long Run** *8mi* | **Long Run** *10mi* |
 | **Sun** | **REST** | **REST** | **REST** | **REST** |
 
@@ -366,7 +366,7 @@
 | **Tue** | Easy *2mi* | Easy *3mi* | Easy *4mi* | Easy *5mi* |
 | **Wed** | **6x300m@R w/3:00** *3.5mi* | **8x300m@R w/3:00** *3.5mi* | **10x300m@R w/3:00** *4.5mi* | **10x300m@R w/3:00** *5.5mi* |
 | **Thu** | Easy *3mi* | Easy *3mi* | Easy *4mi* | Easy *4mi* |
-| **Fri** | Easy *3mi/20min* | Easy *3mi/20-25min* | Easy *4mi/25-30min* | Easy *4mi/30min* |
+| **Fri** | Easy *20min* | Easy *25min* | Easy *30min* | Easy *30min* |
 | **Sat** | **Regionals** *5mi* | **Regionals** *6mi* | **Regionals** *6mi* | **Regionals** *6mi* |
 | **Sun** | **REST** | **REST** | **REST** | **REST** |
 
