@@ -347,9 +347,9 @@
 | Day | Blue (17.5 mi) | White (21.5 mi) | Green (28.5 mi) | Gold (32.5 mi) |
 |:----|:---|:---|:---|:---|
 | **Mon** | Easy *2mi* | Easy *3mi* | Easy *4mi* | Easy *5mi* |
-| **Tue** | **6x400m@R w/200j** *3.5mi* | **8x400m@R w/200j** *4.5mi* | **10x400m@R w/200j** *6mi* | **12x400m@R w/200j** *6.5mi* |
+| **Tue** | **6x400m@R w/3:00** *3.5mi* | **8x400m@R w/3:00** *4mi* | **10x400m@R w/3:00** *4.5mi* | **12x400m@R w/3:00** *5mi* |
 | **Wed** | Easy *2mi* | Easy *3mi* | Easy *4mi* | Easy *5mi* |
-| **Thu** | **3x1600m@I w/2:30** *4mi* | **4x1600m@I w/2:30** *5mi* | **5x1600m@I w/2:30** *6.5mi* | **6x1600m@I w/2:30** *7mi* |
+| **Thu** | **3x1600m@I w/3:00** *4mi* | **4x1600m@I w/3:00** *6mi* | **5x1600m@I w/3:00** *7mi* | **5x1600m@I w/3:00** *7mi* |
 | **Fri** | Easy *20min* | Easy *25min* | Easy *30min* | Easy *30min* |
 | **Sat** | **Long Run** *5mi* | **Long Run** *6mi* | **Long Run** *8mi* | **Long Run** *10mi* |
 | **Sun** | **REST** | **REST** | **REST** | **REST** |
@@ -374,7 +374,6 @@
 
 | Day | Blue | White | Green | Gold |
 |:----|:---|:---|:---|:---|
-| **Mon** | **Workout TBD** | **Workout TBD** | **Workout TBD** | **Workout TBD** |
 | **Wed** | Easy *2mi* | Easy *3mi* | Easy *4mi* | Easy *5mi* |
 | **Thu** | **JV Regional** *5mi* | **JV Regional** *6mi* | **JV Regional** *6mi* | **JV Regional** *6mi* |
 | **Sat** | Easy *3mi* | Easy *3mi* | Easy *4mi* | Easy *4mi* |
@@ -391,10 +390,10 @@
 
 | Day | Blue (22 mi) | White (23.5 mi) | Green (29 mi) | Gold (31 mi) |
 |:----|:---|:---|:---|:---|
-| **Mon** | Easy *3mi* | Easy *3.5mi* | Easy *4.5mi* | Easy *5mi* |
-| **Tue** | **3x1000m@T w/1:00 + 4x200m@R** *4mi* | **4x1000m@T w/1:00 + 4x200m@R** *4mi* | **5x1000m@T w/1:00 + 4-6x200m@R** *5.5mi* | **6x1000m@T w/1:00 + 4-6x200m@R** *6mi* |
-| **Wed** | Easy *3mi* | Easy *3mi* | Easy *4mi* | Easy *4.5mi* |
-| **Thu** | **10x200m@R w/2:00** *4mi* | **12x200m@R w/2:00** *4mi* | **14x200m@R w/2:00** *5mi* | **16x200m@R w/2:00** *5.5mi* |
+| **Mon** | **3x1000m@T w/1:00 + 4x200m@R** *4mi* | **4x1000m@T w/1:00 + 4x200m@R** *4mi* | **5x1000m@T w/1:00 + 4-6x200m@R** *5.5mi* | **6x1000m@T w/1:00 + 4-6x200m@R** *6mi* |
+| **Tue** | Easy *3mi* | Easy *3.5mi* | Easy *4.5mi* | Easy *5mi* |
+| **Wed** | **10x200m@R w/2:00** *4mi* | **12x200m@R w/2:00** *4mi* | **14x200m@R w/2:00** *5mi* | **16x200m@R w/2:00** *5.5mi* |
+| **Thu** | Easy *3mi* | Easy *3mi* | Easy *4mi* | Easy *4.5mi* |
 | **Fri** | Easy *3mi/20min* | Easy *3mi/20-25min* | Easy *4mi/25-30min* | Easy *4mi/30min* |
 | **Sat** | **STATE** *5mi* | **STATE** *6mi* | **STATE** *6mi* | **STATE** *6mi* |
 | **Sun** | **REST** | **REST** | **REST** | **REST** |
@@ -404,7 +403,7 @@
 | Day | Blue | White | Green | Gold |
 |:----|:---|:---|:---|:---|
 | **Thu** | **HOKA 2 Mile Nationals** *5mi* | **HOKA 2 Mile Nationals** *6mi* | **HOKA 2 Mile Nationals** *6mi* | **HOKA 2 Mile Nationals** *6mi* |
-| **Sat** | **Workout TBD** | **Workout TBD** | **Workout TBD** | **Workout TBD** |
+| **Sat** | **REST** | **REST** | **REST** | **REST** |
 
 > **JV — Week 23:** HOKA 2 Mile Nationals Thu 10/29. State (Sat) is Varsity only; JV Saturday TBD.
 
