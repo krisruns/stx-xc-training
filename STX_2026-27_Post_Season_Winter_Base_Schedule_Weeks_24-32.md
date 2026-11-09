@@ -25,7 +25,7 @@
 
 #### Post Season Overrides
 
-| Day | Blue (17.3 mi) | White (18.1 mi) | Green (19.4 mi) | Gold (20.7 mi) |
+| Day | Blue (13.4 mi) | White (14 mi) | Green (15 mi) | Gold (16 mi) |
 |:----|:---|:---|:---|:---|
 | **Mon** | **REST** | **REST** | **REST** | **REST** |
 | **Tue** | **REST** | **REST** | **REST** | **REST** |
@@ -33,15 +33,15 @@
 | **Thu** | Easy *20-30min* | Easy *20-30min* | Easy *20-30min* | Easy *20-30min* |
 | **Fri** | Easy *30-40min* | Easy *30-40min* | Easy *30-40min* | Easy *30-40min* |
 | **Sat** | Easy *30-40min + 4x100m strides* | Easy *30-40min + 4x100m strides* | Easy *30-40min + 4x100m strides* | Easy *30-40min + 4x100m strides* |
-| **Sun** | Easy *30-40min + 6x100m strides* | Easy *30-40min + 6x100m strides* | Easy *30-40min + 6x100m strides* | Easy *30-40min + 6x100m strides* |
+| **Sun** | **REST** | **REST** | **REST** | **REST** |
 
 ---
 
 ## **WEEK 25: NOVEMBER 9–15, 2026** — Return to Running
 
-*Default group: 20–30 minutes easy every other day. Post Season group resumes training, with Nike Cross Regionals 13 days after Monday.*
+*Default group: 20–30 minutes easy Monday, Wednesday and Friday; Sunday is rest. Post Season group resumes training, with Nike Cross Regionals 13 days after Monday.*
 
-| Day | Blue (11.2 mi) | White (11.6 mi) | Green (12.4 mi) | Gold (13.2 mi) |
+| Day | Blue (8.4 mi) | White (8.7 mi) | Green (9.3 mi) | Gold (9.9 mi) |
 |:----|:---|:---|:---|:---|
 | **Mon** | Easy *20-30min* | Easy *20-30min* | Easy *20-30min* | Easy *20-30min* |
 | **Tue** | **REST** | **REST** | **REST** | **REST** |
@@ -49,11 +49,11 @@
 | **Thu** | **REST** | **REST** | **REST** | **REST** |
 | **Fri** | Easy *20-30min* | Easy *20-30min* | Easy *20-30min* | Easy *20-30min* |
 | **Sat** | **REST** | **REST** | **REST** | **REST** |
-| **Sun** | Easy *20-30min* | Easy *20-30min* | Easy *20-30min* | Easy *20-30min* |
+| **Sun** | **REST** | **REST** | **REST** | **REST** |
 
 #### Post Season Overrides
 
-| Day | Blue (21 mi) | White (26 mi) | Green (30.5 mi) | Gold (34.5 mi) |
+| Day | Blue (18 mi) | White (22 mi) | Green (25.5 mi) | Gold (28.5 mi) |
 |:----|:---|:---|:---|:---|
 | **Mon** | Easy *2.5mi* | Easy *3mi* | Easy *3.5mi* | Easy *4mi* |
 | **Tue** | Easy *3mi + 6x100m strides* | Easy *3.5mi + 6x100m strides* | Easy *4.5mi + 6x100m strides* | Easy *5mi + 6x100m strides* |
@@ -61,7 +61,7 @@
 | **Thu** | Easy *2.5mi* | Easy *3mi* | Easy *3.5mi* | Easy *4mi* |
 | **Fri** | Easy *2mi* | Easy *2.5mi* | Easy *3mi* | Easy *3.5mi* |
 | **Sat** | **4x800m@I w/2:30** *4mi* | **5x800m@I w/2:30** *5mi* | **5x800m@I w/2:30** *5.5mi* | **6x800m@I w/2:30** *6mi* |
-| **Sun** | Easy *3mi* | Easy *4mi* | Easy *5mi* | Easy *6mi* |
+| **Sun** | **REST** | **REST** | **REST** | **REST** |
 
 ---
 
@@ -109,7 +109,7 @@
 
 #### Post Season Overrides
 
-| Day | Blue (19 mi) | White (23 mi) | Green (27 mi) | Gold (32.5 mi) |
+| Day | Blue (16 mi) | White (19 mi) | Green (22 mi) | Gold (26.5 mi) |
 |:----|:---|:---|:---|:---|
 | **Mon** | **REST** | **REST** | **REST** | **REST** |
 | **Tue** | Easy *3mi* | Easy *3.5mi* | Easy *4.5mi* | Easy *5mi* |
@@ -117,7 +117,7 @@
 | **Thu** | **Optional Thanksgiving Race or Easy** *3mi* | **Optional Thanksgiving Race or Easy** *3.5mi* | **Optional Thanksgiving Race or Easy** *4mi* | **Optional Thanksgiving Race or Easy** *5mi* |
 | **Fri** | **20-25min Progression (easy instead if you competed Thursday)** *4mi* | **20-25min Progression (easy instead if you competed Thursday)** *4.5mi* | **20-25min Progression (easy instead if you competed Thursday)** *5mi* | **20-25min Progression (easy instead if you competed Thursday)** *6mi* |
 | **Sat** | Easy *3mi* | Easy *3.5mi* | Easy *4mi* | Easy *5mi* |
-| **Sun** | Easy *3mi* | Easy *4mi* | Easy *5mi* | Easy *6mi* |
+| **Sun** | **REST** | **REST** | **REST** | **REST** |
 
 ---
 
@@ -151,7 +151,7 @@
 
 ## **WEEK 29: DECEMBER 7–13, 2026** — Speed Endurance
 
-*Default group: Progression 1, mileage up no more than 10%. Post Season group: 5 days complete rest after Huntsville (Sun 12/6–Thu 12/10), then 20–30 minutes every other day.*
+*Default group: Progression 1, mileage up no more than 10%. Post Season group: 5 days complete rest after Huntsville (Sun 12/6–Thu 12/10), then 20–30 minutes Friday. Sunday is rest.*
 
 | Day | Blue (26 mi) | White (30.5 mi) | Green (36.5 mi) | Gold (42 mi) |
 |:----|:---|:---|:---|:---|
@@ -165,7 +165,7 @@
 
 #### Post Season Overrides
 
-| Day | Blue (5.6 mi) | White (5.8 mi) | Green (6.2 mi) | Gold (6.6 mi) |
+| Day | Blue (2.8 mi) | White (2.9 mi) | Green (3.1 mi) | Gold (3.3 mi) |
 |:----|:---|:---|:---|:---|
 | **Mon** | **REST** | **REST** | **REST** | **REST** |
 | **Tue** | **REST** | **REST** | **REST** | **REST** |
@@ -173,13 +173,13 @@
 | **Thu** | **REST** | **REST** | **REST** | **REST** |
 | **Fri** | Easy *20-30min* | Easy *20-30min* | Easy *20-30min* | Easy *20-30min* |
 | **Sat** | **REST** | **REST** | **REST** | **REST** |
-| **Sun** | Easy *20-30min* | Easy *20-30min* | Easy *20-30min* | Easy *20-30min* |
+| **Sun** | **REST** | **REST** | **REST** | **REST** |
 
 ---
 
 ## **WEEK 30: DECEMBER 14–20, 2026** — Pre-Holiday Peak
 
-*Default group: Fartlek 2. Post Season group: last two days of every-other-day running, then back into the regular rotation Wednesday 12/16.*
+*Default group: Fartlek 2. Post Season group: 20–30 minutes Monday, off Tuesday, then back into the regular rotation Wednesday 12/16.*
 
 | Day | Blue (28 mi) | White (33 mi) | Green (39.5 mi) | Gold (45.5 mi) |
 |:----|:---|:---|:---|:---|
@@ -195,8 +195,8 @@
 
 | Day | Blue (21.3 mi) | White (24.9 mi) | Green (28.6 mi) | Gold (33.3 mi) |
 |:----|:---|:---|:---|:---|
-| **Mon** | **REST** | **REST** | **REST** | **REST** |
-| **Tue** | Easy *20-30min* | Easy *20-30min* | Easy *20-30min* | Easy *20-30min* |
+| **Mon** | Easy *20-30min* | Easy *20-30min* | Easy *20-30min* | Easy *20-30min* |
+| **Tue** | **REST** | **REST** | **REST** | **REST** |
 
 ---
 
@@ -261,7 +261,7 @@
 | Week | Dates | Blue | White | Green | Gold | Phase |
 |:----:|:------|:----:|:-----:|:-----:|:----:|:------|
 | 24 | Nov 2–8 | 0 | 0 | 0 | 0 | Post-State Recovery |
-| 25 | Nov 9–15 | 11.2 | 11.6 | 12.4 | 13.2 | Return to Running |
+| 25 | Nov 9–15 | 8.4 | 8.7 | 9.3 | 9.9 | Return to Running |
 | 26 | Nov 16–22 | 20 | 24 | 28 | 32 | Nike Cross Regionals |
 | 27 | Nov 23–29 | 22 | 26 | 30.5 | 35 | Thanksgiving Week |
 | 28 | Nov 30–Dec 6 | 24 | 28 | 33.5 | 38.5 | Aerobic Base + Huntsville |
@@ -276,12 +276,12 @@
 
 | Week | Dates | Blue | White | Green | Gold | Note |
 |:----:|:------|:----:|:-----:|:-----:|:----:|:------|
-| 24 | Nov 2–8 | 17.3 | 18.1 | 19.4 | 20.7 | 3 days off after State |
-| 25 | Nov 9–15 | 21 | 26 | 30.5 | 34.5 |  |
+| 24 | Nov 2–8 | 13.4 | 14 | 15 | 16 | 3 days off after State |
+| 25 | Nov 9–15 | 18 | 22 | 25.5 | 28.5 |  |
 | 26 | Nov 16–22 | 22.5 | 25 | 30 | 32.5 | Nike Cross Regionals (Sun 11/22) |
-| 27 | Nov 23–29 | 19 | 23 | 27 | 32.5 | Thanksgiving race optional |
+| 27 | Nov 23–29 | 16 | 19 | 22 | 26.5 | Thanksgiving race optional |
 | 28 | Nov 30–Dec 6 | 19.5 | 21.5 | 26 | 28.5 | Huntsville (Sat 12/5) |
-| 29 | Dec 7–13 | 5.6 | 5.8 | 6.2 | 6.6 | 5 days rest after Huntsville |
+| 29 | Dec 7–13 | 2.8 | 2.9 | 3.1 | 3.3 | 5 days rest after Huntsville |
 | 30 | Dec 14–20 | 21.3 | 24.9 | 28.6 | 33.3 | Back in rotation Wed 12/16 |
 | 31 | Dec 21–27 | 22 | 26 | 30.5 | 35 |  |
 | 32 | Dec 28–Jan 3 | 24 | 28 | 33.5 | 38.5 |  |
