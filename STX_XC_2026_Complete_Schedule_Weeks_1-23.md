@@ -23,7 +23,7 @@
 
 ## **WEEK 2: JUNE 1–7, 2026** — Early Summer Base
 
-*Blue group not yet reporting. First quality session: Fartlek 1.*
+*First quality session: Fartlek 1.*
 
 | Day | Blue (14 mi) | White (20 mi) | Green (25 mi) | Gold (32 mi) |
 |:----|:---|:---|:---|:---|
@@ -39,7 +39,7 @@
 
 ## **WEEK 3: JUNE 8–14, 2026** — Early Summer Base
 
-*Blue group not yet reporting. Progression 1 introduces controlled tempo building.*
+*Progression 1 introduces controlled tempo building.*
 
 | Day | Blue (15 mi) | White (22 mi) | Green (28 mi) | Gold (36 mi) |
 |:----|:---|:---|:---|:---|
@@ -101,7 +101,7 @@
 
 *Official mandatory practice begins July 14, leading to the first Time Trial.*
 
-| Day | Blue (18 mi) | White (30 mi) | Green (38 mi) | Gold (48 mi) |
+| Day | Blue (18 mi) | White (30 mi) | Green (38 mi) | Gold (47.5 mi) |
 |:----|:---|:---|:---|:---|
 | **Mon** | Easy *3mi* | Easy *4.5mi* | Easy *5.5mi* | Easy *7mi* |
 | **Tue** | Easy *3.5mi* | **Progression 3 — 5min easy / 15min steady / 15min faster / 5min fastest / 5min easy** *5.5mi* | **Progression 3 — 5min easy / 15min steady / 15min faster / 5min fastest / 5min easy** *7mi* | **Progression 3 — 5min easy / 15min steady / 15min faster / 5min fastest / 5min easy** *8.5mi* |
@@ -195,7 +195,7 @@
 
 *Tiger Run on Saturday.*
 
-| Day | Blue (24 mi) | White (29 mi) | Green (35 mi) | Gold (40 mi) |
+| Day | Blue (24 mi) | White (29 mi) | Green (38.8 mi) | Gold (44 mi) |
 |:----|:---|:---|:---|:---|
 | **Mon** | Easy *4mi* | Easy *5mi* | Easy *6mi* | Easy *8mi* |
 | **Tue** | **4x(3:00 on/2:00 off)** *4mi* | **5x(3:00 on/2:00 off)** *5.5mi* | **6x(3:00 on/2:00 off)** *6mi* | **7x(3:00 on/2:00 off)** *7mi* |
@@ -211,7 +211,7 @@
 
 *Long Run on Saturday (no race).*
 
-| Day | Blue (24 mi) | White (30 mi) | Green (37 mi) | Gold (43 mi) |
+| Day | Blue (25.5 mi) | White (31 mi) | Green (38 mi) | Gold (43 mi) |
 |:----|:---|:---|:---|:---|
 | **Mon** | Easy *4mi* | Easy *5mi* | Easy *6mi* | Easy *7mi* |
 | **Tue** | **8x200m@RP/200 steady (4 loops)** *4.5mi* | **10x200m@RP/200 steady (5 loops)** *5mi* | **12x200m@RP/200 steady (6 loops)** *6mi* | **14x200m@RP/200 steady (7 loops)** *7mi* |
@@ -227,7 +227,7 @@
 
 *Practices moved to AM due to heat*
 
-| Day | Blue (24.5 mi) | White (28 mi) | Green (33.5 mi) | Gold (36.5 mi) |
+| Day | Blue (23.9 mi) | White (28.2 mi) | Green (32.9 mi) | Gold (36.2 mi) |
 |:----|:---|:---|:---|:---|
 | **Mon** | Easy *35min + 6x100m strides* | Easy *40min + 6x100m strides* | Easy *45min + 6x100m strides* | Easy *50min + 6x100m strides* |
 | **Tue** | **4x800m@I w/2:30** *4mi* | **5x800m@I w/2:30** *5mi* | **6x800m@I w/2:30** *5.5mi* | **7x800m@I w/2:30** *6mi* |
@@ -245,7 +245,7 @@
 
 *Southern Showcase approaching next week — major invitational prep. Long Run Saturday.*
 
-| Day | Blue (25 mi) | White (31.5 mi) | Green (38 mi) | Gold (43 mi) |
+| Day | Blue (25 mi) | White (31.5 mi) | Green (37.3 mi) | Gold (43 mi) |
 |:----|:---|:---|:---|:---|
 | **Mon** | Easy *4mi* | Easy *5mi* | Easy *6mi* | Easy *7mi* |
 | **Tue** | **12x200m@R w/200j** *5mi* | **16x200m@R w/200j** *6mi* | **18x200m@R w/200j** *6.5mi* | **20x200m@R w/200j** *7mi* |
@@ -261,7 +261,7 @@
 
 *Biggest invitational of the season. Use this race to solidify team chemistry and establish racing hierarchies. Sunday = 20–30min shakeout run + mobility.*
 
-| Day | Blue (26 mi) | White (30 mi) | Green (35 mi) | Gold (42.5 mi) |
+| Day | Blue (25 mi) | White (30 mi) | Green (34.8 mi) | Gold (38.5 mi) |
 |:----|:---|:---|:---|:---|
 | **Mon** | Easy *4mi* | Easy *5mi* | Easy *6mi* | Easy *7mi* |
 | **Tue** | **3x1000m@I w/2:30** *4mi* | **4x1000m@I w/2:30** *4.5mi* | **5x1000m@I w/2:30** *5mi* | **6x1000m@I w/2:30** *6mi* |
@@ -301,7 +301,7 @@
 
 ## **WEEK 19: SEPTEMBER 28 – OCTOBER 4, 2026** — Louisville XC Classic
 
-*Championship-level race experience in our home market. Sunday = easy.*
+*Championship-level race experience in our home market.*
 
 | Day | Blue (23.5 mi) | White (28.5 mi) | Green (34 mi) | Gold (38.5 mi) |
 |:----|:---|:---|:---|:---|
@@ -325,9 +325,9 @@
 
 ## **WEEK 20: OCTOBER 5–11, 2026** — Haunted Woods XC
 
-*Important competitive stimulus before championship season. Sunday = easy.*
+*Important competitive stimulus before championship season.*
 
-| Day | Blue (22 mi) | White (25 mi) | Green (32 mi) | Gold (36 mi) |
+| Day | Blue (20.2 mi) | White (24.9 mi) | Green (30.8 mi) | Gold (35 mi) |
 |:----|:---|:---|:---|:---|
 | **Mon** | Easy *3mi* | Easy *4mi* | Easy *5mi* | Easy *6mi* |
 | **Tue** | **3x1200m@I w/2:30** *4mi* | **4x1200m@I w/2:30** *5mi* | **5x1200m@I w/2:30** *6mi* | **6x1200m@I w/2:30** *7mi* |
@@ -342,9 +342,9 @@
 
 ## **WEEK 21: OCTOBER 12–18, 2026** — Significant Volume Reduction
 
-*Major taper begins — optimizing freshness for HOKA 2-Mile and Regional. Monday: REST.*
+*Major taper begins — optimizing freshness for HOKA 2-Mile and Regional.*
 
-| Day | Blue (17.5 mi) | White (21.5 mi) | Green (28.5 mi) | Gold (32.5 mi) |
+| Day | Blue (18.7 mi) | White (24.9 mi) | Green (31.3 mi) | Gold (36 mi) |
 |:----|:---|:---|:---|:---|
 | **Mon** | Easy *2mi* | Easy *3mi* | Easy *4mi* | Easy *5mi* |
 | **Tue** | **6x400m@R w/3:00** *3.5mi* | **8x400m@R w/3:00** *4mi* | **10x400m@R w/3:00** *4.5mi* | **12x400m@R w/3:00** *5mi* |
@@ -360,7 +360,7 @@
 
 *Primary focus: qualify for State. Volume significantly reduced. Tempo on Monday, 300s on Wednesday.*
 
-| Day | Blue (21 mi) | White (24.5 mi) | Green (29 mi) | Gold (31.5 mi) |
+| Day | Blue (20.7 mi) | White (24.4 mi) | Green (28.8 mi) | Gold (31.5 mi) |
 |:----|:---|:---|:---|:---|
 | **Mon** | **4x1000m@T w/1:00 + 4x200m@R** *5mi* | **5x1000m@T w/1:00 + 5x200m@R** *6mi* | **6x1000m@T w/1:00 + 6x200m@R** *6.5mi* | **7x1000m@T w/1:00 + 6x200m@R** *7mi* |
 | **Tue** | Easy *2mi* | Easy *3mi* | Easy *4mi* | Easy *5mi* |
@@ -414,27 +414,27 @@
 | Week | Dates | Blue | White | Green | Gold | Phase |
 |:----:|:------|:----:|:-----:|:-----:|:----:|:------|
 | 1 | May 25–31 | — | 18 | 22 | 28 | Early Summer Intro |
-| 2 | June 1–7 | — | 20 | 25 | 32 | Early Summer (Fartlek 1) |
-| 3 | June 8–14 | — | 22 | 28 | 36 | Early Summer (Progression 1) |
+| 2 | June 1–7 | 14 | 20 | 25 | 32 | Early Summer (Fartlek 1) |
+| 3 | June 8–14 | 15 | 22 | 28 | 36 | Early Summer (Progression 1) |
 | 4 | June 15–21 | 14 | 24 | 31 | 40 | Blue Begins (Fartlek 2) |
 | 5 | June 22–28 | 16 | 26 | 34 | 43 | Build (Progression 2) |
 | 6 | June 29–July 5 | 16 | 28 | 36 | 46 | Build (Fartlek 3) |
-| 7 | July 6–12 | 18 | 30 | 38 | 48 | Final Build (Progression 3) |
+| 7 | July 6–12 | 18 | 30 | 38 | 47.5 | Final Build (Progression 3) |
 | 8 | July 13–19 | 20 | 32 | 40 | 49.5 | Mandatory Practice Begins |
 | 9 | July 20–26 | 20 | 34 | 44 | 53 | Time Trial Week |
 | 10 | July 27–Aug 2 | 21 | 35 | 45 | 55 | Summer Peak |
 | 11 | Aug 3–9 | 22 | 30 | 37 | 43 | Recovery + Alumni Run |
 | 12 | Aug 10–16 | 24 | 34 | 43 | 55 | Pre-Season Adjustment |
-| 13 | Aug 17–23 | 24 | 29 | 35 | 40 | Peak Mileage + Tiger Run |
-| 14 | Aug 24–30 | 24 | 30 | 37 | 43 | Time Trial Tue + Long Run Sat |
-| 15 | Aug 31–Sep 6 | 24.5 | 28 | 33.5 | 36.5 | Run for the Gold |
-| 16 | Sep 7–13 | 25 | 31.5 | 38 | 43 | Long Run Week (No Race) |
-| 17 | Sep 14–20 | 26 | 31.5 | 38 | 42.5 | Southern Showcase |
+| 13 | Aug 17–23 | 24 | 29 | 38.8 | 44 | Tiger Run |
+| 14 | Aug 24–30 | 25.5 | 31 | 38 | 43 | Long Run Sat (No Race) |
+| 15 | Aug 31–Sep 6 | 23.9 | 28.2 | 32.9 | 36.2 | Run for the Gold |
+| 16 | Sep 7–13 | 25 | 31.5 | 37.3 | 43 | Long Run Week (No Race) |
+| 17 | Sep 14–20 | 25 | 30 | 34.8 | 38.5 | Southern Showcase |
 | 18 | Sep 21–27 | 25 | 30 | 35.5 | 39 | ✈️ Palatine Invitational |
 | 19 | Sep 28–Oct 4 | 23.5 | 28.5 | 34 | 38.5 | Louisville XC Classic |
-| 20 | Oct 5–11 | 23 | 27 | 36 | 42 | Haunted Woods XC |
-| 21 | Oct 12–18 | 17.5 | 21.5 | 28.5 | 32.5 | Major Taper |
-| 22 | Oct 19–25 | 21 | 24.5 | 29 | 31.5 | Regional Championships |
+| 20 | Oct 5–11 | 20.2 | 24.9 | 30.8 | 35 | Haunted Woods XC |
+| 21 | Oct 12–18 | 18.7 | 24.9 | 31.3 | 36 | Major Taper |
+| 22 | Oct 19–25 | 20.7 | 24.4 | 28.8 | 31.5 | Regional Championships |
 | 23 | Oct 26–Nov 1 | 22 | 23.5 | 29 | 31 | 🏆 STATE |
 
 ---
@@ -459,8 +459,8 @@
 **🔝 MANDATORY PRACTICE + SUMMER PEAK** (Weeks 8–10): Fartlek/Hills shift structure; peak volume builds to 55mi Gold  
 **♻️ RECOVERY** (Week 11): Alumni Run; planned mileage reduction  
 **📚 PRE-SEASON** (Week 12): School schedule adjustment; mileage restored  
-**🐯 XC BUILD** (Week 13): Peak mileage + Tiger Run  
-**🏁 RACE INTRODUCTION** (Weeks 14–15): Varsity time trial; Run for the Gold; volume moderated  
+**🐯 XC BUILD** (Week 13): Tiger Run  
+**🏁 RACE INTRODUCTION** (Weeks 14–15): Run for the Gold; volume moderated  
 **🎯 CHAMPIONSHIP PREP** (Weeks 16–20): Southern Showcase → Palatine → LXC Classic → Haunted Woods  
 **📉 TAPER** (Weeks 21–22): Significant volume reduction; optimize freshness  
 **🏆 STATE** (Week 23): The pinnacle
@@ -486,13 +486,10 @@
 |:-----|:-----|:-----|
 | Freshman group name | Freshman | Blue |
 | Weeks 1–7 quality structure | Various | Tuesday only (alternating Fartlek/Progression) |
-| Week 8 Fartlek day | Tuesday | Wednesday |
 | Tiger Run timing | Week 14 | Week 13 |
 | New race: Alumni Run | — | Week 11 (Saturday) |
 | New race: Run for the Gold | — | Week 15 (Saturday) |
 | Week 14 Saturday | Tiger Run (race) | Long Run |
-| Week 14 Tuesday | Race-pace workout | Varsity Time Trial / Race |
-| Week 15 Monday | Easy | REST (all groups) |
 | Week 16 | Race week | Long Run week (no race) |
 | Palatine week | 18 (same) | 18 (same) |
 | Weeks 16–20 mileage | Per 2025 plan | Updated per 2026 CSV |
