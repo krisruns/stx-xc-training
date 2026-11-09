@@ -88,7 +88,7 @@
 | **Wed** | **3x1000m@T w/1:00 + 4x200m@R** *4mi* | **4x1000m@T w/1:00 + 4x200m@R** *4mi* | **5x1000m@T w/1:00 + 4x200m@R** *5.5mi* | **6x1000m@T w/1:00 + 4x200m@R** *6mi* |
 | **Thu** | Easy *2.5mi* | Easy *3mi* | Easy *3.5mi* | Easy *4mi* |
 | **Fri** | **6x200m@R w/2:00** *3mi* | **7x200m@R w/2:00** *3.5mi* | **8x200m@R w/2:00** *4mi* | **9x200m@R w/2:00** *4.5mi* |
-| **Sat** | Easy *2mi + strides + race simulations* | Easy *2.5mi + strides + race simulations* | Easy *3mi + strides + race simulations* | Easy *3mi + strides + race simulations* |
+| **Sat** | Easy *2mi + strides * | Easy *2.5mi + strides * | Easy *3mi + strides * | Easy *3mi + strides * |
 | **Sun** | **Nike Cross Regionals** *5mi* | **Nike Cross Regionals** *6mi* | **Nike Cross Regionals** *6mi* | **Nike Cross Regionals** *6mi* |
 
 ---
@@ -143,7 +143,7 @@
 | **Tue** | **3x1000m@T w/1:00 + 4x200m@R** *4mi* | **4x1000m@T w/1:00 + 4x200m@R** *4mi* | **5x1000m@T w/1:00 + 4x200m@R** *5.5mi* | **5x1000m@T w/1:00 + 4x200m@R** *6mi* |
 | **Wed** | Easy *2.5mi* | Easy *3mi* | Easy *3.5mi* | Easy *4mi* |
 | **Thu** | **4x300m@R w/3:00** *3mi* | **5x300m@R w/3:00** *3mi* | **6x300m@R w/3:00** *4mi* | **6x300m@R w/3:00** *4.5mi* |
-| **Fri** | Easy *2mi + strides + race simulations* | Easy *2.5mi + strides + race simulations* | Easy *3mi + strides + race simulations* | Easy *3mi + strides + race simulations* |
+| **Fri** | Easy *2mi + strides * | Easy *2.5mi + strides * | Easy *3mi + strides * | Easy *3mi + strides * |
 | **Sat** | **RunningLane XC Championships** *5mi* | **RunningLane XC Championships** *6mi* | **RunningLane XC Championships** *6mi* | **RunningLane XC Championships** *6mi* |
 | **Sun** | **REST** | **REST** | **REST** | **REST** |
 
