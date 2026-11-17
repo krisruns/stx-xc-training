@@ -77,18 +77,17 @@ Notes / assumptions (read this if a week looks off):
       TBD             -> label is/contains "TBD" (e.g. **Workout TBD**). Shown as a
                           placeholder row with no routines. Add *Nmi* if you know the
                           mileage; if not, the week total that includes it gets a "+".
-  - Pre/post routine tags are assigned by (day-of-week, type):
-        Monday + easy      -> Foot Drills, Dynamics, Buildups / Strides, Mobility/Strength A
-        other day + easy   -> WU, Dynamics, stride progression / Strides, Mobility/Strength A
-        quality            -> WU, Dynamics, stride progression /
-                                 Strides+Mobility A   (if the workout already ends in strides, i.e. "@R"/"200m")
-                                 Mobility/Strength B  (otherwise)
-        long run           -> Awesomizer, Lunge Matrix / Strides, Mobility A, 24s
-        race               -> Race Day WU / Post Race
-        rest               -> (no pre/post, shown as a plain REST row)
-    These rules were reverse-engineered from the one hand-built example
-    (Week 13) and are easy to edit below in `build_workout()` if St. X
-    coaches want different wording.
+  - Pre/post routines follow the head coach's weekly rotation by day
+    (PRE_RUN_ROTATION / POST_RUN_ROTATION near the top of the script).
+    It applies to easy runs, workouts and long runs, Monday-Saturday:
+        Mon  Foot Drills, Dynamics, Buildups / Mobility A, Strength A, 6 Strides, Fast Feet
+        Tue  Warmup, Dynamics, Strides       / Mobility B, Strength B
+        Wed  Mobility A, Senior 6 Strength   / 6 Strides, Fast Feet, Lunge Matrix, Foot Drills
+        Thu  Warmup, Dynamics, Strides       / Mobility B, Strength B
+        Fri  Post-Run Mobility               / Post-Run Mobility
+        Sat  Foot Drills, Dynamics, Buildups / Foot Drills, Dynamics, Buildups, Mobility A, Strength A
+        Sun  (not in the rotation, so no routine)
+    Races keep Race Day WU / Post Race. Rest days show no routine.
   - Varsity vs JV workouts (optional, per week). The main table in a week is
     the Varsity / default schedule. When JV does something different on a
     day, add a second table directly under the main one, introduced by a
@@ -190,9 +189,53 @@ QUALITY_PATTERNS = [
     re.compile(r"\d{3,4}m", re.I),         # 200m/300m/400m/800m/1000m/1200m/1600m
 ]
 
-REF_WARMUP = "STX_XC_Movement___Warmup_Reference.html"
-REF_FOOT = "STX_XC_Foot_Drills_Reference.html"
+REF_WARMUP = "movement-warmup.html"
+REF_FOOT = "movement-warmup.html#foot-drills"
+REF_DYNAMICS = "movement-warmup.html#dynamics"
+REF_AWESOMIZER = "movement-warmup.html#awesomizer"
+REF_RACE_WU = "movement-warmup.html#race-day-warmup"
 REF_MOBILITY = "mobility-strength.html"
+REF_MOB_A = "mobility-strength.html#mobility-a"
+REF_MOB_B = "mobility-strength.html#mobility-b"
+REF_STR_A = "mobility-strength.html#strength-a"
+REF_STR_B = "mobility-strength.html#strength-b"
+REF_POST_RACE = "mobility-strength.html#post-race"
+
+# Weekly pre-run / post-run rotation from the head coach (Nov 2026).
+# Used for every easy run, workout and long run, Monday-Saturday.
+# Races keep Race Day WU / Post Race, and rest days show nothing.
+# Sunday isn't in the rotation, so a Sunday run shows no routine.
+# Each entry is a list of (link or None, text).
+_FOOT_DYN_BUILD = [(REF_FOOT, "Foot Drills"), (REF_DYNAMICS, "Dynamics"), (None, "Buildups")]
+_WU_DYN_STRIDES = [(REF_WARMUP, "Warmup"), (REF_DYNAMICS, "Dynamics"), (None, "Strides")]
+_MOB_STR_A = [(REF_MOB_A, "Mobility A"), (REF_STR_A, "Strength A")]
+_MOB_STR_B = [(REF_MOB_B, "Mobility B"), (REF_STR_B, "Strength B")]
+_STRIDES_FAST_FEET = [(None, "6 Strides"), (REF_WARMUP, "Fast Feet")]
+_POST_RUN_MOBILITY = [(REF_MOBILITY, "Post-Run Mobility")]
+
+PRE_RUN_ROTATION = {
+    "Mon": _FOOT_DYN_BUILD,
+    "Tue": _WU_DYN_STRIDES,
+    "Wed": [(REF_MOB_A, "Mobility A"), (REF_MOBILITY, "Senior 6 Strength")],
+    "Thu": _WU_DYN_STRIDES,
+    "Fri": _POST_RUN_MOBILITY,
+    "Sat": _FOOT_DYN_BUILD,
+}
+POST_RUN_ROTATION = {
+    "Mon": _MOB_STR_A + _STRIDES_FAST_FEET,
+    "Tue": _MOB_STR_B,
+    "Wed": _STRIDES_FAST_FEET + [(REF_MOB_A, "Lunge Matrix"), (REF_FOOT, "Foot Drills")],
+    "Thu": _MOB_STR_B,
+    "Fri": _POST_RUN_MOBILITY,
+    "Sat": _FOOT_DYN_BUILD + _MOB_STR_A,
+}
+
+
+def day_routines(day_abbr):
+    """(pre_html, post_html) for a run on this day, or (None, None) on Sunday."""
+    pre = PRE_RUN_ROTATION.get(day_abbr)
+    post = POST_RUN_ROTATION.get(day_abbr)
+    return (render_items(pre) if pre else None, render_items(post) if post else None)
 
 
 # ---------------------------------------------------------------------------
@@ -1161,13 +1204,9 @@ def build_workout(day_abbr, group_name, cell_raw, week_num=None):
             desc = f"{qty} easy"
         else:
             desc = plain or "Easy"
-        if day_abbr == "Mon":
-            pre = [(REF_FOOT, "Foot Drills"), (REF_WARMUP, "Dynamics"), (None, "Buildups")]
-        else:
-            pre = [(REF_WARMUP, "WU"), (REF_WARMUP, "Dynamics"), (None, "stride progression")]
-        post = [(REF_WARMUP, "Strides"), (REF_MOBILITY, "Mobility/Strength A")]
+        pre, post = day_routines(day_abbr)
         return {
-            "type": "easy", "desc": desc, "pre": render_items(pre), "post": render_items(post),
+            "type": "easy", "desc": desc, "pre": pre, "post": post,
             "miles": miles, "modal": MODAL_KEY_BY_TYPE.get(wtype), "estimated": is_estimated,
         }
 
@@ -1179,17 +1218,16 @@ def build_workout(day_abbr, group_name, cell_raw, week_num=None):
             desc = f"Long Run {qty}"
         else:
             desc = label or "Long Run"
-        pre = [(REF_WARMUP, "Awesomizer"), (REF_WARMUP, "Lunge Matrix")]
-        post = [(REF_WARMUP, "Strides"), (REF_MOBILITY, "Mobility A"), (None, "24s")]
+        pre, post = day_routines(day_abbr)
         return {
-            "type": "long_run", "desc": desc, "pre": render_items(pre), "post": render_items(post),
+            "type": "long_run", "desc": desc, "pre": pre, "post": post,
             "miles": miles, "modal": MODAL_KEY_BY_TYPE.get(wtype), "estimated": is_estimated,
         }
 
     if wtype == "race":
         desc = label or "Race"
-        pre = [(REF_WARMUP, "Race Day WU")]
-        post = [(REF_WARMUP, "Post Race")]
+        pre = [(REF_RACE_WU, "Race Day WU")]
+        post = [(REF_POST_RACE, "Post Race")]
         return {
             "type": "race", "desc": desc, "pre": render_items(pre), "post": render_items(post),
             "miles": miles, "modal": MODAL_KEY_BY_TYPE.get(wtype), "estimated": False,
@@ -1198,14 +1236,10 @@ def build_workout(day_abbr, group_name, cell_raw, week_num=None):
     # quality
     desc = label or plain or qty or "Workout"
     subtype = classify_quality_subtype(effective_label)
-    pre = [(REF_WARMUP, "WU"), (REF_WARMUP, "Dynamics"), (None, "stride progression")]
-    if re.search(r"@r\b", (effective_label or "").lower()) or "200m" in (effective_label or "").lower():
-        post = [(REF_WARMUP, "Strides"), (REF_MOBILITY, "Mobility/Strength A")]
-    else:
-        post = [(REF_MOBILITY, "Mobility/Strength B")]
+    pre, post = day_routines(day_abbr)
     return {
         "type": "quality", "subtype": subtype, "desc": desc,
-        "pre": render_items(pre), "post": render_items(post),
+        "pre": pre, "post": post,
         "miles": miles, "modal": MODAL_KEY_BY_QUALITY_SUBTYPE.get(subtype, "quality-workout"),
         "estimated": False,
     }
@@ -1999,7 +2033,7 @@ def main():
                      help="Directory to write weekN.html files into (defaults to the "
                           "current folder, so links to the other reference pages keep working)")
     ap.add_argument("--weeks", default=None,
-                     help="Comma list of specific week numbers to generate, e.g. 1,2,3 "
+                     help="Week numbers to generate, e.g. 26, 26-32 or 1,2,5-7 "
                           "(overrides --start/--end)")
     ap.add_argument("--start", type=int, default=None, help="First week number to generate")
     ap.add_argument("--end", type=int, default=None,
@@ -2031,7 +2065,10 @@ def main():
     # Figure out which week numbers to generate, in priority order:
     # --weeks > --start/--end > interactive prompt > --yes (all weeks)
     if args.weeks:
-        wanted = {int(w) for w in args.weeks.split(",")}
+        try:
+            wanted = parse_week_selection(args.weeks, available_nums)
+        except ValueError:
+            sys.exit(f"--weeks: couldn't read '{args.weeks}'. Use e.g. 26, 26-32 or 25,27,29-31.")
     elif args.start is not None:
         end = args.end if args.end is not None else max(available_nums)
         wanted = set(range(args.start, end + 1))
