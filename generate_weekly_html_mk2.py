@@ -1212,6 +1212,366 @@ def build_workout(day_abbr, group_name, cell_raw, week_num=None):
 
 
 # ---------------------------------------------------------------------------
+# Workout pace pages
+# ---------------------------------------------------------------------------
+# For every workout cell with a paced segment (e.g. "4x1000m@T", "6x300m@R",
+# "2mi@T", "20min@T"), build pace_pages/week{N}_{day}_paces.html listing each
+# athlete's target time from their VDOT (athlete_groups.html) and the
+# STX Training Paces chart (training_paces.csv). Override workouts (JV /
+# Post Season) get their own page: week{N}_{day}_{squad}_paces.html.
+#
+# Pages the script makes carry PACE_PAGE_MARKER. An existing page WITHOUT the
+# marker was made by hand (e.g. hill-adjusted reps), so it is never overwritten.
+
+PACE_PAGE_DIR = "pace_pages"
+PACE_PAGE_MARKER = "<!-- generated-by: generate_weekly_html pace pages -->"
+PACE_CTX = None  # set in main(): {"vdot": {...}, "groups": [...]} when data files are found
+
+# Training Paces chart columns (0-based) per zone, keyed by rep distance in meters.
+# T = Tempo, I/RP = 5K pace, R = Mile pace (same as the fall pages: 200@R = mile-pace 200).
+PACE_ZONE_COLUMNS = {
+    "T": {400: 10, 1000: 11, 1609: 12},
+    "I": {400: 21, 1000: 22, 1200: 23, 1609: 24},
+    "RP": {400: 21, 1000: 22, 1200: 23, 1609: 24},
+    "R": {200: 29, 300: 30, 400: 31, 600: 32, 800: 33},
+}
+PACE_ZONE_NAME = {"T": "Threshold", "I": "Interval", "RP": "Race Pace", "R": "Repetition"}
+PACE_ZONE_HOW = {
+    "T": "<strong>Threshold pace:</strong> comfortably hard, about 15K to half-marathon effort. Controlled and even; you should finish each rep feeling you could do more.",
+    "I": "<strong>Interval pace:</strong> 3K to 5K effort, hard but sustainable. Hit the target time, don't race the rep.",
+    "RP": "<strong>Race pace:</strong> current 5K fitness. Practice the rhythm you'll race at.",
+    "R": "<strong>Repetition pace:</strong> fast but not hard. Smooth, relaxed form; if a rep feels like a strain, you're going too fast.",
+}
+SEGMENT_RE = re.compile(
+    r"(?:(\d+(?:-\d+)?)\s*x\s*)?(\d+(?:\.\d+)?)\s*(mi|min|m)?@(RP|T|I|R)(?![A-Za-z])")
+MONTHS = {m: i for i, m in enumerate(
+    ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST",
+     "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"], 1)}
+
+
+def _chart_seconds(value):
+    """'1:40' -> 100, '72' -> 72; blanks, dashes and 0 -> None."""
+    value = (value or "").strip()
+    try:
+        if ":" in value:
+            mins, secs = value.split(":")
+            total = int(mins) * 60 + int(secs)
+        else:
+            total = int(value)
+    except ValueError:
+        return None
+    return total if total > 0 else None
+
+
+def load_pace_chart(path):
+    """{vdot: {(zone, meters): seconds}} from training_paces.csv."""
+    import csv
+    chart = {}
+    with open(path, newline="", encoding="utf-8-sig") as f:
+        rows = list(csv.reader(f))
+    for row in rows[4:]:
+        if not row or not row[0].strip().isdigit():
+            continue
+        vdot = int(row[0])
+        paces = {}
+        for zone, cols in PACE_ZONE_COLUMNS.items():
+            for meters, col in cols.items():
+                if col < len(row):
+                    secs = _chart_seconds(row[col])
+                    if secs:
+                        paces[(zone, meters)] = secs
+        chart[vdot] = paces
+    return chart
+
+
+def load_athlete_groups(path):
+    """[{"name": "Group 1", "athletes": [(name, vdot or None), ...]}, ...] from athlete_groups.html."""
+    import html as htmlmod
+    with open(path, encoding="utf-8") as f:
+        text = f.read()
+    groups = []
+    for card in re.split(r'<div class="group-card', text)[1:]:
+        head = re.search(r'<div class="group-header">(.*?)</div>', card, re.S)
+        if not head:
+            continue
+        athletes = []
+        for li in re.findall(r"<li>(.*?)</li>", card, re.S):
+            name = re.search(r'<span class="athlete-name">(.*?)</span>', li, re.S)
+            if not name:
+                continue
+            clean = htmlmod.unescape(re.sub(r"<[^>]+>", "", name.group(1))).replace("‡", "").strip()
+            vdot = re.search(r"VDOT[\s:]+(\d+)", li)
+            athletes.append((clean, int(vdot.group(1)) if vdot else None))
+        groups.append({"name": htmlmod.unescape(head.group(1)).strip(), "athletes": athletes})
+    return groups
+
+
+def find_pace_data(folder):
+    """Load the roster and chart if both files are in `folder`, else None."""
+    groups_path = os.path.join(folder, "athlete_groups.html")
+    chart_path = os.path.join(folder, "training_paces.csv")
+    missing = [os.path.basename(p) for p in (groups_path, chart_path) if not os.path.exists(p)]
+    if missing:
+        print(f"NOTE: no pace pages this run - missing {', '.join(missing)} in {folder}", file=sys.stderr)
+        return None
+    return {"vdot": load_pace_chart(chart_path), "groups": load_athlete_groups(groups_path)}
+
+
+def workout_segments(cell_raw):
+    """Paced segments in a cell, in order, de-duplicated:
+    [{"zone": "T", "meters": 1000} or {"zone": "T", "per_mile": True}, ...]"""
+    label, _qty, plain = parse_cell(cell_raw)
+    text = label or plain or ""
+    segs = []
+    for _reps, num, unit, zone in SEGMENT_RE.findall(text):
+        value = float(num)
+        if unit in ("mi", "min"):
+            seg = {"zone": zone, "per_mile": True}
+        elif unit == "m" or value >= 100:
+            seg = {"zone": zone, "meters": int(value)}
+        else:
+            continue
+        if seg not in segs:
+            segs.append(seg)
+    return segs
+
+
+def segment_seconds(chart, vdot, seg):
+    """Target time for one rep at this VDOT (per mile for timed/mile segments)."""
+    if vdot is None or not chart:
+        return None
+    vdot = min(max(vdot, min(chart)), max(chart))
+    paces = chart[vdot]
+    zone = seg["zone"]
+    meters = 1609 if seg.get("per_mile") else seg["meters"]
+    lookup = 1609 if meters == 1600 else meters
+    if (zone, lookup) in paces:
+        return paces[(zone, lookup)]
+    # No chart column for this distance: scale from the nearest one in the same zone.
+    have = sorted((abs(m - meters), m) for (z, m) in paces if z == zone)
+    if not have:
+        return None
+    base = have[0][1]
+    return int(paces[(zone, base)] * meters / base + 0.5)
+
+
+def fmt_secs(secs):
+    if secs is None:
+        return "&mdash;"
+    secs = int(secs)
+    return f"{secs // 60}:{secs % 60:02d}" if secs >= 60 else str(secs)
+
+
+def segment_columns(seg):
+    """(split distances, finish label) for a segment's table columns."""
+    if seg.get("per_mile"):
+        return [400], "per mile"
+    d = seg["meters"]
+    step = 100 if d <= 300 else 200 if d <= 800 else 400
+    return list(range(step, d, step)), f"{d} finish"
+
+
+def segment_name(seg):
+    return f"mile @ {seg['zone']}" if seg.get("per_mile") else f"{seg['meters']} @ {seg['zone']}"
+
+
+def week_start_date(date_range):
+    import datetime
+    m = re.match(r"\s*([A-Z]+)\s+(\d+)", date_range.upper())
+    year = re.search(r"(\d{4})", date_range)
+    if not (m and year and m.group(1) in MONTHS):
+        return None
+    return datetime.date(int(year.group(1)), MONTHS[m.group(1)], int(m.group(2)))
+
+
+def pace_page_name(week_num, day_abbr, squad=None):
+    day = DAY_FULL[day_abbr].lower()
+    return f"week{week_num}_{day}_{squad}_paces.html" if squad else f"week{week_num}_{day}_paces.html"
+
+
+def render_pace_page(week, day_abbr, cells, squad_label, ctx):
+    """cells: {color group: raw cell} for the workouts on this page."""
+    import datetime
+    import html as htmlmod
+    segs = []
+    for cell in cells.values():
+        for s in workout_segments(cell):
+            if s not in segs:
+                segs.append(s)
+
+    start = week_start_date(week["date_range"])
+    date_txt = ""
+    if start:
+        day = start + datetime.timedelta(days=DAY_ORDER.index(day_abbr))
+        date_txt = f" · {day.strftime('%A, %B')} {day.day}, {day.year}"
+    title_txt = f" · {htmlmod.escape(week['title'])}" if week.get("title") else ""
+    squad_txt = f" · {squad_label} group" if squad_label else ""
+    zones = []
+    for s in segs:
+        if s["zone"] not in zones:
+            zones.append(s["zone"])
+    heading = " + ".join(f"{segment_name(s).replace(' @ ', 's @ ', 1) if not s.get('per_mile') else 'Tempo @ T'}" for s in segs)
+
+    color_var = {"Gold": "var(--gold)", "Green": "var(--green2)", "White": "var(--white)", "Blue": "var(--blue)"}
+    plan = []
+    for g in GROUP_DISPLAY_ORDER:
+        if g not in cells:
+            continue
+        label, qty, plain = parse_cell(cells[g])
+        miles, _mins, _left = extract_miles_minutes(qty)
+        miles_txt = f"<small>{miles:g} mi day</small>" if miles is not None else ""
+        plan.append(f'<div style="--c:{color_var[g]}"><b>{g}</b><span>{htmlmod.escape(label or plain)}</span>{miles_txt}</div>')
+
+    single = len(segs) == 1
+    head_cells = ["<th>Athlete</th>"]
+    for s in segs:
+        splits, finish = segment_columns(s)
+        prefix = "" if single else f"{segment_name(s)}<small>"
+        suffix = "" if single else "</small>"
+        for sp in splits:
+            head_cells.append(f"<th>{prefix}{sp} split{suffix}</th>")
+        head_cells.append(f"<th>{prefix}{finish}{suffix}</th>")
+
+    chart = ctx["vdot"]
+    sections, filters = [], ['<button class="active" onclick="show(\'all\',this)">All Groups</button>']
+    for i, grp in enumerate(ctx["groups"], 1):
+        filters.append(f'<button onclick="show(\'{i}\',this)">{htmlmod.escape(grp["name"])}</button>')
+        targets, rows = [], []
+        for s in segs:
+            times = [segment_seconds(chart, v, s) for _n, v in grp["athletes"]]
+            times = [t for t in times if t]
+            if times:
+                lo, hi = min(times), max(times)
+                rng = fmt_secs(lo) if lo == hi else f"{fmt_secs(lo)} – {fmt_secs(hi)}"
+                targets.append(f"<em>{segment_name(s)}</em>{rng}")
+        for name, vdot in grp["athletes"]:
+            tds = [f"<td>{htmlmod.escape(name)}</td>"]
+            for s in segs:
+                secs = segment_seconds(chart, vdot, s)
+                splits, _finish = segment_columns(s)
+                whole = 1609 if s.get("per_mile") else s["meters"]
+                for sp in splits:
+                    tds.append(f"<td>{fmt_secs(round(secs * sp / whole)) if secs else '&mdash;'}</td>")
+                tds.append(f"<td class='key'>{fmt_secs(secs)}</td>" if secs else "<td class='na'>no VDOT</td>")
+            rows.append("<tr>" + "".join(tds) + "</tr>")
+        sections.append(
+            f'<section class="group" data-g="{i}"><div class="ghead"><h2>{htmlmod.escape(grp["name"])}</h2>'
+            f'<div class="target">{" &nbsp; ".join(targets)}</div></div>\n'
+            f'<div class="wrap"><table><thead><tr>{"".join(head_cells)}</tr></thead><tbody>\n'
+            + "\n".join(rows) + "\n</tbody></table></div></section>")
+
+    how = "".join(f"<p>{PACE_ZONE_HOW[z]}</p>" for z in zones)
+    note = (f'<div class="note">These paces are for the <strong>{squad_label}</strong> group\'s workout. '
+            f'Everyone else follows the regular schedule.</div>\n' if squad_label else "")
+    day_full = DAY_FULL[day_abbr].title()
+    return f"""<!DOCTYPE html>
+{PACE_PAGE_MARKER}
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STX Week {week['num']} {day_full} Paces{squad_txt}</title>
+<style>
+:root{{--green:#2c5530;--green2:#4a7c59;--gold:#DAA520;--white:#888;--blue:#4169E1;--ink:#222;--muted:#666;--line:#e3e6e3;--bg:#fafafa}}
+*{{box-sizing:border-box}}
+body{{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;max-width:1000px;margin:20px auto;padding:0 16px;background:var(--bg);color:var(--ink)}}
+.back-btn{{display:inline-block;margin-bottom:12px;padding:7px 14px;background:#fff;color:var(--green);border:2px solid var(--green2);border-radius:4px;text-decoration:none;font-size:.9rem;font-weight:600}}
+.back-btn:hover{{background:var(--green2);color:#fff}}
+.print-btn{{float:right;padding:7px 14px;background:var(--green);color:#fff;border:0;border-radius:4px;font-size:.9rem;font-weight:600;cursor:pointer}}
+h1{{color:var(--green);border-bottom:3px solid var(--green2);padding-bottom:10px;margin:8px 0 6px;font-size:1.7rem}}
+.subtitle{{color:var(--muted);margin:0 0 18px}}
+.plan{{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin:0 0 14px}}
+.plan div{{background:#fff;border-radius:6px;padding:12px 14px;box-shadow:0 1px 3px rgba(0,0,0,.08);border-left:5px solid var(--c)}}
+.plan b{{display:block;font-size:.8rem;color:var(--c);letter-spacing:.3px}}
+.plan span{{font-size:1rem;font-weight:600}}
+.plan small{{display:block;color:var(--muted);font-size:.8rem;margin-top:2px}}
+.note{{background:#E6F0FF;border:1px solid var(--blue);border-radius:6px;padding:10px 14px;margin:0 0 12px;font-size:.9rem;color:#1E3A8A}}
+.how{{background:#fff;border-radius:6px;padding:12px 16px;margin:0 0 18px;font-size:.9rem;color:#444;box-shadow:0 1px 3px rgba(0,0,0,.08)}}
+.how p{{margin:4px 0}}
+.filters{{margin:0 0 16px;display:flex;flex-wrap:wrap;gap:6px}}
+.filters button{{padding:7px 14px;border:2px solid var(--green2);background:#fff;color:var(--green2);border-radius:4px;cursor:pointer;font-size:.9rem;font-weight:600}}
+.filters button.active,.filters button:hover{{background:var(--green2);color:#fff}}
+.group{{background:#fff;border-radius:8px;overflow:hidden;margin:0 0 18px;box-shadow:0 2px 4px rgba(0,0,0,.1)}}
+.ghead{{background:linear-gradient(135deg,#2c5530 0%,#4a7c59 100%);color:#fff;padding:12px 18px;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px}}
+.ghead h2{{margin:0;font-size:1.2rem}}
+.target{{font-size:.95rem;font-weight:600;opacity:.95}}
+.target em{{font-style:normal;font-weight:400;opacity:.8;margin-right:4px}}
+.wrap{{overflow-x:auto}}
+table{{width:100%;border-collapse:collapse;font-size:.95rem}}
+th{{text-align:right;font-size:.75rem;color:var(--muted);font-weight:700;padding:9px 14px 6px;border-bottom:2px solid var(--line);white-space:nowrap}}
+th small{{display:block;font-weight:500;color:#999}}
+th:first-child,td:first-child{{text-align:left}}
+td{{padding:7px 14px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}}
+tr:last-child td{{border-bottom:0}}
+td.key{{font-weight:700;color:var(--green)}}
+td.na{{color:#999;font-style:italic}}
+tbody tr:nth-child(even){{background:#f7f9f7}}
+footer{{color:#999;font-size:.8rem;margin:24px 0 30px;text-align:center}}
+@media (max-width:600px){{td,th{{padding-left:9px;padding-right:9px}}table{{font-size:.88rem}}h1{{font-size:1.4rem}}}}
+@media print{{
+ body{{margin:0;max-width:none;background:#fff;font-size:11px}}
+ .back-btn,.print-btn,.filters{{display:none}}
+ .group{{display:block!important;box-shadow:none;border:1px solid #bbb;break-inside:avoid;margin-bottom:10px}}
+ .ghead{{background:#2c5530!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;padding:6px 10px}}
+ td,th{{padding:3px 8px}}
+ .plan div,.how{{box-shadow:none;border:1px solid #ccc}}
+}}
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">🖨 Print</button>
+<a class="back-btn" href="../week{week['num']}.html">← Week {week['num']}</a>
+<h1>⏱ {day_full} Paces — {heading}</h1>
+<p class="subtitle">Week {week['num']}{date_txt}{title_txt}{squad_txt}</p>
+{note}<div class="plan">{''.join(plan)}</div>
+
+<div class="how">{how}</div>
+<div class="filters">{''.join(filters)}</div>
+{chr(10).join(sections)}
+<footer>Paces from the STX Training Paces master chart, by each athlete's current VDOT (training groups page).</footer>
+<script>function show(g,btn){{document.querySelectorAll('.group').forEach(e=>e.style.display=(g==='all'||e.dataset.g===g)?'':'none');document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}}</script>
+</body></html>
+"""
+
+
+def week_pace_pages(week):
+    """[(filename, day_abbr, {group: cell}, squad_label)] for every page this week needs."""
+    pages = []
+    override_type = week.get("override_type")
+    for day_abbr in DAY_ORDER:
+        main = {g: c for g, c in week["days"].get(day_abbr, {}).items() if workout_segments(c)}
+        if main:
+            pages.append((pace_page_name(week["num"], day_abbr), day_abbr, main, None))
+        over = {g: c for g, c in week.get("override_days", {}).get(day_abbr, {}).items() if workout_segments(c)}
+        if over and override_type:
+            pages.append((pace_page_name(week["num"], day_abbr, override_type["squad"]),
+                          day_abbr, over, override_type["label"]))
+    return pages
+
+
+def write_pace_pages(week, outdir):
+    """Write this week's pace pages, keeping hand-made pages. Returns (written, kept)."""
+    if not PACE_CTX:
+        return 0, 0
+    folder = os.path.join(outdir, PACE_PAGE_DIR)
+    os.makedirs(folder, exist_ok=True)
+    written, kept = 0, 0
+    for name, day_abbr, cells, squad_label in week_pace_pages(week):
+        path = os.path.join(folder, name)
+        if os.path.exists(path):
+            with open(path, encoding="utf-8", errors="ignore") as f:
+                if PACE_PAGE_MARKER not in f.read(400):
+                    print(f"Kept hand-made {PACE_PAGE_DIR}/{name}")
+                    kept += 1
+                    continue
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(render_pace_page(week, day_abbr, cells, squad_label, PACE_CTX))
+        print(f"Wrote {PACE_PAGE_DIR}/{name}")
+        written += 1
+    return written, kept
+
+
+# ---------------------------------------------------------------------------
 # HTML rendering
 # ---------------------------------------------------------------------------
 
@@ -1255,6 +1615,8 @@ def render_workout_item(group_name, wo, squad="all"):
             f'<span class="info-icon" onclick="openModal(\'{wo["modal"]}\')" '
             f'title="Click for workout details">i</span>'
         )
+    pace_html = (f'<a class="pace-link" href="{wo["pace_url"]}">⏱ Paces</a>'
+                 if wo.get("pace_url") else "")
     pre_html = f'<div class="workout-pre">{wo["pre"]}</div>' if wo["pre"] else ""
     post_html = f'<div class="workout-post">{wo["post"]}</div>' if wo["post"] else ""
 
@@ -1264,12 +1626,19 @@ def render_workout_item(group_name, wo, squad="all"):
                             {pre_html}
                             <div class="workout-desc">
                                 <span>{wo["desc"]}</span>
-                                {info_icon_html}
+                                {info_icon_html}{pace_html}
                             </div>
                             {post_html}
                         </div>
                         <div class="workout-miles"{miles_title}>{miles_txt}</div>
                     </div>'''
+
+
+def _with_pace_url(wo, cell_raw, page_name):
+    """Attach the pace page link when pace pages are on and the cell has paced reps."""
+    if PACE_CTX and workout_segments(cell_raw):
+        wo["pace_url"] = f"{PACE_PAGE_DIR}/{page_name}"
+    return wo
 
 
 def compute_week_workouts(week):
@@ -1280,14 +1649,19 @@ def compute_week_workouts(week):
     for the weekly mileage totals so the totals always match the daily rows."""
     computed = {}
     override_days = week.get("override_days", {})
+    squad = (week.get("override_type") or {}).get("squad")
     for day_abbr, day_cells in week["days"].items():
         computed[day_abbr] = {
             "main": {
-                group_name: build_workout(day_abbr, group_name, cell_raw, week_num=week["num"])
+                group_name: _with_pace_url(
+                    build_workout(day_abbr, group_name, cell_raw, week_num=week["num"]),
+                    cell_raw, pace_page_name(week["num"], day_abbr))
                 for group_name, cell_raw in day_cells.items()
             },
             "override": {
-                group_name: build_workout(day_abbr, group_name, cell_raw, week_num=week["num"])
+                group_name: _with_pace_url(
+                    build_workout(day_abbr, group_name, cell_raw, week_num=week["num"]),
+                    cell_raw, pace_page_name(week["num"], day_abbr, squad))
                 for group_name, cell_raw in override_days.get(day_abbr, {}).items()
             },
         }
@@ -1673,6 +2047,8 @@ def main():
               file=sys.stderr)
 
     os.makedirs(outdir, exist_ok=True)
+    global PACE_CTX
+    PACE_CTX = find_pace_data(outdir)
 
     existing = [
         os.path.join(outdir, f"week{week['num']}.html")
@@ -1690,6 +2066,7 @@ def main():
             print("Skipping all existing files (new weeks will still be written).")
 
     written, skipped = 0, 0
+    pace_written, pace_kept = 0, 0
     for week in sorted(weeks, key=lambda w: w["num"]):
         out_path = os.path.join(outdir, f"week{week['num']}.html")
 
@@ -1703,8 +2080,14 @@ def main():
             f.write(html)
         print(f"Wrote {out_path}")
         written += 1
+        p_written, p_kept = write_pace_pages(week, outdir)
+        pace_written += p_written
+        pace_kept += p_kept
 
     print(f"\nDone: {written} week page(s) written, {skipped} skipped, in {outdir}")
+    if PACE_CTX:
+        print(f"      {pace_written} pace page(s) written to {PACE_PAGE_DIR}/"
+              + (f", {pace_kept} hand-made page(s) kept" if pace_kept else ""))
 
 
 if __name__ == "__main__":

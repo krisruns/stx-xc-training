@@ -84,14 +84,15 @@
 | Day | Blue (22.5 mi) | White (25 mi) | Green (30 mi) | Gold (32.5 mi) |
 |:----|:---|:---|:---|:---|
 | **Mon** | Easy *3mi* | Easy *3mi* | Easy *4mi* | Easy *4.5mi* |
-| **Tue** | Easy *3mi* | Easy *3mi* | Easy *4mi* | Easy *4.5mi* |
-| **Wed** | **3x1000m@T w/1:00 + 4x200m@R** *4mi* | **4x1000m@T w/1:00 + 4x200m@R** *4mi* | **5x1000m@T w/1:00 + 4x200m@R** *5.5mi* | **6x1000m@T w/1:00 + 4x200m@R** *6mi* |
-| **Thu** | Easy *2.5mi* | Easy *3mi* | Easy *3.5mi* | Easy *4mi* |
-| **Fri** | **6x200m@R w/2:00** *3mi* | **7x200m@R w/2:00** *3.5mi* | **8x200m@R w/2:00** *4mi* | **9x200m@R w/2:00** *4.5mi* |
+| **Tue** | **3x1000m@T w/1:00 + 4x200m@R** *4mi* | **4x1000m@T w/1:00 + 4x200m@R** *4mi* | **5x1000m@T w/1:00 + 4x200m@R** *5.5mi* | **6x1000m@T w/1:00 + 4x200m@R** *6mi* |
+| **Wed** | Easy *3mi* | Easy *3mi* | Easy *4mi* | Easy *4.5mi* |
+| **Thu** | **6x200m@R w/2:00** *3mi* | **7x200m@R w/2:00** *3.5mi* | **8x200m@R w/2:00** *4mi* | **9x200m@R w/2:00** *4.5mi* |
+| **Fri** | Easy *2.5mi* | Easy *3mi* | Easy *3.5mi* | Easy *4mi* |
 | **Sat** | Easy *2mi + strides * | Easy *2.5mi + strides * | Easy *3mi + strides * | Easy *3mi + strides * |
 | **Sun** | **Nike Cross Regionals** *5mi* | **Nike Cross Regionals** *6mi* | **Nike Cross Regionals** *6mi* | **Nike Cross Regionals** *6mi* |
 
 ---
+
 
 ## **WEEK 27: NOVEMBER 23–29, 2026** — Thanksgiving Week
 
